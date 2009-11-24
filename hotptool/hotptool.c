@@ -128,6 +128,13 @@ main (int argc, char *argv[])
   if (digits != 6 && digits != 7 && digits != 8)
     error (EXIT_FAILURE, 0, "Only digits 6, 7 and 8 are supported");
 
+  if (validate_otp_p (args_info.inputs_num) && !args_info.digits_orig)
+    digits = strlen (args_info.inputs[1]);
+  else if (validate_otp_p (args_info.inputs_num) && args_info.digits_orig &&
+	   args_info.digits_arg != strlen (args_info.inputs[1]))
+    error (EXIT_FAILURE, 0, "Given one-time password has bad length %d != %d",
+	   args_info.digits_arg, strlen (args_info.inputs[1]));
+
   do
     {
       rc = hotp_generate_otp (secret,
@@ -157,7 +164,8 @@ main (int argc, char *argv[])
 
   if (validate_otp_p (args_info.inputs_num))
     error (2, 0, "Password \"%s\" not found in range %ld .. %ld",
-	   otp, (long) moving_factor, (long) moving_factor + window);
+	   args_info.inputs[1],
+	   (long) moving_factor, (long) moving_factor + window);
 
   return EXIT_SUCCESS;
 }
