@@ -58,13 +58,6 @@
 # endif
 #endif
 
-#include <ykclient.h>
-
-#ifdef HAVE_LIBLDAP
-#include <ldap.h>
-#define PORT_NUMBER  LDAP_PORT
-#endif
-
 #ifndef PAM_EXTERN
 #ifdef PAM_STATIC
 #define PAM_EXTERN static
@@ -72,9 +65,6 @@
 #define PAM_EXTERN extern
 #endif
 #endif
-
-#include <sys/types.h>
-#include <pwd.h>
 
 #define TOKEN_LEN 44
 #define TOKEN_ID_LEN 12
@@ -137,7 +127,6 @@ pam_sm_authenticate (pam_handle_t * pamh,
   const char *user = NULL;
   const char *password = NULL;
   char otp[TOKEN_LEN + 1] = { 0 };
-  char otp_id[TOKEN_ID_LEN + 1] = { 0 };
   int password_len = 0;
   int valid_token = 0;
   struct pam_conv *conv;
