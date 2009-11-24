@@ -1,0 +1,9 @@
+The HOTP Toolkit package contains tools that are useful when deploying
+HOTP technology.  See RFC 4226 for technical background.  The
+components included in the package is:
+
+   * libhotp: A shared and static C library for low-level handling
+              of HOTPs.  Licensed under the LGPLv2.1+.
+
+   * hotptool: A command line tool for debugging and testing of HOTPs.
+              Licensed under the GPLv3.0+.

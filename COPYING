@@ -1,0 +1,6 @@
+Each component of the HOTP Toolkit has its own license, see COPYING in
+each sub-directory.  In particular:
+
+   * libhotp: Licensed under the LGPLv2.1+.
+
+   * hotptool: Licensed under the GPLv3.0+.
