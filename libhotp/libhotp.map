@@ -18,6 +18,8 @@
 
 LIBHOTP_0.0 {
   global:
+    hotp_init;
+    hotp_done;
     hotp_generate_otp;
 
   local:

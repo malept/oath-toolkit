@@ -39,10 +39,21 @@
 #include <string.h>
 
 typedef enum {
-  HOTP_OK = 0
+  HOTP_OK = 0,
+  HOTP_CRYPTO_ERROR,
+  HOTP_INVALID_DIGITS,
+  HOTP_PRINTF_ERROR
 } hotp_rc;
 
+#define HOTP_DYNAMIC_TRUNCATION SIZE_MAX
+
+extern int HOTPAPI hotp_init (void);
+extern int HOTPAPI hotp_done (void);
+
+#define HOTP_OTP_LENGTH(digits, checksum) (digits + (checksum ? 1 : 0))
+
 extern int HOTPAPI hotp_generate_otp (char *secret,
+				      size_t secret_length,
 				      uint64_t moving_factor,
 				      unsigned digits,
 				      bool add_checksum,
