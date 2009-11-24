@@ -201,6 +201,25 @@ hotp_check_version (const char *req_version)
   return NULL;
 }
 
+/**
+ * hotp_hex2bin:
+ * @hexstr: input string with hex data
+ * @binstr: output string that holds binary data, or %NULL
+ * @binlen: output variable holding needed length of @binstr
+ *
+ * Convert string with hex data to binary data.
+ *
+ * Non-hexadecimal data are not ignored but instead will lead to an
+ * %HOTP_INVALID_HEX error.
+ *
+ * If @binstr is %NULL, then @binlen will be populated with the
+ * necessary length.  If the @binstr buffer is too small,
+ * %HOTP_TOO_SMALL_BUFFER is returned and @binlen will contain the
+ * necessary length.
+ *
+ * Returns: On success, %HOTP_OK (zero) is returned, otherwise an
+ *   error code is returned.
+ **/
 int
 hotp_hex2bin (char *hexstr,
 	      char *binstr,

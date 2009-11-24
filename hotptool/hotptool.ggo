@@ -1,4 +1,4 @@
 purpose "Generate one-time passwords according to HOTP algorithm."
 
 option "counter" c "Counter value" int typestr="COUNTER" no
-option "digits" d "Number of digits in one-time password" string typestr="DIGITS" no
+option "digits" d "Number of digits in one-time password" int typestr="DIGITS" no

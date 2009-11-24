@@ -107,9 +107,9 @@ extern HOTPAPI int hotp_generate_otp (char *secret,
 				      size_t truncation_offset,
 				      char *output_otp);
 
-extern HOTPAPI int hotp_hex2bin (char *str,
-				 char *hexstr,
-				 size_t *hexlen);
+extern HOTPAPI int hotp_hex2bin (char *hexstr,
+				 char *binstr,
+				 size_t *binlen);
 
 extern HOTPAPI const char *hotp_check_version (const char *req_version);
 

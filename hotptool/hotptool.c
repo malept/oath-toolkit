@@ -67,6 +67,9 @@ int
 main (int argc, char *argv[])
 {
   struct gengetopt_args_info args_info;
+  char *secret;
+  size_t secretlen;
+  int rc;
 
   set_program_name (argv[0]);
 
@@ -93,5 +96,36 @@ main (int argc, char *argv[])
       return EXIT_SUCCESS;
     }
 
-  return 0;
+  secretlen = 1 + strlen (args_info.inputs[0]) / 2;
+  secret = malloc (secretlen);
+
+  rc = hotp_hex2bin (args_info.inputs[0], secret, &secretlen);
+  if (rc != HOTP_OK)
+    error (EXIT_FAILURE, 0, "Hex decoding of secret key failed");
+
+  {
+    uint64_t moving_factor = args_info.counter_arg;
+    unsigned digits = args_info.digits_arg;
+    char otp[10];
+
+    if (!args_info.digits_orig)
+      digits = 6;
+
+    if (digits != 6 && digits != 7 && digits != 8)
+      error (EXIT_FAILURE, 0, "Only digits 6, 7 and 8 are supported");
+
+    rc = hotp_generate_otp (secret,
+			    secretlen,
+			    moving_factor,
+			    digits,
+			    false,
+			    HOTP_DYNAMIC_TRUNCATION,
+			    otp);
+    if (rc != HOTP_OK)
+      error (EXIT_FAILURE, 0, "Generating OTP failed: %d", rc);
+
+    printf ("%s\n", otp);
+  }
+
+  return EXIT_SUCCESS;
 }
