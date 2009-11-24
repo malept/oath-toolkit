@@ -111,7 +111,6 @@ pam_hotp/config.log
 pam_hotp/config.status
 pam_hotp/configure
 pam_hotp/libtool
-pam_hotp/m4/
 pam_hotp/pam_hotp.la
 pam_hotp/pam_hotp.lo
 pam_hotp/stamp-h1
