@@ -134,6 +134,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   struct pam_response *resp;
   int nargs = 1;
   struct cfg cfg;
+  char *query_prompt = NULL;
 
   parse_cfg (flags, argc, argv, &cfg);
 
@@ -187,19 +188,21 @@ pam_sm_authenticate (pam_handle_t * pamh,
 	size_t len = strlen (query_template) + strlen (user);
 	size_t wrote;
 
-	msg[0].msg = malloc (len);
-	if (!msg[0].msg)
+	query_prompt = malloc (len);
+	if (!query_prompt)
 	  {
 	    retval = PAM_BUF_ERR;
 	    goto done;
 	  }
 
-	wrote = snprintf ((char *) msg[0].msg, len, query_template, user);
+	wrote = snprintf (query_prompt, len, query_template, user);
 	if (wrote < 0 || wrote >= len)
 	  {
 	    retval = PAM_BUF_ERR;
 	    goto done;
 	  }
+
+	msg[0].msg = query_prompt;
       }
       msg[0].msg_style = PAM_PROMPT_ECHO_OFF;
       resp = NULL;
@@ -207,7 +210,8 @@ pam_sm_authenticate (pam_handle_t * pamh,
       retval = conv->conv (nargs, (const struct pam_message **) pmsg,
 			   &resp, conv->appdata_ptr);
 
-      free (msg[0].msg);
+      free (query_prompt);
+      query_prompt = NULL;
 
       if (retval != PAM_SUCCESS)
 	{
@@ -261,6 +265,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
 
 done:
   hotp_done ();
+  free (query_prompt);
   if (cfg.alwaysok && retval != PAM_SUCCESS)
     {
       DBG (("alwaysok needed (otherwise return with %d)", retval));
