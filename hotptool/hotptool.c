@@ -65,6 +65,8 @@ usage (int status)
 #define generate_otp_p(n) ((n) == 1)
 #define validate_otp_p(n) ((n) == 2)
 
+#define EXIT_OTPINVALID 2
+
 int
 main (int argc, char *argv[])
 {
@@ -108,7 +110,7 @@ main (int argc, char *argv[])
 
   rc = hotp_hex2bin (args_info.inputs[0], secret, &secretlen);
   if (rc != HOTP_OK)
-    error (EXIT_FAILURE, 0, "Hex decoding of secret key failed");
+    error (EXIT_FAILURE, 0, "hex decoding of secret key failed");
 
   if (args_info.counter_orig)
     moving_factor = args_info.counter_arg;
@@ -126,13 +128,13 @@ main (int argc, char *argv[])
     window = 0;
 
   if (digits != 6 && digits != 7 && digits != 8)
-    error (EXIT_FAILURE, 0, "Only digits 6, 7 and 8 are supported");
+    error (EXIT_FAILURE, 0, "only digits 6, 7 and 8 are supported");
 
   if (validate_otp_p (args_info.inputs_num) && !args_info.digits_orig)
     digits = strlen (args_info.inputs[1]);
   else if (validate_otp_p (args_info.inputs_num) && args_info.digits_orig &&
 	   args_info.digits_arg != strlen (args_info.inputs[1]))
-    error (EXIT_FAILURE, 0, "Given one-time password has bad length %d != %d",
+    error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
   do
@@ -145,7 +147,8 @@ main (int argc, char *argv[])
 			      HOTP_DYNAMIC_TRUNCATION,
 			      otp);
       if (rc != HOTP_OK)
-	error (EXIT_FAILURE, 0, "Generating one-time password failed: %d", rc);
+	error (EXIT_FAILURE, 0,
+	       "generating one-time password failed (%d)", rc);
 
       if (generate_otp_p (args_info.inputs_num))
 	{
@@ -163,7 +166,8 @@ main (int argc, char *argv[])
   while (window - iter++ > 0);
 
   if (validate_otp_p (args_info.inputs_num))
-    error (2, 0, "Password \"%s\" not found in range %ld .. %ld",
+    error (EXIT_OTPINVALID, 0,
+	   "password \"%s\" not found in range %ld .. %ld",
 	   args_info.inputs[1],
 	   (long) moving_factor, (long) moving_factor + window);
 

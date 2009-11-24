@@ -45,8 +45,8 @@
 #include <security/pam_modules.h>
 #endif
 
-#if defined(DEBUG_PAM)
-# if defined(HAVE_SECURITY__PAM_MACROS_H)
+#if defined DEBUG_PAM
+# if defined HAVE_SECURITY__PAM_MACROS_H
 #  define DEBUG
 #  include <security/_pam_macros.h>
 # else
@@ -207,7 +207,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
       retval = conv->conv (nargs, (const struct pam_message **) pmsg,
 			   &resp, conv->appdata_ptr);
 
-      free ((char *) msg[0].msg);
+      free (msg[0].msg);
 
       if (retval != PAM_SUCCESS)
 	{

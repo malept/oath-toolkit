@@ -1,0 +1,3 @@
+^libhotp/lib/Makefile.am
+^libhotp/lib/wchar.in.h
+^libhotp/m4/wchar.m4

@@ -1,0 +1,2 @@
+^libhotp/tests/tst_hotp.c
+^pam_hotp/tests/test-pam_hotp.c
