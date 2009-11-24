@@ -62,6 +62,8 @@ usage (int status)
   exit (status);
 }
 
+#define generate_otp_p(n) ((n) == 1)
+#define validate_otp_p(n) ((n) == 2)
 
 int
 main (int argc, char *argv[])
@@ -70,6 +72,11 @@ main (int argc, char *argv[])
   char *secret;
   size_t secretlen;
   int rc;
+  size_t window;
+  uint64_t moving_factor;
+  unsigned digits;
+  char otp[10];
+  size_t iter = 0;
 
   set_program_name (argv[0]);
 
@@ -103,29 +110,54 @@ main (int argc, char *argv[])
   if (rc != HOTP_OK)
     error (EXIT_FAILURE, 0, "Hex decoding of secret key failed");
 
-  {
-    uint64_t moving_factor = args_info.counter_arg;
-    unsigned digits = args_info.digits_arg;
-    char otp[10];
+  if (args_info.counter_orig)
+    moving_factor = args_info.counter_arg;
+  else
+    moving_factor = 0;
 
-    if (!args_info.digits_orig)
-      digits = 6;
+  if (args_info.digits_orig)
+    digits = args_info.digits_arg;
+  else
+    digits = 6;
 
-    if (digits != 6 && digits != 7 && digits != 8)
-      error (EXIT_FAILURE, 0, "Only digits 6, 7 and 8 are supported");
+  if (args_info.window_orig)
+    window = args_info.window_arg;
+  else
+    window = 0;
 
-    rc = hotp_generate_otp (secret,
-			    secretlen,
-			    moving_factor,
-			    digits,
-			    false,
-			    HOTP_DYNAMIC_TRUNCATION,
-			    otp);
-    if (rc != HOTP_OK)
-      error (EXIT_FAILURE, 0, "Generating OTP failed: %d", rc);
+  if (digits != 6 && digits != 7 && digits != 8)
+    error (EXIT_FAILURE, 0, "Only digits 6, 7 and 8 are supported");
 
-    printf ("%s\n", otp);
-  }
+  do
+    {
+      rc = hotp_generate_otp (secret,
+			      secretlen,
+			      moving_factor + iter,
+			      digits,
+			      false,
+			      HOTP_DYNAMIC_TRUNCATION,
+			      otp);
+      if (rc != HOTP_OK)
+	error (EXIT_FAILURE, 0, "Generating one-time password failed: %d", rc);
+
+      if (generate_otp_p (args_info.inputs_num))
+	{
+	  printf ("%s\n", otp);
+	}
+      else if (validate_otp_p (args_info.inputs_num))
+	{
+	  if (strcmp (otp, args_info.inputs[1]) == 0)
+	    {
+	      printf ("%ld\n", (long) iter);
+	      return EXIT_SUCCESS;
+	    }
+	}
+    }
+  while (window - iter++ > 0);
+
+  if (validate_otp_p (args_info.inputs_num))
+    error (2, 0, "Password \"%s\" not found in range %ld .. %ld",
+	   otp, (long) moving_factor, (long) moving_factor + window);
 
   return EXIT_SUCCESS;
 }
