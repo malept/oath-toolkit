@@ -1,5 +1,5 @@
 /*
- * hotptool.c - command line tool for handling HOTP passwords
+ * hotptool.c - command line tool for HOTP one-time passwords
  * Copyright (C) 2009  Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or
