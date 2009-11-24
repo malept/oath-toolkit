@@ -1,4 +1,4 @@
-SUBDIRS = lib . tests
+SUBDIRS = lib . tests gtk-doc
 
 ACLOCAL_AMFLAGS = -I m4
 

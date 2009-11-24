@@ -24,5 +24,6 @@ AC_CONFIG_FILES([
   Makefile
   lib/Makefile
   tests/Makefile
+  gtk-doc/Makefile
 ])
 AC_OUTPUT
