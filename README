@@ -5,3 +5,5 @@ background on HOTP.  The components included in the package is:
    * libhotp: A shared and static C library for handling of HOTPs.
 
    * hotptool: A command line tool for generating and validating HOTPs.
+
+   * pam_hotp: A PAM module for pluggable login authentication.
