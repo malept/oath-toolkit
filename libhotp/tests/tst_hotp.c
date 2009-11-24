@@ -117,7 +117,9 @@ int
 main (void)
 {
   hotp_rc rc;
-  char *secret = "12345678901234567890";
+  char secret[20];
+  size_t secretlen;
+  char *hexsecret = "3132333435363738393031323334353637383930";
   char otp[10];
   uint64_t moving_factor;
   unsigned digits;
@@ -128,6 +130,38 @@ main (void)
       printf ("hotp_init: %d\n", rc);
       return 1;
     }
+
+  secretlen = 0;
+  rc = hotp_hex2bin (hexsecret, secret, &secretlen);
+  if (rc != HOTP_TOO_SMALL_BUFFER)
+    {
+      printf ("hotp_hex2bin too small: %d\n", rc);
+      return 1;
+    }
+  if (secretlen != 20)
+    {
+      printf ("hotp_hex2bin too small: 20 != %d\n", secretlen);
+      return 1;
+    }
+
+  secretlen = sizeof (secret);
+  rc = hotp_hex2bin (hexsecret, secret, &secretlen);
+  if (rc != HOTP_OK)
+    {
+      printf ("hotp_hex2bin: %d\n", rc);
+      return 1;
+    }
+  if (secretlen != 20)
+    {
+      printf ("hotp_hex2bin: 20 != %d\n", secretlen);
+      return 1;
+    }
+  if (strcmp (secret, "12345678901234567890") != 0)
+    {
+      printf ("hotp_hex2bin: decode mismatch\n");
+      return 1;
+    }
+
 
   for (digits = 6; digits <= 8; digits++)
     for (moving_factor = 0; moving_factor < MAX_ITER; moving_factor++)

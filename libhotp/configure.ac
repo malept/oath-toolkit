@@ -1,4 +1,4 @@
-AC_INIT([libhotp], [0.0], [simon@josefsson.org])
+AC_INIT([libhotp], [1.0.0], [simon@josefsson.org])
 AC_COPYRIGHT([Copyright (C) 2009 Simon Josefsson])
 
 # Library code modified:                              REVISION++

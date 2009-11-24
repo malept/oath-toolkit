@@ -1,4 +1,4 @@
-AC_INIT([hotp-toolkit], [0.0], [simon@josefsson.org])
+AC_INIT([hotp-toolkit], [1.0.0], [simon@josefsson.org])
 AC_COPYRIGHT([Copyright (C) 2009 Simon Josefsson])
 
 AC_CONFIG_AUX_DIR([build-aux])

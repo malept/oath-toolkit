@@ -21,6 +21,8 @@ LIBHOTP_0.0 {
     hotp_init;
     hotp_done;
     hotp_generate_otp;
+    hotp_check_version;
+    hotp_hex2bin;
 
   local:
     *;

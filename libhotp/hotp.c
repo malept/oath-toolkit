@@ -25,6 +25,7 @@
 
 #include "gc.h"
 #include <stdio.h>
+#include <string.h>		/* for strverscmp */
 
 /**
  * hotp_init - initialize the HOTP library
@@ -170,6 +171,81 @@ hotp_generate_otp (char *secret,
     if (len != digits)
       return HOTP_PRINTF_ERROR;
   }
+
+  return HOTP_OK;
+}
+
+/**
+ * hotp_check_version:
+ * @req_version: version string to compare with, or %NULL.
+ *
+ * Check HOTP library version.
+ *
+ * See %HOTP_VERSION for a suitable @req_version string.
+ *
+ * This function is one of few in the library that can be used without
+ * a successful call to gsasl_init().
+ *
+ * Return value: Check that the version of the library is at
+ *   minimum the one given as a string in @req_version and return the
+ *   actual version string of the library; return %NULL if the
+ *   condition is not met.  If %NULL is passed to this function no
+ *   check is done and only the version string is returned.
+ **/
+const char *
+hotp_check_version (const char *req_version)
+{
+  if (!req_version || strverscmp (req_version, HOTP_VERSION) <= 0)
+    return HOTP_VERSION;
+
+  return NULL;
+}
+
+int
+hotp_hex2bin (char *hexstr,
+	      char *binstr,
+	      size_t *binlen)
+{
+  const char *hexalphabet = "0123456789abcdef";
+  bool highbits = true;
+  size_t save_binlen = *binlen;
+  bool too_small = false;
+
+  *binlen = 0;
+
+  while (*hexstr)
+    {
+      char *p;
+
+      p = strchr (hexalphabet, *hexstr);
+      if (!p)
+	return HOTP_INVALID_HEX;
+
+      if (binstr && save_binlen > 0)
+	{
+	  if (highbits)
+	    *binstr = (*binstr & 0x0F) | ((p - hexalphabet) << 4);
+	  else
+	    *binstr = (*binstr & 0xF0) | (p - hexalphabet);
+	}
+
+      hexstr++;
+      if (!highbits)
+	{
+	  binstr++, (*binlen)++;
+	  if (save_binlen > 0)
+	    save_binlen--;
+	  else
+	    too_small = true;
+	}
+      highbits = !highbits;
+    }
+
+  if (!highbits)
+    return HOTP_INVALID_HEX;
+
+  if (too_small)
+    return HOTP_TOO_SMALL_BUFFER;
 
   return HOTP_OK;
 }

@@ -25,6 +25,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -52,6 +53,9 @@ AC_DEFUN([gl_INIT],
   gl_MULTIARCH
   gl_STDDEF_H
   gl_STDINT_H
+  gl_HEADER_STRING_H
+  gl_FUNC_STRVERSCMP
+  gl_STRING_MODULE_INDICATOR([strverscmp])
   gl_WCHAR_H
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -195,8 +199,11 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sha1.h
   lib/stddef.in.h
   lib/stdint.in.h
+  lib/string.in.h
+  lib/strverscmp.c
   lib/wchar.in.h
   m4/00gnulib.m4
+  m4/extensions.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4
   m4/gnulib-common.m4
@@ -213,6 +220,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sha1.m4
   m4/stddef_h.m4
   m4/stdint.m4
+  m4/string_h.m4
+  m4/strverscmp.m4
   m4/visibility.m4
   m4/wchar.m4
   m4/wchar_t.m4
