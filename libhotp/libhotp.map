@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-LIBHOTP_0.0 {
+LIBHOTP_1.0.0 {
   global:
     hotp_init;
     hotp_done;
