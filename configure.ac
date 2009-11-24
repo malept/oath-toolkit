@@ -11,6 +11,7 @@ gl_INIT
 AC_CONFIG_SUBDIRS([
   libhotp
   hotptool
+  pam_hotp
 ])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
