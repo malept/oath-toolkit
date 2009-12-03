@@ -65,7 +65,7 @@ usage (int status)
 #define generate_otp_p(n) ((n) == 1)
 #define validate_otp_p(n) ((n) == 2)
 
-#define EXIT_OTPINVALID 2
+#define EXIT_OTP_INVALID 2
 
 int
 main (int argc, char *argv[])
@@ -166,7 +166,7 @@ main (int argc, char *argv[])
   while (window - iter++ > 0);
 
   if (validate_otp_p (args_info.inputs_num))
-    error (EXIT_OTPINVALID, 0,
+    error (EXIT_OTP_INVALID, 0,
 	   "password \"%s\" not found in range %ld .. %ld",
 	   args_info.inputs[1],
 	   (long) moving_factor, (long) moving_factor + window);

@@ -18,11 +18,12 @@
 
 LIBHOTP_1.0.0 {
   global:
-    hotp_init;
+    hotp_check_version;
     hotp_done;
     hotp_generate_otp;
-    hotp_check_version;
     hotp_hex2bin;
+    hotp_init;
+    hotp_validate_otp;
 
   local:
     *;

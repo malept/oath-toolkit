@@ -102,7 +102,7 @@ hotp_done (void)
  *   error code is returned.
  **/
 int
-hotp_generate_otp (char *secret,
+hotp_generate_otp (const char *secret,
 		   size_t secret_length,
 		   uint64_t moving_factor,
 		   unsigned digits,

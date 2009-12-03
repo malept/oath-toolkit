@@ -99,13 +99,20 @@ typedef enum {
 extern HOTPAPI int hotp_init (void);
 extern HOTPAPI int hotp_done (void);
 
-extern HOTPAPI int hotp_generate_otp (char *secret,
+extern HOTPAPI int hotp_generate_otp (const char *secret,
 				      size_t secret_length,
 				      uint64_t moving_factor,
 				      unsigned digits,
 				      bool add_checksum,
 				      size_t truncation_offset,
 				      char *output_otp);
+
+extern HOTPAPI int hotp_validate_otp (const char *secret,
+				      size_t secret_length,
+				      uint64_t start_moving_factor,
+				      size_t window,
+				      unsigned digits,
+				      const char *otp);
 
 extern HOTPAPI int hotp_hex2bin (char *hexstr,
 				 char *binstr,
