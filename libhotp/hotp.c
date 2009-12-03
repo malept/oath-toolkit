@@ -74,6 +74,109 @@ hotp_done (void)
 }
 
 /**
+ * hotp_check_version:
+ * @req_version: version string to compare with, or %NULL.
+ *
+ * Check HOTP library version.
+ *
+ * See %HOTP_VERSION for a suitable @req_version string.
+ *
+ * This function is one of few in the library that can be used without
+ * a successful call to gsasl_init().
+ *
+ * Return value: Check that the version of the library is at
+ *   minimum the one given as a string in @req_version and return the
+ *   actual version string of the library; return %NULL if the
+ *   condition is not met.  If %NULL is passed to this function no
+ *   check is done and only the version string is returned.
+ **/
+const char *
+hotp_check_version (const char *req_version)
+{
+  if (!req_version || strverscmp (req_version, HOTP_VERSION) <= 0)
+    return HOTP_VERSION;
+
+  return NULL;
+}
+
+#define maybe_lowercase(c)					\
+  ((c) == 'A' ? 'a' :						\
+   ((c) == 'B' ? 'b' :						\
+    ((c) == 'C' ? 'c' :						\
+     ((c) == 'D' ? 'd' :					\
+      ((c) == 'E' ? 'e' :					\
+       ((c) == 'F' ? 'f' :					\
+	c))))))
+
+/**
+ * hotp_hex2bin:
+ * @hexstr: input string with hex data
+ * @binstr: output string that holds binary data, or %NULL
+ * @binlen: output variable holding needed length of @binstr
+ *
+ * Convert string with hex data to binary data.
+ *
+ * Non-hexadecimal data are not ignored but instead will lead to an
+ * %HOTP_INVALID_HEX error.
+ *
+ * If @binstr is %NULL, then @binlen will be populated with the
+ * necessary length.  If the @binstr buffer is too small,
+ * %HOTP_TOO_SMALL_BUFFER is returned and @binlen will contain the
+ * necessary length.
+ *
+ * Returns: On success, %HOTP_OK (zero) is returned, otherwise an
+ *   error code is returned.
+ **/
+int
+hotp_hex2bin (char *hexstr,
+	      char *binstr,
+	      size_t *binlen)
+{
+  const char *hexalphabet = "0123456789abcdef";
+  bool highbits = true;
+  size_t save_binlen = *binlen;
+  bool too_small = false;
+
+  *binlen = 0;
+
+  while (*hexstr)
+    {
+      char *p;
+
+      p = strchr (hexalphabet, maybe_lowercase (*hexstr));
+      if (!p)
+	return HOTP_INVALID_HEX;
+
+      if (binstr && save_binlen > 0)
+	{
+	  if (highbits)
+	    *binstr = (*binstr & 0x0F) | ((p - hexalphabet) << 4);
+	  else
+	    *binstr = (*binstr & 0xF0) | (p - hexalphabet);
+	}
+
+      hexstr++;
+      if (!highbits)
+	{
+	  binstr++, (*binlen)++;
+	  if (save_binlen > 0)
+	    save_binlen--;
+	  else
+	    too_small = true;
+	}
+      highbits = !highbits;
+    }
+
+  if (!highbits)
+    return HOTP_INVALID_HEX;
+
+  if (too_small)
+    return HOTP_TOO_SMALL_BUFFER;
+
+  return HOTP_OK;
+}
+
+/**
  * hotp_generate_otp:
  * @secret: the shared secret string
  * @secret_length: length of @secret
@@ -223,107 +326,4 @@ hotp_validate_otp (const char *secret,
   while (window - iter++ > 0);
 
   return HOTP_INVALID_OTP;
-}
-
-/**
- * hotp_check_version:
- * @req_version: version string to compare with, or %NULL.
- *
- * Check HOTP library version.
- *
- * See %HOTP_VERSION for a suitable @req_version string.
- *
- * This function is one of few in the library that can be used without
- * a successful call to gsasl_init().
- *
- * Return value: Check that the version of the library is at
- *   minimum the one given as a string in @req_version and return the
- *   actual version string of the library; return %NULL if the
- *   condition is not met.  If %NULL is passed to this function no
- *   check is done and only the version string is returned.
- **/
-const char *
-hotp_check_version (const char *req_version)
-{
-  if (!req_version || strverscmp (req_version, HOTP_VERSION) <= 0)
-    return HOTP_VERSION;
-
-  return NULL;
-}
-
-#define maybe_lowercase(c)					\
-  ((c) == 'A' ? 'a' :						\
-   ((c) == 'B' ? 'b' :						\
-    ((c) == 'C' ? 'c' :						\
-     ((c) == 'D' ? 'd' :					\
-      ((c) == 'E' ? 'e' :					\
-       ((c) == 'F' ? 'f' :					\
-	c))))))
-
-/**
- * hotp_hex2bin:
- * @hexstr: input string with hex data
- * @binstr: output string that holds binary data, or %NULL
- * @binlen: output variable holding needed length of @binstr
- *
- * Convert string with hex data to binary data.
- *
- * Non-hexadecimal data are not ignored but instead will lead to an
- * %HOTP_INVALID_HEX error.
- *
- * If @binstr is %NULL, then @binlen will be populated with the
- * necessary length.  If the @binstr buffer is too small,
- * %HOTP_TOO_SMALL_BUFFER is returned and @binlen will contain the
- * necessary length.
- *
- * Returns: On success, %HOTP_OK (zero) is returned, otherwise an
- *   error code is returned.
- **/
-int
-hotp_hex2bin (char *hexstr,
-	      char *binstr,
-	      size_t *binlen)
-{
-  const char *hexalphabet = "0123456789abcdef";
-  bool highbits = true;
-  size_t save_binlen = *binlen;
-  bool too_small = false;
-
-  *binlen = 0;
-
-  while (*hexstr)
-    {
-      char *p;
-
-      p = strchr (hexalphabet, maybe_lowercase (*hexstr));
-      if (!p)
-	return HOTP_INVALID_HEX;
-
-      if (binstr && save_binlen > 0)
-	{
-	  if (highbits)
-	    *binstr = (*binstr & 0x0F) | ((p - hexalphabet) << 4);
-	  else
-	    *binstr = (*binstr & 0xF0) | (p - hexalphabet);
-	}
-
-      hexstr++;
-      if (!highbits)
-	{
-	  binstr++, (*binlen)++;
-	  if (save_binlen > 0)
-	    save_binlen--;
-	  else
-	    too_small = true;
-	}
-      highbits = !highbits;
-    }
-
-  if (!highbits)
-    return HOTP_INVALID_HEX;
-
-  if (too_small)
-    return HOTP_TOO_SMALL_BUFFER;
-
-  return HOTP_OK;
 }

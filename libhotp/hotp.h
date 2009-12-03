@@ -117,6 +117,12 @@ typedef enum {
 extern HOTPAPI int hotp_init (void);
 extern HOTPAPI int hotp_done (void);
 
+extern HOTPAPI const char *hotp_check_version (const char *req_version);
+
+extern HOTPAPI int hotp_hex2bin (char *hexstr,
+				 char *binstr,
+				 size_t *binlen);
+
 extern HOTPAPI int hotp_generate_otp (const char *secret,
 				      size_t secret_length,
 				      uint64_t moving_factor,
@@ -131,11 +137,5 @@ extern HOTPAPI int hotp_validate_otp (const char *secret,
 				      uint64_t start_moving_factor,
 				      size_t window,
 				      const char *otp);
-
-extern HOTPAPI int hotp_hex2bin (char *hexstr,
-				 char *binstr,
-				 size_t *binlen);
-
-extern HOTPAPI const char *hotp_check_version (const char *req_version);
 
 #endif /* HOTP_H */
