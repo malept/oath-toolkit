@@ -201,6 +201,15 @@ hotp_check_version (const char *req_version)
   return NULL;
 }
 
+#define maybe_lowercase(c)					\
+  ((c) == 'A' ? 'a' :						\
+   ((c) == 'B' ? 'b' :						\
+    ((c) == 'C' ? 'c' :						\
+     ((c) == 'D' ? 'd' :					\
+      ((c) == 'E' ? 'e' :					\
+       ((c) == 'F' ? 'f' :					\
+	c))))))
+
 /**
  * hotp_hex2bin:
  * @hexstr: input string with hex data
@@ -236,7 +245,7 @@ hotp_hex2bin (char *hexstr,
     {
       char *p;
 
-      p = strchr (hexalphabet, *hexstr);
+      p = strchr (hexalphabet, maybe_lowercase (*hexstr));
       if (!p)
 	return HOTP_INVALID_HEX;
 

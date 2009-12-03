@@ -124,6 +124,25 @@ main (void)
   uint64_t moving_factor;
   unsigned digits;
 
+  if (!hotp_check_version (HOTP_VERSION))
+    {
+      printf ("hotp_check_version (%s) failed [%s]\n", HOTP_VERSION,
+	      hotp_check_version (NULL));
+      return 1;
+    }
+
+  if (hotp_check_version (NULL) == NULL)
+    {
+      printf ("hotp_check_version (NULL) == NULL\n");
+      return 1;
+    }
+
+  if (hotp_check_version ("999.999"))
+    {
+      printf ("hotp_check_version (999.999) succeeded?!\n");
+      return 1;
+    }
+
   rc = hotp_init ();
   if (rc != HOTP_OK)
     {
@@ -141,6 +160,34 @@ main (void)
   if (secretlen != 20)
     {
       printf ("hotp_hex2bin too small: 20 != %d\n", secretlen);
+      return 1;
+    }
+
+  rc = hotp_hex2bin ("abcd", secret, &secretlen);
+  if (rc != HOTP_OK)
+    {
+      printf ("hotp_hex2bin lower case failed: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_hex2bin ("ABCD", secret, &secretlen);
+  if (rc != HOTP_OK)
+    {
+      printf ("hotp_hex2bin upper case failed: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_hex2bin ("ABC", secret, &secretlen);
+  if (rc != HOTP_INVALID_HEX)
+    {
+      printf ("hotp_hex2bin too small failed: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_hex2bin ("JUNK", secret, &secretlen);
+  if (rc != HOTP_INVALID_HEX)
+    {
+      printf ("hotp_hex2bin junk failed: %d\n", rc);
       return 1;
     }
 
@@ -193,6 +240,27 @@ main (void)
 	    return 1;
 	  }
       }
+
+  for (digits = 0; digits < 6; digits++)
+    {
+      rc = hotp_generate_otp (secret, secretlen, moving_factor,
+			      digits, false, HOTP_DYNAMIC_TRUNCATION, otp);
+      if (rc != HOTP_INVALID_DIGITS)
+	{
+	  printf ("hotp_generate_otp %d digits %d\n", digits, rc);
+	  return 1;
+	}
+    }
+  for (digits = 9; digits < 15; digits++)
+    {
+      rc = hotp_generate_otp (secret, secretlen, moving_factor,
+			      digits, false, HOTP_DYNAMIC_TRUNCATION, otp);
+      if (rc != HOTP_INVALID_DIGITS)
+	{
+	  printf ("hotp_generate_otp %d digits %d\n", digits, rc);
+	  return 1;
+	}
+    }
 
   rc = hotp_done ();
   if (rc != HOTP_OK)
