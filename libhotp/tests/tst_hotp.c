@@ -156,17 +156,17 @@ main (void)
       printf ("hotp_hex2bin: 20 != %d\n", secretlen);
       return 1;
     }
-  if (strcmp (secret, "12345678901234567890") != 0)
+  if (memcmp (secret, "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+	      "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30", 20) != 0)
     {
       printf ("hotp_hex2bin: decode mismatch\n");
       return 1;
     }
 
-
   for (digits = 6; digits <= 8; digits++)
     for (moving_factor = 0; moving_factor < MAX_ITER; moving_factor++)
       {
-	rc = hotp_generate_otp (secret, strlen (secret), moving_factor,
+	rc = hotp_generate_otp (secret, secretlen, moving_factor,
 				digits, false, HOTP_DYNAMIC_TRUNCATION, otp);
 	if (rc != HOTP_OK)
 	  {
