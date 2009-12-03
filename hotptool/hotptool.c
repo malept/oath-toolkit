@@ -78,7 +78,6 @@ main (int argc, char *argv[])
   uint64_t moving_factor;
   unsigned digits;
   char otp[10];
-  size_t iter = 0;
 
   set_program_name (argv[0]);
 
@@ -137,39 +136,44 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
-  do
+  if (generate_otp_p (args_info.inputs_num))
     {
-      rc = hotp_generate_otp (secret,
-			      secretlen,
-			      moving_factor + iter,
-			      digits,
-			      false,
-			      HOTP_DYNAMIC_TRUNCATION,
-			      otp);
-      if (rc != HOTP_OK)
-	error (EXIT_FAILURE, 0,
-	       "generating one-time password failed (%d)", rc);
+      size_t iter = 0;
 
-      if (generate_otp_p (args_info.inputs_num))
+      do
 	{
+	  rc = hotp_generate_otp (secret,
+				  secretlen,
+				  moving_factor + iter,
+				  digits,
+				  false,
+				  HOTP_DYNAMIC_TRUNCATION,
+				  otp);
+	  if (rc != HOTP_OK)
+	    error (EXIT_FAILURE, 0,
+		   "generating one-time password failed (%d)", rc);
+
 	  printf ("%s\n", otp);
 	}
-      else if (validate_otp_p (args_info.inputs_num))
-	{
-	  if (strcmp (otp, args_info.inputs[1]) == 0)
-	    {
-	      printf ("%ld\n", (long) iter);
-	      return EXIT_SUCCESS;
-	    }
-	}
+      while (window - iter++ > 0);
     }
-  while (window - iter++ > 0);
-
-  if (validate_otp_p (args_info.inputs_num))
-    error (EXIT_OTP_INVALID, 0,
-	   "password \"%s\" not found in range %ld .. %ld",
-	   args_info.inputs[1],
-	   (long) moving_factor, (long) moving_factor + window);
+  else if (validate_otp_p (args_info.inputs_num))
+    {
+      rc = hotp_validate_otp (secret,
+			      secretlen,
+			      moving_factor,
+			      window,
+			      args_info.inputs[1]);
+      if (rc == HOTP_INVALID_OTP)
+	error (EXIT_OTP_INVALID, 0,
+	       "password \"%s\" not found in range %ld .. %ld",
+	       args_info.inputs[1],
+	       (long) moving_factor, (long) moving_factor + window);
+      else if (rc < 0)
+	error (EXIT_FAILURE, 0,
+	       "validating one-time password failed (%d)", rc);
+      printf ("%d\n", rc);
+    }
 
   return EXIT_SUCCESS;
 }

@@ -83,13 +83,31 @@
  */
 # define HOTP_VERSION_NUMBER 0x010000
 
+/**
+ * hotp_rc:
+ * @HOTP_OK: Successful return
+ * @HOTP_CRYPTO_ERROR: Internal error in crypto functions
+ * @HOTP_INVALID_DIGITS: Unsupported number of OTP digits
+ * @HOTP_PRINTF_ERROR: Error from system printf call
+ * @HOTP_INVALID_HEX: Hex string is invalid
+ * @HOTP_TOO_SMALL_BUFFER: The output buffer is too small
+ * @HOTP_INVALID_OTP: The OTP is not valid
+ *
+ * Return codes for HOTP functions.  All return codes are negative
+ * except for the successful code HOTP_OK which are guaranteed to be
+ * 0.  Positive values are reserved for non-error return codes.
+ *
+ * Note that the #hotp_rc enumeration may be extended at a later date
+ * to include new return codes.
+ */
 typedef enum {
-  HOTP_OK = 0,
-  HOTP_CRYPTO_ERROR,     /* 1 */
-  HOTP_INVALID_DIGITS,   /* 2 */
-  HOTP_PRINTF_ERROR,     /* 3 */
-  HOTP_INVALID_HEX,      /* 4 */
-  HOTP_TOO_SMALL_BUFFER  /* 5 */
+  HOTP_OK		=  0,
+  HOTP_CRYPTO_ERROR	= -1,
+  HOTP_INVALID_DIGITS	= -2,
+  HOTP_PRINTF_ERROR	= -3,
+  HOTP_INVALID_HEX	= -4,
+  HOTP_TOO_SMALL_BUFFER	= -5,
+  HOTP_INVALID_OTP	= -6
 } hotp_rc;
 
 #define HOTP_DYNAMIC_TRUNCATION SIZE_MAX
@@ -107,11 +125,11 @@ extern HOTPAPI int hotp_generate_otp (const char *secret,
 				      size_t truncation_offset,
 				      char *output_otp);
 
+
 extern HOTPAPI int hotp_validate_otp (const char *secret,
 				      size_t secret_length,
 				      uint64_t start_moving_factor,
 				      size_t window,
-				      unsigned digits,
 				      const char *otp);
 
 extern HOTPAPI int hotp_hex2bin (char *hexstr,

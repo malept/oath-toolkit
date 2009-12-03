@@ -176,6 +176,55 @@ hotp_generate_otp (const char *secret,
 }
 
 /**
+ * hotp_validate_otp:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @start_moving_factor: start counter in OTP stream
+ * @window: how many OTPs from start counter to test
+ * @otp: the OTP to validate.
+ *
+ * Validate an OTP according to OATH HOTP algorithm per RFC 4226.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns position in OTP window, or %HOTP_INVALID_OTP if no
+ *   OTP was found in OTP window, or an error code.
+ **/
+int
+hotp_validate_otp (const char *secret,
+		   size_t secret_length,
+		   uint64_t start_moving_factor,
+		   size_t window,
+		   const char *otp)
+{
+  unsigned digits = strlen (otp);
+  unsigned iter = 0;
+  char tmp_otp[10];
+  int rc;
+
+  do
+    {
+      rc = hotp_generate_otp (secret,
+			      secret_length,
+			      start_moving_factor + iter,
+			      digits,
+			      false,
+			      HOTP_DYNAMIC_TRUNCATION,
+			      tmp_otp);
+      if (rc != HOTP_OK)
+	return rc;
+
+      if (strcmp (otp, tmp_otp) == 0)
+	return iter;
+    }
+  while (window - iter++ > 0);
+
+  return HOTP_INVALID_OTP;
+}
+
+/**
  * hotp_check_version:
  * @req_version: version string to compare with, or %NULL.
  *
