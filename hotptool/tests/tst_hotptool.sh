@@ -46,17 +46,23 @@ dotest()
 
     if test "`echo $got`" $cmp "$expect"; then
 	echo FAIL: hotptool $params
-	echo expected: $expect
-	echo got: $got
-	echo err: $err
+	echo expected: -$expect-
+	echo got: -$got-
+	echo err: -$err-
 	exit 1
     else
 	echo PASS hotptool $params
     fi
 }
 
+dotest "--version" "fail" fail
+dotest "" "fail" fail
+dotest "-h" "fail" fail
+dotest "-z" "fail" fail
+dotest "Z" "fail" fail
 dotest "00" "328482"
 dotest "-d 6 00" "328482"
+dotest "-d 9 00" "fail" fail
 dotest "--digits=6 00" "328482"
 dotest "--digits 6 00" "328482"
 dotest "--digits 7 00" "5328482"
