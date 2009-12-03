@@ -189,8 +189,9 @@ hotp_generate_otp (const char *secret,
  * restrictions may be lifted in future versions, although some
  * limitations are inherent in the protocol.
  *
- * Returns: Returns position in OTP window, or %HOTP_INVALID_OTP if no
- *   OTP was found in OTP window, or an error code.
+ * Returns: Returns position in OTP window (zero is first position),
+ *   or %HOTP_INVALID_OTP if no OTP was found in OTP window, or an
+ *   error code.
  **/
 int
 hotp_validate_otp (const char *secret,
