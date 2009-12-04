@@ -1,3 +1,5 @@
+Copyright (C) 2009 Simon Josefsson
+
 The HOTP Toolkit package contains tools that are useful when deploying
 the one-time password HOTP technology.  See RFC 4226 for technical
 background on HOTP.  The components included in the package is:
@@ -7,3 +9,5 @@ background on HOTP.  The components included in the package is:
    * hotptool: A command line tool for generating and validating HOTPs.
 
    * pam_hotp: A PAM module for pluggable login authentication.
+
+See each sub-directory for more information.
