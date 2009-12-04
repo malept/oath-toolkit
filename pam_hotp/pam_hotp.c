@@ -46,16 +46,11 @@
 #endif
 
 #if defined DEBUG_PAM
-# if defined HAVE_SECURITY__PAM_MACROS_H
-#  define DEBUG
-#  include <security/_pam_macros.h>
-# else
-#  define D(x) do {							\
-    printf ("debug: %s:%d (%s): ", __FILE__, __LINE__, __FUNCTION__);	\
+# define D(x) do {							\
+    printf ("[%s:%s(%d)] ", __FILE__, __FUNCTION__, __LINE__);		\
     printf x;								\
     printf ("\n");							\
   } while (0)
-# endif
 #endif
 
 #ifndef PAM_EXTERN
@@ -65,6 +60,9 @@
 #define PAM_EXTERN extern
 #endif
 #endif
+
+#define MIN_OTP_LEN 6
+#define MAX_OTP_LEN 8
 
 #define TOKEN_LEN 44
 #define TOKEN_ID_LEN 12
@@ -76,6 +74,8 @@ struct cfg
   int try_first_pass;
   int use_first_pass;
   char *auth_file;
+  unsigned digits;
+  unsigned window;
 };
 
 static void
@@ -88,6 +88,8 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
   cfg->try_first_pass = 0;
   cfg->use_first_pass = 0;
   cfg->auth_file = NULL;
+  cfg->digits = 0;
+  cfg->window = 5;
 
   for (i = 0; i < argc; i++)
     {
@@ -101,6 +103,17 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
 	cfg->use_first_pass = 1;
       if (strncmp (argv[i], "authfile=", 9) == 0)
 	cfg->auth_file = (char *) argv[i] + 9;
+      if (strncmp (argv[i], "digits=", 7) == 0)
+	cfg->digits = atoi (argv[i] + 7);
+      if (strncmp (argv[i], "window=", 7) == 0)
+	cfg->window = atoi (argv[i] + 9);
+    }
+
+  if (cfg->digits != 6 && cfg->digits != 7 && cfg->digits != 8)
+    {
+      D (("only 6, 7, and 8 OTP lengths are supported: invalid value %d",
+	  cfg->digits));
+      cfg->digits = 0;
     }
 
   if (cfg->debug)
@@ -114,6 +127,8 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
       D (("try_first_pass=%d", cfg->try_first_pass));
       D (("use_first_pass=%d", cfg->use_first_pass));
       D (("authfile=%s", cfg->auth_file ? cfg->auth_file : "(null)"));
+      D (("digits=%d", cfg->digits));
+      D (("window=%d", cfg->window));
     }
 }
 
@@ -126,7 +141,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   int retval, rc;
   const char *user = NULL;
   const char *password = NULL;
-  char otp[TOKEN_LEN + 1] = { 0 };
+  char otp[MAX_OTP_LEN + 1];
   int password_len = 0;
   int valid_token = 0;
   struct pam_conv *conv;
@@ -224,22 +239,41 @@ pam_sm_authenticate (pam_handle_t * pamh,
       password = resp->resp;
     }
 
-  password_len = strlen (password);
-  if (password_len < TOKEN_LEN)
+  if (password)
+    password_len = strlen (password);
+  else
+    {
+      DBG (("Could not read password"));
+      retval = PAM_AUTH_ERR;
+      goto done;
+    }
+
+  if (password_len < MIN_OTP_LEN)
     {
       DBG (("OTP too short: %s", password));
       retval = PAM_AUTH_ERR;
       goto done;
     }
-
-  DBG (("OTP: %s", otp));
-
-  /* user entered their system password followed by generated OTP? */
-  if (password_len > TOKEN_LEN)
+  else if (cfg.digits != 0 && password_len < cfg.digits)
+    {
+      DBG (("OTP shorter than digits=%d: %s",
+	    cfg.digits, password));
+      retval = PAM_AUTH_ERR;
+      goto done;
+    }
+  else if (cfg.digits == 0 && password_len > MAX_OTP_LEN)
+    {
+      DBG (("OTP too long (and no digits=): %s", password));
+      retval = PAM_AUTH_ERR;
+      goto done;
+    }
+  else if (cfg.digits != 0 && password_len > cfg.digits)
     {
       char *onlypasswd = strdup (password);
 
-      onlypasswd[password_len - TOKEN_LEN] = '\0';
+      /* user entered their system password followed by generated OTP? */
+
+      onlypasswd[password_len - cfg.digits] = '\0';
 
       DBG (("Password: %s ", onlypasswd));
 
@@ -250,13 +284,22 @@ pam_sm_authenticate (pam_handle_t * pamh,
 	  DBG (("set_item returned error: %s", pam_strerror (pamh, retval)));
 	  goto done;
 	}
+
+      strncpy (otp, password + password_len - cfg.digits, cfg.digits);
+      otp[cfg.digits] = '\0';
     }
   else
-    password = NULL;
+    {
+      strcpy (otp, password);
+      password = NULL;
+    }
+
+  DBG (("OTP: %s", otp ? otp : "(null)"));
 
   if (valid_token == 0)
     {
-      DBG (("One-time password not authorized to login as user"));
+      DBG (("One-time password not authorized to login as user '%s'",
+	    user));
       retval = PAM_AUTHINFO_UNAVAIL;
       goto done;
     }
@@ -282,17 +325,14 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
 {
   int retval;
   int auth_retval;
-  struct cfg cfg;
 
-  parse_cfg (flags, argc, argv, &cfg);
-
-  DBG (("called."));
+  D (("called."));
 
   /* TODO: ? */
 
   retval = pam_get_data (pamh, "hotp_setcred_return",
 			 (void*) (intptr_t) &auth_retval);
-  DBG (("retval: %d", auth_retval));
+  D (("retval: %d", auth_retval));
   if (retval != PAM_SUCCESS)
     return PAM_CRED_UNAVAIL;
 
@@ -312,7 +352,7 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
       break;
     }
 
-  DBG (("done. [%s]", pam_strerror (pamh, retval)));
+  D (("done. [%s]", pam_strerror (pamh, retval)));
 
   return retval;
 }
