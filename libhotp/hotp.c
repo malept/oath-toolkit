@@ -82,7 +82,7 @@ hotp_done (void)
  * See %HOTP_VERSION for a suitable @req_version string.
  *
  * This function is one of few in the library that can be used without
- * a successful call to gsasl_init().
+ * a successful call to hotp_init().
  *
  * Return value: Check that the version of the library is at
  *   minimum the one given as a string in @req_version and return the
