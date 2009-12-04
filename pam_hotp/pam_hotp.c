@@ -88,7 +88,7 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
   cfg->try_first_pass = 0;
   cfg->use_first_pass = 0;
   cfg->auth_file = NULL;
-  cfg->digits = 0;
+  cfg->digits = -1;
   cfg->window = 5;
 
   for (i = 0; i < argc; i++)
@@ -111,8 +111,9 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
 
   if (cfg->digits != 6 && cfg->digits != 7 && cfg->digits != 8)
     {
-      D (("only 6, 7, and 8 OTP lengths are supported: invalid value %d",
-	  cfg->digits));
+      if (cfg->digits != -1)
+	D (("only 6, 7, and 8 OTP lengths are supported: invalid value %d",
+	    cfg->digits));
       cfg->digits = 0;
     }
 
