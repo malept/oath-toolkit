@@ -19,7 +19,7 @@ SUBDIRS = libhotp hotptool
 
 if ENABLE_PAM
 SUBDIRS += pam_hotp
-fi
+endif
 
 ACLOCAL_AMFLAGS = -I m4
 
