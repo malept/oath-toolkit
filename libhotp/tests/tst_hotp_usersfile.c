@@ -49,10 +49,52 @@ main (void)
     }
 
   rc = hotp_authenticate_otp_usersfile ("users.hotp",
-					"jas",
+					"joe",
 					"755224",
 					0,
 					"1234",
+					&last_otp);
+  if (rc != HOTP_BAD_PASSWORD)
+    {
+      printf ("hotp_authenticate_otp_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_authenticate_otp_usersfile ("users.hotp",
+					"foo",
+					"755224",
+					0,
+					"8989",
+					&last_otp);
+  if (rc != HOTP_REPLAYED_OTP)
+    {
+      printf ("hotp_authenticate_otp_usersfile: %d\n", rc);
+      return 1;
+    }
+  if (last_otp != 1260203142)
+    {
+      printf ("hotp_authenticate_otp_usersfile timestamp %d != 1260203142\n",
+	      last_otp);
+      return 1;
+    }
+
+  rc = hotp_authenticate_otp_usersfile ("users.hotp",
+					"rms",
+					"755224",
+					0,
+					"4321",
+					&last_otp);
+  if (rc != HOTP_BAD_PASSWORD)
+    {
+      printf ("hotp_authenticate_otp_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_authenticate_otp_usersfile ("users.hotp",
+					"rms",
+					"436521",
+					10,
+					"6767",
 					&last_otp);
   if (rc != HOTP_OK)
     {

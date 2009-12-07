@@ -330,6 +330,128 @@ hotp_validate_otp (const char *secret,
   return HOTP_INVALID_OTP;
 }
 
+static unsigned
+parse_type (const char *str)
+{
+  if (strcmp (str, "HOTP/E/6") == 0)
+    return 6;
+  if (strcmp (str, "HOTP/E/7") == 0)
+    return 7;
+  if (strcmp (str, "HOTP/E/8") == 0)
+    return 8;
+  if (strcmp (str, "HOTP/E") == 0)
+    return 6;
+  if (strcmp (str, "HOTP") == 0)
+    return 6;
+  return 0;
+}
+
+static int
+parse_usersfile (const char *usersfile,
+		 const char *username,
+		 const char *otp,
+		 size_t window,
+		 const char *passwd,
+		 time_t *timestamp,
+		 FILE *infh,
+		 char **lineptr,
+		 size_t *n)
+{
+  ssize_t t;
+
+  while ((t = getline (lineptr, n, infh)) != -1)
+    {
+      static const char *whitespace = " \t\r\n";
+      char *saveptr;
+      char *p = strtok_r (*lineptr, whitespace, &saveptr);
+      unsigned digits;
+      char secret[20];
+      size_t secret_length = sizeof (secret);
+      uint64_t start_moving_factor = 0;
+      int rc;
+      char *last_otp = NULL;
+
+      if (p == NULL)
+	continue;
+
+      /* Read token type */
+      digits = parse_type (p);
+      if (digits == 0)
+	continue;
+
+      /* Read username */
+      p = strtok_r (NULL, whitespace, &saveptr);
+      if (p == NULL || strcmp (p, username) != 0)
+	continue;
+
+      /* Read password. */
+      p = strtok_r (NULL, whitespace, &saveptr);
+      if (passwd)
+	{
+	  if (p == NULL)
+	    continue;
+	  if (strcmp (p, "-") == 0 && *p != '\0')
+	    return HOTP_BAD_PASSWORD;
+	  if (strcmp (p, passwd) != 0)
+	    return HOTP_BAD_PASSWORD;
+	}
+
+      /* Read key. */
+      p = strtok_r (NULL, whitespace, &saveptr);
+      if (p == NULL)
+	continue;
+      rc = hotp_hex2bin (p, secret, &secret_length);
+      if (rc != HOTP_OK)
+	return rc;
+
+      /* Read (optional) moving factor. */
+      p = strtok_r (NULL, whitespace, &saveptr);
+      if (p && *p)
+	{
+	  char *endptr;
+	  unsigned long long int ull = strtoull(p, &endptr, 10);
+	  if (endptr && *endptr != '\0')
+	    return HOTP_INVALID_COUNTER;
+	  start_moving_factor = ull;
+	}
+
+      /* Read (optional) last OTP */
+      last_otp = strtok_r (NULL, whitespace, &saveptr);
+
+      /* Read (optional) timestamp */
+      p = strtok_r (NULL, whitespace, &saveptr);
+      if (p)
+	{
+	  struct tm tm;
+	  char *t;
+
+	  t = strptime (p, "%Y-%m-%dT%H:%M:%SL", &tm);
+	  if (t == NULL || *t != '\0')
+	    return HOTP_INVALID_TIMESTAMP;
+	  tm.tm_isdst = -1;
+	  if (timestamp)
+	    {
+	      *timestamp = mktime(&tm);
+	      if (*timestamp == (time_t) -1)
+		return HOTP_INVALID_TIMESTAMP;
+	    }
+	}
+
+      if (last_otp && strcmp (last_otp, otp) == 0)
+	return HOTP_REPLAYED_OTP;
+
+      rc = hotp_validate_otp (secret, secret_length,
+			    start_moving_factor,
+			    window,
+			    otp);
+      if (rc < 0)
+	return rc;
+      return HOTP_OK;
+    }
+
+  return HOTP_UNKNOWN_USER;
+}
+
 /**
  * hotp_authenticate_otp_usersfile:
  * @usersfile: string with user credential filename, in UsersFile format
@@ -337,7 +459,7 @@ hotp_validate_otp (const char *secret,
  * @otp: string with one-time password to authenticate
  * @window: how many future OTPs to search
  * @passwd: string with password, or %NULL to disable password checking
- * @last_otp: output variable holding last successful authentication
+ * @timestamp: output variable holding last successful authentication
  *
  * Authenticate user named @username with the one-time password @otp
  * and (optional) password @passwd.  Credentials are read (and
@@ -346,7 +468,7 @@ hotp_validate_otp (const char *secret,
  * Returns: On successful validation, %HOTP_OK is returned.  If the
  *   supplied @otp is the same as the last successfully authenticated
  *   one-time password, %HOTP_REPLAYED_OTP is returned and the
- *   timestamp of the last authentication is returned in @last_otp.
+ *   timestamp of the last authentication is returned in @timestamp.
  *   If the one-time password is not found in the indicated search
  *   window, %HOTP_INVALID_OTP is returned.  Otherwise, an error code
  *   is returned.
@@ -357,14 +479,30 @@ hotp_authenticate_otp_usersfile (const char *usersfile,
 				 const char *otp,
 				 size_t window,
 				 const char *passwd,
-				 time_t *last_otp)
+				 time_t *timestamp)
 {
   FILE *infh;
-  ssize_t t;
+  char *line = NULL;
+  size_t n = 0;
+  int rc;
 
   infh = fopen (usersfile, "r");
   if (!infh)
     return HOTP_NO_SUCH_FILE;
 
-  return HOTP_OK;
+  rc = parse_usersfile (usersfile,
+			username,
+			otp,
+			window,
+			passwd,
+			timestamp,
+			infh,
+			&line,
+			&n);
+
+  free (line);
+  fclose (infh);
+
+  return rc;
 }
+
