@@ -35,7 +35,6 @@
 # endif
 
 #include <stdbool.h>
-#include <stdint.h>
 #include <string.h>
 
 /**
@@ -125,7 +124,7 @@ extern HOTPAPI int hotp_hex2bin (char *hexstr,
 
 extern HOTPAPI int hotp_generate_otp (const char *secret,
 				      size_t secret_length,
-				      uint64_t moving_factor,
+				      unsigned long moving_factor,
 				      unsigned digits,
 				      bool add_checksum,
 				      size_t truncation_offset,
@@ -134,7 +133,7 @@ extern HOTPAPI int hotp_generate_otp (const char *secret,
 
 extern HOTPAPI int hotp_validate_otp (const char *secret,
 				      size_t secret_length,
-				      uint64_t start_moving_factor,
+				      unsigned long start_moving_factor,
 				      size_t window,
 				      const char *otp);
 
