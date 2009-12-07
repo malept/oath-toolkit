@@ -73,7 +73,7 @@ struct cfg
   int alwaysok;
   int try_first_pass;
   int use_first_pass;
-  char *auth_file;
+  char *usersfile;
   unsigned digits;
   unsigned window;
 };
@@ -87,7 +87,7 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
   cfg->alwaysok = 0;
   cfg->try_first_pass = 0;
   cfg->use_first_pass = 0;
-  cfg->auth_file = NULL;
+  cfg->usersfile = NULL;
   cfg->digits = -1;
   cfg->window = 5;
 
@@ -101,12 +101,12 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
 	cfg->try_first_pass = 1;
       if (strcmp (argv[i], "use_first_pass") == 0)
 	cfg->use_first_pass = 1;
-      if (strncmp (argv[i], "authfile=", 9) == 0)
-	cfg->auth_file = (char *) argv[i] + 9;
+      if (strncmp (argv[i], "usersfile=", 10) == 0)
+	cfg->usersfile = (char *) argv[i] + 10;
       if (strncmp (argv[i], "digits=", 7) == 0)
 	cfg->digits = atoi (argv[i] + 7);
       if (strncmp (argv[i], "window=", 7) == 0)
-	cfg->window = atoi (argv[i] + 9);
+	cfg->window = atoi (argv[i] + 7);
     }
 
   if (cfg->digits != 6 && cfg->digits != 7 && cfg->digits != 8)
@@ -127,7 +127,7 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
       D (("alwaysok=%d", cfg->alwaysok));
       D (("try_first_pass=%d", cfg->try_first_pass));
       D (("use_first_pass=%d", cfg->use_first_pass));
-      D (("authfile=%s", cfg->auth_file ? cfg->auth_file : "(null)"));
+      D (("usersfile=%s", cfg->usersfile ? cfg->usersfile : "(null)"));
       D (("digits=%d", cfg->digits));
       D (("window=%d", cfg->window));
     }
@@ -144,7 +144,6 @@ pam_sm_authenticate (pam_handle_t * pamh,
   const char *password = NULL;
   char otp[MAX_OTP_LEN + 1];
   int password_len = 0;
-  int valid_token = 0;
   struct pam_conv *conv;
   struct pam_message *pmsg[1], msg[1];
   struct pam_response *resp;
@@ -297,7 +296,19 @@ pam_sm_authenticate (pam_handle_t * pamh,
 
   DBG (("OTP: %s", otp ? otp : "(null)"));
 
-  if (valid_token == 0)
+  {
+    time_t last_otp;
+
+    rc = hotp_authenticate_usersfile (cfg.usersfile,
+				      user,
+				      otp,
+				      cfg.window,
+				      password,
+				      &last_otp);
+    DBG (("authenticate rc %d last otp %s", rc, ctime(&last_otp)));
+  }
+
+  if (rc != HOTP_OK)
     {
       DBG (("One-time password not authorized to login as user '%s'",
 	    user));

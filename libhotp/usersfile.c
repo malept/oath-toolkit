@@ -362,6 +362,7 @@ hotp_authenticate_usersfile (const char *usersfile,
       time_t t;
       size_t l;
       int r;
+      mode_t old_umask;
 
       if (time (&t) == (time_t) -1)
 	return HOTP_TIME_ERROR;
@@ -373,9 +374,13 @@ hotp_authenticate_usersfile (const char *usersfile,
       if (l != 20)
 	return HOTP_TIME_ERROR;
 
+      old_umask = umask (~(S_IRUSR | S_IWUSR));
+
       rc = update_usersfile (usersfile, username, otp, last_otp,
 			     infh, &line, &n, timestamp,
 			     new_moving_factor);
+
+      umask (old_umask);
     }
 
   free (line);
