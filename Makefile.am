@@ -13,6 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+
 SUBDIRS = libhotp hotptool pam_hotp
 
 ACLOCAL_AMFLAGS = -I m4
+
+EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk

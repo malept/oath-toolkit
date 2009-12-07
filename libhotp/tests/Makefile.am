@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AM_CPPFLAGS = -I../
+AM_CPPFLAGS = -I$(srcdir)/..
 AM_LDFLAGS = -no-install
 
 LDADD = ../libhotp.la
@@ -24,5 +24,6 @@ EXTRA_DIST = users.hotp expect.hotp
 
 TESTS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile.sh
 check_PROGRAMS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile$(EXEEXT)
+dist_check_SCRIPTS = tst_hotp_usersfile.sh
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
