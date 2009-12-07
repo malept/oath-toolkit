@@ -232,7 +232,7 @@ hotp_generate_otp (const char *secret,
   }
 
   {
-    size_t offset = hs[sizeof (hs) - 1] & 0x0f;
+    uint8_t offset = hs[sizeof (hs) - 1] & 0x0f;
 
     S = (((hs[offset] & 0x7f) << 24)
 	 | ((hs[offset + 1] & 0xff) << 16)
