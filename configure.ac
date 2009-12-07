@@ -20,13 +20,31 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 
+AC_CHECK_HEADERS_ONCE([security/pam_appl.h])
+
+AC_ARG_ENABLE([pam],
+  [AS_HELP_STRING([--without-pam], [disable PAM module])],
+   [],
+   [enable_pam=$ac_cv_header_security_pam_appl_h])
+AM_CONDITIONAL([ENABLE_PAM], [test "x$enable_pam" = xyes])
+  
 gl_EARLY
 gl_INIT
 
 AC_CONFIG_SUBDIRS([
   libhotp
   hotptool
-  pam_hotp
 ])
+if test "x$enable_pam" = xyes; then
+  AC_CONFIG_SUBDIRS([pam_hotp])
+fi
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+AC_MSG_NOTICE([summary of build options:
+
+  version:          ${VERSION}
+  Install prefix:   ${prefix}
+  Compiler:         ${CC}
+  Build PAM module: $enable_pam
+])

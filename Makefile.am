@@ -15,7 +15,11 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = libhotp hotptool pam_hotp
+SUBDIRS = libhotp hotptool
+
+if ENABLE_PAM
+SUBDIRS += pam_hotp
+fi
 
 ACLOCAL_AMFLAGS = -I m4
 
