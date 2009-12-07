@@ -23,9 +23,11 @@
 
 #include "hotp.h"
 
+#include <stdio.h>   /* For snprintf. */
+#include <string.h>  /* For strverscmp. */
+
 #include "gc.h"
-#include <stdio.h>
-#include <string.h>		/* for strverscmp */
+#include "getline.h"
 
 /**
  * hotp_init - initialize the HOTP library
@@ -326,4 +328,42 @@ hotp_validate_otp (const char *secret,
   while (window - iter++ > 0);
 
   return HOTP_INVALID_OTP;
+}
+
+/**
+ * hotp_authenticate_otp_usersfile:
+ * @usersfile: 
+ * @username: 
+ * @otp: 
+ * @window: 
+ * @passwd: 
+ * @last_otp: 
+ *
+ * Authenticate user named @username with the one-time password @otp
+ * and (optional) password @passwd.  Credentials are read (and
+ * updated) from a text file named @usersfile.
+ *
+ * Returns: On successful validation, %HOTP_OK is returned.  If the
+ *   supplied @otp is the same as the last successfully authenticated
+ *   one-time password, %HOTP_REPLAYED_OTP is returned and the
+ *   timestamp of the last authentication is returned in @last_otp.
+ *   If the one-time password is not found in the indicated search
+ *   window, %HOTP_INVALID_OTP is returned.  Otherwise, an error code
+ *   is returned.
+ **/
+int
+hotp_authenticate_otp_usersfile (const char *usersfile,
+				 const char *username,
+				 const char *otp,
+				 size_t window,
+				 const char *passwd,
+				 time_t *last_otp)
+{
+  FILE *infh;
+
+  infh = fopen (usersfile, "r");
+  if (!infh)
+    return HOTP_NO_SUCH_FILE;
+
+  return HOTP_OK;
 }

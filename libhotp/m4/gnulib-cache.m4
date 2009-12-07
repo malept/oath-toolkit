@@ -15,12 +15,13 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --libtool --macro-prefix=gl crypto/gc-hmac-sha1 lib-symbol-versions lib-symbol-visibility strverscmp
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --libtool --macro-prefix=gl crypto/gc-hmac-sha1 getline lib-symbol-versions lib-symbol-visibility strverscmp
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
 gl_MODULES([
   crypto/gc-hmac-sha1
+  getline
   lib-symbol-versions
   lib-symbol-visibility
   strverscmp

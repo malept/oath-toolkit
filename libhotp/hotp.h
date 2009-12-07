@@ -34,9 +34,10 @@
 #  endif
 # endif
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
+#include <stdbool.h> /* For bool. */
+#include <stdint.h> /* For uint64_t, SIZE_MAX. */
+#include <string.h> /* For size_t.t */
+#include <time.h> /* For time_t. */
 
 /**
  * HOTP_VERSION
@@ -107,7 +108,9 @@ typedef enum {
   HOTP_PRINTF_ERROR	= -3,
   HOTP_INVALID_HEX	= -4,
   HOTP_TOO_SMALL_BUFFER	= -5,
-  HOTP_INVALID_OTP	= -6
+  HOTP_INVALID_OTP	= -6,
+  HOTP_REPLAYED_OTP	= -7,
+  HOTP_NO_SUCH_FILE     = -8
 } hotp_rc;
 
 #define HOTP_DYNAMIC_TRUNCATION SIZE_MAX
@@ -137,5 +140,12 @@ extern HOTPAPI int hotp_validate_otp (const char *secret,
 				      uint64_t start_moving_factor,
 				      size_t window,
 				      const char *otp);
+
+extern HOTPAPI int hotp_authenticate_otp_usersfile (const char *usersfile,
+						    const char *username,
+						    const char *otp,
+						    size_t window,
+						    const char *passwd,
+						    time_t *last_otp);
 
 #endif /* HOTP_H */

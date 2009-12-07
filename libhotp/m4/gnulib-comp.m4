@@ -48,14 +48,24 @@ AC_DEFUN([gl_INIT],
   fi
   gl_GC_HMAC_SHA1
   gl_MODULE_INDICATOR([gc-hmac-sha1])
+  gl_HEADER_ERRNO_H
+  gl_FUNC_GETDELIM
+  gl_STDIO_MODULE_INDICATOR([getdelim])
+  gl_FUNC_GETLINE
+  gl_STDIO_MODULE_INDICATOR([getline])
   gl_LD_VERSION_SCRIPT
   gl_VISIBILITY
   gl_MULTIARCH
+  gl_FUNC_REALLOC_POSIX
+  gl_STDLIB_MODULE_INDICATOR([realloc-posix])
   gl_STDDEF_H
   gl_STDINT_H
+  gl_STDIO_H
+  gl_STDLIB_H
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
+  gl_UNISTD_H
   gl_WCHAR_H
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -188,24 +198,35 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/config.rpath
   build-aux/link-warning.h
   lib/dummy.c
+  lib/errno.in.h
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
   lib/gc.h
+  lib/getdelim.c
+  lib/getline.c
   lib/hmac-sha1.c
   lib/hmac.h
   lib/memxor.c
   lib/memxor.h
+  lib/realloc.c
   lib/sha1.c
   lib/sha1.h
   lib/stddef.in.h
   lib/stdint.in.h
+  lib/stdio-write.c
+  lib/stdio.in.h
+  lib/stdlib.in.h
   lib/string.in.h
   lib/strverscmp.c
+  lib/unistd.in.h
   lib/wchar.in.h
   m4/00gnulib.m4
+  m4/errno_h.m4
   m4/extensions.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4
+  m4/getdelim.m4
+  m4/getline.m4
   m4/gnulib-common.m4
   m4/hmac-sha1.m4
   m4/include_next.m4
@@ -214,14 +235,19 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-link.m4
   m4/lib-prefix.m4
   m4/longlong.m4
+  m4/malloc.m4
   m4/memxor.m4
   m4/multiarch.m4
   m4/onceonly.m4
+  m4/realloc.m4
   m4/sha1.m4
   m4/stddef_h.m4
   m4/stdint.m4
+  m4/stdio_h.m4
+  m4/stdlib_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
+  m4/unistd_h.m4
   m4/visibility.m4
   m4/wchar.m4
   m4/wchar_t.m4
