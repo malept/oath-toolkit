@@ -20,8 +20,9 @@ AM_LDFLAGS = -no-install
 
 LDADD = ../libhotp.la
 
-EXTRA_DIST = users.hotp
+EXTRA_DIST = users.hotp expect.hotp
 
-ctests = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile$(EXEEXT)
-TESTS = $(ctests)
-check_PROGRAMS = $(ctests)
+TESTS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile.sh
+check_PROGRAMS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile$(EXEEXT)
+
+TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)

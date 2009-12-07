@@ -25,8 +25,7 @@
 
 #include <stdio.h>
 
-#define MAX_DIGIT 8
-#define MAX_ITER 20
+#define CREDS "tmp.hotp"
 
 int
 main (void)
@@ -56,7 +55,7 @@ main (void)
       return 1;
     }
 
-  rc = hotp_authenticate_usersfile ("users.hotp", "joe", "755224",
+  rc = hotp_authenticate_usersfile (CREDS, "joe", "755224",
 				    0, "1234", &last_otp);
   if (rc != HOTP_BAD_PASSWORD)
     {
@@ -64,7 +63,7 @@ main (void)
       return 1;
     }
 
-  rc = hotp_authenticate_usersfile ("users.hotp", "bob", "755224",
+  rc = hotp_authenticate_usersfile (CREDS, "bob", "755224",
 				    0, "1234", &last_otp);
   if (rc != HOTP_BAD_PASSWORD)
     {
@@ -72,7 +71,7 @@ main (void)
       return 1;
     }
 
-  rc = hotp_authenticate_usersfile ("users.hotp",
+  rc = hotp_authenticate_usersfile (CREDS,
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != HOTP_REPLAYED_OTP)
     {
@@ -86,7 +85,7 @@ main (void)
       return 1;
     }
 
-  rc = hotp_authenticate_usersfile ("users.hotp",
+  rc = hotp_authenticate_usersfile (CREDS,
 				    "rms", "755224", 0, "4321", &last_otp);
   if (rc != HOTP_BAD_PASSWORD)
     {
@@ -94,7 +93,7 @@ main (void)
       return 1;
     }
 
-  rc = hotp_authenticate_usersfile ("users.hotp",
+  rc = hotp_authenticate_usersfile (CREDS,
 				    "rms", "436521", 10, "6767", &last_otp);
   if (rc != HOTP_OK)
     {
