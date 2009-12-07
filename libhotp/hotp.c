@@ -23,11 +23,11 @@
 
 #include "hotp.h"
 
-#include <stdio.h>   /* For snprintf. */
+#include <stdio.h>   /* For snprintf, getline. */
 #include <string.h>  /* For strverscmp. */
+#include <unistd.h>  /* For ssize_t. */
 
 #include "gc.h"
-#include "getline.h"
 
 /**
  * hotp_init - initialize the HOTP library
@@ -332,12 +332,12 @@ hotp_validate_otp (const char *secret,
 
 /**
  * hotp_authenticate_otp_usersfile:
- * @usersfile: 
- * @username: 
- * @otp: 
- * @window: 
- * @passwd: 
- * @last_otp: 
+ * @usersfile: string with user credential filename, in UsersFile format
+ * @username: string with name of user
+ * @otp: string with one-time password to authenticate
+ * @window: how many future OTPs to search
+ * @passwd: string with password, or %NULL to disable password checking
+ * @last_otp: output variable holding last successful authentication
  *
  * Authenticate user named @username with the one-time password @otp
  * and (optional) password @passwd.  Credentials are read (and
@@ -360,6 +360,7 @@ hotp_authenticate_otp_usersfile (const char *usersfile,
 				 time_t *last_otp)
 {
   FILE *infh;
+  ssize_t t;
 
   infh = fopen (usersfile, "r");
   if (!infh)
