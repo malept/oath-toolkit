@@ -352,7 +352,7 @@ parse_usersfile (const char *usersfile,
 		 const char *otp,
 		 size_t window,
 		 const char *passwd,
-		 time_t *timestamp,
+		 time_t *last_otp,
 		 FILE *infh,
 		 char **lineptr,
 		 size_t *n)
@@ -369,7 +369,7 @@ parse_usersfile (const char *usersfile,
       size_t secret_length = sizeof (secret);
       uint64_t start_moving_factor = 0;
       int rc;
-      char *last_otp = NULL;
+      char *prev_otp = NULL;
 
       if (p == NULL)
 	continue;
@@ -416,9 +416,9 @@ parse_usersfile (const char *usersfile,
 	}
 
       /* Read (optional) last OTP */
-      last_otp = strtok_r (NULL, whitespace, &saveptr);
+      prev_otp = strtok_r (NULL, whitespace, &saveptr);
 
-      /* Read (optional) timestamp */
+      /* Read (optional) last_otp */
       p = strtok_r (NULL, whitespace, &saveptr);
       if (p)
 	{
@@ -429,15 +429,15 @@ parse_usersfile (const char *usersfile,
 	  if (t == NULL || *t != '\0')
 	    return HOTP_INVALID_TIMESTAMP;
 	  tm.tm_isdst = -1;
-	  if (timestamp)
+	  if (last_otp)
 	    {
-	      *timestamp = mktime(&tm);
-	      if (*timestamp == (time_t) -1)
+	      *last_otp = mktime(&tm);
+	      if (*last_otp == (time_t) -1)
 		return HOTP_INVALID_TIMESTAMP;
 	    }
 	}
 
-      if (last_otp && strcmp (last_otp, otp) == 0)
+      if (prev_otp && strcmp (prev_otp, otp) == 0)
 	return HOTP_REPLAYED_OTP;
 
       rc = hotp_validate_otp (secret, secret_length,
@@ -459,7 +459,7 @@ parse_usersfile (const char *usersfile,
  * @otp: string with one-time password to authenticate
  * @window: how many future OTPs to search
  * @passwd: string with password, or %NULL to disable password checking
- * @timestamp: output variable holding last successful authentication
+ * @last_otp: output variable holding last successful authentication
  *
  * Authenticate user named @username with the one-time password @otp
  * and (optional) password @passwd.  Credentials are read (and
@@ -468,7 +468,7 @@ parse_usersfile (const char *usersfile,
  * Returns: On successful validation, %HOTP_OK is returned.  If the
  *   supplied @otp is the same as the last successfully authenticated
  *   one-time password, %HOTP_REPLAYED_OTP is returned and the
- *   timestamp of the last authentication is returned in @timestamp.
+ *   timestamp of the last authentication is returned in @last_otp.
  *   If the one-time password is not found in the indicated search
  *   window, %HOTP_INVALID_OTP is returned.  Otherwise, an error code
  *   is returned.
@@ -479,7 +479,7 @@ hotp_authenticate_otp_usersfile (const char *usersfile,
 				 const char *otp,
 				 size_t window,
 				 const char *passwd,
-				 time_t *timestamp)
+				 time_t *last_otp)
 {
   FILE *infh;
   char *line = NULL;
@@ -495,7 +495,7 @@ hotp_authenticate_otp_usersfile (const char *usersfile,
 			otp,
 			window,
 			passwd,
-			timestamp,
+			last_otp,
 			infh,
 			&line,
 			&n);

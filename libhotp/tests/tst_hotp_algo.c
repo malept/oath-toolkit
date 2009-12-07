@@ -1,5 +1,5 @@
 /*
- * tst_hotp.c - self-tests for libhotp
+ * tst_hotp_algo.c - self-tests for libhotp algorithm functions
  * Copyright (C) 2009  Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or

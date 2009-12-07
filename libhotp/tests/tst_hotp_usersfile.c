@@ -1,5 +1,5 @@
 /*
- * tst_hotp.c - self-tests for libhotp
+ * tst_hotp_usersfile.c - self-tests for libhotp usersfile functions
  * Copyright (C) 2009  Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or

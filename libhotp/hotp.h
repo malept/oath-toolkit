@@ -93,6 +93,12 @@
  * @HOTP_INVALID_HEX: Hex string is invalid
  * @HOTP_TOO_SMALL_BUFFER: The output buffer is too small
  * @HOTP_INVALID_OTP: The OTP is not valid
+ * @HOTP_REPLAYED_OTP: The OTP has been replayed
+ * @HOTP_BAD_PASSWORD: The password does not match
+ * @HOTP_INVALID_COUNTER: The counter value is corrupt
+ * @HOTP_INVALID_TIMESTAMP: The timestamp is corrupt
+ * @HOTP_NO_SUCH_FILE: The supplied filename does not exist
+ * @HOTP_UNKNOWN_USER: Cannot find information about user
  *
  * Return codes for HOTP functions.  All return codes are negative
  * except for the successful code HOTP_OK which are guaranteed to be
