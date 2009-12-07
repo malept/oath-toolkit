@@ -121,7 +121,7 @@ main (void)
   size_t secretlen;
   char *hexsecret = "3132333435363738393031323334353637383930";
   char otp[10];
-  unsigned long moving_factor;
+  uint64_t moving_factor;
   unsigned digits;
 
   if (!hotp_check_version (HOTP_VERSION))

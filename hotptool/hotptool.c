@@ -75,7 +75,7 @@ main (int argc, char *argv[])
   size_t secretlen;
   int rc;
   size_t window;
-  unsigned long moving_factor;
+  uint64_t moving_factor;
   unsigned digits;
   char otp[10];
 
