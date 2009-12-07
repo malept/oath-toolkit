@@ -18,7 +18,8 @@ SUBDIRS = . tests
 ACLOCAL_AMFLAGS = -I m4
 
 AM_CPPFLAGS = -I. -I$(srcdir)/../libhotp
-AM_CFLAGS = -DDEBUG_PAM
+
+EXTRA_DIST = README
 
 libdir = $(PAMDIR)
 

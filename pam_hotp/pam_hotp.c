@@ -45,13 +45,11 @@
 #include <security/pam_modules.h>
 #endif
 
-#if defined DEBUG_PAM
-# define D(x) do {							\
+#define D(x) do {							\
     printf ("[%s:%s(%d)] ", __FILE__, __FUNCTION__, __LINE__);		\
     printf x;								\
     printf ("\n");							\
   } while (0)
-#endif
 #define DBG(x) if (cfg.debug) { D(x); }
 
 #ifndef PAM_EXTERN
