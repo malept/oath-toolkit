@@ -99,6 +99,12 @@
  * @HOTP_INVALID_TIMESTAMP: The timestamp is corrupt
  * @HOTP_NO_SUCH_FILE: The supplied filename does not exist
  * @HOTP_UNKNOWN_USER: Cannot find information about user
+ * @HOTP_FILE_SEEK_ERROR: System error when seeking in file
+ * @HOTP_FILE_CREATE_ERROR: System error when creating file
+ * @HOTP_FILE_LOCK_ERROR: System error when locking file
+ * @HOTP_FILE_RENAME_ERROR: System error when renaming file
+ * @HOTP_FILE_UNLINK_ERROR: System error when removing file
+ * @HOTP_TIME_ERROR: System error for time manipulation
  *
  * Return codes for HOTP functions.  All return codes are negative
  * except for the successful code HOTP_OK which are guaranteed to be
