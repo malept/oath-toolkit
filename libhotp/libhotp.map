@@ -24,7 +24,7 @@ LIBHOTP_1.0.0 {
     hotp_hex2bin;
     hotp_init;
     hotp_validate_otp;
-    hotp_authenticate_otp_usersfile;
+    hotp_authenticate_usersfile;
 
   local:
     *;

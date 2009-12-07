@@ -34,10 +34,10 @@
 #  endif
 # endif
 
-#include <stdbool.h> /* For bool. */
-#include <stdint.h> /* For uint64_t, SIZE_MAX. */
-#include <string.h> /* For size_t.t */
-#include <time.h> /* For time_t. */
+#include <stdbool.h>		/* For bool. */
+#include <stdint.h>		/* For uint64_t, SIZE_MAX. */
+#include <string.h>		/* For size_t.t */
+#include <time.h>		/* For time_t. */
 
 /**
  * HOTP_VERSION
@@ -107,20 +107,21 @@
  * Note that the #hotp_rc enumeration may be extended at a later date
  * to include new return codes.
  */
-typedef enum {
-  HOTP_OK		  =  0,
-  HOTP_CRYPTO_ERROR	  = -1,
-  HOTP_INVALID_DIGITS	  = -2,
-  HOTP_PRINTF_ERROR	  = -3,
-  HOTP_INVALID_HEX	  = -4,
-  HOTP_TOO_SMALL_BUFFER	  = -5,
-  HOTP_INVALID_OTP	  = -6,
-  HOTP_REPLAYED_OTP	  = -7,
-  HOTP_BAD_PASSWORD       = -8,
-  HOTP_INVALID_COUNTER    = -9,
-  HOTP_INVALID_TIMESTAMP  = -10,
-  HOTP_NO_SUCH_FILE       = -11,
-  HOTP_UNKNOWN_USER       = -12
+typedef enum
+{
+  HOTP_OK = 0,
+  HOTP_CRYPTO_ERROR = -1,
+  HOTP_INVALID_DIGITS = -2,
+  HOTP_PRINTF_ERROR = -3,
+  HOTP_INVALID_HEX = -4,
+  HOTP_TOO_SMALL_BUFFER = -5,
+  HOTP_INVALID_OTP = -6,
+  HOTP_REPLAYED_OTP = -7,
+  HOTP_BAD_PASSWORD = -8,
+  HOTP_INVALID_COUNTER = -9,
+  HOTP_INVALID_TIMESTAMP = -10,
+  HOTP_NO_SUCH_FILE = -11,
+  HOTP_UNKNOWN_USER = -12
 } hotp_rc;
 
 #define HOTP_DYNAMIC_TRUNCATION SIZE_MAX
@@ -132,9 +133,7 @@ extern HOTPAPI int hotp_done (void);
 
 extern HOTPAPI const char *hotp_check_version (const char *req_version);
 
-extern HOTPAPI int hotp_hex2bin (char *hexstr,
-				 char *binstr,
-				 size_t *binlen);
+extern HOTPAPI int hotp_hex2bin (char *hexstr, char *binstr, size_t * binlen);
 
 extern HOTPAPI int hotp_generate_otp (const char *secret,
 				      size_t secret_length,
@@ -148,14 +147,13 @@ extern HOTPAPI int hotp_generate_otp (const char *secret,
 extern HOTPAPI int hotp_validate_otp (const char *secret,
 				      size_t secret_length,
 				      uint64_t start_moving_factor,
-				      size_t window,
-				      const char *otp);
+				      size_t window, const char *otp);
 
-extern HOTPAPI int hotp_authenticate_otp_usersfile (const char *usersfile,
-						    const char *username,
-						    const char *otp,
-						    size_t window,
-						    const char *passwd,
-						    time_t *last_otp);
+extern HOTPAPI int hotp_authenticate_usersfile (const char *usersfile,
+						const char *username,
+						const char *otp,
+						size_t window,
+						const char *passwd,
+						time_t * last_otp);
 
 #endif /* HOTP_H */

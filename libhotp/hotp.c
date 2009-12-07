@@ -23,9 +23,9 @@
 
 #include "hotp.h"
 
-#include <stdio.h>   /* For snprintf, getline. */
-#include <string.h>  /* For strverscmp. */
-#include <unistd.h>  /* For ssize_t. */
+#include <stdio.h>		/* For snprintf, getline. */
+#include <string.h>		/* For strverscmp. */
+#include <unistd.h>		/* For ssize_t. */
 
 #include "gc.h"
 
@@ -130,9 +130,7 @@ hotp_check_version (const char *req_version)
  *   error code is returned.
  **/
 int
-hotp_hex2bin (char *hexstr,
-	      char *binstr,
-	      size_t *binlen)
+hotp_hex2bin (char *hexstr, char *binstr, size_t * binlen)
 {
   const char *hexalphabet = "0123456789abcdef";
   bool highbits = true;
@@ -212,8 +210,7 @@ hotp_generate_otp (const char *secret,
 		   uint64_t moving_factor,
 		   unsigned digits,
 		   bool add_checksum,
-		   size_t truncation_offset,
-		   char *output_otp)
+		   size_t truncation_offset, char *output_otp)
 {
   char hs[GC_SHA1_DIGEST_SIZE];
   long S;
@@ -238,8 +235,7 @@ hotp_generate_otp (const char *secret,
 
     S = (((hs[offset] & 0x7f) << 24)
 	 | ((hs[offset + 1] & 0xff) << 16)
-	 | ((hs[offset + 2] & 0xff) << 8)
-	 | ((hs[offset + 3] & 0xff)));
+	 | ((hs[offset + 2] & 0xff) << 8) | ((hs[offset + 3] & 0xff)));
 
 #if DEBUG
     printf ("offset is %d hash is ", offset);
@@ -302,8 +298,7 @@ int
 hotp_validate_otp (const char *secret,
 		   size_t secret_length,
 		   uint64_t start_moving_factor,
-		   size_t window,
-		   const char *otp)
+		   size_t window, const char *otp)
 {
   unsigned digits = strlen (otp);
   unsigned iter = 0;
@@ -316,9 +311,7 @@ hotp_validate_otp (const char *secret,
 			      secret_length,
 			      start_moving_factor + iter,
 			      digits,
-			      false,
-			      HOTP_DYNAMIC_TRUNCATION,
-			      tmp_otp);
+			      false, HOTP_DYNAMIC_TRUNCATION, tmp_otp);
       if (rc != HOTP_OK)
 	return rc;
 
@@ -352,10 +345,7 @@ parse_usersfile (const char *usersfile,
 		 const char *otp,
 		 size_t window,
 		 const char *passwd,
-		 time_t *last_otp,
-		 FILE *infh,
-		 char **lineptr,
-		 size_t *n)
+		 time_t * last_otp, FILE * infh, char **lineptr, size_t * n)
 {
   ssize_t t;
 
@@ -409,7 +399,7 @@ parse_usersfile (const char *usersfile,
       if (p && *p)
 	{
 	  char *endptr;
-	  unsigned long long int ull = strtoull(p, &endptr, 10);
+	  unsigned long long int ull = strtoull (p, &endptr, 10);
 	  if (endptr && *endptr != '\0')
 	    return HOTP_INVALID_COUNTER;
 	  start_moving_factor = ull;
@@ -431,8 +421,8 @@ parse_usersfile (const char *usersfile,
 	  tm.tm_isdst = -1;
 	  if (last_otp)
 	    {
-	      *last_otp = mktime(&tm);
-	      if (*last_otp == (time_t) -1)
+	      *last_otp = mktime (&tm);
+	      if (*last_otp == (time_t) - 1)
 		return HOTP_INVALID_TIMESTAMP;
 	    }
 	}
@@ -441,9 +431,7 @@ parse_usersfile (const char *usersfile,
 	return HOTP_REPLAYED_OTP;
 
       rc = hotp_validate_otp (secret, secret_length,
-			    start_moving_factor,
-			    window,
-			    otp);
+			      start_moving_factor, window, otp);
       if (rc < 0)
 	return rc;
       return HOTP_OK;
@@ -453,7 +441,7 @@ parse_usersfile (const char *usersfile,
 }
 
 /**
- * hotp_authenticate_otp_usersfile:
+ * hotp_authenticate_usersfile:
  * @usersfile: string with user credential filename, in UsersFile format
  * @username: string with name of user
  * @otp: string with one-time password to authenticate
@@ -474,12 +462,11 @@ parse_usersfile (const char *usersfile,
  *   is returned.
  **/
 int
-hotp_authenticate_otp_usersfile (const char *usersfile,
-				 const char *username,
-				 const char *otp,
-				 size_t window,
-				 const char *passwd,
-				 time_t *last_otp)
+hotp_authenticate_usersfile (const char *usersfile,
+			     const char *username,
+			     const char *otp,
+			     size_t window,
+			     const char *passwd, time_t * last_otp)
 {
   FILE *infh;
   char *line = NULL;
@@ -492,17 +479,10 @@ hotp_authenticate_otp_usersfile (const char *usersfile,
 
   rc = parse_usersfile (usersfile,
 			username,
-			otp,
-			window,
-			passwd,
-			last_otp,
-			infh,
-			&line,
-			&n);
+			otp, window, passwd, last_otp, infh, &line, &n);
 
   free (line);
   fclose (infh);
 
   return rc;
 }
-
