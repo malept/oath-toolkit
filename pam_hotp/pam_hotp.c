@@ -150,6 +150,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   int nargs = 1;
   struct cfg cfg;
   char *query_prompt = NULL;
+  char *onlypasswd = NULL;
 
   parse_cfg (flags, argc, argv, &cfg);
 
@@ -269,7 +270,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
     }
   else if (cfg.digits != 0 && password_len > cfg.digits)
     {
-      char *onlypasswd = strdup (password);
+      onlypasswd = strdup (password);
 
       /* user entered their system password followed by generated OTP? */
 
@@ -278,7 +279,6 @@ pam_sm_authenticate (pam_handle_t * pamh,
       DBG (("Password: %s ", onlypasswd));
 
       retval = pam_set_item (pamh, PAM_AUTHTOK, onlypasswd);
-      free (onlypasswd);
       if (retval != PAM_SUCCESS)
 	{
 	  DBG (("set_item returned error: %s", pam_strerror (pamh, retval)));
@@ -303,7 +303,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
 				      user,
 				      otp,
 				      cfg.window,
-				      password,
+				      onlypasswd,
 				      &last_otp);
     DBG (("authenticate rc %d last otp %s", rc, ctime(&last_otp)));
   }
@@ -321,6 +321,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
 done:
   hotp_done ();
   free (query_prompt);
+  free (onlypasswd);
   if (cfg.alwaysok && retval != PAM_SUCCESS)
     {
       DBG (("alwaysok needed (otherwise return with %d)", retval));
