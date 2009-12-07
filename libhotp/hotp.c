@@ -26,6 +26,8 @@
 #include <stdio.h>		/* For snprintf, getline. */
 #include <string.h>		/* For strverscmp. */
 #include <unistd.h>		/* For ssize_t. */
+#include <fcntl.h>		/* For fcntl. */
+#include <errno.h>		/* For errno. */
 
 #include "gc.h"
 
@@ -339,19 +341,24 @@ parse_type (const char *str)
   return 0;
 }
 
+static const char *whitespace = " \t\r\n";
+static const char *time_format_string = "%Y-%m-%dT%H:%M:%SL";
+
 static int
-parse_usersfile (const char *usersfile,
-		 const char *username,
+parse_usersfile (const char *username,
 		 const char *otp,
 		 size_t window,
 		 const char *passwd,
-		 time_t * last_otp, FILE * infh, char **lineptr, size_t * n)
+		 time_t * last_otp,
+		 FILE * infh,
+		 char **lineptr,
+		 size_t * n,
+		 uint64_t *new_moving_factor)
 {
   ssize_t t;
 
   while ((t = getline (lineptr, n, infh)) != -1)
     {
-      static const char *whitespace = " \t\r\n";
       char *saveptr;
       char *p = strtok_r (*lineptr, whitespace, &saveptr);
       unsigned digits;
@@ -415,7 +422,7 @@ parse_usersfile (const char *usersfile,
 	  struct tm tm;
 	  char *t;
 
-	  t = strptime (p, "%Y-%m-%dT%H:%M:%SL", &tm);
+	  t = strptime (p, time_format_string, &tm);
 	  if (t == NULL || *t != '\0')
 	    return HOTP_INVALID_TIMESTAMP;
 	  tm.tm_isdst = -1;
@@ -434,10 +441,172 @@ parse_usersfile (const char *usersfile,
 			      start_moving_factor, window, otp);
       if (rc < 0)
 	return rc;
+      *new_moving_factor = start_moving_factor + rc;
       return HOTP_OK;
     }
 
   return HOTP_UNKNOWN_USER;
+}
+
+static int
+update_usersfile2 (const char *username,
+		   const char *otp,
+		   FILE * infh,
+		   FILE * outfh,
+		   char **lineptr,
+		   size_t * n,
+		   char *timestamp,
+		   uint64_t new_moving_factor)
+{
+  ssize_t t;
+
+  while ((t = getline (lineptr, n, infh)) != -1)
+    {
+      char *saveptr;
+      char *origline;
+      char *user, *type, *passwd, *secret;
+      int r;
+
+      origline = strdup (*lineptr);
+
+      type = strtok_r (*lineptr, whitespace, &saveptr);
+      if (type == NULL)
+	continue;
+
+      /* Read username */
+      user = strtok_r (NULL, whitespace, &saveptr);
+      if (user == NULL || strcmp (user, username) != 0)
+	{
+	  r = fputs (origline, outfh);
+	  if (r <= 0)
+	    return HOTP_PRINTF_ERROR;
+	  continue;
+	}
+
+      passwd = strtok_r (NULL, whitespace, &saveptr);
+      if (passwd == NULL)
+	passwd = "-";
+
+      secret = strtok_r (NULL, whitespace, &saveptr);
+      if (secret == NULL)
+	secret = "-";
+
+      r = fprintf (outfh, "%s\t%s\t%s\t%s\t%llu\t%s\t%s\n",
+		   type, username, passwd, secret,
+		   (unsigned long long) new_moving_factor,
+		   otp, timestamp);
+      if (r <= 0)
+	return HOTP_PRINTF_ERROR;
+    }
+
+  return HOTP_OK;
+}
+
+static int
+update_usersfile (const char *usersfile,
+		  const char *username,
+		  const char *otp,
+		  time_t *last_otp,
+		  FILE * infh,
+		  char **lineptr,
+		  size_t * n,
+		  char *timestamp,
+		  uint64_t new_moving_factor)
+{
+  FILE *outfh, *lockfh;
+  int rc;
+  char *newfilename, *lockfile;
+
+  /* Rewind input file. */
+  {
+    int pos;
+
+    pos = fseek (infh, 0L, SEEK_SET);
+    if (pos == -1)
+      return HOTP_FILE_SEEK_ERROR;
+    clearerr (infh);
+  }
+
+  /* Open lockfile. */
+  {
+    int l;
+
+    l = asprintf (&lockfile, "%s.lock", usersfile);
+    if (lockfile == NULL || l != strlen (usersfile) + 5)
+      return HOTP_PRINTF_ERROR;
+
+    lockfh = fopen (lockfile, "w");
+    if (!lockfh)
+      {
+	free (lockfile);
+	return HOTP_FILE_CREATE_ERROR;
+      }
+  }
+
+  /* Lock the lockfile. */
+  {
+    struct flock l;
+
+    memset (&l, 0, sizeof (l));
+    l.l_whence = SEEK_SET;
+    l.l_start = 0;
+    l.l_len = 0;
+    l.l_type = F_WRLCK;
+
+    while ((rc = fcntl (fileno (lockfh), F_SETLKW, &l)) < 0 && errno == EINTR)
+      continue;
+    if (rc == -1)
+      {
+	fclose (lockfh);
+	free (lockfile);
+	return HOTP_FILE_LOCK_ERROR;
+      }
+  }
+
+  /* Open the "new" file. */
+  {
+    int l;
+
+    l = asprintf (&newfilename, "%s.new", usersfile);
+    if (newfilename == NULL || l != strlen (usersfile) + 4)
+      {
+	fclose (lockfh);
+	free (lockfile);
+	return HOTP_PRINTF_ERROR;
+      }
+
+    outfh = fopen (newfilename, "w");
+    if (!outfh)
+      {
+	free (newfilename);
+	fclose (lockfh);
+	free (lockfile);
+	return HOTP_FILE_CREATE_ERROR;
+      }
+  }
+
+  rc = update_usersfile2 (username, otp, infh, outfh, lineptr, n,
+			  timestamp, new_moving_factor);
+
+  fclose (lockfh);
+  fclose (outfh);
+
+  {
+    int tmprc1, tmprc2;
+
+    tmprc1 = rename (newfilename, usersfile);
+    free (newfilename);
+
+    tmprc2 = unlink (lockfile);
+    free (lockfile);
+
+    if (tmprc1 == -1)
+      return HOTP_FILE_RENAME_ERROR;
+    if (tmprc2 == -1)
+      return HOTP_FILE_UNLINK_ERROR;
+  }
+
+  return rc;
 }
 
 /**
@@ -466,20 +635,45 @@ hotp_authenticate_usersfile (const char *usersfile,
 			     const char *username,
 			     const char *otp,
 			     size_t window,
-			     const char *passwd, time_t * last_otp)
+			     const char *passwd,
+			     time_t * last_otp)
 {
   FILE *infh;
   char *line = NULL;
   size_t n = 0;
+  uint64_t new_moving_factor;
   int rc;
 
   infh = fopen (usersfile, "r");
   if (!infh)
     return HOTP_NO_SUCH_FILE;
 
-  rc = parse_usersfile (usersfile,
-			username,
-			otp, window, passwd, last_otp, infh, &line, &n);
+  rc = parse_usersfile (username, otp, window, passwd, last_otp,
+			infh, &line, &n, &new_moving_factor);
+
+  if (rc == HOTP_OK)
+    {
+      char timestamp[30];
+      size_t max = sizeof (timestamp);
+      struct tm now;
+      time_t t;
+      size_t l;
+      int r;
+
+      if (time (&t) == (time_t) -1)
+	return HOTP_TIME_ERROR;
+
+      if (localtime_r (&t, &now) == NULL)
+	return HOTP_TIME_ERROR;
+
+      l = strftime (timestamp, max, time_format_string, &now);
+      if (l != 20)
+	return HOTP_TIME_ERROR;
+
+      rc = update_usersfile (usersfile, username, otp, last_otp,
+			     infh, &line, &n, timestamp,
+			     new_moving_factor);
+    }
 
   free (line);
   fclose (infh);
