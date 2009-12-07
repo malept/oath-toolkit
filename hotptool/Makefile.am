@@ -36,8 +36,9 @@ $(BUILT_SOURCES): hotptool.ggo Makefile.am
 
 dist_man_MANS = hotptool.1
 MAINTAINERCLEANFILES = $(dist_man_MANS)
+EXTRA_DIST = hotptool.h2m
 
-hotptool.1: $(srcdir)/hotptool.c $(srcdir)/hotptool.ggo $(srcdir)/configure.ac
+hotptool.1: $(srcdir)/hotptool.c $(srcdir)/hotptool.ggo $(srcdir)/hotptool.h2m $(srcdir)/configure.ac
 	$(HELP2MAN) \
-		--name="HOTP one-time password tool" \
+		--include hotptool.h2m \
 		--output=$@ $(top_builddir)/hotptool$(EXEEXT)
