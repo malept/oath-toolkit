@@ -52,6 +52,7 @@
     printf ("\n");							\
   } while (0)
 #endif
+#define DBG(x) if (cfg.debug) { D(x); }
 
 #ifndef PAM_EXTERN
 #ifdef PAM_STATIC
@@ -63,9 +64,6 @@
 
 #define MIN_OTP_LEN 6
 #define MAX_OTP_LEN 8
-
-#define TOKEN_LEN 44
-#define TOKEN_ID_LEN 12
 
 struct cfg
 {
@@ -133,8 +131,6 @@ parse_cfg (int flags, int argc, const char **argv, struct cfg *cfg)
     }
 }
 
-#define DBG(x) if (cfg.debug) { D(x); }
-
 PAM_EXTERN int
 pam_sm_authenticate (pam_handle_t * pamh,
 		     int flags, int argc, const char **argv)
@@ -150,7 +146,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   int nargs = 1;
   struct cfg cfg;
   char *query_prompt = NULL;
-  char *onlypasswd = NULL;
+  char *onlypasswd = strdup("");
 
   parse_cfg (flags, argc, argv, &cfg);
 
@@ -270,6 +266,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
     }
   else if (cfg.digits != 0 && password_len > cfg.digits)
     {
+      free (onlypasswd);
       onlypasswd = strdup (password);
 
       /* user entered their system password followed by generated OTP? */
@@ -312,7 +309,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
     {
       DBG (("One-time password not authorized to login as user '%s'",
 	    user));
-      retval = PAM_AUTHINFO_UNAVAIL;
+      retval = PAM_AUTH_ERR;
       goto done;
     }
 
@@ -338,14 +335,15 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
 {
   int retval;
   int auth_retval;
+  struct cfg cfg;
 
-  D (("called."));
+  DBG (("called."));
 
   /* TODO: ? */
 
   retval = pam_get_data (pamh, "hotp_setcred_return",
 			 (void*) (intptr_t) &auth_retval);
-  D (("retval: %d", auth_retval));
+  DBG (("retval: %d", auth_retval));
   if (retval != PAM_SUCCESS)
     return PAM_CRED_UNAVAIL;
 
@@ -365,69 +363,7 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
       break;
     }
 
-  D (("done. [%s]", pam_strerror (pamh, retval)));
-
-  return retval;
-}
-
-PAM_EXTERN int
-pam_sm_acct_mgmt (pam_handle_t * pamh, int flags, int argc, const char **argv)
-{
-  int retval;
-
-  D (("called."));
-
-  /* TODO: ? */
-  retval = PAM_SUCCESS;
-
-  D (("done. [%s]", pam_strerror (pamh, retval)));
-
-  return retval;
-}
-
-PAM_EXTERN int
-pam_sm_open_session (pam_handle_t * pamh,
-		     int flags, int argc, const char **argv)
-{
-  int retval;
-
-  D (("called."));
-
-  /* TODO: ? */
-  retval = PAM_SUCCESS;
-
-  D (("done. [%s]", pam_strerror (pamh, retval)));
-
-  return retval;
-}
-
-PAM_EXTERN int
-pam_sm_close_session (pam_handle_t * pamh,
-		      int flags, int argc, const char **argv)
-{
-  int retval;
-
-  D (("called."));
-
-  /* TODO: ? */
-  retval = PAM_SUCCESS;
-
-  D (("done. [%s]", pam_strerror (pamh, retval)));
-
-  return retval;
-}
-
-PAM_EXTERN int
-pam_sm_chauthtok (pam_handle_t * pamh, int flags, int argc, const char **argv)
-{
-  int retval;
-
-  D (("called."));
-
-  /* TODO: ? */
-  retval = PAM_SUCCESS;
-
-  D (("done. [%s]", pam_strerror (pamh, retval)));
+  DBG (("done. [%s]", pam_strerror (pamh, retval)));
 
   return retval;
 }
@@ -438,10 +374,10 @@ struct pam_module _pam_hotp_modstruct = {
   "pam_hotp",
   pam_sm_authenticate,
   pam_sm_setcred,
-  pam_sm_acct_mgmt,
-  pam_sm_open_session,
-  pam_sm_close_session,
-  pam_sm_chauthtok
+  NULL,
+  NULL,
+  NULL,
+  NULL
 };
 
 #endif
