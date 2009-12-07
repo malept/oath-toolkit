@@ -48,7 +48,23 @@ main (void)
       return 1;
     }
 
+  rc = hotp_authenticate_usersfile ("no-such-file", "joe", "755224",
+				    0, "1234", &last_otp);
+  if (rc != HOTP_NO_SUCH_FILE)
+    {
+      printf ("hotp_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
   rc = hotp_authenticate_usersfile ("users.hotp", "joe", "755224",
+				    0, "1234", &last_otp);
+  if (rc != HOTP_BAD_PASSWORD)
+    {
+      printf ("hotp_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = hotp_authenticate_usersfile ("users.hotp", "bob", "755224",
 				    0, "1234", &last_otp);
   if (rc != HOTP_BAD_PASSWORD)
     {
