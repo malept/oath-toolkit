@@ -1,4 +1,4 @@
-Copyright (C) 2009 Simon Josefsson
+Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
 
 The HOTP Toolkit package contains tools that are useful when deploying
 the one-time password HOTP technology.  See RFC 4226 for technical

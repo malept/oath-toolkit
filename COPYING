@@ -1,3 +1,5 @@
+Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+
 Each component of the HOTP Toolkit has its own license, see COPYING in
 each sub-directory.  In particular:
 
@@ -7,5 +9,5 @@ each sub-directory.  In particular:
 
    * pam_hotp: Licensed under the GPLv3.0+.
 
-All other files without any other notice, such as this file and the
-build files in this directory, are licensed under the GPLv3.0+.
+All other files (without any explicit notice), such as this file and
+the build files in this directory, are licensed under the GPLv3.0+.

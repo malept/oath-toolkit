@@ -1,3 +1,6 @@
+HOTP Toolkit pam_hotp/README
+Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+
 This directory holds an PAM module for authenticating users using OATH
 HOTP one-time password technology.
 
