@@ -21,3 +21,27 @@ local-checks-to-skip += sc_unmarked_diagnostics
 ChangeLog:
 	git2cl > ChangeLog
 	cat .clcopying >> ChangeLog
+
+tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
+htmldir = ../www-$(PACKAGE)
+
+release: prepare upload web upload-web
+
+prepare:
+	! git tag -l $(tag) | grep $(PACKAGE) > /dev/null
+	rm -f ChangeLog
+	$(MAKE) ChangeLog distcheck
+	git commit -m Generated. ChangeLog
+	git tag -u b565716f! -m $(VERSION) $(tag)
+
+upload:
+	git push
+	git push --tags
+	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
+
+web:
+	cp -v libhotp/gtk-doc/html/*.html libhotp/gtk-doc/html/*.png libhotp/gtk-doc/html/html/*.devhelp libhotp/gtk-doc/html/*.css $(htmldir)/reference/
+
+upload-web:
+	cd $(htmldir) && \
+		cvs commit -m "Update." reference/
