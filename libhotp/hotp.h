@@ -46,7 +46,7 @@
  * version number.  Used together with hotp_check_version() to verify
  * header file and run-time library consistency.
  */
-# define HOTP_VERSION "1.0.0"
+# define HOTP_VERSION "1.0.1"
 
 /**
  * HOTP_VERSION_MAJOR
@@ -73,7 +73,7 @@
  * level of the header file version number.  For example, when the
  * header version is 1.2.3 this symbol will be 3.
  */
-# define HOTP_VERSION_PATCH 0
+# define HOTP_VERSION_PATCH 1
 
 /**
  * HOTP_VERSION_NUMBER
@@ -82,7 +82,7 @@
  * header file version number.  For example, when the header version
  * is 1.2.3 this symbol will have the value 0x010203.
  */
-# define HOTP_VERSION_NUMBER 0x010000
+# define HOTP_VERSION_NUMBER 0x010001
 
 /**
  * hotp_rc:

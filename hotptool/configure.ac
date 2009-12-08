@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([hotptool], [1.0.0], [simon@josefsson.org], [hotptool],
+AC_INIT([hotptool], [1.0.1], [simon@josefsson.org], [hotptool],
         [http://josefsson.org/hotp-toolkit/])
 AC_COPYRIGHT([Copyright (C) 2009 Simon Josefsson])
 

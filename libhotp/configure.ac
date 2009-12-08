@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AC_INIT([libhotp], [1.0.0], [simon@josefsson.org])
+AC_INIT([libhotp], [1.0.1], [simon@josefsson.org])
 AC_COPYRIGHT([Copyright (C) 2009 Simon Josefsson])
 
 # Library code modified:                              REVISION++
