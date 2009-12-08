@@ -13,6 +13,12 @@
       Libhotp is a shared and static C library for handling of HOTPs.
     </para>
 
+    <para>
+      Libhotp and this manual, which is generated from the Libhotp
+      source code, are licensed under the LGPLv2.1+.  See COPYING in
+      the package for more information.
+    </para>
+
     <xi:include href="xml/hotp.xml"/>
   </chapter>
 </book>
