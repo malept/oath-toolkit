@@ -1,1 +1,436 @@
-This file will be automatically generated from version control commit messages.
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add release targets.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.0.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING: Clarify license.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/gtk-doc/libhotp-docs.sgml: Fix license header.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/gtk-doc/libhotp-docs.sgml: Add license info.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* maint.mk: Update gnulib files.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/build-aux/link-warning.h, libhotp/lib/Makefile.am,
+	libhotp/lib/dummy.c, libhotp/lib/errno.in.h,
+	libhotp/lib/gc-gnulib.c, libhotp/lib/gc-libgcrypt.c,
+	libhotp/lib/gc.h, libhotp/lib/getdelim.c, libhotp/lib/getline.c,
+	libhotp/lib/hmac-sha1.c, libhotp/lib/hmac.h, libhotp/lib/memxor.c,
+	libhotp/lib/memxor.h, libhotp/lib/realloc.c, libhotp/lib/sha1.c,
+	libhotp/lib/sha1.h, libhotp/lib/stddef.in.h,
+	libhotp/lib/stdint.in.h, libhotp/lib/stdio-write.c,
+	libhotp/lib/stdio.in.h, libhotp/lib/stdlib.in.h,
+	libhotp/lib/string.in.h, libhotp/lib/strverscmp.c,
+	libhotp/lib/unistd.in.h, libhotp/lib/wchar.in.h,
+	libhotp/m4/gnulib-cache.m4: Update license headers.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS, hotptool/hotptool.h2m: Improve licensing.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, NEWS, README, pam_hotp/README: More license headers.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/Makefile.am, hotptool/hotptool.h2m: Improve man page.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/README: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/Makefile.am, pam_hotp/pam_hotp.c: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/README: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Fix passwd.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/usersfile.c, pam_hotp/pam_hotp.c: Actually validate OTP,
+	whoa!
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.h: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/tests/tst_hotp_usersfile.sh: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, cfg.mk, hotptool/tests/Makefile.am,
+	libhotp/Makefile.am, libhotp/tests/Makefile.am: Fix make distcheck.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/tests/Makefile.am, libhotp/tests/tst_hotp_usersfile.c: 
+	Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/tests/expect.hotp: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: [no log message]
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/Makefile.am, libhotp/hotp.c, libhotp/usersfile.c: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/tests/tst_hotp_usersfile.c, libhotp/tests/users.hotp: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h, libhotp/libhotp.map,
+	libhotp/tests/tst_hotp_usersfile.c: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h, libhotp/tests/tst_hotp_algo.c,
+	libhotp/tests/tst_hotp_usersfile.c: Fix.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h,
+	libhotp/tests/tst_hotp_usersfile.c, libhotp/tests/users.hotp: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, libhotp/tests/tst_hotp_usersfile.c: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/tests/Makefile.am,
+	libhotp/tests/tst_hotp.c, libhotp/tests/tst_hotp_algo.c,
+	libhotp/tests/users.hotp: Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h, libhotp/lib/Makefile.am,
+	libhotp/lib/errno.in.h, libhotp/lib/getdelim.c,
+	libhotp/lib/getline.c, libhotp/lib/realloc.c,
+	libhotp/lib/stdio-write.c, libhotp/lib/stdio.in.h,
+	libhotp/lib/stdlib.in.h, libhotp/lib/unistd.in.h,
+	libhotp/libhotp.map, libhotp/m4/errno_h.m4, libhotp/m4/getdelim.m4,
+	libhotp/m4/getline.m4, libhotp/m4/gnulib-cache.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/malloc.m4,
+	libhotp/m4/realloc.m4, libhotp/m4/stdio_h.m4,
+	libhotp/m4/stdlib_h.m4, libhotp/m4/unistd_h.m4, libhotp/m4/wchar.m4: 
+	Add.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.c, libhotp/hotp.c, libhotp/hotp.h,
+	libhotp/tests/tst_hotp.c: Revert "Don't use uin64_t." This reverts commit 94b3506bba5464db76d814e2395657d9d3f9fa29.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.h: Revert "Get SIZE_MAX." This reverts commit 687c277afa905cb18f39b91a74b5d6183125b76f.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c: Revert "Don't use uint8_t type." This reverts commit 8eb7e7c7ba8c5d3d9c5ea74189c6213143d10b95.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c: Don't use uint8_t type.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.h: Get SIZE_MAX.
+
+2009-12-07  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.c, libhotp/hotp.c, libhotp/hotp.h,
+	libhotp/tests/tst_hotp.c: Don't use uin64_t.
+
+2009-12-04  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Fix warning.
+
+2009-12-04  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, Makefile.am, NEWS, README, cfg.mk, configure.ac,
+	hotptool/Makefile.am, hotptool/configure.ac, hotptool/hotptool.ggo,
+	hotptool/tests/Makefile.am, hotptool/tests/tst_hotptool.sh,
+	libhotp/Makefile.am, libhotp/configure.ac,
+	libhotp/tests/Makefile.am, pam_hotp/COPYING, pam_hotp/Makefile.am,
+	pam_hotp/configure.ac, pam_hotp/tests/Makefile.am,
+	pam_hotp/tests/test-pam_hotp.c: Add license headers.
+
+2009-12-04  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Improve PAM.
+
+2009-12-04  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c: Doc fix.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h: Reorder.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c: Doc fix.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/Makefile.am, hotptool/hotptool.c, libhotp/hotp.c,
+	libhotp/hotp.h: New API function.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/tests/tst_hotptool.sh: Improve self-tests.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/Makefile.am, hotptool/configure.ac, hotptool/hotptool.c,
+	hotptool/tests/Makefile.am, hotptool/tests/tst_hotptool.sh,
+	libhotp/hotp.c, libhotp/hotp.h, libhotp/libhotp.map: Self-tests and
+	other fixes.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/hotp.c, libhotp/hotp.h, libhotp/tests/tst_hotp.c: Improve
+	coverage report.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/tests/tst_hotp.c: Make it work.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Make ChangeLog.
+
+2009-12-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix version.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/gtk-doc/libhotp-docs.sgml: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/gtk-doc/Makefile.am: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Fix warning.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_cast_of_alloca_return_value, .x-sc_error_message_uppercase,
+	.x-sc_m4_quote_check, .x-sc_makefile_check, .x-sc_program_name,
+	.x-sc_prohibit_HAVE_MBRTOWC, .x-sc_require_config_h,
+	.x-sc_require_config_h_first, .x-sc_space_tab,
+	.x-sc_useless_cpp_parens, cfg.mk, hotptool/hotptool.c,
+	libhotp/tests/Makefile.am, pam_hotp/Makefile.am,
+	pam_hotp/pam_hotp.c, pam_hotp/tests/Makefile.am,
+	pam_hotp/tests/test-pam_hotp.c: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/m4/dummy: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, pam_hotp/pam_hotp.c: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/Makefile.am, pam_hotp/configure.ac,
+	pam_hotp/tests/Makefile.am, pam_hotp/tests/test-pam_hotp.c: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/configure.ac: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/m4/gtk-doc.m4: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/Makefile.am, libhotp/configure.ac, libhotp/gtk-doc.make,
+	libhotp/gtk-doc/Makefile.am: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, README: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* README: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* README, hotptool/hotptool.c: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.c, hotptool/hotptool.ggo: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/libhotp.map: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.c: Fix.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.c, hotptool/hotptool.ggo, libhotp/hotp.c,
+	libhotp/hotp.h: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/lib/gettext.h, hotptool/lib/progname.c,
+	hotptool/lib/progname.h, hotptool/lib/stdarg.in.h,
+	hotptool/lib/version-etc.c, hotptool/lib/version-etc.h,
+	hotptool/m4/stdarg.m4, hotptool/m4/version-etc.m4: Update.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/hotptool.ggo: Update.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, hotptool/Makefile.am, hotptool/configure.ac,
+	hotptool/hotptool.c, hotptool/lib/Makefile.am,
+	hotptool/lib/dummy.c, hotptool/m4/gnulib-cache.m4,
+	hotptool/m4/gnulib-comp.m4, libhotp/configure.ac, libhotp/hotp.c,
+	libhotp/hotp.h, libhotp/lib/Makefile.am, libhotp/lib/string.in.h,
+	libhotp/lib/strverscmp.c, libhotp/libhotp.map,
+	libhotp/m4/extensions.m4, libhotp/m4/gnulib-cache.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/string_h.m4,
+	libhotp/m4/strverscmp.m4, libhotp/tests/tst_hotp.c: Update.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/Makefile.am, libhotp/hotp.c, libhotp/hotp.h,
+	libhotp/libhotp.map, libhotp/tests/tst_hotp.c: Implement.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Add.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/build-aux/link-warning.h, hotptool/lib/Makefile.am,
+	hotptool/lib/dummy.c, hotptool/lib/errno.in.h,
+	hotptool/lib/error.c, hotptool/lib/error.h,
+	hotptool/lib/intprops.h, hotptool/lib/stddef.in.h,
+	hotptool/lib/strerror.c, hotptool/lib/string.in.h,
+	hotptool/m4/00gnulib.m4, hotptool/m4/errno_h.m4,
+	hotptool/m4/error.m4, hotptool/m4/extensions.m4,
+	hotptool/m4/gnulib-cache.m4, hotptool/m4/gnulib-common.m4,
+	hotptool/m4/gnulib-comp.m4, hotptool/m4/gnulib-tool.m4,
+	hotptool/m4/include_next.m4, hotptool/m4/onceonly.m4,
+	hotptool/m4/stddef_h.m4, hotptool/m4/strerror.m4,
+	hotptool/m4/string_h.m4, hotptool/m4/wchar_t.m4: Update gnulib
+	files.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/build-aux/config.rpath, libhotp/build-aux/link-warning.h,
+	libhotp/lib/Makefile.am, libhotp/lib/dummy.c,
+	libhotp/lib/gc-gnulib.c, libhotp/lib/gc-libgcrypt.c,
+	libhotp/lib/gc.h, libhotp/lib/hmac-sha1.c, libhotp/lib/hmac.h,
+	libhotp/lib/memxor.c, libhotp/lib/memxor.h, libhotp/lib/sha1.c,
+	libhotp/lib/sha1.h, libhotp/lib/stddef.in.h,
+	libhotp/lib/stdint.in.h, libhotp/lib/wchar.in.h,
+	libhotp/m4/00gnulib.m4, libhotp/m4/gc-hmac-sha1.m4,
+	libhotp/m4/gc.m4, libhotp/m4/gnulib-cache.m4,
+	libhotp/m4/gnulib-common.m4, libhotp/m4/gnulib-comp.m4,
+	libhotp/m4/gnulib-tool.m4, libhotp/m4/hmac-sha1.m4,
+	libhotp/m4/include_next.m4, libhotp/m4/ld-version-script.m4,
+	libhotp/m4/lib-ld.m4, libhotp/m4/lib-link.m4,
+	libhotp/m4/lib-prefix.m4, libhotp/m4/longlong.m4,
+	libhotp/m4/memxor.m4, libhotp/m4/multiarch.m4,
+	libhotp/m4/onceonly.m4, libhotp/m4/sha1.m4, libhotp/m4/stddef_h.m4,
+	libhotp/m4/stdint.m4, libhotp/m4/visibility.m4,
+	libhotp/m4/wchar.m4, libhotp/m4/wchar_t.m4, libhotp/m4/wint_t.m4: 
+	Update gnulib files.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/useless-if-before-free, build-aux/vc-list-files,
+	m4/00gnulib.m4, m4/gnulib-cache.m4, m4/gnulib-common.m4,
+	m4/gnulib-comp.m4, m4/gnulib-tool.m4, m4/onceonly.m4: Update gnulib
+	files.
+
+2009-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* Initial import.
+
+	-----
+
+	Copyright (C) 2009 Simon Josefsson
+
+	Copying and distribution of this file, with or without
+	modification, are permitted provided the copyright notice
+	and this notice are preserved.
