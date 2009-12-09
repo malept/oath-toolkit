@@ -60,6 +60,7 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_STRERROR
   gl_STRING_MODULE_INDICATOR([strerror])
   gl_HEADER_STRING_H
+  gl_UNISTD_H
   gl_VERSION_ETC
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -201,6 +202,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stddef.in.h
   lib/strerror.c
   lib/string.in.h
+  lib/unistd.in.h
   lib/version-etc.c
   lib/version-etc.h
   m4/00gnulib.m4
@@ -214,6 +216,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stddef_h.m4
   m4/strerror.m4
   m4/string_h.m4
+  m4/unistd_h.m4
   m4/version-etc.m4
   m4/wchar_t.m4
 ])
