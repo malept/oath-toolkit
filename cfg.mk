@@ -14,13 +14,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
-.DEFAULT_GOAL := none
+.DEFAULT_GOAL := buildit
 endif
 
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS sc_prohibit_strcmp
 
 # Re-add when we have translation
 local-checks-to-skip += sc_unmarked_diagnostics
+
+buildit:
+	test -f configure || autoreconf --force --install
+	test -f Makefile || ./configure $(CFGFLAGS)
+	make
 
 glimport:
 	gnulib-tool --import
