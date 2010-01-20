@@ -1,4 +1,4 @@
-Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
 [NAME]
 hotptool \- HOTP one-time password tool
@@ -24,7 +24,7 @@ which is used in the examples of RFC 4226:
    399871
    520489
    403154
-   $ 
+   $
 
 In the last output, the counter for the first OTP was 0, the second
 OTP had a counter of 1, and so on.
@@ -33,7 +33,7 @@ To validate an one-time password use:
 
    $ hotptool -w 10 3132333435363738393031323334353637383930 969429
    3
-   $ 
+   $
 
 The output indicates the counter that was used.  It works by starting
 with counter 0 and increment until it founds a match (or not), within

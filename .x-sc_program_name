@@ -1,2 +1,3 @@
-^libhotp/tests/tst_hotp.c
+^libhotp/tests/tst_hotp_algo.c
+^libhotp/tests/tst_hotp_usersfile.c
 ^pam_hotp/tests/test-pam_hotp.c

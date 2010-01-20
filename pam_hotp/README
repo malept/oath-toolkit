@@ -1,5 +1,5 @@
 HOTP Toolkit pam_hotp/README
-Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
 This directory holds an PAM module for authenticating users using OATH
 HOTP one-time password technology.
@@ -18,8 +18,8 @@ Configuration
 To use the module, first make sure that it is accessible as
 /lib/security/pam_hotp.so:
 
-# ln -s /usr/local/lib/pam_hotp.so /lib/security/pam_hotp.so 
-# ls -la /lib/security/pam_hotp.so 
+# ln -s /usr/local/lib/pam_hotp.so /lib/security/pam_hotp.so
+# ls -la /lib/security/pam_hotp.so
 lrwxrwxrwx 1 root root 53 Dec  4 10:49 /lib/security/pam_hotp.so -> /usr/local/lib/pam_hotp.so
 #
 
@@ -29,7 +29,7 @@ window open before making any changes!
 
 # head -1 /etc/pam.d/su
 auth requisite pam_hotp.so debug usersfile=/etc/users.hotp window=20
-# 
+#
 
 The next step is to create a user credentials file.  As you can see,
 the PAM configuration uses /etc/users.hotp for this.  So we create the
@@ -53,7 +53,7 @@ generate some one-time passwords.  The "hotptool" is handy for this purpose:
 887919
 320986
 435986
-# 
+#
 
 So let's test this by running 'su':
 
@@ -72,7 +72,7 @@ jas@mocca:~$ su
 [pam_hotp.c:parse_cfg(131)] digits=0
 [pam_hotp.c:parse_cfg(132)] window=20
 [pam_hotp.c:pam_sm_authenticate(162)] get user returned: root
-One-time password (HOTP) for `root': 
+One-time password (HOTP) for `root':
 [pam_hotp.c:pam_sm_authenticate(237)] conv returned: 328482
 [pam_hotp.c:pam_sm_authenticate(297)] OTP: 328482
 [pam_hotp.c:pam_sm_authenticate(308)] authenticate rc 0 last otp Wed Jun  3 19:22:50 1931
@@ -91,7 +91,7 @@ follows:
 
 # cat /etc/users.hotp
 HOTP	root	-	00	0	328482	2009-12-07T23:23:49L
-# 
+#
 
 In production use you will want to remove the 'debug' parameter in the
 PAM configuration.
@@ -104,14 +104,14 @@ length for the PAM module:
 
 # head -1 /etc/pam.d/su
 auth requisite pam_hotp.so usersfile=/etc/users.hotp window=20 digits=6
-# 
+#
 
 Next specify a password in the users.hotp file:
 
 # cat>/etc/users.hotp
 HOTP root pw 00
 # chmod go-rw /etc/users.hotp
-# 
+#
 
 Then test it:
 
@@ -131,9 +131,9 @@ jas@mocca:~$ su
 [pam_hotp.c:parse_cfg(131)] digits=6
 [pam_hotp.c:parse_cfg(132)] window=20
 [pam_hotp.c:pam_sm_authenticate(163)] get user returned: root
-One-time password (HOTP) for `root': 
+One-time password (HOTP) for `root':
 [pam_hotp.c:pam_sm_authenticate(238)] conv returned: pw820368
-[pam_hotp.c:pam_sm_authenticate(279)] Password: pw 
+[pam_hotp.c:pam_sm_authenticate(279)] Password: pw
 [pam_hotp.c:pam_sm_authenticate(297)] OTP: 820368
 [pam_hotp.c:pam_sm_authenticate(308)] authenticate rc 0 last otp Mon Jun  1 20:43:54 1931
 
@@ -141,7 +141,7 @@ One-time password (HOTP) for `root':
 [pam_hotp.c:pam_sm_setcred(342)] called.
 [pam_hotp.c:pam_sm_setcred(348)] retval: 0
 [pam_hotp.c:pam_sm_setcred(368)] done. [Success]
-mocca:/home/jas# 
+mocca:/home/jas#
 
 If you supply an incorrect password, you'll get:
 
@@ -161,9 +161,9 @@ jas@mocca:~$ su
 [pam_hotp.c:parse_cfg(131)] digits=6
 [pam_hotp.c:parse_cfg(132)] window=20
 [pam_hotp.c:pam_sm_authenticate(163)] get user returned: root
-One-time password (HOTP) for `root': 
+One-time password (HOTP) for `root':
 [pam_hotp.c:pam_sm_authenticate(238)] conv returned: grr525990
-[pam_hotp.c:pam_sm_authenticate(279)] Password: grr 
+[pam_hotp.c:pam_sm_authenticate(279)] Password: grr
 [pam_hotp.c:pam_sm_authenticate(297)] OTP: 525990
 [pam_hotp.c:pam_sm_authenticate(308)] authenticate rc -8 last otp Tue Jun  2 19:29:14 1931
 
@@ -173,7 +173,7 @@ One-time password (HOTP) for `root':
 [pam_hotp.c:pam_sm_setcred(342)] called.
 [pam_hotp.c:pam_sm_setcred(348)] retval: 0
 [pam_hotp.c:pam_sm_setcred(368)] done. [Success]
-mocca:/home/jas# 
+mocca:/home/jas#
 
 List of all parameters
 ----------------------
@@ -210,8 +210,8 @@ Debug hint
 By using a /lib/security symlink, you may point the module to a file
 in your build directory (for testing purposes):
 
-# ln -s /home/jas/src/hotp-toolkit/pam_hotp/.libs/pam_hotp.so /lib/security/pam_hotp.so 
-# ls -la /lib/security/pam_hotp.so 
+# ln -s /home/jas/src/hotp-toolkit/pam_hotp/.libs/pam_hotp.so /lib/security/pam_hotp.so
+# ls -la /lib/security/pam_hotp.so
 lrwxrwxrwx 1 root root 53 Dec  4 10:49 /lib/security/pam_hotp.so -> /home/jas/src/hotp-toolkit/pam_hotp/.libs/pam_hotp.so
 #
 

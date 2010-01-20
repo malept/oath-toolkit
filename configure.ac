@@ -1,4 +1,4 @@
-# Copyright (C) 2009  Simon Josefsson
+# Copyright (C) 2009, 2010  Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ AC_ARG_ENABLE([pam],
    [],
    [enable_pam=$ac_cv_header_security_pam_appl_h])
 AM_CONDITIONAL([ENABLE_PAM], [test "x$enable_pam" = xyes])
-  
+
 gl_EARLY
 gl_INIT
 
