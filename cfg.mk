@@ -1,4 +1,4 @@
-# Copyright (C) 2009  Simon Josefsson
+# Copyright (C) 2009, 2010  Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,10 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
+.DEFAULT_GOAL := none
+endif
+
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS sc_prohibit_strcmp
 
 # Re-add when we have translation
 local-checks-to-skip += sc_unmarked_diagnostics
+
+glimport:
+	gnulib-tool --import
+	rm -rf lib
+	cd hotptool && gnulib-tool --import
+	cd libhotp && gnulib-tool --import
+	cd pam_hotp && gnulib-tool --import
 
 ChangeLog:
 	git2cl > ChangeLog
