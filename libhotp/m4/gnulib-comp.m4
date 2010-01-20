@@ -65,6 +65,9 @@ AC_DEFUN([gl_INIT],
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
+  gl_HEADER_TIME_H
   gl_UNISTD_H
   gl_WCHAR_H
   m4_ifval(gl_LIBSOURCES_LIST, [
@@ -220,6 +223,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdlib.in.h
   lib/string.in.h
   lib/strverscmp.c
+  lib/sys_stat.in.h
+  lib/time.in.h
   lib/unistd.in.h
   lib/wchar.in.h
   m4/00gnulib.m4
@@ -249,6 +254,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stdlib_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
+  m4/sys_stat_h.m4
+  m4/time_h.m4
   m4/unistd_h.m4
   m4/visibility.m4
   m4/warn-on-use.m4

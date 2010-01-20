@@ -1,6 +1,6 @@
 /*
  * usersfile.c - implementation of UsersFile based HOTP validation
- * Copyright (C) 2009  Simon Josefsson
+ * Copyright (C) 2009, 2010  Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,6 +27,7 @@
 #include <unistd.h>		/* For ssize_t. */
 #include <fcntl.h>		/* For fcntl. */
 #include <errno.h>		/* For errno. */
+#include <sys/stat.h>		/* For S_IRUSR, S_IWUSR. */
 
 static unsigned
 parse_type (const char *str)
