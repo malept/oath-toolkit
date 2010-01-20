@@ -1,5 +1,5 @@
 /* Program name management.
-   Copyright (C) 2001-2004, 2006, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006, 2009-2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -41,8 +41,8 @@ extern void set_program_name (const char *argv0);
 /* Set program_name, based on argv[0], and original installation prefix and
    directory, for relocatability.  */
 extern void set_program_name_and_installdir (const char *argv0,
-					     const char *orig_installprefix,
-					     const char *orig_installdir);
+                                             const char *orig_installprefix,
+                                             const char *orig_installdir);
 #undef set_program_name
 #define set_program_name(ARG0) \
   set_program_name_and_installdir (ARG0, INSTALLPREFIX, INSTALLDIR)

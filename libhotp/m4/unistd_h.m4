@@ -1,5 +1,5 @@
-# unistd_h.m4 serial 36
-dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
+# unistd_h.m4 serial 38
+dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,6 +11,7 @@ AC_DEFUN([gl_UNISTD_H],
   dnl Use AC_REQUIRE here, so that the default behavior below is expanded
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_C_INLINE])
 
   gl_CHECK_NEXT_HEADERS([unistd.h])
 
@@ -21,6 +22,15 @@ AC_DEFUN([gl_UNISTD_H],
     HAVE_UNISTD_H=0
   fi
   AC_SUBST([HAVE_UNISTD_H])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <unistd.h>
+/* Some systems declare environ in the wrong header.  */
+#ifndef __GLIBC__
+# include <stdlib.h>
+#endif
+    ]], [environ])
 ])
 
 AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],
@@ -48,6 +58,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_GETDTABLESIZE=0;    AC_SUBST([GNULIB_GETDTABLESIZE])
   GNULIB_GETGROUPS=0;        AC_SUBST([GNULIB_GETGROUPS])
   GNULIB_GETHOSTNAME=0;      AC_SUBST([GNULIB_GETHOSTNAME])
+  GNULIB_GETLOGIN=0;         AC_SUBST([GNULIB_GETLOGIN])
   GNULIB_GETLOGIN_R=0;       AC_SUBST([GNULIB_GETLOGIN_R])
   GNULIB_GETPAGESIZE=0;      AC_SUBST([GNULIB_GETPAGESIZE])
   GNULIB_GETUSERSHELL=0;     AC_SUBST([GNULIB_GETUSERSHELL])
@@ -82,6 +93,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_GETDTABLESIZE=1;   AC_SUBST([HAVE_GETDTABLESIZE])
   HAVE_GETGROUPS=1;       AC_SUBST([HAVE_GETGROUPS])
   HAVE_GETHOSTNAME=1;     AC_SUBST([HAVE_GETHOSTNAME])
+  HAVE_GETLOGIN=1;        AC_SUBST([HAVE_GETLOGIN])
   HAVE_GETPAGESIZE=1;     AC_SUBST([HAVE_GETPAGESIZE])
   HAVE_GETUSERSHELL=1;    AC_SUBST([HAVE_GETUSERSHELL])
   HAVE_LCHOWN=1;          AC_SUBST([HAVE_LCHOWN])

@@ -2,7 +2,7 @@
 # This Makefile fragment tries to be general-purpose enough to be
 # used by many projects via the gnulib maintainer-makefile module.
 
-## Copyright (C) 2001-2009 Free Software Foundation, Inc.
+## Copyright (C) 2001-2010 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -30,16 +30,20 @@ gzip_rsyncable := \
   $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null && echo --rsyncable)
 GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
-# cfg.mk must define the gpg_key_ID used by this package.
 GIT = git
 VC = $(GIT)
 VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 
 VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 
+# You can override this variable in cfg.mk to set your own regexp
+# matching files to ignore.
+VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
+
 VC_LIST_EXCEPT = \
   $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
-	       else grep -Ev "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi
+	       else grep -Ev -e "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi \
+	| grep -Ev -e '$(VC_LIST_ALWAYS_EXCLUDE_REGEX)'
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version
@@ -325,9 +329,15 @@ sc_prohibit_error_without_use:
 # | sort | perl -MRegexp::Assemble -le \
 #  'print Regexp::Assemble->new(file => "/dev/stdin")->as_string'|sed 's/\?://g'
 # Note this was produced by the above:
-# _xa1 = x(alloc_(oversized|die)|([cz]|2?re)alloc|m(alloc|emdup)|strdup)
-# But we can do better:
-_xa1 = x(alloc_(oversized|die)|([cmz]|2?re)alloc|(mem|str)dup)
+# _xa1 = \
+#x(((2n?)?re|c(har)?|n(re|m)|z)alloc|alloc_(oversized|die)|m(alloc|emdup)|strdup)
+# But we can do better, in at least two ways:
+# 1) take advantage of two "dup"-suffixed strings:
+# x(((2n?)?re|c(har)?|n(re|m)|[mz])alloc|alloc_(oversized|die)|(mem|str)dup)
+# 2) notice that "c(har)?|[mz]" is equivalent to the shorter and more readable
+# "char|[cmz]"
+# x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
+_xa1 = x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
 _xa2 = X([CZ]|N?M)ALLOC
 sc_prohibit_xalloc_without_use:
 	@h='"xalloc.h"' \
@@ -490,6 +500,13 @@ sc_GPL_version:
 	@re='either ''version [^3]' msg='GPL vN, N!=3'			\
 	  $(_prohibit_regexp)
 
+# Require the latest GFDL.  Two regexp, since some .texi files end up
+# line wrapping between 'Free Documentation License,' and 'Version'.
+_GFDL_regexp = (Free ''Documentation.*Version 1\.[^3]|Version 1\.[^3] or any)
+sc_GFDL_version:
+	@re='$(_GFDL_regexp)' msg='GFDL vN, N!=3'			\
+	  $(_prohibit_regexp)
+
 cvs_keywords = \
   Author|Date|Header|Id|Name|Locker|Log|RCSfile|Revision|Source|State
 
@@ -512,14 +529,20 @@ sc_prohibit_S_IS_definition:
 	msg='do not define S_IS* macros; include <sys/stat.h>'		\
 	  $(_prohibit_regexp)
 
-# Each program that uses proper_name_utf8 must link with
-# one of the ICONV libraries.
+# Each program that uses proper_name_utf8 must link with one of the
+# ICONV libraries.  Otherwise, some ICONV library must appear in LDADD.
+# The perl -0777 invocation below extracts the possibly-multi-line
+# definition of LDADD from the appropriate Makefile.am and exits 0
+# when it contains "ICONV".
 sc_proper_name_utf8_requires_ICONV:
 	@progs=$$(grep -l 'proper_name_utf8 ''("' $$($(VC_LIST_EXCEPT)));\
 	if test "x$$progs" != x; then					\
 	  fail=0;							\
 	  for p in $$progs; do						\
 	    dir=$$(dirname "$$p");					\
+	    perl -0777							\
+	      -ne 'exit !(/^LDADD =(.+?[^\\]\n)/ms && $$1 =~ /ICONV/)'	\
+	      $$dir/Makefile.am && continue;				\
 	    base=$$(basename "$$p" .c);					\
 	    grep "$${base}_LDADD.*ICONV)" $$dir/Makefile.am > /dev/null	\
 	      || { fail=1; echo 1>&2 "$(ME): $$p uses proper_name_utf8"; }; \
@@ -545,7 +568,8 @@ sc_const_long_option:
 NEWS_hash =								\
   $$(sed -n '/^\*.* $(PREV_VERSION_REGEXP) ([0-9-]*)/,$$p'		\
        $(srcdir)/NEWS							\
-     | grep -v '^Copyright .*Free Software'				\
+     | perl -0777 -pe							\
+	's/^Copyright.+?Free\sSoftware\sFoundation,\sInc\.\n//ms'	\
      | md5sum -								\
      | sed 's/ .*//')
 
@@ -567,8 +591,12 @@ update-NEWS-hash: NEWS
 # to emit a definition for each substituted variable.
 # We use perl rather than "grep -nE ..." to exempt a single
 # use of an @...@-delimited variable name in src/Makefile.am.
-sc_makefile_check:
-	@perl -ne '/\@[A-Z_0-9]+\@/ && !/^cu_install_program =/'	\
+# Allow the package to add exceptions via a hook in cfg.mk;
+# for example, @PRAGMA_SYSTEM_HEADER@ can be permitted by
+# setting this to ' && !/PRAGMA_SYSTEM_HEADER/'.
+_makefile_at_at_check_exceptions ?=
+sc_makefile_at_at_check:
+	@perl -ne '/\@[A-Z_0-9]+\@/'$(_makefile_at_at_check_exceptions)	\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
 	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
@@ -682,22 +710,18 @@ vc-diff-check:
 	  rm vc-diffs;						\
 	fi
 
-# Use this to make sure we don't run these programs when building
-# from a virgin tgz file, below.
-null_AM_MAKEFLAGS = \
-  ACLOCAL=false \
-  AUTOCONF=false \
-  AUTOMAKE=false \
-  AUTOHEADER=false \
-  MAKEINFO=false
-
-built_programs = $$(cd src && MAKEFLAGS= $(MAKE) -s built_programs.list)
-
 rel-files = $(DIST_ARCHIVES)
 
 gnulib_dir ?= $(srcdir)/gnulib
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
 bootstrap-tools ?= autoconf,automake,gnulib
+
+# If it's not already specified, derive the GPG key ID from
+# the signed tag we've just applied to mark this release.
+gpg_key_ID ?= \
+  $$(git cat-file tag v$(VERSION) > .ann-sig \
+     && gpgv .ann-sig - < /dev/null 2>&1 \
+	  | sed -n '/.*key ID \([0-9A-F]*\)/s//\1/p'; rm -f .ann-sig)
 
 announcement: NEWS ChangeLog $(rel-files)
 	@$(build_aux)/announce-gen					\
@@ -706,7 +730,7 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --prev=$(PREV_VERSION)					\
 	    --curr=$(VERSION)						\
 	    --gpg-key-id=$(gpg_key_ID)					\
-	    --news=NEWS							\
+	    --news=$(srcdir)/NEWS					\
 	    --bootstrap-tools=$(bootstrap-tools)			\
 	    --gnulib-version=$(gnulib-version)				\
 	    --no-print-checksums					\
@@ -725,7 +749,7 @@ emit_upload_commands:
 	@echo "$(build_aux)/gnupload $(GNUPLOADFLAGS) \\"
 	@echo "    --to $(gnu_rel_host):$(PACKAGE) \\"
 	@echo "  $(rel-files)"
-	@echo '# send the /tmp/announcement e-mail'
+	@echo '# send the ~/announce-$(my_distdir) e-mail'
 	@echo =====================================
 	@echo =====================================
 
@@ -761,17 +785,27 @@ alpha beta stable: $(local-check) writable-files no-submodule-changes
 	$(MAKE) news-check
 	$(MAKE) distcheck
 	$(MAKE) dist XZ_OPT=-9ev
-	$(MAKE) -s announcement RELEASE_TYPE=$@ > /tmp/announce-$(my_distdir)
+	$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
+	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
+
+# Override this in cfg.mk if you follow different procedures.
+release-prep-hook ?= release-prep
+
+.PHONY: release-prep
+release-prep:
+	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
+	  *) echo "invalid RELEASE_TYPE: $$RELEASE_TYPE" 1>&2; exit 1;; esac
+	$(MAKE) -s announcement > ~/announce-$(my_distdir)
 	if test -d $(release_archive_dir); then			\
 	  ln $(rel-files) $(release_archive_dir);		\
 	  chmod a-w $(rel-files);				\
 	fi
-	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 	echo $(VERSION) > $(prev_version_file)
 	$(MAKE) update-NEWS-hash
 	perl -pi -e '$$. == 3 and print "$(noteworthy)\n\n\n"' NEWS
 	$(emit-commit-log) > .ci-msg
 	$(VC) commit -F .ci-msg -a
+	rm .ci-msg
 
 .PHONY: web-manual
 web-manual:

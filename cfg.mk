@@ -24,10 +24,11 @@ local-checks-to-skip += sc_unmarked_diagnostics
 
 glimport:
 	gnulib-tool --import
-	rm -rf lib
-	cd hotptool && gnulib-tool --import
+	rm -rfv lib
 	cd libhotp && gnulib-tool --import
+	cd hotptool && gnulib-tool --import
 	cd pam_hotp && gnulib-tool --import
+	rm -rfv pam_hotp/lib pam_hotp/build-aux
 
 ChangeLog:
 	git2cl > ChangeLog
