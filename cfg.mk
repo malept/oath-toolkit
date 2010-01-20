@@ -27,8 +27,6 @@ glimport:
 	rm -rfv lib
 	cd libhotp && gnulib-tool --import
 	cd hotptool && gnulib-tool --import
-	cd pam_hotp && gnulib-tool --import
-	rm -rfv pam_hotp/lib pam_hotp/build-aux
 
 ChangeLog:
 	git2cl > ChangeLog
