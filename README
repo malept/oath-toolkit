@@ -1,4 +1,4 @@
-Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
 The HOTP Toolkit package contains tools that are useful when deploying
 the one-time password HOTP technology.  See RFC 4226 for technical
@@ -11,3 +11,13 @@ background on HOTP.  The components included in the package is:
    * pam_hotp: A PAM module for pluggable login authentication.
 
 See each sub-directory for more information.
+
+For updates on the project please visit our web page:
+
+   http://www.nongnu.org/hotp-toolkit/
+
+For e-mail discussions related the HOTP Toolkit, please send e-mail to
+hotp-toolkit-help@nongnu.org after subscribing to the mailing list
+through this web page:
+
+  http://lists.nongnu.org/mailman/listinfo/hotp-toolkit-help
