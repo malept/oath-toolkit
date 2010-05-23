@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 30
+# wchar_h.m4 serial 33
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -33,6 +33,19 @@ AC_DEFUN([gl_WCHAR_H],
     HAVE_WINT_T=0
   fi
   AC_SUBST([HAVE_WINT_T])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+/* Some systems require additional headers.  */
+#ifndef __GLIBC__
+# include <stddef.h>
+# include <stdio.h>
+# include <time.h>
+#endif
+#include <wchar.h>
+    ]], [btowc wctob mbsinit mbrtowc mbrlen mbsrtowcs mbsnrtowcs wcrtomb
+    wcsrtombs wcsnrtombs wcwidth])
 ])
 
 dnl Check whether <wchar.h> is usable at all.
@@ -94,7 +107,9 @@ AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
 AC_DEFUN([gl_WCHAR_H_DEFAULTS],

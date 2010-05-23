@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 21   -*- Autoconf -*-
+# sys_stat_h.m4 serial 24   -*- Autoconf -*-
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,13 +27,20 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
     [#include <sys/types.h>
      #include <sys/stat.h>])
 
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <sys/stat.h>
+    ]], [fchmodat fstatat futimens lchmod lstat mkdirat mkfifo mkfifoat
+    mknod mknodat stat utimensat])
 ]) # gl_HEADER_SYS_STAT_H
 
 AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
 AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
