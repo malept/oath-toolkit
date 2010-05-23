@@ -11,13 +11,17 @@ AUTOMAKE_OPTIONS = 1.6
 # The name of the module, e.g. 'glib'.
 DOC_MODULE=$(PACKAGE)
 
+# Uncomment for versioned docs and specify the version of the module, e.g. '2'.
+#DOC_MODULE_VERSION=2
+
+
 # The top-level SGML file. You can change this if you want to.
 DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
 
-# The directory containing the source code. Relative to $(srcdir).
-# gtk-doc will search all .c & .h files beneath here for inline comments
-# documenting the functions and macros.
-# e.g. DOC_SOURCE_DIR=../../../gtk
+# Directories containing the source code, relative to $(srcdir).
+# gtk-doc will search all .c and .h files beneath these paths
+# for inline comments documenting functions and macros.
+# e.g. DOC_SOURCE_DIR=../../../gtk ../../../gdk
 DOC_SOURCE_DIR=../
 
 # Extra options to pass to gtkdoc-scangobj. Not normally needed.
@@ -35,6 +39,9 @@ MKDB_OPTIONS=--sgml-mode --output-format=xml
 # e.g. MKTMPL_OPTIONS=--only-section-tmpl
 MKTMPL_OPTIONS=
 
+# Extra options to supply to gtkdoc-mkhtml
+MKHTML_OPTIONS=
+
 # Extra options to supply to gtkdoc-fixref. Not normally needed.
 # e.g. FIXXREF_OPTIONS=--extra-dir=../gdk-pixbuf/html --extra-dir=../gdk/html
 FIXXREF_OPTIONS=
@@ -45,7 +52,11 @@ FIXXREF_OPTIONS=
 HFILE_GLOB=$(top_srcdir)/hotp.h
 CFILE_GLOB=$(top_srcdir)/hotp.c
 
-# Header files to ignore when scanning.
+# Extra header to include when scanning, which are not under DOC_SOURCE_DIR
+# e.g. EXTRA_HFILES=$(top_srcdir}/contrib/extra.h
+EXTRA_HFILES=
+
+# Header files to ignore when scanning. Use base file name, no paths
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES=
 
@@ -65,9 +76,9 @@ expand_content_files=
 # CFLAGS and LDFLAGS for compiling gtkdoc-scangobj with your library.
 # Only needed if you are using gtkdoc-scangobj to dynamically query widget
 # signals and properties.
-# e.g. INCLUDES=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
+# e.g. GTKDOC_CFLAGS=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
 # e.g. GTKDOC_LIBS=$(top_builddir)/gtk/$(gtktargetlib)
-AM_CPPFLAGS=
+GTKDOC_CFLAGS=
 GTKDOC_LIBS=
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.
@@ -83,5 +94,7 @@ EXTRA_DIST +=
 #DISTCLEANFILES +=
 
 # Comment this out if you want your docs-status tested during 'make check'
+if ENABLE_GTK_DOC
+#TESTS_ENVIRONMENT = cd $(srcsrc) &&
 #TESTS = $(GTKDOC_CHECK)
-
+endif
