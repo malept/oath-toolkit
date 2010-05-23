@@ -6,6 +6,10 @@ Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 ** libhotp: Fix build failure due to missing sys/stat.h include on FreeBSD 7.2.
 Reported by Kevin Quinlan <Kevin.Quinlan@polidoris.com>.
 
+** libhotp DOC: Added GTK-DOC manual in PDF format.
+
+** build: Gnulib files were updated.
+
 * Version 1.0.0 (released 2009-12-08)
 
 ** Initial release.
