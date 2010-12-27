@@ -1,6 +1,6 @@
-Copyright (C) 2009 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
-Each component of the HOTP Toolkit has its own license, see COPYING in
+Each component of the OATH Toolkit has its own license, see COPYING in
 each sub-directory.  In particular:
 
    * libhotp: Licensed under the LGPLv2.1+.
