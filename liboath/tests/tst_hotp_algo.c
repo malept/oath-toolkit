@@ -214,7 +214,8 @@ main (void)
     for (moving_factor = 0; moving_factor < MAX_ITER; moving_factor++)
       {
 	rc = oath_hotp_generate (secret, secretlen, moving_factor,
-				digits, false, OATH_DYNAMIC_TRUNCATION, otp);
+				digits, false, OATH_HOTP_DYNAMIC_TRUNCATION,
+				 otp);
 	if (rc != OATH_OK)
 	  {
 	    printf ("oath_hotp_generate: %d\n", rc);
@@ -244,7 +245,8 @@ main (void)
   for (digits = 0; digits < 6; digits++)
     {
       rc = oath_hotp_generate (secret, secretlen, moving_factor,
-			      digits, false, OATH_DYNAMIC_TRUNCATION, otp);
+			      digits, false, OATH_HOTP_DYNAMIC_TRUNCATION,
+			       otp);
       if (rc != OATH_INVALID_DIGITS)
 	{
 	  printf ("oath_hotp_generate %d digits %d\n", digits, rc);
@@ -254,7 +256,8 @@ main (void)
   for (digits = 9; digits < 15; digits++)
     {
       rc = oath_hotp_generate (secret, secretlen, moving_factor,
-			      digits, false, OATH_DYNAMIC_TRUNCATION, otp);
+			      digits, false, OATH_HOTP_DYNAMIC_TRUNCATION,
+			       otp);
       if (rc != OATH_INVALID_DIGITS)
 	{
 	  printf ("oath_hotp_generate %d digits %d\n", digits, rc);

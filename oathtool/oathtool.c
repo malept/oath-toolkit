@@ -147,7 +147,7 @@ main (int argc, char *argv[])
 				   moving_factor + iter,
 				   digits,
 				   false,
-				   OATH_DYNAMIC_TRUNCATION,
+				   OATH_HOTP_DYNAMIC_TRUNCATION,
 				   otp);
 	  if (rc != OATH_OK)
 	    error (EXIT_FAILURE, 0,

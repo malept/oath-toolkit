@@ -164,7 +164,8 @@ oath_hotp_validate (const char *secret,
 			       secret_length,
 			       start_moving_factor + iter,
 			       digits,
-			       false, OATH_DYNAMIC_TRUNCATION, tmp_otp);
+			       false, OATH_HOTP_DYNAMIC_TRUNCATION,
+			       tmp_otp);
       if (rc != OATH_OK)
 	return rc;
 
