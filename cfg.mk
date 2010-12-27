@@ -60,7 +60,7 @@ upload:
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 
 web:
-	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
+	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
 
 upload-web:
 	cd $(htmldir) && \
