@@ -1,5 +1,181 @@
 2010-12-27  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 1.2.0.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac: Revert to 0/0/0 libtool library version.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, README, cfg.mk: Update NEWS and fix some renaming.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, README, hotptool/COPYING, hotptool/Makefile.am,
+	hotptool/build-aux/arg-nonnull.h, hotptool/build-aux/c++defs.h,
+	hotptool/build-aux/warn-on-use.h, hotptool/configure.ac,
+	hotptool/hotptool.c, hotptool/hotptool.ggo, hotptool/hotptool.h2m,
+	hotptool/lib/Makefile.am, hotptool/lib/errno.in.h,
+	hotptool/lib/error.c, hotptool/lib/error.h, hotptool/lib/gettext.h,
+	hotptool/lib/intprops.h, hotptool/lib/progname.c,
+	hotptool/lib/progname.h, hotptool/lib/stdarg.in.h,
+	hotptool/lib/stddef.in.h, hotptool/lib/strerror.c,
+	hotptool/lib/string.in.h, hotptool/lib/unistd.in.h,
+	hotptool/lib/version-etc.c, hotptool/lib/version-etc.h,
+	hotptool/m4/00gnulib.m4, hotptool/m4/errno_h.m4,
+	hotptool/m4/error.m4, hotptool/m4/extensions.m4,
+	hotptool/m4/gnulib-cache.m4, hotptool/m4/gnulib-common.m4,
+	hotptool/m4/gnulib-comp.m4, hotptool/m4/gnulib-tool.m4,
+	hotptool/m4/include_next.m4, hotptool/m4/onceonly.m4,
+	hotptool/m4/stdarg.m4, hotptool/m4/stddef_h.m4,
+	hotptool/m4/strerror.m4, hotptool/m4/string_h.m4,
+	hotptool/m4/unistd_h.m4, hotptool/m4/version-etc.m4,
+	hotptool/m4/warn-on-use.m4, hotptool/m4/wchar_t.m4,
+	hotptool/tests/Makefile.am, hotptool/tests/tst_hotptool.sh,
+	libhotp/COPYING, libhotp/Makefile.am,
+	libhotp/build-aux/arg-nonnull.h, libhotp/build-aux/c++defs.h,
+	libhotp/build-aux/config.rpath, libhotp/build-aux/warn-on-use.h,
+	libhotp/configure.ac, libhotp/gtk-doc.make,
+	libhotp/gtk-doc/Makefile.am, libhotp/gtk-doc/libhotp-docs.sgml,
+	libhotp/hotp.c, libhotp/hotp.h, libhotp/lib/Makefile.am,
+	libhotp/lib/dummy.c, libhotp/lib/errno.in.h,
+	libhotp/lib/gc-gnulib.c, libhotp/lib/gc-libgcrypt.c,
+	libhotp/lib/gc.h, libhotp/lib/getdelim.c, libhotp/lib/getline.c,
+	libhotp/lib/hmac-sha1.c, libhotp/lib/hmac.h, libhotp/lib/memxor.c,
+	libhotp/lib/memxor.h, libhotp/lib/realloc.c, libhotp/lib/sha1.c,
+	libhotp/lib/sha1.h, libhotp/lib/stddef.in.h,
+	libhotp/lib/stdint.in.h, libhotp/lib/stdio-write.c,
+	libhotp/lib/stdio.in.h, libhotp/lib/stdlib.in.h,
+	libhotp/lib/string.in.h, libhotp/lib/strverscmp.c,
+	libhotp/lib/sys_stat.in.h, libhotp/lib/time.in.h,
+	libhotp/lib/unistd.in.h, libhotp/lib/wchar.in.h,
+	libhotp/libhotp.map, libhotp/m4/00gnulib.m4,
+	libhotp/m4/asm-underscore.m4, libhotp/m4/errno_h.m4,
+	libhotp/m4/extensions.m4, libhotp/m4/gc-hmac-sha1.m4,
+	libhotp/m4/gc.m4, libhotp/m4/getdelim.m4, libhotp/m4/getline.m4,
+	libhotp/m4/gnulib-cache.m4, libhotp/m4/gnulib-common.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/gnulib-tool.m4,
+	libhotp/m4/gtk-doc.m4, libhotp/m4/hmac-sha1.m4,
+	libhotp/m4/include_next.m4, libhotp/m4/ld-version-script.m4,
+	libhotp/m4/lib-ld.m4, libhotp/m4/lib-link.m4,
+	libhotp/m4/lib-prefix.m4, libhotp/m4/longlong.m4,
+	libhotp/m4/malloc.m4, libhotp/m4/memxor.m4,
+	libhotp/m4/multiarch.m4, libhotp/m4/onceonly.m4,
+	libhotp/m4/realloc.m4, libhotp/m4/sha1.m4, libhotp/m4/stddef_h.m4,
+	libhotp/m4/stdint.m4, libhotp/m4/stdio_h.m4,
+	libhotp/m4/stdlib_h.m4, libhotp/m4/string_h.m4,
+	libhotp/m4/strverscmp.m4, libhotp/m4/sys_stat_h.m4,
+	libhotp/m4/time_h.m4, libhotp/m4/unistd_h.m4,
+	libhotp/m4/visibility.m4, libhotp/m4/warn-on-use.m4,
+	libhotp/m4/wchar_h.m4, libhotp/m4/wchar_t.m4, libhotp/m4/wint_t.m4,
+	libhotp/tests/Makefile.am, libhotp/tests/expect.hotp,
+	libhotp/tests/tst_hotp_algo.c, libhotp/tests/tst_hotp_usersfile.c,
+	libhotp/tests/tst_hotp_usersfile.sh, libhotp/tests/users.hotp,
+	libhotp/usersfile.c, pam_hotp/COPYING, pam_hotp/Makefile.am,
+	pam_hotp/README, pam_hotp/configure.ac, pam_hotp/m4/dummy,
+	pam_hotp/pam_hotp.c, pam_hotp/tests/Makefile.am,
+	pam_hotp/tests/test-pam_hotp.c: Drop the old stuff.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, pam_oath/COPYING,
+	pam_oath/Makefile.am, pam_oath/README, pam_oath/configure.ac,
+	pam_oath/m4/dummy, pam_oath/pam_oath.c, pam_oath/tests/Makefile.am,
+	pam_oath/tests/test-pam_oath.c: Add pam_oath, based on pam_hotp.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, Makefile.am, README, configure.ac, oathtool/COPYING,
+	oathtool/Makefile.am, oathtool/build-aux/arg-nonnull.h,
+	oathtool/build-aux/c++defs.h, oathtool/build-aux/warn-on-use.h,
+	oathtool/configure.ac, oathtool/lib/Makefile.am,
+	oathtool/lib/errno.in.h, oathtool/lib/error.c,
+	oathtool/lib/error.h, oathtool/lib/gettext.h,
+	oathtool/lib/intprops.h, oathtool/lib/progname.c,
+	oathtool/lib/progname.h, oathtool/lib/stdarg.in.h,
+	oathtool/lib/stddef.in.h, oathtool/lib/strerror.c,
+	oathtool/lib/string.in.h, oathtool/lib/unistd.in.h,
+	oathtool/lib/version-etc.c, oathtool/lib/version-etc.h,
+	oathtool/m4/00gnulib.m4, oathtool/m4/errno_h.m4,
+	oathtool/m4/error.m4, oathtool/m4/extensions.m4,
+	oathtool/m4/gnulib-cache.m4, oathtool/m4/gnulib-common.m4,
+	oathtool/m4/gnulib-comp.m4, oathtool/m4/gnulib-tool.m4,
+	oathtool/m4/include_next.m4, oathtool/m4/onceonly.m4,
+	oathtool/m4/stdarg.m4, oathtool/m4/stddef_h.m4,
+	oathtool/m4/strerror.m4, oathtool/m4/string_h.m4,
+	oathtool/m4/unistd_h.m4, oathtool/m4/version-etc.m4,
+	oathtool/m4/warn-on-use.m4, oathtool/m4/wchar_t.m4,
+	oathtool/oathtool.c, oathtool/oathtool.ggo, oathtool/oathtool.h2m,
+	oathtool/tests/Makefile.am, oathtool/tests/tst_oathtool.sh: Add
+	oathtool, based on hotptool.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/oath.h: Drop.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/build-aux/arg-nonnull.h, liboath/build-aux/c++defs.h,
+	liboath/build-aux/config.rpath, liboath/build-aux/warn-on-use.h,
+	liboath/lib/Makefile.am, liboath/lib/dummy.c,
+	liboath/lib/errno.in.h, liboath/lib/gc-gnulib.c,
+	liboath/lib/gc-libgcrypt.c, liboath/lib/gc.h,
+	liboath/lib/getdelim.c, liboath/lib/getline.c,
+	liboath/lib/hmac-sha1.c, liboath/lib/hmac.h, liboath/lib/memxor.c,
+	liboath/lib/memxor.h, liboath/lib/realloc.c, liboath/lib/sha1.c,
+	liboath/lib/sha1.h, liboath/lib/stddef.in.h,
+	liboath/lib/stdint.in.h, liboath/lib/stdio-write.c,
+	liboath/lib/stdio.in.h, liboath/lib/stdlib.in.h,
+	liboath/lib/string.in.h, liboath/lib/strverscmp.c,
+	liboath/lib/sys_stat.in.h, liboath/lib/time.in.h,
+	liboath/lib/unistd.in.h, liboath/lib/wchar.in.h,
+	liboath/m4/00gnulib.m4, liboath/m4/asm-underscore.m4,
+	liboath/m4/errno_h.m4, liboath/m4/extensions.m4,
+	liboath/m4/gc-hmac-sha1.m4, liboath/m4/gc.m4,
+	liboath/m4/getdelim.m4, liboath/m4/getline.m4,
+	liboath/m4/gnulib-cache.m4, liboath/m4/gnulib-common.m4,
+	liboath/m4/gnulib-comp.m4, liboath/m4/gnulib-tool.m4,
+	liboath/m4/hmac-sha1.m4, liboath/m4/include_next.m4,
+	liboath/m4/ld-version-script.m4, liboath/m4/lib-ld.m4,
+	liboath/m4/lib-link.m4, liboath/m4/lib-prefix.m4,
+	liboath/m4/longlong.m4, liboath/m4/malloc.m4, liboath/m4/memxor.m4,
+	liboath/m4/multiarch.m4, liboath/m4/onceonly.m4,
+	liboath/m4/realloc.m4, liboath/m4/sha1.m4, liboath/m4/stddef_h.m4,
+	liboath/m4/stdint.m4, liboath/m4/stdio_h.m4,
+	liboath/m4/stdlib_h.m4, liboath/m4/string_h.m4,
+	liboath/m4/strverscmp.m4, liboath/m4/sys_stat_h.m4,
+	liboath/m4/time_h.m4, liboath/m4/unistd_h.m4,
+	liboath/m4/visibility.m4, liboath/m4/warn-on-use.m4,
+	liboath/m4/wchar_h.m4, liboath/m4/wchar_t.m4, liboath/m4/wint_t.m4: 
+	Add gnulib files.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, Makefile.am, configure.ac: Also build liboath.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/COPYING, liboath/Makefile.am, liboath/configure.ac,
+	liboath/global.c, liboath/gtk-doc.make,
+	liboath/gtk-doc/Makefile.am, liboath/gtk-doc/liboath-docs.sgml,
+	liboath/hotp.c, liboath/liboath.map, liboath/oath.h,
+	liboath/tests/Makefile.am, liboath/tests/expect.hotp,
+	liboath/tests/tst_hotp_algo.c, liboath/tests/tst_hotp_usersfile.c,
+	liboath/tests/tst_hotp_usersfile.sh, liboath/tests/users.hotp,
+	liboath/usersfile.c: Create a liboath, based on libhotp.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, NEWS, README, configure.ac, libhotp/configure.ac,
+	pam_hotp/configure.ac: Rename from HOTP Toolkit to OATH Toolkit.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.0.1.
 
 2010-12-27  Simon Josefsson <simon@josefsson.org>
