@@ -27,7 +27,8 @@ build_aux ?= $(srcdir)/build-aux
 # Do not save the original name or timestamp in the .tar.gz file.
 # Use --rsyncable if available.
 gzip_rsyncable := \
-  $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null && echo --rsyncable)
+  $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null \
+    && printf %s --rsyncable)
 GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
 GIT = git
@@ -102,6 +103,12 @@ endif
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
 today = $(shell date +%Y-%m-%d)
+
+# Select which lines of NEWS are searched for $(news-check-regexp).
+# This is a sed line number spec.  The default says that we search
+# lines 1..10 of NEWS for $(news-check-regexp).
+# If you want to search only line 3 or only lines 20-22, use "3" or "20,22".
+news-check-lines-spec ?= 1,10
 news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
@@ -187,11 +194,11 @@ syntax-check: $(local-check)
 
 # By default, _sc_search_regexp does not ignore case.
 export ignore_case =
-_ignore_case = $$(test -n "$$ignore_case" && echo -i || :)
+_ignore_case = $$(test -n "$$ignore_case" && printf %s -i || :)
 
 define _sc_say_and_exit
    dummy=; : so we do not need a semicolon before each use;		\
-   { echo -e "$(ME): $$msg" 1>&2; exit 1; };
+   { printf '%s\n' "$(ME): $$msg" 1>&2; exit 1; };
 endef
 
 # _sc_search_regexp used to be named _prohibit_regexp.  However,
@@ -583,8 +590,17 @@ sc_changelog:
 sc_program_name:
 	@require='set_program_name *\(m?argv\[0\]\);'			\
 	in_vc_files='\.c$$'						\
-	containing='^main *('						\
+	containing='\<main *('						\
 	halt='the above files do not call set_program_name'		\
+	  $(_sc_search_regexp)
+
+# Ensure that each .c file containing a "main" function also
+# calls bindtextdomain.
+sc_bindtextdomain:
+	@require='bindtextdomain *\('					\
+	in_vc_files='\.c$$'						\
+	containing='\<main *('						\
+	halt='the above files do not call bindtextdomain'		\
 	  $(_sc_search_regexp)
 
 # Require that the final line of each test-lib.sh-using test be this one:
@@ -661,8 +677,9 @@ sc_prohibit_always_true_header_tests:
 	@or=$(gl_header_upper_case_or_);				\
 	re="HAVE_($$or)_H";						\
 	prohibit='\<'"$$re"'\>'						\
-	halt='do not test the above HAVE_<header>_H symbol(s);\n'\
-'  with the corresponding gnulib module, they are always true'		\
+	halt=$$(printf '%s\n'						\
+	'do not test the above HAVE_<header>_H symbol(s);'		\
+	'  with the corresponding gnulib module, they are always true')	\
 	  $(_sc_search_regexp)
 
 # ==================================================================
@@ -688,7 +705,8 @@ define def_sym_regex
 	    perl -lne '$(gl_extract_significant_defines_)' $$f;		\
 	  done;								\
 	) | sort -u							\
-	  | sed 's/^/^ *# *define /;s/$$/\\>/'
+	  | grep -Ev '^ATTRIBUTE_NORETURN'				\
+	  | sed 's/^/^ *# *(define|undef)  */;s/$$/\\>/'
 endef
 
 # Don't define macros that we already get from gnulib header files.
@@ -697,7 +715,7 @@ sc_prohibit_always-defined_macros:
 	  case $$(echo all: | grep -l -f - Makefile) in Makefile);; *)	\
 	    echo '$(ME): skipping $@: you lack GNU grep' 1>&2; exit 0;;	\
 	  esac;								\
-	  $(def_sym_regex) | grep -f - $$($(VC_LIST_EXCEPT))		\
+	  $(def_sym_regex) | grep -E -f - $$($(VC_LIST_EXCEPT))		\
 	    && { echo '$(ME): define the above via some gnulib .h file'	\
 		  1>&2;  exit 1; } || :;				\
 	fi
@@ -723,7 +741,8 @@ sc_GFDL_version:
 	halt='GFDL vN, N!=3'						\
 	  $(_sc_search_regexp)
 
-# Don't use Texinfo @acronym{} as it is not a good idea.
+# Don't use Texinfo's @acronym{}.
+# http://lists.gnu.org/archive/html/bug-gnulib/2010-03/msg00321.html
 texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
 sc_texinfo_acronym:
 	@prohibit='@acronym\{'						\
@@ -799,6 +818,13 @@ sc_prohibit_test_minus_ao:
 	halt='$(_ptm1); $(_ptm2)'					\
 	  $(_sc_search_regexp)
 
+# Avoid a test bashism.
+sc_prohibit_test_double_equal:
+	@prohibit='(\<test| \[+) .+ == '				\
+	containing='#! */bin/[a-z]*sh'					\
+	halt='use "test x = x", not "test x =''= x"'			\
+	  $(_sc_search_regexp)
+
 # Each program that uses proper_name_utf8 must link with one of the
 # ICONV libraries.  Otherwise, some ICONV library must appear in LDADD.
 # The perl -0777 invocation below extracts the possibly-multi-line
@@ -872,8 +898,8 @@ sc_makefile_at_at_check:
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
-	if head $(srcdir)/NEWS | grep -E $(news-check-regexp)		\
-	    >/dev/null; then						\
+	if sed -n $(news-check-lines-spec)p $(srcdir)/NEWS		\
+	    | grep -E $(news-check-regexp) >/dev/null; then		\
 	  :;								\
 	else								\
 	  echo 'NEWS: $$(news-check-regexp) failed to match' 1>&2;	\
@@ -946,7 +972,7 @@ writable-files:
 	  test "$$fail" && exit 1 || : ;				\
 	fi
 
-v_etc_file = lib/version-etc.c
+v_etc_file = $(gnulib_dir)/lib/version-etc.c
 sample-test = tests/sample-test
 texi = doc/$(PACKAGE).texi
 # Make sure that the copyright date in $(v_etc_file) is up to date.
@@ -1004,9 +1030,10 @@ sc_Wundef_boolean:
 sc_vulnerable_makefile_CVE-2009-4029:
 	@prohibit='perm -777 -exec chmod a\+rwx|chmod 777 \$$\(distdir\)' \
 	in_files=$$(find $(srcdir) -name Makefile.in)			\
-	halt='the above files are vulnerable; beware of running\n'\
-'"make dist*" rules, and upgrade to fixed automake\n'\
-'see http://bugzilla.redhat.com/542609 for details'			\
+	halt=$$(printf '%s\n'						\
+	  'the above files are vulnerable; beware of running'		\
+	  '  "make dist*" rules, and upgrade to fixed automake'		\
+	  '  see http://bugzilla.redhat.com/542609 for details')	\
 	  $(_sc_search_regexp)
 
 vc-diff-check:
@@ -1071,7 +1098,6 @@ emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
 
-noteworthy = * Noteworthy changes in release ?.? (????-??-??) [?]
 define emit-commit-log
   printf '%s\n' 'post-release administrivia' '' \
     '* NEWS: Add header line for next release.' \
@@ -1109,6 +1135,7 @@ alpha beta stable: $(local-check) writable-files no-submodule-changes
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep
 
+gl_noteworthy_news_ = * Noteworthy changes in release ?.? (????-??-??) [?]
 .PHONY: release-prep
 release-prep:
 	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
@@ -1120,7 +1147,7 @@ release-prep:
 	fi
 	echo $(VERSION) > $(prev_version_file)
 	$(MAKE) update-NEWS-hash
-	perl -pi -e '$$. == 3 and print "$(noteworthy)\n\n\n"' NEWS
+	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' NEWS
 	$(emit-commit-log) > .ci-msg
 	$(VC) commit -F .ci-msg -a
 	rm .ci-msg

@@ -29,10 +29,10 @@ buildit:
 	make
 
 glimport:
-	gnulib-tool --import
+	gnulib-tool --add-import
 	rm -rfv lib
-	cd libhotp && gnulib-tool --import
-	cd hotptool && gnulib-tool --import
+	cd libhotp && gnulib-tool --add-import
+	cd hotptool && gnulib-tool --add-import
 
 ChangeLog:
 	git2cl > ChangeLog
