@@ -46,7 +46,7 @@
  * version number.  Used together with oath_check_version() to verify
  * header file and run-time library consistency.
  */
-# define OATH_VERSION "1.2.1"
+# define OATH_VERSION "1.2.2"
 
 /**
  * OATH_VERSION_NUMBER
@@ -55,7 +55,7 @@
  * header file version number.  For example, when the header version
  * is 1.2.3 this symbol will have the value 0x010203.
  */
-# define OATH_VERSION_NUMBER 0x010201
+# define OATH_VERSION_NUMBER 0x010202
 
 /**
  * oath_rc:
