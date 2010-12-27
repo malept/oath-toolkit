@@ -1,3 +1,231 @@
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.1.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, AUTHORS, ChangeLog, Makefile.am,
+	hotptool/Makefile.am, hotptool/configure.ac, hotptool/hotptool.c,
+	hotptool/hotptool.ggo, hotptool/tests/Makefile.am,
+	hotptool/tests/tst_hotptool.sh, libhotp/Makefile.am,
+	libhotp/configure.ac, libhotp/hotp.c, libhotp/hotp.h,
+	libhotp/tests/Makefile.am, libhotp/tests/tst_hotp_algo.c,
+	libhotp/tests/tst_hotp_usersfile.c,
+	libhotp/tests/tst_hotp_usersfile.sh, pam_hotp/Makefile.am,
+	pam_hotp/configure.ac, pam_hotp/tests/Makefile.am,
+	pam_hotp/tests/test-pam_hotp.c: Bump copyright years.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Enable gtk-doc.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Ignore more syntax checks.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, cfg.mk, hotptool/lib/Makefile.am,
+	hotptool/lib/errno.in.h, hotptool/lib/gettext.h,
+	hotptool/lib/intprops.h, hotptool/lib/stdarg.in.h,
+	hotptool/lib/stddef.in.h, hotptool/lib/strerror.c,
+	hotptool/lib/string.in.h, hotptool/lib/unistd.in.h,
+	hotptool/m4/errno_h.m4, hotptool/m4/error.m4,
+	hotptool/m4/gnulib-cache.m4, hotptool/m4/gnulib-common.m4,
+	hotptool/m4/gnulib-comp.m4, hotptool/m4/include_next.m4,
+	hotptool/m4/onceonly.m4, hotptool/m4/stdarg.m4,
+	hotptool/m4/string_h.m4, hotptool/m4/unistd_h.m4,
+	hotptool/m4/wchar_t.m4, libhotp/lib/Makefile.am,
+	libhotp/lib/errno.in.h, libhotp/lib/realloc.c,
+	libhotp/lib/stddef.in.h, libhotp/lib/stdint.in.h,
+	libhotp/lib/stdio.in.h, libhotp/lib/stdlib.in.h,
+	libhotp/lib/string.in.h, libhotp/lib/sys_stat.in.h,
+	libhotp/lib/time.in.h, libhotp/lib/unistd.in.h,
+	libhotp/lib/wchar.in.h, libhotp/m4/errno_h.m4,
+	libhotp/m4/getdelim.m4, libhotp/m4/getline.m4,
+	libhotp/m4/gnulib-cache.m4, libhotp/m4/gnulib-common.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/include_next.m4,
+	libhotp/m4/ld-version-script.m4, libhotp/m4/lib-ld.m4,
+	libhotp/m4/lib-link.m4, libhotp/m4/malloc.m4,
+	libhotp/m4/onceonly.m4, libhotp/m4/realloc.m4,
+	libhotp/m4/stdint.m4, libhotp/m4/stdio_h.m4,
+	libhotp/m4/stdlib_h.m4, libhotp/m4/string_h.m4,
+	libhotp/m4/time_h.m4, libhotp/m4/unistd_h.m4,
+	libhotp/m4/visibility.m4, libhotp/m4/wchar_h.m4,
+	libhotp/m4/wchar_t.m4, libhotp/m4/wint_t.m4, m4/gnulib-cache.m4,
+	m4/gnulib-common.m4, m4/gnulib-comp.m4, m4/onceonly.m4, maint.mk: 
+	Update gnulib files.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, libhotp/usersfile.c: Reject non-empty passwords when
+	usersfile contains '-'.  Reported by Rick van Rein <rick@openfortress.nl>.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/pam_hotp.c: Explain strdup("").
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* libhotp/usersfile.c: Include stdlib.h for free.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* pam_hotp/README: Fix documentation.
+
+2010-05-23  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2010-05-23  Simon Josefsson <simon@josefsson.org>
+
+	* INSTALL, libhotp/gtk-doc.make, libhotp/gtk-doc/Makefile.am,
+	libhotp/m4/gtk-doc.m4: Support GTK-DOC PDFs.
+
+2010-05-23  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_space_tab, libhotp/COPYING: Fix syntax-check warnings.
+
+2010-05-23  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/vc-list-files,
+	hotptool/build-aux/c++defs.h, hotptool/build-aux/link-warning.h,
+	hotptool/build-aux/warn-on-use.h, hotptool/lib/Makefile.am,
+	hotptool/lib/error.c, hotptool/lib/error.h, hotptool/lib/gettext.h,
+	hotptool/lib/string.in.h, hotptool/lib/unistd.in.h,
+	hotptool/m4/gnulib-common.m4, hotptool/m4/gnulib-comp.m4,
+	hotptool/m4/stddef_h.m4, hotptool/m4/string_h.m4,
+	hotptool/m4/unistd_h.m4, hotptool/m4/warn-on-use.m4,
+	libhotp/build-aux/c++defs.h, libhotp/build-aux/link-warning.h,
+	libhotp/build-aux/warn-on-use.h, libhotp/lib/Makefile.am,
+	libhotp/lib/gc-libgcrypt.c, libhotp/lib/stdint.in.h,
+	libhotp/lib/stdio-write.c, libhotp/lib/stdio.in.h,
+	libhotp/lib/stdlib.in.h, libhotp/lib/string.in.h,
+	libhotp/lib/sys_stat.in.h, libhotp/lib/time.in.h,
+	libhotp/lib/unistd.in.h, libhotp/lib/wchar.in.h,
+	libhotp/m4/asm-underscore.m4, libhotp/m4/getdelim.m4,
+	libhotp/m4/getline.m4, libhotp/m4/gnulib-common.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/lib-link.m4,
+	libhotp/m4/stddef_h.m4, libhotp/m4/stdio_h.m4,
+	libhotp/m4/stdlib_h.m4, libhotp/m4/string_h.m4,
+	libhotp/m4/sys_stat_h.m4, libhotp/m4/time_h.m4,
+	libhotp/m4/unistd_h.m4, libhotp/m4/visibility.m4,
+	libhotp/m4/warn-on-use.m4, libhotp/m4/wchar.m4,
+	libhotp/m4/wchar_h.m4, m4/gnulib-common.m4, m4/gnulib-comp.m4,
+	maint.mk: Update gnulib files.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_prohibit_atoi_atof: Add.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_program_name, cfg.mk, configure.ac, hotptool/hotptool.h2m,
+	libhotp/gtk-doc/libhotp-docs.sgml, pam_hotp/README: Syntax-check
+	fixes.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add default build rule.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* README: Add URL/e-mail links.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: No gnulib in pam_hotp.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, libhotp/lib/Makefile.am, libhotp/lib/sys_stat.in.h,
+	libhotp/lib/time.in.h, libhotp/m4/gnulib-cache.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/sys_stat_h.m4,
+	libhotp/m4/time_h.m4, libhotp/usersfile.c: libhotp/usersfile.c:
+	Include sys/stat.h to fix FreeBSD 7.2 build.  Reported by Kevin Quinlan <Kevin.Quinlan@polidoris.com>.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/useless-if-before-free,
+	build-aux/vc-list-files, cfg.mk, hotptool/build-aux/arg-nonnull.h,
+	hotptool/build-aux/link-warning.h,
+	hotptool/build-aux/warn-on-use.h, hotptool/lib/Makefile.am,
+	hotptool/lib/errno.in.h, hotptool/lib/error.c,
+	hotptool/lib/error.h, hotptool/lib/gettext.h,
+	hotptool/lib/intprops.h, hotptool/lib/progname.c,
+	hotptool/lib/progname.h, hotptool/lib/stdarg.in.h,
+	hotptool/lib/stddef.in.h, hotptool/lib/strerror.c,
+	hotptool/lib/string.in.h, hotptool/lib/unistd.in.h,
+	hotptool/lib/version-etc.c, hotptool/lib/version-etc.h,
+	hotptool/m4/00gnulib.m4, hotptool/m4/errno_h.m4,
+	hotptool/m4/error.m4, hotptool/m4/extensions.m4,
+	hotptool/m4/gnulib-cache.m4, hotptool/m4/gnulib-common.m4,
+	hotptool/m4/gnulib-comp.m4, hotptool/m4/gnulib-tool.m4,
+	hotptool/m4/include_next.m4, hotptool/m4/onceonly.m4,
+	hotptool/m4/stdarg.m4, hotptool/m4/stddef_h.m4,
+	hotptool/m4/strerror.m4, hotptool/m4/string_h.m4,
+	hotptool/m4/unistd_h.m4, hotptool/m4/version-etc.m4,
+	hotptool/m4/warn-on-use.m4, hotptool/m4/wchar_t.m4,
+	libhotp/build-aux/arg-nonnull.h, libhotp/build-aux/config.rpath,
+	libhotp/build-aux/link-warning.h, libhotp/build-aux/warn-on-use.h,
+	libhotp/lib/Makefile.am, libhotp/lib/dummy.c,
+	libhotp/lib/errno.in.h, libhotp/lib/gc-gnulib.c,
+	libhotp/lib/gc-libgcrypt.c, libhotp/lib/gc.h,
+	libhotp/lib/getdelim.c, libhotp/lib/getline.c,
+	libhotp/lib/hmac-sha1.c, libhotp/lib/hmac.h, libhotp/lib/memxor.c,
+	libhotp/lib/memxor.h, libhotp/lib/realloc.c, libhotp/lib/sha1.c,
+	libhotp/lib/sha1.h, libhotp/lib/stddef.in.h,
+	libhotp/lib/stdint.in.h, libhotp/lib/stdio-write.c,
+	libhotp/lib/stdio.in.h, libhotp/lib/stdlib.in.h,
+	libhotp/lib/string.in.h, libhotp/lib/strverscmp.c,
+	libhotp/lib/unistd.in.h, libhotp/lib/wchar.in.h,
+	libhotp/m4/00gnulib.m4, libhotp/m4/errno_h.m4,
+	libhotp/m4/extensions.m4, libhotp/m4/gc-hmac-sha1.m4,
+	libhotp/m4/gc.m4, libhotp/m4/getdelim.m4, libhotp/m4/getline.m4,
+	libhotp/m4/gnulib-cache.m4, libhotp/m4/gnulib-common.m4,
+	libhotp/m4/gnulib-comp.m4, libhotp/m4/gnulib-tool.m4,
+	libhotp/m4/hmac-sha1.m4, libhotp/m4/include_next.m4,
+	libhotp/m4/ld-version-script.m4, libhotp/m4/lib-ld.m4,
+	libhotp/m4/lib-link.m4, libhotp/m4/lib-prefix.m4,
+	libhotp/m4/longlong.m4, libhotp/m4/malloc.m4, libhotp/m4/memxor.m4,
+	libhotp/m4/multiarch.m4, libhotp/m4/onceonly.m4,
+	libhotp/m4/realloc.m4, libhotp/m4/sha1.m4, libhotp/m4/stddef_h.m4,
+	libhotp/m4/stdint.m4, libhotp/m4/stdio_h.m4,
+	libhotp/m4/stdlib_h.m4, libhotp/m4/string_h.m4,
+	libhotp/m4/strverscmp.m4, libhotp/m4/unistd_h.m4,
+	libhotp/m4/visibility.m4, libhotp/m4/warn-on-use.m4,
+	libhotp/m4/wchar.m4, libhotp/m4/wchar_t.m4, libhotp/m4/wint_t.m4,
+	m4/00gnulib.m4, m4/gnulib-cache.m4, m4/gnulib-common.m4,
+	m4/gnulib-comp.m4, m4/gnulib-tool.m4, m4/onceonly.m4, maint.mk: 
+	Update gnulib files.
+
+2010-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add glimport target.
+
+2009-12-09  Simon Josefsson <simon@josefsson.org>
+
+	* hotptool/build-aux/link-warning.h, hotptool/lib/Makefile.am,
+	hotptool/lib/error.c, hotptool/lib/progname.c,
+	hotptool/lib/progname.h, hotptool/lib/unistd.in.h,
+	hotptool/lib/version-etc.c, hotptool/m4/error.m4,
+	hotptool/m4/gnulib-comp.m4, hotptool/m4/unistd_h.m4,
+	libhotp/build-aux/link-warning.h, libhotp/lib/Makefile.am: Update
+	gnulib files.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, hotptool/configure.ac, libhotp/configure.ac,
+	libhotp/hotp.h, pam_hotp/configure.ac: Bump versions.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Sign package.
+
+2009-12-08  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2009-12-08  Simon Josefsson <simon@josefsson.org>
 
 	* cfg.mk: Add release targets.
