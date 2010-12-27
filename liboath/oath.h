@@ -49,33 +49,6 @@
 # define OATH_VERSION "1.0.1"
 
 /**
- * OATH_VERSION_MAJOR
- *
- * Pre-processor symbol with a decimal value that describe the major
- * level of the header file version number.  For example, when the
- * header version is 1.2.3 this symbol will be 1.
- */
-# define OATH_VERSION_MAJOR 0
-
-/**
- * OATH_VERSION_MINOR
- *
- * Pre-processor symbol with a decimal value that describe the minor
- * level of the header file version number.  For example, when the
- * header version is 1.2.3 this symbol will be 2.
- */
-# define OATH_VERSION_MINOR 0
-
-/**
- * OATH_VERSION_PATCH
- *
- * Pre-processor symbol with a decimal value that describe the patch
- * level of the header file version number.  For example, when the
- * header version is 1.2.3 this symbol will be 3.
- */
-# define OATH_VERSION_PATCH 1
-
-/**
  * OATH_VERSION_NUMBER
  *
  * Pre-processor symbol with a hexadecimal value describing the
