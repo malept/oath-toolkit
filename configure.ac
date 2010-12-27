@@ -33,6 +33,7 @@ gl_INIT
 
 AC_CONFIG_SUBDIRS([
   libhotp
+  liboath
   hotptool
 ])
 if test "x$enable_pam" = xyes; then

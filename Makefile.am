@@ -15,7 +15,7 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = libhotp hotptool
+SUBDIRS = libhotp liboath hotptool
 
 if ENABLE_PAM
 SUBDIRS += pam_hotp
