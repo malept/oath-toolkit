@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AC_INIT([liboath], [1.2.0], [simon@josefsson.org])
+AC_INIT([liboath], [1.2.1], [simon@josefsson.org])
 AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
 
 # Library code modified:                              REVISION++
@@ -23,7 +23,7 @@ AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 AC_SUBST(LT_CURRENT, 0)
-AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_REVISION, 1)
 AC_SUBST(LT_AGE, 0)
 
 AC_CONFIG_AUX_DIR([build-aux])

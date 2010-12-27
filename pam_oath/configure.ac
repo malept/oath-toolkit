@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pam_oath], [1.2.0], [simon@josefsson.org])
+AC_INIT([pam_oath], [1.2.1], [simon@josefsson.org])
 AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
 
 AC_CONFIG_AUX_DIR([build-aux])
