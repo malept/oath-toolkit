@@ -5,7 +5,7 @@ each sub-directory.  In particular:
 
    * libhotp, liboath: Licensed under the LGPLv2.1+.
 
-   * hotptool: Licensed under the GPLv3.0+.
+   * hotptool, oathtool: Licensed under the GPLv3.0+.
 
    * pam_hotp: Licensed under the GPLv3.0+.
 

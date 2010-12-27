@@ -13,14 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+purpose "Generate and validate OATH one-time passwords."
 
-SUBDIRS = libhotp liboath hotptool oathtool
+option "hotp" - "Use HOTP mode" flag on
 
-if ENABLE_PAM
-SUBDIRS += pam_hotp
-endif
-
-ACLOCAL_AMFLAGS = -I m4
-
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
+option "counter" c "Counter value" int typestr="COUNTER" no
+option "digits" d "Number of digits in one-time password" int typestr="DIGITS" no
+option "window" w "Window of counter values to test when validating OTPs" int typestr="WIDTH" no

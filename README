@@ -4,9 +4,9 @@ The OATH Toolkit attempts to collect several tools that are useful
 when deploying technologies related to OATH.  For example, see RFC
 4226 on OATH HOTP.  The components included in the package is:
 
-   * libhotp: A shared and static C library for handling of HOTPs.
+   * libhotp, liboath: A shared and static C library for OATH handling.
 
-   * hotptool: A command line tool for generating and validating HOTPs.
+   * hotptool, oathtool: A command line tool for generating and validating OTPs.
 
    * pam_hotp: A PAM module for pluggable login authentication.
 

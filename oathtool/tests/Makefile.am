@@ -13,14 +13,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
-
-SUBDIRS = libhotp liboath hotptool oathtool
-
-if ENABLE_PAM
-SUBDIRS += pam_hotp
-endif
-
-ACLOCAL_AMFLAGS = -I m4
-
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
+TESTS = tst_oathtool.sh
+dist_check_SCRIPTS = tst_oathtool.sh

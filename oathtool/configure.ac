@@ -13,14 +13,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+AC_INIT([oathtool], [1.0.1], [simon@josefsson.org], [oathtool],
+        [http://josefsson.org/oath-toolkit/])
+AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
 
-SUBDIRS = libhotp liboath hotptool oathtool
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
-if ENABLE_PAM
-SUBDIRS += pam_hotp
-endif
+AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 
-ACLOCAL_AMFLAGS = -I m4
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_CC
+gl_EARLY
+AC_PROG_LIBTOOL
+gl_INIT
 
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
+AC_CONFIG_FILES([
+  Makefile
+  lib/Makefile
+  tests/Makefile
+])
+AC_OUTPUT

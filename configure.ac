@@ -35,6 +35,7 @@ AC_CONFIG_SUBDIRS([
   libhotp
   liboath
   hotptool
+  oathtool
 ])
 if test "x$enable_pam" = xyes; then
   AC_CONFIG_SUBDIRS([pam_hotp])
