@@ -20,7 +20,7 @@ ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 endif
 
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS sc_prohibit_strcmp
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(hotptool|libhotp)/(m4|lib)$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(oathtool|liboath)/(m4|lib)$
 
 # Re-add when we have translation
 local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
@@ -33,8 +33,8 @@ buildit:
 glimport:
 	gnulib-tool --add-import
 	rm -rfv lib
-	cd libhotp && gnulib-tool --add-import
-	cd hotptool && gnulib-tool --add-import
+	cd liboath && gnulib-tool --add-import
+	cd oathtool && gnulib-tool --add-import
 
 ChangeLog:
 	git2cl > ChangeLog
@@ -60,7 +60,7 @@ upload:
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 
 web:
-	cp -v libhotp/gtk-doc/html/*.html libhotp/gtk-doc/html/*.png libhotp/gtk-doc/html/html/*.devhelp libhotp/gtk-doc/html/*.css $(htmldir)/reference/
+	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
 
 upload-web:
 	cd $(htmldir) && \

@@ -5,6 +5,15 @@ Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
 ** Project renamed from "HOTP Toolkit" to "OATH Toolkit".
 
+** liboath: The header file is "oath.h" and library is "liboath.so".
+Functions were renamed, but functionality is retained so updating code
+is a matter of changing the symbol names only.
+
+** oathtool: Renamed from "hotptool".  Added --hotp flag (the default).
+This is to plan for the future when the tool will also support TOTP/OCRA.
+
+** pam_oath: Renamed from pam_hotp.
+
 * Version 1.0.1 (released 2010-12-27)
 
 ** libhotp: Fix build failure due to missing sys/stat.h include on FreeBSD 7.2.

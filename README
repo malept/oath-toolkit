@@ -14,7 +14,7 @@ See each sub-directory for more information.
 
 For updates on the project please visit our web page:
 
-   http://www.nongnu.org/hotp-toolkit/
+   http://gitorious.org/oath-toolkit
 
 For e-mail discussions related the OATH Toolkit, please send e-mail to
 hotp-toolkit-help@nongnu.org after subscribing to the mailing list
@@ -22,5 +22,5 @@ through this web page:
 
   http://lists.nongnu.org/mailman/listinfo/hotp-toolkit-help
 
-Note that the project used to be called "HOTP Toolkit", and there are
-still several references to the old project name.
+Note that the OATH Toolkit project used to be called "HOTP Toolkit",
+and there are still references to the old project name.
