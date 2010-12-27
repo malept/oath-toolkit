@@ -3,11 +3,11 @@ Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 Each component of the OATH Toolkit has its own license, see COPYING in
 each sub-directory.  In particular:
 
-   * libhotp, liboath: Licensed under the LGPLv2.1+.
+   * liboath: Licensed under the LGPLv2.1+.
 
-   * hotptool, oathtool: Licensed under the GPLv3.0+.
+   * oathtool: Licensed under the GPLv3.0+.
 
-   * pam_hotp: Licensed under the GPLv3.0+.
+   * pam_oath: Licensed under the GPLv3.0+.
 
 All other files without any other explicit notice that were written as
 part of this project are intended to be licensed under the GPLv3.0+.
