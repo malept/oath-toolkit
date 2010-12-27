@@ -21,7 +21,7 @@ local-checks-to-skip = sc_GPL_version sc_immutable_NEWS sc_prohibit_strcmp
 VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(hotptool|libhotp)/(m4|lib)$
 
 # Re-add when we have translation
-local-checks-to-skip += sc_unmarked_diagnostics
+local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
 
 buildit:
 	test -f configure || autoreconf --force --install
