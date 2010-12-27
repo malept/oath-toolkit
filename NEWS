@@ -1,7 +1,7 @@
 HOTP Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.0.1 (unreleased)
+* Version 1.0.1 (released 2010-12-27)
 
 ** libhotp: Fix build failure due to missing sys/stat.h include on FreeBSD 7.2.
 Reported by Kevin Quinlan <Kevin.Quinlan@polidoris.com>.
