@@ -1,3 +1,45 @@
+2010-12-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.2.1.
+
+2010-12-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/hotp.c, liboath/tests/tst_hotp_algo.c,
+	oathtool/oathtool.c: Namespace fixes.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, liboath/configure.ac, oathtool/configure.ac,
+	pam_oath/configure.ac: Bump versions.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/hotp.c, liboath/oath.h: Fix version and namespace.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/liboath.map: Bump to match release version.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/Makefile.am: Install liboath oath.h header file.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.h2m: Fix markup.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix gtk-doc devhelp glob.
+
+2010-12-27  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2010-12-27  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.2.0.
