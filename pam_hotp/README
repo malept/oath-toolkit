@@ -18,9 +18,9 @@ Configuration
 To use the module, first make sure that it is accessible as
 /lib/security/pam_hotp.so:
 
-# ln -s /usr/local/lib/pam_hotp.so /lib/security/pam_hotp.so
+# ln -s /usr/local/lib/security/pam_hotp.so /lib/security/pam_hotp.so
 # ls -la /lib/security/pam_hotp.so
-lrwxrwxrwx 1 root root 53 Dec  4 10:49 /lib/security/pam_hotp.so -> /usr/local/lib/pam_hotp.so
+lrwxrwxrwx 1 root root 35 Dec  4 10:49 /lib/security/pam_hotp.so -> /usr/local/lib/security/pam_hotp.so
 #
 
 The next step is to configure PAM to use the module.  One simple way
