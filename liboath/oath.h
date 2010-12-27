@@ -46,7 +46,7 @@
  * version number.  Used together with oath_check_version() to verify
  * header file and run-time library consistency.
  */
-# define OATH_VERSION "1.0.1"
+# define OATH_VERSION "1.2.1"
 
 /**
  * OATH_VERSION_NUMBER
@@ -55,7 +55,7 @@
  * header file version number.  For example, when the header version
  * is 1.2.3 this symbol will have the value 0x010203.
  */
-# define OATH_VERSION_NUMBER 0x010001
+# define OATH_VERSION_NUMBER 0x010201
 
 /**
  * oath_rc:
@@ -109,8 +109,6 @@ typedef enum
   OATH_TIME_ERROR = -18,
 } oath_rc;
 
-#define OATH_DYNAMIC_TRUNCATION SIZE_MAX
-
 /* Global */
 
 extern OATHAPI int oath_init (void);
@@ -123,6 +121,8 @@ extern OATHAPI int oath_hex2bin (char *hexstr, char *binstr, size_t * binlen);
 /* HOTP */
 
 #define OATH_HOTP_LENGTH(digits, checksum) (digits + (checksum ? 1 : 0))
+
+#define OATH_HOTP_DYNAMIC_TRUNCATION SIZE_MAX
 
 extern OATHAPI int oath_hotp_generate (const char *secret,
 				       size_t secret_length,

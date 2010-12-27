@@ -40,7 +40,7 @@
  * Generate a one-time-password using the HOTP algorithm as described
  * in RFC 4226.
  *
- * Use a value of %OATH_DYNAMIC_TRUNCATION for @truncation_offset
+ * Use a value of %OATH_HOTP_DYNAMIC_TRUNCATION for @truncation_offset
  * unless you really need a specific truncation offset.
  *
  * To find out the size of the OTP you may use the OATH_HOTP_LENGTH()
