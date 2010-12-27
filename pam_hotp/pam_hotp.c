@@ -1,6 +1,6 @@
 /*
  * pam_hotp.c - a PAM module for HOTP one-time passwords
- * Copyright (C) 2009  Simon Josefsson
+ * Copyright (C) 2009, 2010  Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -144,7 +144,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   int nargs = 1;
   struct cfg cfg;
   char *query_prompt = NULL;
-  char *onlypasswd = strdup("");
+  char *onlypasswd = strdup(""); /* empty passwords never match */
 
   parse_cfg (flags, argc, argv, &cfg);
 
