@@ -13,14 +13,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
-
-SUBDIRS = liboath oathtool
-
-if ENABLE_PAM
-SUBDIRS += pam_oath
-endif
+SUBDIRS = . tests
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
+AM_CPPFLAGS = -I. -I$(srcdir)/../liboath
+
+EXTRA_DIST = README
+
+libdir = $(PAMDIR)
+
+lib_LTLIBRARIES = pam_oath.la
+
+pam_oath_la_SOURCES = pam_oath.c
+# XXX add -Wl,-x too?  PAM documentation suggests it.
+pam_oath_la_LIBADD = ../liboath/liboath.la
+pam_oath_la_LDFLAGS = -module -avoid-version
