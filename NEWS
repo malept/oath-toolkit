@@ -6,6 +6,9 @@ Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 ** libhotp: Fix build failure due to missing sys/stat.h include on FreeBSD 7.2.
 Reported by Kevin Quinlan <Kevin.Quinlan@polidoris.com>.
 
+** libhotp: Make usersfile logic for '-' passwords work.
+Reported by Rick van Rein <rick@openfortress.nl>.
+
 ** libhotp DOC: Added GTK-DOC manual in PDF format.
 
 ** build: Gnulib files were updated.

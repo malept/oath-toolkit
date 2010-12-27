@@ -92,7 +92,7 @@ parse_usersfile (const char *username,
 	{
 	  if (p == NULL)
 	    continue;
-	  if (strcmp (p, "-") == 0 && *p != '\0')
+	  if (strcmp (p, "-") == 0 && *passwd != '\0')
 	    return HOTP_BAD_PASSWORD;
 	  if (strcmp (p, passwd) != 0)
 	    return HOTP_BAD_PASSWORD;
