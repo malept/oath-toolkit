@@ -23,7 +23,7 @@ AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 AC_SUBST(LT_CURRENT, 0)
-AC_SUBST(LT_REVISION, 1)
+AC_SUBST(LT_REVISION, 0)
 AC_SUBST(LT_AGE, 0)
 
 AC_CONFIG_AUX_DIR([build-aux])
