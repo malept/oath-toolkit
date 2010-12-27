@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.2.0 (unreleased)
+* Version 1.2.0 (released 2010-12-27)
 
 ** Project renamed from "HOTP Toolkit" to "OATH Toolkit".
 
