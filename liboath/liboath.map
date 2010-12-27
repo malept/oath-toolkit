@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-LIBOATH_1.0.0 {
+LIBOATH_1.2.0 {
   global:
     oath_init;
     oath_done;
