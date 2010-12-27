@@ -24,6 +24,7 @@
 #include "hotp.h"
 
 #include <stdio.h>		/* For snprintf, getline. */
+#include <stdlib.h>		/* For free. */
 #include <unistd.h>		/* For ssize_t. */
 #include <fcntl.h>		/* For fcntl. */
 #include <errno.h>		/* For errno. */
