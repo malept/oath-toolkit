@@ -36,7 +36,7 @@ the PAM configuration uses /etc/users.oath for this.  So we create the
 file:
 
 # cat>/etc/users.oath
-OATH root - 00
+HOTP root - 00
 # chmod go-rw /etc/users.oath
 #
 
@@ -90,7 +90,7 @@ incremented counter, last OTP and timestamp.  Inspect the new value as
 follows:
 
 # cat /etc/users.oath
-OATH	root	-	00	0	328482	2009-12-07T23:23:49L
+HOTP	root	-	00	0	328482	2009-12-07T23:23:49L
 #
 
 In production use you will want to remove the 'debug' parameter in the
@@ -109,7 +109,7 @@ auth requisite pam_oath.so usersfile=/etc/users.oath window=20 digits=6
 Next specify a password in the users.oath file:
 
 # cat>/etc/users.oath
-OATH root pw 00
+HOTP root pw 00
 # chmod go-rw /etc/users.oath
 #
 
