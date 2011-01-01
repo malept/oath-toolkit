@@ -58,6 +58,7 @@ upload:
 	git push
 	git push --tags
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
+	scp $(distdir).tar.gz $(distdir).tar.gz.sig jas@dl.sv.nongnu.org:/releases/oath-toolkit/
 
 web:
 	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
