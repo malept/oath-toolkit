@@ -1,6 +1,6 @@
 #!/bin/sh
 # tst_hotp_usersfile.sh - Invoke tst_hotp_usersfile and check output.
-# Copyright (C) 2009, 2010 Simon Josefsson
+# Copyright (C) 2009, 2010, 2011 Simon Josefsson
 
 # This library is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
