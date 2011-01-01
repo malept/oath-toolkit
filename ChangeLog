@@ -1,3 +1,51 @@
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.2.2.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Also upload.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* README: Fix URLs.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, AUTHORS, ChangeLog, Makefile.am, NEWS, cfg.mk,
+	configure.ac, liboath/Makefile.am, liboath/configure.ac,
+	liboath/global.c, liboath/hotp.c, liboath/oath.h,
+	liboath/tests/Makefile.am, liboath/tests/tst_hotp_algo.c,
+	liboath/tests/tst_hotp_usersfile.c,
+	liboath/tests/tst_hotp_usersfile.sh, liboath/usersfile.c,
+	oathtool/Makefile.am, oathtool/configure.ac, oathtool/oathtool.c,
+	oathtool/oathtool.ggo, oathtool/oathtool.h2m,
+	oathtool/tests/Makefile.am, oathtool/tests/tst_oathtool.sh,
+	pam_oath/Makefile.am, pam_oath/README, pam_oath/configure.ac,
+	pam_oath/pam_oath.c, pam_oath/tests/Makefile.am,
+	pam_oath/tests/test-pam_oath.c: Update copyright years.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* README: Update mailing list name.
+
+2010-12-30  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/README: Fix pam config line.
+
+2010-12-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, liboath/configure.ac, liboath/oath.h,
+	oathtool/configure.ac, pam_oath/configure.ac: Bump versions.
+
+2010-12-28  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2010-12-28  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.2.1.
