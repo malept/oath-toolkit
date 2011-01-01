@@ -3,6 +3,8 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.2.2 (unreleased)
 
+** Cleanups related to name change.
+
 * Version 1.2.1 (released 2010-12-28)
 
 ** liboath: Install header file "oath.h".
