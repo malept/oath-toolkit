@@ -4,17 +4,18 @@ The OATH Toolkit attempts to collect several tools that are useful
 when deploying technologies related to OATH.  For example, see RFC
 4226 on OATH HOTP.  The components included in the package is:
 
-   * liboath: A shared and static C library for OATH handling.
+  * liboath: A shared and static C library for OATH handling.
 
-   * oathtool: A command line tool for generating and validating OTPs.
+  * oathtool: A command line tool for generating and validating OTPs.
 
-   * pam_oath: A PAM module for pluggable login authentication for OATH.
+  * pam_oath: A PAM module for pluggable login authentication for OATH.
 
 See each sub-directory for more information.
 
 For updates on the project please visit our web page:
 
-   http://gitorious.org/oath-toolkit
+  https://savannah.nongnu.org/projects/oath-toolkit/
+  http://gitorious.org/oath-toolkit
 
 For e-mail discussions related the OATH Toolkit, please send e-mail to
 oath-toolkit-help@nongnu.org after subscribing to the mailing list
