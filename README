@@ -1,4 +1,4 @@
-Copyright (C) 2009, 2010 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 The OATH Toolkit attempts to collect several tools that are useful
 when deploying technologies related to OATH.  For example, see RFC
@@ -17,10 +17,10 @@ For updates on the project please visit our web page:
    http://gitorious.org/oath-toolkit
 
 For e-mail discussions related the OATH Toolkit, please send e-mail to
-hotp-toolkit-help@nongnu.org after subscribing to the mailing list
+oath-toolkit-help@nongnu.org after subscribing to the mailing list
 through this web page:
 
-  http://lists.nongnu.org/mailman/listinfo/hotp-toolkit-help
+  http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Note that the OATH Toolkit project used to be called "HOTP Toolkit",
 and there are still references to the old project name.
