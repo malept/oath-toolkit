@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([oath-toolkit], [1.2.2], [simon@josefsson.org])
-AC_COPYRIGHT([Copyright (C) 2009, 2010 Simon Josefsson])
+AC_INIT([oath-toolkit], [1.2.3], [simon@josefsson.org])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
