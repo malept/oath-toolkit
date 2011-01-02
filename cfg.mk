@@ -25,6 +25,7 @@ VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(oathtool|liboath)/(m4|lib)$
 # Re-add when we have translation
 local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
 
+update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson"
 buildit:
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)
