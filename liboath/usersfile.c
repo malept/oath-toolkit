@@ -320,7 +320,7 @@ update_usersfile (const char *usersfile,
  * @username: string with name of user
  * @otp: string with one-time password to authenticate
  * @window: how many future OTPs to search
- * @passwd: string with password, or %NULL to disable password checking
+ * @passwd: string with password, or NULL to disable password checking
  * @last_otp: output variable holding last successful authentication
  *
  * Authenticate user named @username with the one-time password @otp

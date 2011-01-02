@@ -76,7 +76,7 @@ oath_done (void)
 
 /**
  * oath_check_version:
- * @req_version: version string to compare with, or %NULL.
+ * @req_version: version string to compare with, or NULL.
  *
  * Check OATH library version.
  *
@@ -87,8 +87,8 @@ oath_done (void)
  *
  * Return value: Check that the version of the library is at
  *   minimum the one given as a string in @req_version and return the
- *   actual version string of the library; return %NULL if the
- *   condition is not met.  If %NULL is passed to this function no
+ *   actual version string of the library; return NULL if the
+ *   condition is not met.  If NULL is passed to this function no
  *   check is done and only the version string is returned.
  **/
 const char *
@@ -112,7 +112,7 @@ oath_check_version (const char *req_version)
 /**
  * oath_hex2bin:
  * @hexstr: input string with hex data
- * @binstr: output string that holds binary data, or %NULL
+ * @binstr: output string that holds binary data, or NULL
  * @binlen: output variable holding needed length of @binstr
  *
  * Convert string with hex data to binary data.
@@ -120,7 +120,7 @@ oath_check_version (const char *req_version)
  * Non-hexadecimal data are not ignored but instead will lead to an
  * %OATH_INVALID_HEX error.
  *
- * If @binstr is %NULL, then @binlen will be populated with the
+ * If @binstr is NULL, then @binlen will be populated with the
  * necessary length.  If the @binstr buffer is too small,
  * %OATH_TOO_SMALL_BUFFER is returned and @binlen will contain the
  * necessary length.
