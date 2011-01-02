@@ -26,31 +26,52 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  # Code from module alloca-opt:
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module c-ctype:
+  # Code from module clock-time:
+  # Code from module environ:
   # Code from module errno:
   # Code from module error:
   # Code from module exitfail:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module gettext-h:
+  # Code from module gettime:
+  # Code from module gettimeofday:
   # Code from module include_next:
   # Code from module inline:
   # Code from module intprops:
+  # Code from module malloca:
+  # Code from module mktime:
+  # Code from module multiarch:
+  # Code from module parse-datetime:
   # Code from module parse-duration:
   # Code from module progname:
+  # Code from module setenv:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
   dnl AC_PROG_CC_STDC arranges for this.  With older Autoconf AC_PROG_CC_STDC
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   AC_REQUIRE([AC_PROG_CC_STDC])
+  # Code from module stdbool:
   # Code from module stddef:
+  # Code from module stdint:
+  # Code from module stdlib:
   # Code from module strerror:
   # Code from module string:
+  # Code from module sys_time:
+  # Code from module time:
+  # Code from module time_r:
+  # Code from module timespec:
   # Code from module unistd:
+  # Code from module unsetenv:
+  # Code from module verify:
   # Code from module version-etc:
   # Code from module warn-on-use:
+  # Code from module wchar:
   # Code from module xalloc:
   # Code from module xalloc-die:
 ])
@@ -69,8 +90,16 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib'
+  # Code from module alloca-opt:
+  gl_FUNC_ALLOCA
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module c-ctype:
+  # Code from module clock-time:
+  gl_CLOCK_TIME
+  # Code from module environ:
+  gl_ENVIRON
+  gl_UNISTD_MODULE_INDICATOR([environ])
   # Code from module errno:
   gl_HEADER_ERRNO_H
   # Code from module error:
@@ -83,29 +112,68 @@ AC_DEFUN([gl_INIT],
   # Code from module gettext-h:
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  # Code from module gettime:
+  gl_GETTIME
+  # Code from module gettimeofday:
+  gl_FUNC_GETTIMEOFDAY
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   # Code from module include_next:
   # Code from module inline:
   gl_INLINE
   # Code from module intprops:
+  # Code from module malloca:
+  gl_MALLOCA
+  # Code from module mktime:
+  gl_FUNC_MKTIME
+  gl_TIME_MODULE_INDICATOR([mktime])
+  # Code from module multiarch:
+  gl_MULTIARCH
+  # Code from module parse-datetime:
+  gl_PARSE_DATETIME
   # Code from module parse-duration:
   AC_REQUIRE([AC_C_INLINE])
   # Code from module progname:
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+  # Code from module setenv:
+  gl_FUNC_SETENV
+  gl_STDLIB_MODULE_INDICATOR([setenv])
   # Code from module stdarg:
   gl_STDARG_H
+  # Code from module stdbool:
+  AM_STDBOOL_H
   # Code from module stddef:
   gl_STDDEF_H
+  # Code from module stdint:
+  gl_STDINT_H
+  # Code from module stdlib:
+  gl_STDLIB_H
   # Code from module strerror:
   gl_FUNC_STRERROR
   gl_STRING_MODULE_INDICATOR([strerror])
   # Code from module string:
   gl_HEADER_STRING_H
+  # Code from module sys_time:
+  gl_HEADER_SYS_TIME_H
+  AC_PROG_MKDIR_P
+  # Code from module time:
+  gl_HEADER_TIME_H
+  # Code from module time_r:
+  gl_TIME_R
+  gl_TIME_MODULE_INDICATOR([time_r])
+  # Code from module timespec:
+  gl_TIMESPEC
   # Code from module unistd:
   gl_UNISTD_H
+  # Code from module unsetenv:
+  gl_FUNC_UNSETENV
+  gl_STDLIB_MODULE_INDICATOR([unsetenv])
+  # Code from module verify:
   # Code from module version-etc:
   gl_VERSION_ETC
   # Code from module warn-on-use:
+  # Code from module wchar:
+  gl_WCHAR_H
   # Code from module xalloc:
   gl_XALLOC
   # Code from module xalloc-die:
@@ -248,42 +316,89 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/arg-nonnull.h
   build-aux/c++defs.h
   build-aux/warn-on-use.h
+  doc/parse-datetime.texi
+  lib/alloca.in.h
+  lib/c-ctype.c
+  lib/c-ctype.h
   lib/errno.in.h
   lib/error.c
   lib/error.h
   lib/exitfail.c
   lib/exitfail.h
   lib/gettext.h
+  lib/gettime.c
+  lib/gettimeofday.c
   lib/intprops.h
+  lib/malloca.c
+  lib/malloca.h
+  lib/malloca.valgrind
+  lib/mktime-internal.h
+  lib/mktime.c
+  lib/parse-datetime.h
+  lib/parse-datetime.y
   lib/parse-duration.c
   lib/parse-duration.h
   lib/progname.c
   lib/progname.h
+  lib/setenv.c
   lib/stdarg.in.h
+  lib/stdbool.in.h
   lib/stddef.in.h
+  lib/stdint.in.h
+  lib/stdlib.in.h
   lib/strerror.c
   lib/string.in.h
+  lib/sys_time.in.h
+  lib/time.in.h
+  lib/time_r.c
+  lib/timespec.h
   lib/unistd.in.h
+  lib/unsetenv.c
+  lib/verify.h
   lib/version-etc.c
   lib/version-etc.h
+  lib/wchar.in.h
   lib/xalloc-die.c
   lib/xalloc.h
   lib/xmalloc.c
   m4/00gnulib.m4
+  m4/alloca.m4
+  m4/bison.m4
+  m4/clock_time.m4
+  m4/eealloc.m4
+  m4/environ.m4
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
+  m4/gettime.m4
+  m4/gettimeofday.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/inline.m4
+  m4/longlong.m4
+  m4/malloca.m4
+  m4/mktime.m4
+  m4/multiarch.m4
   m4/onceonly.m4
+  m4/parse-datetime.m4
+  m4/setenv.m4
   m4/stdarg.m4
+  m4/stdbool.m4
   m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdlib_h.m4
   m4/strerror.m4
   m4/string_h.m4
+  m4/sys_time_h.m4
+  m4/time_h.m4
+  m4/time_r.m4
+  m4/timespec.m4
+  m4/tm_gmtoff.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
+  m4/wint_t.m4
   m4/xalloc.m4
 ])
