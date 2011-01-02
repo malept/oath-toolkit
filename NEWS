@@ -10,6 +10,9 @@ New function oath_totp_generate.  New symbols
 OATH_TOTP_DEFAULT_TIME_STEP_SIZE and OATH_TOTP_DEFAULT_START_TIME for
 default system parameters.
 
+** oathtool: New parameter --totp to generate time-variant TOTPT's.
+New sub-parameter --time-step-size used to specify TOTP configuration.
+
 * Version 1.2.2 (released 2011-01-01)
 
 ** Cleanups related to name change.

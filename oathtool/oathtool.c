@@ -136,7 +136,7 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
-  if (generate_otp_p (args_info.inputs_num))
+  if (generate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {
       size_t iter = 0;
 
@@ -156,6 +156,23 @@ main (int argc, char *argv[])
 	  printf ("%s\n", otp);
 	}
       while (window - iter++ > 0);
+    }
+  else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
+    {
+      time_t now = time (NULL);
+
+      rc = oath_totp_generate (secret,
+			       secretlen,
+			       now,
+			       args_info.time_step_size_arg,
+			       0,
+			       digits,
+			       otp);
+      if (rc != OATH_OK)
+	error (EXIT_FAILURE, 0,
+	       "generating one-time password failed (%d)", rc);
+
+      printf ("%s\n", otp);
     }
   else if (validate_otp_p (args_info.inputs_num))
     {
