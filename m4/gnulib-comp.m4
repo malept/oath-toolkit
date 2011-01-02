@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2010 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -28,6 +28,7 @@ AC_DEFUN([gl_EARLY],
   AC_REQUIRE([AC_PROG_RANLIB])
   # Code from module gnumakefile:
   # Code from module maintainer-makefile:
+  # Code from module update-copyright:
   # Code from module useless-if-before-free:
   # Code from module vc-list-files:
 ])
@@ -62,6 +63,7 @@ AC_DEFUN([gl_INIT],
   # Code from module maintainer-makefile:
   AC_CONFIG_COMMANDS_PRE([m4_ifdef([AH_HEADER],
     [AC_SUBST([CONFIG_INCLUDE], m4_defn([AH_HEADER]))])])
+  # Code from module update-copyright:
   # Code from module useless-if-before-free:
   # Code from module vc-list-files:
   # End of code from modules
@@ -204,6 +206,7 @@ AC_DEFUN([gltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
+  build-aux/update-copyright
   build-aux/useless-if-before-free
   build-aux/vc-list-files
   m4/00gnulib.m4
