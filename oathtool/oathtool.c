@@ -30,6 +30,7 @@
 #include "error.h"
 #include "version-etc.h"
 #include "parse-duration.h"
+#include "parse-datetime.h"
 
 #include "oathtool_cmd.h"
 
@@ -61,6 +62,20 @@ usage (int status)
       emit_bug_reporting_address ();
     }
   exit (status);
+}
+
+static time_t
+parse_time (const char *p, const time_t now)
+{
+  struct timespec nowspec = { 0, 0 };
+  struct timespec thenspec;
+
+  nowspec.tv_sec = now;
+
+  if (!parse_datetime (&thenspec, p, &nowspec))
+    return BAD_TIME;
+
+  return thenspec.tv_sec;
 }
 
 #define generate_otp_p(n) ((n) == 1)
@@ -164,20 +179,53 @@ main (int argc, char *argv[])
   else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
     {
       time_t now = time (NULL);
+      time_t when = parse_time (args_info.now_arg, now);
+      time_t t0 = parse_time (args_info.start_time_arg, now);
       time_t time_step_size = parse_duration (args_info.time_step_size_arg);
 
+      if (when == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
+	       args_info.now_arg);
+
+      if (t0 == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
+	       args_info.start_time_arg);
+
       if (time_step_size == BAD_TIME)
-	error (EXIT_FAILURE, 0, "cannot parse time duration `%s'",
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
 	       args_info.time_step_size_arg);
 
       if (args_info.verbose_flag)
-	printf ("Step size (seconds): %ld\n", time_step_size);
+	{
+	  struct tm tmp;
+	  char outstr[200];
+
+	  if (gmtime_r (&t0, &tmp) == NULL)
+	    error (EXIT_FAILURE, 0, "gmtime_r");
+
+	  if (strftime (outstr, sizeof(outstr),
+			"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+	    error (EXIT_FAILURE, 0, "strftime");
+
+	  printf ("Step size (seconds): %ld\n", time_step_size);
+	  printf ("Start time: %s (%ld)\n", outstr, t0);
+
+	  if (gmtime_r (&when, &tmp) == NULL)
+	    error (EXIT_FAILURE, 0, "gmtime_r");
+
+	  if (strftime (outstr, sizeof(outstr),
+			"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+	    error (EXIT_FAILURE, 0, "strftime");
+
+	  printf ("Time now: %s (%ld)\n", outstr, when);
+	  printf ("Counter: %ld\n", (when - t0) / time_step_size);
+	}
 
       rc = oath_totp_generate (secret,
 			       secretlen,
-			       now,
+			       when,
 			       time_step_size,
-			       0,
+			       t0,
 			       digits,
 			       otp);
       if (rc != OATH_OK)

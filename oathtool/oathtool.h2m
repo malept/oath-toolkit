@@ -56,11 +56,24 @@ mode.  Usage is similar, but --totp needs to be provided:
    $
 
 Don't be alarmed if you do not get the same output, this is because
-the output is time variant.
+the output is time variant.  To generate a TOTP for a particular fixed
+time use the \-N (\-\-now) parameter:
+
+   $ oathtool --totp --now "2008-04-23 17:42:17 UTC" 00
+   974945
+   $
+
+The format is a mostly free format human readable date string such as
+"Sun, 29 Feb 2004 16:21:42 -0800" or "2004-02-29 16:21:42" or even
+"next Thursday".  It is the same used as the \-\-date parameter of the
+date(1) tool.
+
+There are two systems parameter for TOTP: the time-step size and the
+time start.
 
 By default the time-step size is 30 seconds, which means you get a new
 OTP every 30 seconds.  You may modify this with the \-s
-(\-\-time-step-size) parameter:
+(\-\-time\-step\-size) parameter:
 
    $ oathtool --totp --time-step-size=45s 00
    109841
@@ -69,11 +82,23 @@ OTP every 30 seconds.  You may modify this with the \-s
 The values are valid ISO\-8601 durations, see:
 http://en.wikipedia.org/wiki/ISO_8601#Durations
 
-To get more information about what the tool is using use the \-v
-(\-\-verbose) parameter:
+The time start is normally 1970-01-01 00:00:00 UTC but you may change
+it using the \-S (\-\-start\-time):
 
-   $ oathtool --totp --time-step-size=45s --verbose 00
-   Hex secret: 00
-   Step size (seconds): 45
-   109841
+   $ oathtool --totp --start-time "1980-01-01 00:00:00 UTC" 00
+   273884
+   $
+
+To get more information about what the tool is using use the \-v
+(\-\-verbose) parameter.  Finally, to generate the last TOTP (for
+SHA-1) in the test vector table of draft-mraihi-totp-timebased-06 you
+can invoke the tool like this:
+
+   $ oathtool --totp -v -N "2033-05-18 03:33:20 UTC" -d8 3132333435363738393031323334353637383930
+   Hex secret: 3132333435363738393031323334353637383930
+   Step size (seconds): 30
+   Start time: 1970-01-01 00:00:00 UTC (0)
+   Time now: 2033-05-18 03:33:20 UTC (2000000000)
+   Counter: 66666666
+   69279037
    $

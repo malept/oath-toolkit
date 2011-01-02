@@ -20,6 +20,8 @@ option "totp" - "use time-variant TOTP mode" flag off
 
 option "counter" c "HOTP counter value" int typestr="COUNTER" no
 option "time-step-size" s "TOTP time-step duration" string typestr="DURATION" default="30s" no
+option "start-time" S "when to start counting time steps for TOTP" string typestr="TIME" default="1970-01-01 00:00:00 UTC" no
+option "now" N "use this time as current time for TOTP" string typestr="TIME" default="now" no
 option "digits" d "number of digits in one-time password" int typestr="DIGITS" no
 option "window" w "window of counter values to test when validating OTPs" int typestr="WIDTH" no
 
