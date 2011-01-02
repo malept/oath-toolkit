@@ -56,7 +56,7 @@
  * Returns: On success, %OATH_OK (zero) is returned, otherwise an
  *   error code is returned.
  *
- * Since: 1.2.3
+ * Since: 1.4.0
  **/
 int
 oath_totp_generate (const char *secret,
