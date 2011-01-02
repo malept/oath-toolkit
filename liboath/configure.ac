@@ -21,9 +21,9 @@ AC_INIT([liboath], [1.2.3], [simon@josefsson.org])
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 0)
-AC_SUBST(LT_REVISION, 2)
-AC_SUBST(LT_AGE, 0)
+AC_SUBST(LT_CURRENT, 1)
+AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_AGE, 1)
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
