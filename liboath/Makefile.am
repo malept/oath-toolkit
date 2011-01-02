@@ -31,7 +31,7 @@ lib_LTLIBRARIES = liboath.la
 oath_includedir=$(includedir)/liboath
 oath_include_HEADERS = oath.h
 
-liboath_la_SOURCES = liboath.map oath.h global.c usersfile.c hotp.c
+liboath_la_SOURCES = liboath.map oath.h global.c usersfile.c hotp.c totp.c
 liboath_la_LIBADD = lib/libgnu.la
 liboath_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -no-undefined

@@ -138,6 +138,19 @@ extern OATHAPI int oath_hotp_validate (const char *secret,
 				       uint64_t start_moving_factor,
 				       size_t window, const char *otp);
 
+/* TOTP */
+
+#define OATH_TOTP_DEFAULT_TIME_STEP_SIZE	30
+#define OATH_TOTP_DEFAULT_START_TIME		((time_t) 0)
+
+extern OATHAPI int oath_totp_generate (const char *secret,
+				       size_t secret_length,
+				       time_t now,
+				       unsigned time_step_size,
+				       time_t start_offset,
+				       unsigned digits,
+				       char *output_otp);
+
 /* Usersfile */
 
 extern OATHAPI int oath_authenticate_usersfile (const char *usersfile,
