@@ -117,96 +117,17 @@ int
 main (void)
 {
   oath_rc rc;
-  char secret[20];
-  size_t secretlen;
-  char *hexsecret = "3132333435363738393031323334353637383930";
+  char secret[20] = "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+    "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30";
+  size_t secretlen = sizeof (secret);
   char otp[10];
   uint64_t moving_factor;
   unsigned digits;
-
-  if (!oath_check_version (OATH_VERSION))
-    {
-      printf ("oath_check_version (%s) failed [%s]\n", OATH_VERSION,
-	      oath_check_version (NULL));
-      return 1;
-    }
-
-  if (oath_check_version (NULL) == NULL)
-    {
-      printf ("oath_check_version (NULL) == NULL\n");
-      return 1;
-    }
-
-  if (oath_check_version ("999.999"))
-    {
-      printf ("oath_check_version (999.999) succeeded?!\n");
-      return 1;
-    }
 
   rc = oath_init ();
   if (rc != OATH_OK)
     {
       printf ("oath_init: %d\n", rc);
-      return 1;
-    }
-
-  secretlen = 0;
-  rc = oath_hex2bin (hexsecret, secret, &secretlen);
-  if (rc != OATH_TOO_SMALL_BUFFER)
-    {
-      printf ("oath_hex2bin too small: %d\n", rc);
-      return 1;
-    }
-  if (secretlen != 20)
-    {
-      printf ("oath_hex2bin too small: 20 != %d\n", secretlen);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("abcd", secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin lower case failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("ABCD", secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin upper case failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("ABC", secret, &secretlen);
-  if (rc != OATH_INVALID_HEX)
-    {
-      printf ("oath_hex2bin too small failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("JUNK", secret, &secretlen);
-  if (rc != OATH_INVALID_HEX)
-    {
-      printf ("oath_hex2bin junk failed: %d\n", rc);
-      return 1;
-    }
-
-  secretlen = sizeof (secret);
-  rc = oath_hex2bin (hexsecret, secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin: %d\n", rc);
-      return 1;
-    }
-  if (secretlen != 20)
-    {
-      printf ("oath_hex2bin: 20 != %d\n", secretlen);
-      return 1;
-    }
-  if (memcmp (secret, "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
-	      "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30", 20) != 0)
-    {
-      printf ("oath_hex2bin: decode mismatch\n");
       return 1;
     }
 

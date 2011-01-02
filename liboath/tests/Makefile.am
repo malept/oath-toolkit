@@ -22,8 +22,14 @@ LDADD = ../liboath.la
 
 EXTRA_DIST = users.hotp expect.hotp
 
-TESTS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile.sh
-check_PROGRAMS = tst_hotp_algo$(EXEEXT) tst_hotp_usersfile$(EXEEXT)
+TESTS = \
+	tst_basic$(EXEEXT) \
+	tst_hotp_algo$(EXEEXT) \
+	tst_hotp_usersfile.sh
+check_PROGRAMS = \
+	tst_basic$(EXEEXT) \
+	tst_hotp_algo$(EXEEXT)	\
+	tst_hotp_usersfile$(EXEEXT)
 dist_check_SCRIPTS = tst_hotp_usersfile.sh
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
