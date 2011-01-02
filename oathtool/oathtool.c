@@ -29,6 +29,7 @@
 #include "progname.h"
 #include "error.h"
 #include "version-etc.h"
+#include "parse-duration.h"
 
 #include "oathtool_cmd.h"
 
@@ -136,6 +137,9 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
+  if (args_info.verbose_flag)
+    printf ("Hex secret: %s\n", args_info.inputs[0]);
+
   if (generate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {
       size_t iter = 0;
@@ -160,11 +164,19 @@ main (int argc, char *argv[])
   else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
     {
       time_t now = time (NULL);
+      time_t time_step_size = parse_duration (args_info.time_step_size_arg);
+
+      if (time_step_size == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time duration `%s'",
+	       args_info.time_step_size_arg);
+
+      if (args_info.verbose_flag)
+	printf ("Step size (seconds): %ld\n", time_step_size);
 
       rc = oath_totp_generate (secret,
 			       secretlen,
 			       now,
-			       args_info.time_step_size_arg,
+			       time_step_size,
 			       0,
 			       digits,
 			       otp);
