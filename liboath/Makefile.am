@@ -41,3 +41,6 @@ liboath_la_LDFLAGS += -Wl,--version-script=$(srcdir)/liboath.map
 else
 liboath_la_LDFLAGS += -export-symbols-regex '^oath_.*'
 endif
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = liboath.pc

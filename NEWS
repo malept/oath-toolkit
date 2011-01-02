@@ -3,6 +3,8 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.2.3 (unreleased)
 
+** liboath: Added pkg-config script.
+
 * Version 1.2.2 (released 2011-01-01)
 
 ** Cleanups related to name change.

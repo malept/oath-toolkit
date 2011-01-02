@@ -15,33 +15,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AC_INIT([liboath], [1.2.3], [simon@josefsson.org])
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
 
-# Library code modified:                              REVISION++
-# Interfaces changed/added/removed:   CURRENT++       REVISION=0
-# Interfaces added:                             AGE++
-# Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 0)
-AC_SUBST(LT_REVISION, 2)
-AC_SUBST(LT_AGE, 0)
-
-AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_CC
-gl_EARLY
-AC_PROG_LIBTOOL
-gl_INIT
-GTK_DOC_CHECK(1.1)
-
-AC_CONFIG_FILES([
-  Makefile
-  liboath.pc
-  lib/Makefile
-  tests/Makefile
-  gtk-doc/Makefile
-])
-AC_OUTPUT
+Name: Liboath
+Description: Library for Open AuTHentication (OATH) HOTP etc support.
+URL: http://www.nongnu.org/oath-toolkit/
+Version: @VERSION@
+Libs: -L${libdir} -loath
+Cflags: -I${includedir}
