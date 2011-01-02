@@ -30,11 +30,14 @@ AC_DEFUN([gl_EARLY],
   # Code from module c++defs:
   # Code from module errno:
   # Code from module error:
+  # Code from module exitfail:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module gettext-h:
   # Code from module include_next:
+  # Code from module inline:
   # Code from module intprops:
+  # Code from module parse-duration:
   # Code from module progname:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
@@ -48,6 +51,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module unistd:
   # Code from module version-etc:
   # Code from module warn-on-use:
+  # Code from module xalloc:
+  # Code from module xalloc-die:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -73,12 +78,17 @@ AC_DEFUN([gl_INIT],
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
      AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+  # Code from module exitfail:
   # Code from module extensions:
   # Code from module gettext-h:
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
   # Code from module include_next:
+  # Code from module inline:
+  gl_INLINE
   # Code from module intprops:
+  # Code from module parse-duration:
+  AC_REQUIRE([AC_C_INLINE])
   # Code from module progname:
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
@@ -96,6 +106,9 @@ AC_DEFUN([gl_INIT],
   # Code from module version-etc:
   gl_VERSION_ETC
   # Code from module warn-on-use:
+  # Code from module xalloc:
+  gl_XALLOC
+  # Code from module xalloc-die:
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -238,8 +251,12 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/errno.in.h
   lib/error.c
   lib/error.h
+  lib/exitfail.c
+  lib/exitfail.h
   lib/gettext.h
   lib/intprops.h
+  lib/parse-duration.c
+  lib/parse-duration.h
   lib/progname.c
   lib/progname.h
   lib/stdarg.in.h
@@ -249,12 +266,16 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/unistd.in.h
   lib/version-etc.c
   lib/version-etc.h
+  lib/xalloc-die.c
+  lib/xalloc.h
+  lib/xmalloc.c
   m4/00gnulib.m4
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/inline.m4
   m4/onceonly.m4
   m4/stdarg.m4
   m4/stddef_h.m4
@@ -264,4 +285,5 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/version-etc.m4
   m4/warn-on-use.m4
   m4/wchar_t.m4
+  m4/xalloc.m4
 ])
