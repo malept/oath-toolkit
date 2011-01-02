@@ -29,7 +29,7 @@
 #include "gc.h"
 
 /**
- * oath_init - initialize the OATH library
+ * oath_init:
  *
  * This function initializes the OATH library.  Every user of this
  * library needs to call this function before using other functions.
@@ -56,7 +56,7 @@ oath_init (void)
 }
 
 /**
- * oath_done - deinitialize the OATH library
+ * oath_done:
  *
  * This function deinitializes the OATH library, which were
  * initialized using oath_init().  After calling this function, no
