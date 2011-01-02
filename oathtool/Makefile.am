@@ -41,4 +41,5 @@ EXTRA_DIST = oathtool.h2m
 oathtool.1: $(srcdir)/oathtool.c $(srcdir)/oathtool.ggo $(srcdir)/oathtool.h2m $(srcdir)/configure.ac
 	$(HELP2MAN) \
 		--include oathtool.h2m \
+		--no-info \
 		--output=$@ $(top_builddir)/oathtool$(EXEEXT)
