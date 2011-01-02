@@ -153,11 +153,19 @@ main (int argc, char *argv[])
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
   if (args_info.verbose_flag)
-    printf ("Hex secret: %s\n", args_info.inputs[0]);
+    {
+      printf ("Hex secret: %s\n", args_info.inputs[0]);
+      printf ("Digits: %d\n", digits);
+      printf ("Window size: %ld\n", window);
+    }
 
   if (generate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {
       size_t iter = 0;
+
+      if (args_info.verbose_flag)
+	printf ("Start counter: 0x%lX (%ld)\n\n",
+		moving_factor, moving_factor);
 
       do
 	{
@@ -218,7 +226,8 @@ main (int argc, char *argv[])
 	    error (EXIT_FAILURE, 0, "strftime");
 
 	  printf ("Time now: %s (%ld)\n", outstr, when);
-	  printf ("Counter: %ld\n", (when - t0) / time_step_size);
+	  printf ("Counter: 0x%lX (%ld)\n\n", (when - t0) / time_step_size,
+		  (when - t0) / time_step_size);
 	}
 
       rc = oath_totp_generate (secret,
@@ -236,6 +245,10 @@ main (int argc, char *argv[])
     }
   else if (validate_otp_p (args_info.inputs_num))
     {
+      if (args_info.verbose_flag)
+	printf ("Start counter: 0x%lX (%ld)\n\n",
+		moving_factor, moving_factor);
+
       rc = oath_hotp_validate (secret,
 			       secretlen,
 			       moving_factor,
