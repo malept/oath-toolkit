@@ -18,7 +18,7 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
-includedir=@includedir@
+includedir=@includedir@/liboath
 
 Name: Liboath
 Description: Library for Open AuTHentication (OATH) HOTP etc support.
