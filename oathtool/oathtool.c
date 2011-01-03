@@ -102,11 +102,18 @@ main (int argc, char *argv[])
 
   if (args_info.version_given)
     {
-      const char *p = PACKAGE_NAME;
-      if (strcmp (oath_check_version (NULL), PACKAGE_VERSION) != 0)
-	p = PACKAGE_STRING;
-      version_etc (stdout, "oathtool", p, oath_check_version (NULL),
+      char *p;
+      if (strcmp (oath_check_version ( NULL), OATH_VERSION) != 0)
+	asprintf (&p, "OATH Toolkit liboath.so %s oath.h %s",
+		  oath_check_version (NULL), OATH_VERSION);
+      else if (strcmp (OATH_VERSION, PACKAGE_VERSION) != 0)
+	asprintf (&p, "OATH Toolkit %s",
+		  oath_check_version (NULL), OATH_VERSION);
+      else
+	asprintf (&p, "OATH Toolkit");
+      version_etc (stdout, "oathtool", p, PACKAGE_VERSION,
 		   "Simon Josefsson", (char *) NULL);
+      free (p);
       return EXIT_SUCCESS;
     }
 
