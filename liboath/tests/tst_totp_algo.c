@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 
-/* From draft-mraihi-totp-timebased-06 */
+/* From draft-mraihi-totp-timebased-07 */
 const struct {
   time_t secs;
   uint64_t T;
@@ -35,7 +35,8 @@ const struct {
   { 1111111109, 0x00000000023523EC, "07081804" },
   { 1111111111, 0x00000000023523ED, "14050471" },
   { 1234567890, 0x000000000273EF07, "89005924" },
-  { 2000000000, 0x0000000003F940AA, "69279037" }
+  { 2000000000, 0x0000000003F940AA, "69279037" },
+  { 20000000000, 0x0000000027BC86AA, "65353130" }
 };
 
 int
