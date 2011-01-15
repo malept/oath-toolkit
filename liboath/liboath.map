@@ -34,7 +34,7 @@ LIBOATH_1.2.0 {
     *;
 };
 
-LIBOATH_1.2.3
+LIBOATH_1.4.0
 {
   global:
     oath_totp_generate;
