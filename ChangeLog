@@ -1,3 +1,296 @@
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix git tagging to work with git-version-gen.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.0.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.h2m: Bump to draft -07.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/totp.c: Bump to draft -07.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/liboath.map: Bump version.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/hotp.c, liboath/oath.h, liboath/totp.c,
+	liboath/usersfile.c: Indent.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/hotp.c, liboath/oath.h: Doc fixes.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Update.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/hotp.c, liboath/liboath.map, liboath/oath.h,
+	liboath/tests/Makefile.am, liboath/tests/tst_hotp_validate.c: Add
+	oath_hotp_validate_callback and self-tests.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Update to latest draft.
+
+2011-01-15  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/git-version-gen, build-aux/useless-if-before-free,
+	maint.mk: Update gnulib files.
+
+2011-01-04  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_totp_algo.c: Add another test vector.
+
+2011-01-04  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/git-version-gen, build-aux/update-copyright: Update
+	gnulib files.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/liboath.pc.in: Specify correct includedir.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/lib/Makefile.am, oathtool/lib/asnprintf.c,
+	oathtool/lib/asprintf.c, oathtool/lib/float+.h,
+	oathtool/lib/float.in.h, oathtool/lib/memchr.c,
+	oathtool/lib/memchr.valgrind, oathtool/lib/printf-args.c,
+	oathtool/lib/printf-args.h, oathtool/lib/printf-parse.c,
+	oathtool/lib/printf-parse.h, oathtool/lib/size_max.h,
+	oathtool/lib/stdio-write.c, oathtool/lib/stdio.in.h,
+	oathtool/lib/vasnprintf.c, oathtool/lib/vasnprintf.h,
+	oathtool/lib/vasprintf.c, oathtool/lib/xsize.h,
+	oathtool/m4/asm-underscore.m4, oathtool/m4/float_h.m4,
+	oathtool/m4/gnulib-cache.m4, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/intmax_t.m4, oathtool/m4/inttypes_h.m4,
+	oathtool/m4/memchr.m4, oathtool/m4/mmap-anon.m4,
+	oathtool/m4/printf.m4, oathtool/m4/size_max.m4,
+	oathtool/m4/stdint_h.m4, oathtool/m4/stdio_h.m4,
+	oathtool/m4/vasnprintf.m4, oathtool/m4/vasprintf.m4,
+	oathtool/m4/xsize.m4, oathtool/oathtool.c: Improve oathtool
+	--version output.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/gtk-doc/liboath-docs.sgml, liboath/oath.h,
+	liboath/totp.c: Next release will be 1.4.0.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Update.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.c, oathtool/oathtool.h2m: Improve debug output.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/tests/tst_oathtool.sh: Add TOTP checks.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Typo.
+
+2011-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, oathtool/oathtool.c, oathtool/oathtool.ggo,
+	oathtool/oathtool.h2m: Add oathtool --start-time and --now.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/doc/parse-datetime.texi, oathtool/lib/Makefile.am,
+	oathtool/lib/alloca.in.h, oathtool/lib/c-ctype.c,
+	oathtool/lib/c-ctype.h, oathtool/lib/gettime.c,
+	oathtool/lib/gettimeofday.c, oathtool/lib/malloca.c,
+	oathtool/lib/malloca.h, oathtool/lib/malloca.valgrind,
+	oathtool/lib/mktime-internal.h, oathtool/lib/mktime.c,
+	oathtool/lib/parse-datetime.h, oathtool/lib/parse-datetime.y,
+	oathtool/lib/setenv.c, oathtool/lib/stdbool.in.h,
+	oathtool/lib/stdint.in.h, oathtool/lib/stdlib.in.h,
+	oathtool/lib/sys_time.in.h, oathtool/lib/time.in.h,
+	oathtool/lib/time_r.c, oathtool/lib/timespec.h,
+	oathtool/lib/unsetenv.c, oathtool/lib/verify.h,
+	oathtool/lib/wchar.in.h, oathtool/m4/alloca.m4,
+	oathtool/m4/bison.m4, oathtool/m4/clock_time.m4,
+	oathtool/m4/eealloc.m4, oathtool/m4/environ.m4,
+	oathtool/m4/gettime.m4, oathtool/m4/gettimeofday.m4,
+	oathtool/m4/gnulib-cache.m4, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/longlong.m4, oathtool/m4/malloca.m4,
+	oathtool/m4/mktime.m4, oathtool/m4/multiarch.m4,
+	oathtool/m4/parse-datetime.m4, oathtool/m4/setenv.m4,
+	oathtool/m4/stdbool.m4, oathtool/m4/stdint.m4,
+	oathtool/m4/stdlib_h.m4, oathtool/m4/sys_time_h.m4,
+	oathtool/m4/time_h.m4, oathtool/m4/time_r.m4,
+	oathtool/m4/timespec.m4, oathtool/m4/tm_gmtoff.m4,
+	oathtool/m4/wchar_h.m4, oathtool/m4/wint_t.m4: Add parse-datetime
+	module.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/Makefile.am: There is no info manual.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.c, oathtool/oathtool.ggo, oathtool/oathtool.h2m: 
+	Support ISO-8601 durations.  Add --verbose.  Improve man page.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/lib/Makefile.am, oathtool/lib/exitfail.c,
+	oathtool/lib/exitfail.h, oathtool/lib/parse-duration.c,
+	oathtool/lib/parse-duration.h, oathtool/lib/xalloc-die.c,
+	oathtool/lib/xalloc.h, oathtool/lib/xmalloc.c,
+	oathtool/m4/gnulib-cache.m4, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/inline.m4, oathtool/m4/xalloc.m4: Add parse-duration
+	module.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, oathtool/oathtool.c, oathtool/oathtool.ggo: Add oathtool
+	--totp and --time-step-size.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/global.c, liboath/gtk-doc/Makefile.am: Doc fixes.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/global.c, liboath/usersfile.c: Doc fixes.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc/liboath-docs.sgml: Add index.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/update-copyright: Update gnulib files.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, liboath/configure.ac,
+	oathtool/configure.ac, pam_oath/configure.ac: Use git-version-gen.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/git-version-gen, m4/gnulib-cache.m4, m4/gnulib-comp.m4: 
+	Add git-version-gen module.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac: Bump ABI version.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/Makefile.am, liboath/liboath.map, liboath/oath.h,
+	liboath/tests/Makefile.am, liboath/tests/tst_totp_algo.c,
+	liboath/totp.c: liboath: Support time-variant TOTP based on
+	draft-mraihi-totp-timebased-06.  New function oath_totp_generate.  New symbols
+	OATH_TOTP_DEFAULT_TIME_STEP_SIZE and OATH_TOTP_DEFAULT_START_TIME
+	for default system parameters.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/Makefile.am, liboath/configure.ac,
+	liboath/liboath.pc.in: Add pkg-config script.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/Makefile.am, liboath/tests/tst_basic.c,
+	liboath/tests/tst_hotp_algo.c: Split out basic self-checks.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/update-copyright, cfg.mk: Fix update-copyright.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/update-copyright,
+	build-aux/useless-if-before-free, build-aux/vc-list-files,
+	liboath/build-aux/arg-nonnull.h, liboath/build-aux/c++defs.h,
+	liboath/build-aux/config.rpath, liboath/build-aux/warn-on-use.h,
+	liboath/lib/Makefile.am, liboath/lib/dummy.c,
+	liboath/lib/errno.in.h, liboath/lib/gc-gnulib.c,
+	liboath/lib/gc-libgcrypt.c, liboath/lib/getdelim.c,
+	liboath/lib/getline.c, liboath/lib/hmac-sha1.c, liboath/lib/hmac.h,
+	liboath/lib/memxor.c, liboath/lib/memxor.h, liboath/lib/realloc.c,
+	liboath/lib/sha1.c, liboath/lib/sha1.h, liboath/lib/stddef.in.h,
+	liboath/lib/stdint.in.h, liboath/lib/stdio-write.c,
+	liboath/lib/stdio.in.h, liboath/lib/stdlib.in.h,
+	liboath/lib/string.in.h, liboath/lib/strverscmp.c,
+	liboath/lib/sys_stat.in.h, liboath/lib/time.in.h,
+	liboath/lib/unistd.in.h, liboath/lib/wchar.in.h,
+	liboath/m4/00gnulib.m4, liboath/m4/asm-underscore.m4,
+	liboath/m4/errno_h.m4, liboath/m4/extensions.m4,
+	liboath/m4/gc-hmac-sha1.m4, liboath/m4/gc.m4,
+	liboath/m4/getdelim.m4, liboath/m4/getline.m4,
+	liboath/m4/gnulib-cache.m4, liboath/m4/gnulib-common.m4,
+	liboath/m4/gnulib-comp.m4, liboath/m4/gnulib-tool.m4,
+	liboath/m4/hmac-sha1.m4, liboath/m4/include_next.m4,
+	liboath/m4/ld-version-script.m4, liboath/m4/lib-ld.m4,
+	liboath/m4/lib-link.m4, liboath/m4/lib-prefix.m4,
+	liboath/m4/longlong.m4, liboath/m4/malloc.m4, liboath/m4/memxor.m4,
+	liboath/m4/multiarch.m4, liboath/m4/onceonly.m4,
+	liboath/m4/realloc.m4, liboath/m4/sha1.m4, liboath/m4/stddef_h.m4,
+	liboath/m4/stdint.m4, liboath/m4/stdio_h.m4,
+	liboath/m4/stdlib_h.m4, liboath/m4/string_h.m4,
+	liboath/m4/strverscmp.m4, liboath/m4/sys_stat_h.m4,
+	liboath/m4/time_h.m4, liboath/m4/unistd_h.m4,
+	liboath/m4/visibility.m4, liboath/m4/warn-on-use.m4,
+	liboath/m4/wchar_h.m4, liboath/m4/wchar_t.m4, liboath/m4/wint_t.m4,
+	m4/00gnulib.m4, m4/gnulib-cache.m4, m4/gnulib-common.m4,
+	m4/gnulib-comp.m4, m4/gnulib-tool.m4, m4/onceonly.m4, maint.mk,
+	oathtool/build-aux/arg-nonnull.h, oathtool/build-aux/c++defs.h,
+	oathtool/build-aux/warn-on-use.h, oathtool/lib/Makefile.am,
+	oathtool/lib/errno.in.h, oathtool/lib/error.c,
+	oathtool/lib/error.h, oathtool/lib/gettext.h,
+	oathtool/lib/intprops.h, oathtool/lib/progname.c,
+	oathtool/lib/progname.h, oathtool/lib/stdarg.in.h,
+	oathtool/lib/stddef.in.h, oathtool/lib/strerror.c,
+	oathtool/lib/string.in.h, oathtool/lib/unistd.in.h,
+	oathtool/lib/version-etc.c, oathtool/lib/version-etc.h,
+	oathtool/m4/00gnulib.m4, oathtool/m4/errno_h.m4,
+	oathtool/m4/error.m4, oathtool/m4/extensions.m4,
+	oathtool/m4/gnulib-cache.m4, oathtool/m4/gnulib-common.m4,
+	oathtool/m4/gnulib-comp.m4, oathtool/m4/gnulib-tool.m4,
+	oathtool/m4/include_next.m4, oathtool/m4/onceonly.m4,
+	oathtool/m4/stdarg.m4, oathtool/m4/stddef_h.m4,
+	oathtool/m4/strerror.m4, oathtool/m4/string_h.m4,
+	oathtool/m4/unistd_h.m4, oathtool/m4/version-etc.m4,
+	oathtool/m4/warn-on-use.m4, oathtool/m4/wchar_t.m4: Update gnulib
+	files.  Add update-copyright module.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2011-01-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, liboath/configure.ac, liboath/oath.h,
+	oathtool/configure.ac, pam_oath/configure.ac: Bump versions.  Drop
+	AC_COPYRIGHT invocation.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add web-coverage rules.
+
+2011-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-01-01  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.2.2.
