@@ -70,6 +70,7 @@ upload:
 	scp $(distdir).tar.gz $(distdir).tar.gz.sig jas@dl.sv.nongnu.org:/releases/oath-toolkit/
 
 web:
+	groff -man -T html oathtool/oathtool.1  > $(htmldir)/man-oathtool.html
 	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
 
 upload-web:
