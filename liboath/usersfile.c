@@ -56,9 +56,7 @@ parse_usersfile (const char *username,
 		 const char *passwd,
 		 time_t * last_otp,
 		 FILE * infh,
-		 char **lineptr,
-		 size_t * n,
-		 uint64_t *new_moving_factor)
+		 char **lineptr, size_t * n, uint64_t * new_moving_factor)
 {
   ssize_t t;
 
@@ -159,9 +157,7 @@ update_usersfile2 (const char *username,
 		   FILE * infh,
 		   FILE * outfh,
 		   char **lineptr,
-		   size_t * n,
-		   char *timestamp,
-		   uint64_t new_moving_factor)
+		   size_t * n, char *timestamp, uint64_t new_moving_factor)
 {
   ssize_t t;
 
@@ -198,8 +194,7 @@ update_usersfile2 (const char *username,
 
       r = fprintf (outfh, "%s\t%s\t%s\t%s\t%llu\t%s\t%s\n",
 		   type, username, passwd, secret,
-		   (unsigned long long) new_moving_factor,
-		   otp, timestamp);
+		   (unsigned long long) new_moving_factor, otp, timestamp);
       if (r <= 0)
 	return OATH_PRINTF_ERROR;
     }
@@ -211,12 +206,10 @@ static int
 update_usersfile (const char *usersfile,
 		  const char *username,
 		  const char *otp,
-		  time_t *last_otp,
+		  time_t * last_otp,
 		  FILE * infh,
 		  char **lineptr,
-		  size_t * n,
-		  char *timestamp,
-		  uint64_t new_moving_factor)
+		  size_t * n, char *timestamp, uint64_t new_moving_factor)
 {
   FILE *outfh, *lockfh;
   int rc;
@@ -340,8 +333,7 @@ oath_authenticate_usersfile (const char *usersfile,
 			     const char *username,
 			     const char *otp,
 			     size_t window,
-			     const char *passwd,
-			     time_t * last_otp)
+			     const char *passwd, time_t * last_otp)
 {
   FILE *infh;
   char *line = NULL;
@@ -366,7 +358,7 @@ oath_authenticate_usersfile (const char *usersfile,
       int r;
       mode_t old_umask;
 
-      if (time (&t) == (time_t) -1)
+      if (time (&t) == (time_t) - 1)
 	return OATH_TIME_ERROR;
 
       if (localtime_r (&t, &now) == NULL)
@@ -379,8 +371,7 @@ oath_authenticate_usersfile (const char *usersfile,
       old_umask = umask (~(S_IRUSR | S_IWUSR));
 
       rc = update_usersfile (usersfile, username, otp, last_otp,
-			     infh, &line, &n, timestamp,
-			     new_moving_factor);
+			     infh, &line, &n, timestamp, new_moving_factor);
 
       umask (old_umask);
     }

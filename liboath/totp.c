@@ -63,9 +63,7 @@ oath_totp_generate (const char *secret,
 		    size_t secret_length,
 		    time_t now,
 		    unsigned time_step_size,
-		    time_t start_offset,
-		    unsigned digits,
-		    char *output_otp)
+		    time_t start_offset, unsigned digits, char *output_otp)
 {
   uint64_t nts;
 
@@ -78,7 +76,5 @@ oath_totp_generate (const char *secret,
 			     secret_length,
 			     nts,
 			     digits,
-			     false,
-			     OATH_HOTP_DYNAMIC_TRUNCATION,
-			     output_otp);
+			     false, OATH_HOTP_DYNAMIC_TRUNCATION, output_otp);
 }

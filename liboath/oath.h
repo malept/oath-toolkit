@@ -20,19 +20,19 @@
  */
 
 #ifndef OATH_H
-# define OATH_H
+#define OATH_H
 
-# ifndef OATHAPI
-#  if defined LIBOATH_BUILDING && defined HAVE_VISIBILITY && HAVE_VISIBILITY
-#   define OATHAPI __attribute__((__visibility__("default")))
-#  elif defined LIBOATH_BUILDING && defined _MSC_VER && ! defined LIBOATH_STATIC
-#   define OATHAPI __declspec(dllexport)
-#  elif defined _MSC_VER && ! defined LIBOATH_STATIC
-#   define OATHAPI __declspec(dllimport)
-#  else
-#   define OATHAPI
-#  endif
+#ifndef OATHAPI
+# if defined LIBOATH_BUILDING && defined HAVE_VISIBILITY && HAVE_VISIBILITY
+#  define OATHAPI __attribute__((__visibility__("default")))
+# elif defined LIBOATH_BUILDING && defined _MSC_VER && ! defined LIBOATH_STATIC
+#  define OATHAPI __declspec(dllexport)
+# elif defined _MSC_VER && ! defined LIBOATH_STATIC
+#  define OATHAPI __declspec(dllimport)
+# else
+#  define OATHAPI
 # endif
+#endif
 
 #include <stdbool.h>		/* For bool. */
 #include <stdint.h>		/* For uint64_t, SIZE_MAX. */
@@ -46,7 +46,7 @@
  * version number.  Used together with oath_check_version() to verify
  * header file and run-time library consistency.
  */
-# define OATH_VERSION "1.4.0"
+#define OATH_VERSION "1.4.0"
 
 /**
  * OATH_VERSION_NUMBER
@@ -55,7 +55,7 @@
  * header file version number.  For example, when the header version
  * is 1.2.3 this symbol will have the value 0x010203.
  */
-# define OATH_VERSION_NUMBER 0x010400
+#define OATH_VERSION_NUMBER 0x010400
 
 /**
  * oath_rc:
@@ -124,21 +124,21 @@ extern OATHAPI int oath_hex2bin (char *hexstr, char *binstr, size_t * binlen);
 
 #define OATH_HOTP_DYNAMIC_TRUNCATION SIZE_MAX
 
-extern OATHAPI int oath_hotp_generate (const char *secret,
-				       size_t secret_length,
-				       uint64_t moving_factor,
-				       unsigned digits,
-				       bool add_checksum,
-				       size_t truncation_offset,
-				       char *output_otp);
+extern OATHAPI int
+oath_hotp_generate (const char *secret,
+		    size_t secret_length,
+		    uint64_t moving_factor,
+		    unsigned digits,
+		    bool add_checksum,
+		    size_t truncation_offset,
+		    char *output_otp);
 
 
-extern OATHAPI int oath_hotp_validate (const char *secret,
-				       size_t secret_length,
-				       uint64_t start_moving_factor,
-				       size_t window,
-				       const char *otp);
-
+extern OATHAPI int
+oath_hotp_validate (const char *secret,
+		    size_t secret_length,
+		    uint64_t start_moving_factor,
+		    size_t window, const char *otp);
 
 /**
  * oath_hotp_validate_strcmp_function:
@@ -179,21 +179,22 @@ oath_hotp_validate_callback (const char *secret,
 #define OATH_TOTP_DEFAULT_TIME_STEP_SIZE	30
 #define OATH_TOTP_DEFAULT_START_TIME		((time_t) 0)
 
-extern OATHAPI int oath_totp_generate (const char *secret,
-				       size_t secret_length,
-				       time_t now,
-				       unsigned time_step_size,
-				       time_t start_offset,
-				       unsigned digits,
-				       char *output_otp);
+extern OATHAPI int
+oath_totp_generate (const char *secret,
+		    size_t secret_length,
+		    time_t now,
+		    unsigned time_step_size,
+		    time_t start_offset,
+		    unsigned digits, char *output_otp);
 
 /* Usersfile */
 
-extern OATHAPI int oath_authenticate_usersfile (const char *usersfile,
-						const char *username,
-						const char *otp,
-						size_t window,
-						const char *passwd,
-						time_t * last_otp);
+extern OATHAPI int
+oath_authenticate_usersfile (const char *usersfile,
+			     const char *username,
+			     const char *otp,
+			     size_t window,
+			     const char *passwd,
+			     time_t * last_otp);
 
 #endif /* OATH_H */

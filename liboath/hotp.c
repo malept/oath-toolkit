@@ -61,8 +61,7 @@ oath_hotp_generate (const char *secret,
 		    uint64_t moving_factor,
 		    unsigned digits,
 		    bool add_checksum,
-		    size_t truncation_offset,
-		    char *output_otp)
+		    size_t truncation_offset, char *output_otp)
 {
   char hs[GC_SHA1_DIGEST_SIZE];
   long S;
@@ -191,8 +190,7 @@ oath_hotp_validate_callback (const char *secret,
 			       secret_length,
 			       start_moving_factor + iter,
 			       digits,
-			       false, OATH_HOTP_DYNAMIC_TRUNCATION,
-			       tmp_otp);
+			       false, OATH_HOTP_DYNAMIC_TRUNCATION, tmp_otp);
       if (rc != OATH_OK)
 	return rc;
 
@@ -226,8 +224,7 @@ int
 oath_hotp_validate (const char *secret,
 		    size_t secret_length,
 		    uint64_t start_moving_factor,
-		    size_t window,
-		    const char *otp)
+		    size_t window, const char *otp)
 {
   return oath_hotp_validate_callback (secret, secret_length,
 				      start_moving_factor,
