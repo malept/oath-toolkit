@@ -140,9 +140,9 @@ strcmp_callback (void *handle, const char *test_otp)
  * @secret: the shared secret string
  * @secret_length: length of @secret
  * @start_moving_factor: start counter in OTP stream
- * @window: how many OTPs from start counter to test
+ * @window: how many OTPs after start counter to test
  * @digits: number of requested digits in the OTP
- * @oath_strcmp: function pointer to a strcmp-like function.
+ * @strcmp_otp: function pointer to a strcmp-like function.
  * @strcmp_handle: caller handle to be passed on to @oath_strcmp.
  *
  * Validate an OTP according to OATH HOTP algorithm per RFC 4226.
@@ -209,7 +209,7 @@ oath_hotp_validate_callback (const char *secret,
  * @secret: the shared secret string
  * @secret_length: length of @secret
  * @start_moving_factor: start counter in OTP stream
- * @window: how many OTPs from start counter to test
+ * @window: how many OTPs after start counter to test
  * @otp: the OTP to validate.
  *
  * Validate an OTP according to OATH HOTP algorithm per RFC 4226.

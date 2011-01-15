@@ -140,6 +140,28 @@ extern OATHAPI int oath_hotp_validate (const char *secret,
 				       const char *otp);
 
 
+/**
+ * oath_hotp_validate_strcmp_function:
+ * @handle: caller handle as passed to oath_hotp_validate_callback()
+ * @test_otp: OTP to match against.
+ *
+ * Prototype of strcmp-like function that will be called by
+ * oath_hotp_validate_callback() to validate OTPs.
+ *
+ * The function should behave like strcmp, i.e., only ever return 0 on
+ * matches.
+ *
+ * This callback interface is useful when you cannot compare OTPs
+ * directly using normal strcmp, but instead for example only have a
+ * hashed OTP.  You would then typically pass in the hashed OTP in the
+ * @strcmp_handle and let your implementation of @oath_strcmp hash the
+ * test_otp OTP using the same hash, and then compare the results.
+ *
+ * Return value: 0 if and only if @test_otp is identical to the OTP to
+ *   be validated.
+ *
+ * Since: 1.4.0
+ **/
 typedef int (*oath_hotp_validate_strcmp_function) (void *handle,
 						   const char *test_otp);
 
