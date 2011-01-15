@@ -36,6 +36,7 @@ liboath/gtk-doc/html.stamp
 liboath/gtk-doc/html/
 liboath/gtk-doc/liboath-decl-list.txt
 liboath/gtk-doc/liboath-decl.txt
+liboath/gtk-doc/liboath-decl.txt.bak
 liboath/gtk-doc/liboath-overrides.txt
 liboath/gtk-doc/liboath-sections.txt
 liboath/gtk-doc/liboath-undeclared.txt
@@ -102,6 +103,8 @@ liboath/tests/tst_hotp_algo
 liboath/tests/tst_hotp_algo.o
 liboath/tests/tst_hotp_usersfile
 liboath/tests/tst_hotp_usersfile.o
+liboath/tests/tst_hotp_validate
+liboath/tests/tst_hotp_validate.o
 liboath/tests/tst_totp_algo
 liboath/tests/tst_totp_algo.o
 liboath/totp.lo
@@ -133,6 +136,8 @@ oathtool/lib/Makefile
 oathtool/lib/Makefile.in
 oathtool/lib/alloca.h
 oathtool/lib/arg-nonnull.h
+oathtool/lib/asnprintf.lo
+oathtool/lib/asnprintf.o
 oathtool/lib/c++defs.h
 oathtool/lib/c-ctype.lo
 oathtool/lib/c-ctype.o
@@ -148,13 +153,20 @@ oathtool/lib/parse-datetime.lo
 oathtool/lib/parse-datetime.o
 oathtool/lib/parse-duration.lo
 oathtool/lib/parse-duration.o
+oathtool/lib/printf-args.lo
+oathtool/lib/printf-args.o
+oathtool/lib/printf-parse.lo
+oathtool/lib/printf-parse.o
 oathtool/lib/progname.lo
 oathtool/lib/progname.o
+oathtool/lib/stdio.h
 oathtool/lib/stdlib.h
 oathtool/lib/string.h
 oathtool/lib/sys/
 oathtool/lib/time.h
 oathtool/lib/unistd.h
+oathtool/lib/vasnprintf.lo
+oathtool/lib/vasnprintf.o
 oathtool/lib/version-etc.lo
 oathtool/lib/version-etc.o
 oathtool/lib/warn-on-use.h
