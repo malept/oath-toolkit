@@ -38,4 +38,5 @@ LIBOATH_1.2.3
 {
   global:
     oath_totp_generate;
+    oath_hotp_validate_callback;
 } LIBOATH_1.2.0;

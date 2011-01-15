@@ -25,11 +25,13 @@ EXTRA_DIST = users.hotp expect.hotp
 TESTS = \
 	tst_basic$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
+	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile.sh \
 	tst_totp_algo$(EXEEXT)
 check_PROGRAMS = \
 	tst_basic$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
+	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile$(EXEEXT) \
 	tst_totp_algo$(EXEEXT)
 dist_check_SCRIPTS = tst_hotp_usersfile.sh

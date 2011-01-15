@@ -106,7 +106,7 @@ typedef enum
   OATH_FILE_LOCK_ERROR = -15,
   OATH_FILE_RENAME_ERROR = -16,
   OATH_FILE_UNLINK_ERROR = -17,
-  OATH_TIME_ERROR = -18,
+  OATH_TIME_ERROR = -18
 } oath_rc;
 
 /* Global */
@@ -136,7 +136,21 @@ extern OATHAPI int oath_hotp_generate (const char *secret,
 extern OATHAPI int oath_hotp_validate (const char *secret,
 				       size_t secret_length,
 				       uint64_t start_moving_factor,
-				       size_t window, const char *otp);
+				       size_t window,
+				       const char *otp);
+
+
+typedef int (*oath_hotp_validate_strcmp_function) (void *handle,
+						   const char *test_otp);
+
+extern OATHAPI int
+oath_hotp_validate_callback (const char *secret,
+			     size_t secret_length,
+			     uint64_t start_moving_factor,
+			     size_t window,
+			     unsigned digits,
+			     oath_hotp_validate_strcmp_function strcmp_otp,
+			     void *strcmp_handle);
 
 /* TOTP */
 

@@ -128,6 +128,82 @@ oath_hotp_generate (const char *secret,
   return OATH_OK;
 }
 
+static int
+strcmp_callback (void *handle, const char *test_otp)
+{
+  const char *otp = handle;
+  return strcmp (otp, test_otp);
+}
+
+/**
+ * oath_hotp_validate_callback:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @start_moving_factor: start counter in OTP stream
+ * @window: how many OTPs from start counter to test
+ * @digits: number of requested digits in the OTP
+ * @oath_strcmp: function pointer to a strcmp-like function.
+ * @strcmp_handle: caller handle to be passed on to @oath_strcmp.
+ *
+ * Validate an OTP according to OATH HOTP algorithm per RFC 4226.
+ *
+ * Validation is implemented by generating a number of potential OTPs
+ * and performing a call to the @oath_strcmp function, to compare the
+ * potential OTP against the given @otp.  It has the following prototype:
+ *
+ * int (*oath_hotp_validate_strcmp_function) (void *handle, const char *test_otp);
+ *
+ * The function should behave like strcmp, i.e., only ever return 0 on
+ * matches.
+ *
+ * This callback interface is useful when you cannot compare OTPs
+ * directly using normal strcmp, but instead for example only have a
+ * hashed OTP.  You would then typically pass in the hashed OTP in the
+ * @strcmp_handle and let your implementation of @oath_strcmp hash the
+ * test_otp OTP using the same hash, and then compare the results.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns position in OTP window (zero is first position),
+ *   or %OATH_INVALID_OTP if no OTP was found in OTP window, or an
+ *   error code.
+ *
+ * Since: 1.4.0
+ **/
+int
+oath_hotp_validate_callback (const char *secret,
+			     size_t secret_length,
+			     uint64_t start_moving_factor,
+			     size_t window,
+			     unsigned digits,
+			     oath_hotp_validate_strcmp_function oath_strcmp,
+			     void *strcmp_handle)
+{
+  unsigned iter = 0;
+  char tmp_otp[10];
+  int rc;
+
+  do
+    {
+      rc = oath_hotp_generate (secret,
+			       secret_length,
+			       start_moving_factor + iter,
+			       digits,
+			       false, OATH_HOTP_DYNAMIC_TRUNCATION,
+			       tmp_otp);
+      if (rc != OATH_OK)
+	return rc;
+
+      if (oath_strcmp (strcmp_handle, tmp_otp) == 0)
+	return iter;
+    }
+  while (window - iter++ > 0);
+
+  return OATH_INVALID_OTP;
+}
+
 /**
  * oath_hotp_validate:
  * @secret: the shared secret string
@@ -153,26 +229,8 @@ oath_hotp_validate (const char *secret,
 		    size_t window,
 		    const char *otp)
 {
-  unsigned digits = strlen (otp);
-  unsigned iter = 0;
-  char tmp_otp[10];
-  int rc;
-
-  do
-    {
-      rc = oath_hotp_generate (secret,
-			       secret_length,
-			       start_moving_factor + iter,
-			       digits,
-			       false, OATH_HOTP_DYNAMIC_TRUNCATION,
-			       tmp_otp);
-      if (rc != OATH_OK)
-	return rc;
-
-      if (strcmp (otp, tmp_otp) == 0)
-	return iter;
-    }
-  while (window - iter++ > 0);
-
-  return OATH_INVALID_OTP;
+  return oath_hotp_validate_callback (secret, secret_length,
+				      start_moving_factor,
+				      window, strlen (otp),
+				      strcmp_callback, (void *) otp);
 }

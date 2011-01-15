@@ -10,9 +10,15 @@ New function oath_totp_generate.  New symbols
 OATH_TOTP_DEFAULT_TIME_STEP_SIZE and OATH_TOTP_DEFAULT_START_TIME for
 default system parameters.
 
+** liboath: New API oath_hotp_validate_callback().
+Used when you are validating hashed OTPs.  Inspired by discussions
+with Daniel Pocock <daniel@pocock.com.au>.
+
 ** oathtool: New parameter --totp to generate time-variant TOTP's.
 New sub-parameter --time-step-size, --start-time and --now used to
 specify TOTP configuration.
+
+** liboath: Added self-tests of validate functions.
 
 * Version 1.2.2 (released 2011-01-01)
 
