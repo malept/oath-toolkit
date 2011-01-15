@@ -34,7 +34,7 @@
  * @output_otp: output buffer, must have room for the output OTP plus zero
  *
  * Generate a one-time-password using the time-variant TOTP algorithm
- * described in draft-mraihi-totp-timebased-06.  The input parameters
+ * described in draft-mraihi-totp-timebased-07.  The input parameters
  * are taken as time values.
  *
  * The system parameter @time_step_size describes how long the time
