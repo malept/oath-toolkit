@@ -5,7 +5,7 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 ** liboath: Added pkg-config script.
 
-** liboath: Support time-variant TOTP based on draft-mraihi-totp-timebased-06.
+** liboath: Support time-variant TOTP based on draft-mraihi-totp-timebased-07.
 New function oath_totp_generate.  New symbols
 OATH_TOTP_DEFAULT_TIME_STEP_SIZE and OATH_TOTP_DEFAULT_START_TIME for
 default system parameters.
