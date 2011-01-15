@@ -55,13 +55,13 @@ htmldir = ../www-$(PACKAGE)
 release: prepare upload web upload-web
 
 prepare:
-	! git tag -l $(tag) | grep $(PACKAGE) > /dev/null
+	test `git describe` = `git tag -l $(tag)`
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 	gpg -b $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.sig
 	git commit -m Generated. ChangeLog
-	git tag -u b565716f! -m $(VERSION) $(tag)
+	git tag -f -u b565716f! -m $(VERSION) $(tag)
 
 upload:
 	git push
