@@ -1,0 +1,73 @@
+Subject: OATH Toolkit 1.4.1
+To: oath-toolkit-help@nongnu.org
+<#part sign=pgpmime>
+Just a small release to get past lintian warnings, for dpkg packages.
+
+New in this release:
+
+** liboath: New configure parameter --enable-gcc-warnings.
+Use to enable many compiler warnings.  Enabled by default during
+development.
+
+** oathtool: Replace - with \- in man page, pointed out by lintian.
+
+The OATH Toolkit attempts to collect several tools that are useful when
+deploying technologies related to OATH.  For example, see RFC 4226 on
+OATH HOTP.  The components included in the package is:
+
+   * liboath: A shared and static C library for OATH handling.
+
+   * oathtool: A command line tool for generating and validating OTPs.
+
+   * pam_oath: A PAM module for pluggable login authentication for OATH.
+
+Consider this release experimental!  Please report any issues with it,
+especially with the shared library.
+
+The project's web page is available at:
+  http://www.nongnu.org/oath-toolkit/
+
+GTK-DOC API Reference manual:
+  http://www.nongnu.org/oath-toolkit/reference/liboath-oath.html
+
+Man page for oathtool:
+  http://www.nongnu.org/oath-toolkit/man-oathtool.html
+
+Manual for PAM module:
+  http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/README
+
+If you need help to use the OATH Toolkit, or want to help others, you
+are invited to join our oath-toolkit-help mailing list, see:
+  http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
+
+Here are the compressed sources of the entire package:
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.1.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.1.tar.gz.sig (OpenPGP)
+
+The software is cryptographically signed by the author using an OpenPGP
+key identified by the following information:
+
+pub   1280R/B565716F 2002-05-05 [expires: 2011-03-30]
+      Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
+uid                  Simon Josefsson <jas@extundo.com>
+uid                  Simon Josefsson <simon@josefsson.org>
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2011-03-30]
+
+The key is available from:
+  http://josefsson.org/key.txt
+  dns:b565716f.josefsson.org?TYPE=CERT
+
+Here are the SHA-1 and SHA-224 checksums:
+
+f17561608aa1496dae58ba90dcba75ca338fef67  oath-toolkit-1.4.1.tar.gz
+
+9cce98bc734e887dad4689062a9420321df7dd4f00f4a15a597d8e84  oath-toolkit-1.4.1.tar.gz
+
+Savannah developer's home page:
+  https://savannah.nongnu.org/projects/oath-toolkit/
+
+Code coverage charts:
+  http://www.nongnu.org/oath-toolkit/coverage/
+
+Happy hacking,
+Simon
