@@ -1,5 +1,43 @@
 2011-01-16  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS, liboath/tests/tst_totp_algo.c: Fix liboath TOTP self check.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.h2m: Another hyphen bug.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.2.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/oath.h: Bump version.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.h2m, oathtool/tests/Makefile.am,
+	oathtool/tests/tst_hyphen.sh: Another hyphen bug.  Add self check to
+	make sure we don't get more.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.h2m: More hyphen fixes.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Add.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add my-coverage rule to fix -Werror issue.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.4.1.
 
 2011-01-16  Simon Josefsson <simon@josefsson.org>
