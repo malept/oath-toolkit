@@ -6,6 +6,9 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 ** oathtool: Really replace - with \- in man page, pointed out by lintian.
 We now also have a self check to catch any regressions in this area.
 
+** liboath: Make TOTP self check work on platforms with 32-bit time_t.
+The final test requires >32 bit time_t.
+
 * Version 1.4.1 (released 2011-01-16)
 
 ** liboath: New configure parameter --enable-gcc-warnings.
