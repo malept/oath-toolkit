@@ -41,6 +41,47 @@ AC_PROG_LIBTOOL
 gl_INIT
 GTK_DOC_CHECK(1.1)
 
+AC_ARG_ENABLE([gcc-warnings],
+  [AS_HELP_STRING([--enable-gcc-warnings],
+                  [turn on lots of GCC warnings (for developers)])],
+  [case $enableval in
+     yes|no) ;;
+     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
+   esac
+   gl_gcc_warnings=$enableval],
+  [gl_gcc_warnings=no]
+)
+
+if test "$gl_gcc_warnings" = yes; then
+  gl_WARN_ADD([-Werror], [WERROR_CFLAGS])
+  AC_SUBST([WERROR_CFLAGS])
+
+  gl_MANYWARN_ALL_GCC([warnings])
+  # Set up the list of the pointless, undesired warnings.
+  nw=
+  nw="$nw -Wsystem-headers"       # Don't let system headers trigger warnings
+  nw="$nw -Wundef"                # All compiler preprocessors support #if UNDEF
+  nw="$nw -Wtraditional"          # All compilers nowadays support ANSI C
+  nw="$nw -Wconversion"           # These warnings usually don't point to mistakes.
+  nw="$nw -Wsign-conversion"      # Likewise.
+  nw="$nw -Wtraditional-conversion" # Too many warnings for now
+  nw="$nw -Wlogical-op"           # any use of strchr provokes this
+  nw="$nw -Wunreachable-code"     # any use of strchr provokes this
+  nw="$nw -Wc++-compat"           # We don't care about C++ compilers
+  nw="$nw -Wcast-qual"            # Triggers oath_hotp_validate, how to fix?
+  # Enable all GCC warnings not in this list.
+  gl_MANYWARN_COMPLEMENT([warnings], [$warnings], [$nw])
+  for w in $warnings; do
+    gl_WARN_ADD([$w])
+  done
+  gl_WARN_ADD([-fdiagnostics-show-option])
+  AC_SUBST([WARN_CFLAGS])
+
+  AC_DEFINE([_FORTIFY_SOURCE], [2],
+    [enable compile-time and run-time bounds-checking, and some warnings])
+  AC_DEFINE([GNULIB_PORTCHECK], [1], [enable some gnulib portability checks])
+fi
+
 AC_CONFIG_FILES([
   Makefile
   liboath.pc

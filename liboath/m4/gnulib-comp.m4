@@ -39,6 +39,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module include_next:
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
+  # Code from module manywarnings:
   # Code from module multiarch:
   # Code from module realloc-posix:
   # Code from module stddef:
@@ -51,6 +52,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module time:
   # Code from module unistd:
   # Code from module warn-on-use:
+  # Code from module warnings:
   # Code from module wchar:
 ])
 
@@ -94,6 +96,7 @@ AC_DEFUN([gl_INIT],
   gl_LD_VERSION_SCRIPT
   # Code from module lib-symbol-visibility:
   gl_VISIBILITY
+  # Code from module manywarnings:
   # Code from module multiarch:
   gl_MULTIARCH
   # Code from module realloc-posix:
@@ -120,6 +123,8 @@ AC_DEFUN([gl_INIT],
   # Code from module unistd:
   gl_UNISTD_H
   # Code from module warn-on-use:
+  # Code from module warnings:
+  AC_SUBST([WARN_CFLAGS])
   # Code from module wchar:
   gl_WCHAR_H
   # Code from module dummy:
@@ -305,6 +310,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-prefix.m4
   m4/longlong.m4
   m4/malloc.m4
+  m4/manywarnings.m4
   m4/memxor.m4
   m4/multiarch.m4
   m4/onceonly.m4
@@ -321,6 +327,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/unistd_h.m4
   m4/visibility.m4
   m4/warn-on-use.m4
+  m4/warnings.m4
   m4/wchar_h.m4
   m4/wchar_t.m4
   m4/wint_t.m4

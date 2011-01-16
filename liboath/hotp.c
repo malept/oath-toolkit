@@ -66,6 +66,9 @@ oath_hotp_generate (const char *secret,
   char hs[GC_SHA1_DIGEST_SIZE];
   long S;
 
+  (void) add_checksum;
+  (void) truncation_offset;
+
   {
     char counter[sizeof (moving_factor)];
     size_t i;
@@ -120,7 +123,7 @@ oath_hotp_generate (const char *secret,
   {
     int len = snprintf (output_otp, digits + 1, "%.*ld", digits, S);
     output_otp[digits] = '\0';
-    if (len != digits)
+    if (len <= 0 || ((unsigned) len) != digits)
       return OATH_PRINTF_ERROR;
   }
 
@@ -130,7 +133,7 @@ oath_hotp_generate (const char *secret,
 static int
 strcmp_callback (void *handle, const char *test_otp)
 {
-  const char *otp = handle;
+  char *otp = handle;
   return strcmp (otp, test_otp);
 }
 

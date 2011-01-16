@@ -47,7 +47,7 @@ parse_type (const char *str)
 }
 
 static const char *whitespace = " \t\r\n";
-static const char *time_format_string = "%Y-%m-%dT%H:%M:%SL";
+#define TIME_FORMAT_STRING "%Y-%m-%dT%H:%M:%SL"
 
 static int
 parse_usersfile (const char *username,
@@ -123,10 +123,10 @@ parse_usersfile (const char *username,
       if (p)
 	{
 	  struct tm tm;
-	  char *t;
+	  char *ts;
 
-	  t = strptime (p, time_format_string, &tm);
-	  if (t == NULL || *t != '\0')
+	  ts = strptime (p, TIME_FORMAT_STRING, &tm);
+	  if (ts == NULL || *ts != '\0')
 	    return OATH_INVALID_TIMESTAMP;
 	  tm.tm_isdst = -1;
 	  if (last_otp)
@@ -165,7 +165,7 @@ update_usersfile2 (const char *username,
     {
       char *saveptr;
       char *origline;
-      char *user, *type, *passwd, *secret;
+      const char *user, *type, *passwd, *secret;
       int r;
 
       origline = strdup (*lineptr);
@@ -206,7 +206,6 @@ static int
 update_usersfile (const char *usersfile,
 		  const char *username,
 		  const char *otp,
-		  time_t * last_otp,
 		  FILE * infh,
 		  char **lineptr,
 		  size_t * n, char *timestamp, uint64_t new_moving_factor)
@@ -230,7 +229,7 @@ update_usersfile (const char *usersfile,
     int l;
 
     l = asprintf (&lockfile, "%s.lock", usersfile);
-    if (lockfile == NULL || l != strlen (usersfile) + 5)
+    if (lockfile == NULL || ((size_t) l) != strlen (usersfile) + 5)
       return OATH_PRINTF_ERROR;
 
     lockfh = fopen (lockfile, "w");
@@ -266,7 +265,7 @@ update_usersfile (const char *usersfile,
     int l;
 
     l = asprintf (&newfilename, "%s.new", usersfile);
-    if (newfilename == NULL || l != strlen (usersfile) + 4)
+    if (newfilename == NULL || ((size_t) l) != strlen (usersfile) + 4)
       {
 	fclose (lockfh);
 	free (lockfile);
@@ -355,7 +354,6 @@ oath_authenticate_usersfile (const char *usersfile,
       struct tm now;
       time_t t;
       size_t l;
-      int r;
       mode_t old_umask;
 
       if (time (&t) == (time_t) - 1)
@@ -364,14 +362,14 @@ oath_authenticate_usersfile (const char *usersfile,
       if (localtime_r (&t, &now) == NULL)
 	return OATH_TIME_ERROR;
 
-      l = strftime (timestamp, max, time_format_string, &now);
+      l = strftime (timestamp, max, TIME_FORMAT_STRING, &now);
       if (l != 20)
 	return OATH_TIME_ERROR;
 
       old_umask = umask (~(S_IRUSR | S_IWUSR));
 
-      rc = update_usersfile (usersfile, username, otp, last_otp,
-			     infh, &line, &n, timestamp, new_moving_factor);
+      rc = update_usersfile (usersfile, username, otp, infh,
+			     &line, &n, timestamp, new_moving_factor);
 
       umask (old_umask);
     }
