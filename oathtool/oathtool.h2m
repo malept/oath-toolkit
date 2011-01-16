@@ -49,9 +49,9 @@ with counter 0 and increment until it founds a match (or not), within
 the supplied window of 10 OTPs.
 
 The tool supports time-variant one-time passwords, in so called TOTP
-mode.  Usage is similar, but --totp needs to be provided:
+mode.  Usage is similar, but \-\-totp needs to be provided:
 
-   $ oathtool --totp 00
+   $ oathtool \-\-totp 00
    943388
    $
 
@@ -59,12 +59,12 @@ Don't be alarmed if you do not get the same output, this is because
 the output is time variant.  To generate a TOTP for a particular fixed
 time use the \-N (\-\-now) parameter:
 
-   $ oathtool --totp --now "2008-04-23 17:42:17 UTC" 00
+   $ oathtool \-\-totp \-\-now "2008-04-23 17:42:17 UTC" 00
    974945
    $
 
 The format is a mostly free format human readable date string such as
-"Sun, 29 Feb 2004 16:21:42 -0800" or "2004-02-29 16:21:42" or even
+"Sun, 29 Feb 2004 16:21:42 -0800" or "2004\-02\-29 16:21:42" or even
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
 
@@ -75,7 +75,7 @@ By default the time-step size is 30 seconds, which means you get a new
 OTP every 30 seconds.  You may modify this with the \-s
 (\-\-time\-step\-size) parameter:
 
-   $ oathtool --totp --time-step-size=45s 00
+   $ oathtool \-\-totp \-\-time-step-size=45s 00
    109841
    $
 
@@ -85,7 +85,7 @@ http://en.wikipedia.org/wiki/ISO_8601#Durations
 The time start is normally 1970-01-01 00:00:00 UTC but you may change
 it using the \-S (\-\-start\-time):
 
-   $ oathtool --totp --start-time "1980-01-01 00:00:00 UTC" 00
+   $ oathtool \-\-totp \-\-start-time "1980-01-01 00:00:00 UTC" 00
    273884
    $
 
@@ -94,13 +94,13 @@ To get more information about what the tool is using use the \-v
 SHA-1) in the test vector table of draft-mraihi-totp-timebased-07 you
 can invoke the tool like this:
 
-   $ oathtool --totp -v -N "2033-05-18 03:33:20 UTC" -d8 3132333435363738393031323334353637383930
+   $ oathtool \-\-totp \-v \-N "2033\-05\-18 03:33:20 UTC" \-d8 3132333435363738393031323334353637383930
    Hex secret: 3132333435363738393031323334353637383930
    Digits: 8
    Window size: 0
    Step size (seconds): 30
-   Start time: 1970-01-01 00:00:00 UTC (0)
-   Time now: 2033-05-18 03:33:20 UTC (2000000000)
+   Start time: 1970\-01\-01 00:00:00 UTC (0)
+   Time now: 2033\-05\-18 03:33:20 UTC (2000000000)
    Counter: 0x3F940AA (66666666)
    
    69279037
