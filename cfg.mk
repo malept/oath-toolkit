@@ -41,6 +41,9 @@ ChangeLog:
 	git2cl > ChangeLog
 	cat .clcopying >> ChangeLog
 
+my-coverage:
+	$(MAKE) coverage WERROR_CFLAGS=
+
 web-coverage:
 	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
 	cp -rv $(COVERAGE_OUT)/* $(htmldir)/coverage/
