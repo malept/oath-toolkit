@@ -91,7 +91,7 @@ it using the \-S (\-\-start\-time):
 
 To get more information about what the tool is using use the \-v
 (\-\-verbose) parameter.  Finally, to generate the last TOTP (for
-SHA-1) in the test vector table of draft\-mraihi\-totp\-timebased\-07
+SHA\-1) in the test vector table of draft\-mraihi\-totp\-timebased\-07
 you can invoke the tool like this:
 
    $ oathtool \-\-totp \-v \-N "2033\-05\-18 03:33:20 UTC" \-d8 3132333435363738393031323334353637383930
