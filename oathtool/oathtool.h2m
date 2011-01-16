@@ -33,7 +33,7 @@ OTP had a counter of 1, and so on.
 To generate a particular OTP, use the \-c (\-\-counter) parameter to
 give the exact position directly:
 
-   $ oathtool -c 5 3132333435363738393031323334353637383930
+   $ oathtool \-c 5 3132333435363738393031323334353637383930
    254676
    $
 
@@ -59,12 +59,12 @@ Don't be alarmed if you do not get the same output, this is because
 the output is time variant.  To generate a TOTP for a particular fixed
 time use the \-N (\-\-now) parameter:
 
-   $ oathtool \-\-totp \-\-now "2008-04-23 17:42:17 UTC" 00
+   $ oathtool \-\-totp \-\-now "2008\-04\-23 17:42:17 UTC" 00
    974945
    $
 
 The format is a mostly free format human readable date string such as
-"Sun, 29 Feb 2004 16:21:42 -0800" or "2004\-02\-29 16:21:42" or even
+"Sun, 29 Feb 2004 16:21:42 \-0800" or "2004\-02\-29 16:21:42" or even
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
 
@@ -82,10 +82,10 @@ OTP every 30 seconds.  You may modify this with the \-s
 The values are valid ISO\-8601 durations, see:
 http://en.wikipedia.org/wiki/ISO_8601#Durations
 
-The time start is normally 1970-01-01 00:00:00 UTC but you may change
+The time start is normally 1970\-01\-01 00:00:00 UTC but you may change
 it using the \-S (\-\-start\-time):
 
-   $ oathtool \-\-totp \-\-start-time "1980-01-01 00:00:00 UTC" 00
+   $ oathtool \-\-totp \-\-start-time "1980\-01\-01 00:00:00 UTC" 00
    273884
    $
 

@@ -1,4 +1,7 @@
-# Copyright (C) 2009, 2010, 2011 Simon Josefsson
+#!/bin/sh
+
+# tst_hyphen.sh - test that oathtool.h2m is lintian compliant
+# Copyright (C) 2011 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,5 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-TESTS = tst_oathtool.sh tst_hyphen.sh
-dist_check_SCRIPTS = tst_oathtool.sh tst_hyphen.sh
+srcdir="${srcdir:-.}"
+
+! egrep '[^a-z\\]-' $srcdir/../oathtool.h2m 
