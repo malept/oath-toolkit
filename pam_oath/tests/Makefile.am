@@ -17,6 +17,6 @@ AM_LDFLAGS = -no-install
 
 LDADD = ../pam_oath.la -lpam
 
-ctests = test-pam_oath$(EXEEXT) test-pam_oath-root$(EXEEXT)
 TESTS = test-pam_oath run-root-tests.sh
 check_PROGRAMS = test-pam_oath$(EXEEXT) test-pam_oath-root$(EXEEXT)
+dist_check_SCRIPTS = run-root-tests.sh
