@@ -1,3 +1,36 @@
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/tests/Makefile.am: Dist run-root-tests.sh.
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.3.
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac: Bump shared library version.
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/tests/Makefile.am, pam_oath/tests/run-root-tests.sh,
+	pam_oath/tests/test-pam_oath-root.c: Self check PAM module.
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/usersfile.c: Really correct one-factor logic.  Reported by Michael Stevens <mstevens@etla.org>.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.4.2.
+
+2011-01-16  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-01-16  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS, liboath/tests/tst_totp_algo.c: Fix liboath TOTP self check.
