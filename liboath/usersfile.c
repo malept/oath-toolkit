@@ -90,9 +90,12 @@ parse_usersfile (const char *username,
 	{
 	  if (p == NULL)
 	    continue;
-	  if (strcmp (p, "-") == 0 && *passwd != '\0')
-	    return OATH_BAD_PASSWORD;
-	  if (strcmp (p, passwd) != 0)
+	  if (strcmp (p, "-") == 0)
+	    {
+	      if (*passwd != '\0')
+		return OATH_BAD_PASSWORD;
+	    }
+	  else if (strcmp (p, passwd) != 0)
 	    return OATH_BAD_PASSWORD;
 	}
 
