@@ -1,6 +1,13 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.4.3 (unreleased)
+
+** libhotp: Really make usersfile logic for '-' passwords work.
+Reported by Michael Stevens <mstevens@etla.org>.
+
+** pam_oath: Added better self-test suite (requires root privileges).
+
 * Version 1.4.2 (released 2011-01-16)
 
 ** oathtool: Really replace - with \- in man page, pointed out by lintian.
