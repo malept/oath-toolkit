@@ -68,7 +68,7 @@ The format is a mostly free format human readable date string such as
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
 
-There are two systems parameter for TOTP: the time-step size and the
+There are two system parameters for TOTP: the time-step size and the
 time start.
 
 By default the time-step size is 30 seconds, which means you get a new
