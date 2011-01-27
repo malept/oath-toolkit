@@ -56,7 +56,7 @@ oath_conv (int num_msg, const struct pam_message **msg,
   if (num_msg != 1)
     {
       printf ("num_msg != 1?!\n");
-      exit (1);
+      exit (EXIT_FAILURE);
     }
 
   out = malloc (sizeof (*out));

@@ -18,4 +18,4 @@
 
 srcdir="${srcdir:-.}"
 
-! egrep '[^a-z\\]-' $srcdir/../oathtool.h2m 
+! egrep '[^a-z\\]-' $srcdir/../oathtool.h2m

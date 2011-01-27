@@ -58,14 +58,14 @@ main (void)
 
   if (OATH_TOTP_DEFAULT_TIME_STEP_SIZE != 30)
     {
-      printf ("strange OATH_TOTP_DEFAULT_TIME_STEP_SIZE value %d?!\n", 
+      printf ("strange OATH_TOTP_DEFAULT_TIME_STEP_SIZE value %d?!\n",
 	      OATH_TOTP_DEFAULT_TIME_STEP_SIZE);
       return 1;
     }
 
   if (OATH_TOTP_DEFAULT_START_TIME != 0)
     {
-      printf ("strange OATH_TOTP_DEFAULT_START_TIME value %ld?!\n", 
+      printf ("strange OATH_TOTP_DEFAULT_START_TIME value %ld?!\n",
 	      (long) OATH_TOTP_DEFAULT_START_TIME);
       return 1;
     }
