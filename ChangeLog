@@ -1,3 +1,78 @@
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Ignore more.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, liboath/configure.ac, oathtool/configure.ac,
+	pam_oath/configure.ac: Fix git-version-gen regexp to handle release
+	versions.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.4.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Improve release target.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Make syntax check pass.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Ignore texinfo check.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_program_name, liboath/gtk-doc.make,
+	liboath/tests/tst_totp_algo.c, oathtool/oathtool.h2m,
+	oathtool/tests/tst_hyphen.sh, pam_oath/tests/test-pam_oath-root.c: 
+	Fix make syntax-check nits.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/m4/errno_h.m4, liboath/m4/gnulib-common.m4,
+	liboath/m4/include_next.m4, liboath/m4/multiarch.m4,
+	liboath/m4/stddef_h.m4, liboath/m4/stdio_h.m4,
+	liboath/m4/stdlib_h.m4, liboath/m4/string_h.m4,
+	liboath/m4/time_h.m4, liboath/m4/unistd_h.m4,
+	liboath/m4/wchar_h.m4, m4/gnulib-common.m4, maint.mk,
+	oathtool/m4/errno_h.m4, oathtool/m4/float_h.m4,
+	oathtool/m4/gnulib-common.m4, oathtool/m4/include_next.m4,
+	oathtool/m4/multiarch.m4, oathtool/m4/stdarg.m4,
+	oathtool/m4/stddef_h.m4, oathtool/m4/stdio_h.m4,
+	oathtool/m4/stdlib_h.m4, oathtool/m4/string_h.m4,
+	oathtool/m4/time_h.m4, oathtool/m4/unistd_h.m4,
+	oathtool/m4/wchar_h.m4: Update gnulib files.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac, liboath/oath.h, liboath/oath.h.in: Generate
+	oath.h version number automatically.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, liboath/configure.ac, oathtool/configure.ac,
+	pam_oath/configure.ac: Use X.Y.Z.P version numbers for git builds.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-01-26  Linus Nordberg <linus@nordberg.se>
+
+	* oathtool/oathtool.h2m: Fix typo in oathtool manual.  Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2011-01-20  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-01-20  Simon Josefsson <simon@josefsson.org>
 
 	* pam_oath/tests/Makefile.am: Dist run-root-tests.sh.
