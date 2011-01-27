@@ -3,12 +3,16 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.4.4 (unreleased)
 
+** liboath: Fix OATH_VERSION and OATH_VERSION_NUMBER.
+I forgot to increment these symbols for the last release.  From now
+on, these symbols are generated from the package version instead.
+
 ** oathtool: Fix typo in man page.
 Patch from Linus Nordberg <linus@nordberg.se>.
 
 * Version 1.4.3 (released 2011-01-20)
 
-** libhotp: Really make usersfile logic for '-' passwords work.
+** liboath: Really make usersfile logic for '-' passwords work.
 Reported by Michael Stevens <mstevens@etla.org>.
 
 ** pam_oath: Added better self-test suite (requires root privileges).
