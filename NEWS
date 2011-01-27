@@ -3,6 +3,9 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.4.5 (unreleased)
 
+** liboath: Make sure gnulib files are licensed under the LGPLv2.1+.
+Thanks to Tollef Fog Heen <tfheen@debian.org>.
+
 * Version 1.4.4 (released 2011-01-27)
 
 ** liboath: Fix OATH_VERSION and OATH_VERSION_NUMBER.
