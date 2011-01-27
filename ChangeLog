@@ -1,5 +1,46 @@
 2011-01-27  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 1.4.5.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/lib/Makefile.am, liboath/lib/dummy.c,
+	liboath/lib/errno.in.h, liboath/lib/gc-gnulib.c,
+	liboath/lib/gc-libgcrypt.c, liboath/lib/gc.h,
+	liboath/lib/getdelim.c, liboath/lib/getline.c,
+	liboath/lib/hmac-sha1.c, liboath/lib/hmac.h, liboath/lib/memxor.c,
+	liboath/lib/memxor.h, liboath/lib/realloc.c, liboath/lib/sha1.c,
+	liboath/lib/sha1.h, liboath/lib/stddef.in.h,
+	liboath/lib/stdint.in.h, liboath/lib/stdio-write.c,
+	liboath/lib/stdio.in.h, liboath/lib/stdlib.in.h,
+	liboath/lib/string.in.h, liboath/lib/strverscmp.c,
+	liboath/lib/sys_stat.in.h, liboath/lib/time.in.h,
+	liboath/lib/unistd.in.h, liboath/lib/wchar.in.h,
+	liboath/m4/gnulib-cache.m4: liboath: Make sure gnulib files are
+	licensed under the LGPLv2.1+.  Thanks to Tollef Fog Heen <tfheen@debian.org>.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_totp_algo.c: Also test 0 default values.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.4.4.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.4.3.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
 	* .gitignore: Ignore more.
 
 2011-01-27  Simon Josefsson <simon@josefsson.org>
