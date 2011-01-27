@@ -16,10 +16,10 @@
 # 02110-1301 USA
 
 AC_INIT([liboath],
-	m4_esyscmd([../build-aux/git-version-gen .tarball-version \
-		's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)/v\1.\2.\3/']),
-	[oath-toolkit-help@nongnu.org],,
-	[http://www.nongnu.org/oath-toolkit/])
+  m4_esyscmd([../build-aux/git-version-gen .tarball-version \
+    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)-\([0-9]*\).*/v\1.\2.\3.\4/']),
+  [oath-toolkit-help@nongnu.org],,
+  [http://www.nongnu.org/oath-toolkit/])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0

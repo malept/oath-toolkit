@@ -14,10 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_INIT([oath-toolkit],
-	m4_esyscmd([build-aux/git-version-gen .tarball-version \
-		's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)/v\1.\2.\3/']),
-	[oath-toolkit-help@nongnu.org],,
-	[http://www.nongnu.org/oath-toolkit/])
+  m4_esyscmd([build-aux/git-version-gen .tarball-version \
+    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)-\([0-9]*\).*/v\1.\2.\3.\4/']),
+  [oath-toolkit-help@nongnu.org],,
+  [http://www.nongnu.org/oath-toolkit/])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
