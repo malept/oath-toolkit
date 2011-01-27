@@ -19,12 +19,16 @@ ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := buildit
 endif
 
-# Syntax-check rules
+# SYNTAX CHECK
 VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(oathtool|liboath)/(m4|lib)$
+# Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
-	sc_prohibit_strcmp sc_texinfo_acronym
-# Re-add when we have translation
+	sc_prohibit_strcmp
+# Re-add when we have translation.
 local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
+# Revisit these soon.
+local-checks-to-skip += sc_texinfo_acronym sc_error_message_uppercase	\
+	sc_prohibit_atoi_atof
 
 update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson"
 buildit:
