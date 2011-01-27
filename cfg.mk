@@ -60,7 +60,7 @@ upload-web-coverage:
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
 
-release: prepare upload web upload-web
+release: syntax-check prepare upload web upload-web
 
 prepare:
 	test `git describe` = `git tag -l $(tag)`
@@ -83,4 +83,4 @@ web:
 
 upload-web:
 	cd $(htmldir) && \
-		cvs commit -m "Update." reference/
+		cvs commit -m "Update." man-oathtool.html reference/
