@@ -15,7 +15,7 @@
 
 AC_INIT([pam_oath],
   m4_esyscmd([../build-aux/git-version-gen .tarball-version \
-    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)-\([0-9]*\).*/v\1.\2.\3.\4/']),
+    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)\(-\([0-9]*\)\)\?.*/v\1.\2.\3.\5/;s/\.$//']),
   [oath-toolkit-help@nongnu.org],,
   [http://www.nongnu.org/oath-toolkit/])
 

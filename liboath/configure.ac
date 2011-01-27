@@ -17,14 +17,14 @@
 
 AC_INIT([liboath],
   m4_esyscmd([../build-aux/git-version-gen .tarball-version \
-    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)-\([0-9]*\).*/v\1.\2.\3.\4/']),
+    's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)\(-\([0-9]*\)\)\?.*/v\1.\2.\3.\5/;s/\.$//']),
   [oath-toolkit-help@nongnu.org],,
   [http://www.nongnu.org/oath-toolkit/])
 
-VERSION_MAJOR=`echo $PACKAGE_VERSION | sed 's/\(.*\)\..*\..*\..*/\1/g'`
-VERSION_MINOR=`echo $PACKAGE_VERSION | sed 's/.*\.\(.*\)\..*\..*/\1/g'`
-VERSION_PATCH=`echo $PACKAGE_VERSION | sed 's/.*\..*\.\(.*\)\..*/\1/g'`
-VERSION_COMMIT=`echo $PACKAGE_VERSION | sed 's/.*\..*\..*\.\(.*\)/\1/g;s/-dirty//g;'`
+VERSION_MAJOR=`echo $PACKAGE_VERSION | sed 's/\(.*\)\..*\..*\(\..*\)\?/\1/g'`
+VERSION_MINOR=`echo $PACKAGE_VERSION | sed 's/.*\.\(.*\)\..*\(\..*\)\?/\1/g'`
+VERSION_PATCH=`echo $PACKAGE_VERSION | sed 's/.*\..*\.\(.*\)\(\..*\)\?/\1/g'`
+VERSION_COMMIT=`echo $PACKAGE_VERSION | sed 's/.*\..*\..*\(\.\(.*\)\)\?/\2/g;s/-dirty//g;'`
 VERSION_NUMBER=`printf "0x%02x%02x%02x%02x" \
   $VERSION_MAJOR $VERSION_MINOR $VERSION_PATCH $VERSION_COMMIT`
 AC_SUBST(VERSION_NUMBER)
