@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.4.4 (unreleased)
+* Version 1.4.4 (released 2011-01-27)
 
 ** liboath: Fix OATH_VERSION and OATH_VERSION_NUMBER.
 I forgot to increment these symbols for the last release.  From now
