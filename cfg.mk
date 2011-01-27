@@ -19,9 +19,10 @@ ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := buildit
 endif
 
-local-checks-to-skip = sc_GPL_version sc_immutable_NEWS sc_prohibit_strcmp
+# Syntax-check rules
 VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(oathtool|liboath)/(m4|lib)$
-
+local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
+	sc_prohibit_strcmp sc_texinfo_acronym
 # Re-add when we have translation
 local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
 
