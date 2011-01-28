@@ -20,6 +20,7 @@
  */
 
 #include <config.h>
+#undef GNULIB_POSIXCHECK /* too many complaints for now */
 
 #include "oath.h"
 
@@ -221,7 +222,7 @@ update_usersfile (const char *usersfile,
   {
     int pos;
 
-    pos = fseek (infh, 0L, SEEK_SET);
+    pos = fseeko (infh, 0L, SEEK_SET);
     if (pos == -1)
       return OATH_FILE_SEEK_ERROR;
     clearerr (infh);
