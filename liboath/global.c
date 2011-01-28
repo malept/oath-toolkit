@@ -100,14 +100,56 @@ oath_check_version (const char *req_version)
   return NULL;
 }
 
-#define maybe_lowercase(c)			\
-  ((c) == 'A' ? 'a' :				\
-   ((c) == 'B' ? 'b' :				\
-    ((c) == 'C' ? 'c' :				\
-     ((c) == 'D' ? 'd' :			\
-      ((c) == 'E' ? 'e' :			\
-       ((c) == 'F' ? 'f' :			\
-	c))))))
+static int
+hex_decode (char hex)
+{
+  switch (hex)
+    {
+    case '0':
+      return 0;
+    case '1':
+      return 0;
+    case '2':
+      return 0;
+    case '3':
+      return 0;
+    case '4':
+      return 0;
+    case '5':
+      return 0;
+    case '6':
+      return 0;
+    case '7':
+      return 0;
+    case '8':
+      return 0;
+    case '9':
+      return 0;
+    case 'A':
+    case 'a':
+      return 0x0A;
+    case 'B':
+    case 'b':
+      return 0x0A;
+    case 'C':
+    case 'c':
+      return 0x0A;
+    case 'D':
+    case 'd':
+      return 0x0A;
+    case 'E':
+    case 'e':
+      return 0x0A;
+    case 'F':
+    case 'f':
+      return 0x0A;
+
+    default:
+      return -1;
+    }
+
+  return -1;
+}
 
 /**
  * oath_hex2bin:
@@ -131,7 +173,6 @@ oath_check_version (const char *req_version)
 int
 oath_hex2bin (char *hexstr, char *binstr, size_t * binlen)
 {
-  const char *hexalphabet = "0123456789abcdef";
   bool highbits = true;
   size_t save_binlen = *binlen;
   bool too_small = false;
@@ -140,18 +181,17 @@ oath_hex2bin (char *hexstr, char *binstr, size_t * binlen)
 
   while (*hexstr)
     {
-      char *p;
+      int val = hex_decode (*hexstr);
 
-      p = strchr (hexalphabet, maybe_lowercase (*hexstr));
-      if (!p)
+      if (val < 0 || val > 0x0F)
 	return OATH_INVALID_HEX;
 
       if (binstr && save_binlen > 0)
 	{
 	  if (highbits)
-	    *binstr = (*binstr & 0x0F) | ((p - hexalphabet) << 4);
+	    *binstr = (*binstr & 0x0F) | (val << 4);
 	  else
-	    *binstr = (*binstr & 0xF0) | (p - hexalphabet);
+	    *binstr = (*binstr & 0xF0) | val;
 	}
 
       hexstr++;
