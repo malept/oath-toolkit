@@ -1,6 +1,8 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.4.6 (unreleased)
+
 * Version 1.4.5 (released 2011-01-27)
 
 ** liboath: Make sure gnulib files are licensed under the LGPLv2.1+.
