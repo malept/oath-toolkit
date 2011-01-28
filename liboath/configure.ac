@@ -87,7 +87,7 @@ if test "$gl_gcc_warnings" = yes; then
 
   AC_DEFINE([_FORTIFY_SOURCE], [2],
     [enable compile-time and run-time bounds-checking, and some warnings])
-  AC_DEFINE([GNULIB_PORTCHECK], [1], [enable some gnulib portability checks])
+  AC_DEFINE([GNULIB_POSIXCHECK], [1], [enable some gnulib portability checks])
 fi
 
 AC_CONFIG_FILES([
