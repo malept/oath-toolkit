@@ -28,17 +28,24 @@ AC_DEFUN([gl_EARLY],
   AC_REQUIRE([AC_PROG_RANLIB])
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module close:
+  # Code from module close-hook:
   # Code from module crypto/gc:
   # Code from module crypto/gc-hmac-sha1:
   # Code from module errno:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module fclose:
+  # Code from module fopen:
+  # Code from module fseeko:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module getdelim:
   # Code from module getline:
   # Code from module havelib:
   # Code from module include_next:
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
+  # Code from module lseek:
   # Code from module manywarnings:
   # Code from module multiarch:
   # Code from module realloc-posix:
@@ -46,7 +53,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module stdint:
   # Code from module stdio:
   # Code from module stdlib:
+  # Code from module strdup:
   # Code from module string:
+  # Code from module strtok_r:
   # Code from module strverscmp:
   # Code from module sys_stat:
   # Code from module time:
@@ -72,6 +81,10 @@ AC_DEFUN([gl_INIT],
   gl_source_base='lib'
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module close:
+  gl_FUNC_CLOSE
+  gl_UNISTD_MODULE_INDICATOR([close])
+  # Code from module close-hook:
   # Code from module crypto/gc:
   gl_GC
   if test $gl_cond_libtool = false; then
@@ -84,6 +97,15 @@ AC_DEFUN([gl_INIT],
   # Code from module errno:
   gl_HEADER_ERRNO_H
   # Code from module extensions:
+  # Code from module fclose:
+  gl_FUNC_FCLOSE
+  gl_STDIO_MODULE_INDICATOR([fclose])
+  # Code from module fopen:
+  gl_FUNC_FOPEN
+  gl_STDIO_MODULE_INDICATOR([fopen])
+  # Code from module fseeko:
+  gl_FUNC_FSEEKO
+  gl_STDIO_MODULE_INDICATOR([fseeko])
   # Code from module getdelim:
   gl_FUNC_GETDELIM
   gl_STDIO_MODULE_INDICATOR([getdelim])
@@ -96,6 +118,9 @@ AC_DEFUN([gl_INIT],
   gl_LD_VERSION_SCRIPT
   # Code from module lib-symbol-visibility:
   gl_VISIBILITY
+  # Code from module lseek:
+  gl_FUNC_LSEEK
+  gl_UNISTD_MODULE_INDICATOR([lseek])
   # Code from module manywarnings:
   # Code from module multiarch:
   gl_MULTIARCH
@@ -110,8 +135,14 @@ AC_DEFUN([gl_INIT],
   gl_STDIO_H
   # Code from module stdlib:
   gl_STDLIB_H
+  # Code from module strdup:
+  gl_FUNC_STRDUP
+  gl_STRING_MODULE_INDICATOR([strdup])
   # Code from module string:
   gl_HEADER_STRING_H
+  # Code from module strtok_r:
+  gl_FUNC_STRTOK_R
+  gl_STRING_MODULE_INDICATOR([strtok_r])
   # Code from module strverscmp:
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
@@ -127,7 +158,6 @@ AC_DEFUN([gl_INIT],
   AC_SUBST([WARN_CFLAGS])
   # Code from module wchar:
   gl_WCHAR_H
-  # Code from module dummy:
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -268,8 +298,13 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/c++defs.h
   build-aux/config.rpath
   build-aux/warn-on-use.h
-  lib/dummy.c
+  lib/close-hook.c
+  lib/close-hook.h
+  lib/close.c
   lib/errno.in.h
+  lib/fclose.c
+  lib/fopen.c
+  lib/fseeko.c
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
   lib/gc.h
@@ -277,6 +312,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getline.c
   lib/hmac-sha1.c
   lib/hmac.h
+  lib/lseek.c
   lib/memxor.c
   lib/memxor.h
   lib/realloc.c
@@ -284,10 +320,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sha1.h
   lib/stddef.in.h
   lib/stdint.in.h
+  lib/stdio-impl.h
   lib/stdio-write.c
   lib/stdio.in.h
   lib/stdlib.in.h
+  lib/strdup.c
   lib/string.in.h
+  lib/strtok_r.c
   lib/strverscmp.c
   lib/sys_stat.in.h
   lib/time.in.h
@@ -295,8 +334,12 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/wchar.in.h
   m4/00gnulib.m4
   m4/asm-underscore.m4
+  m4/close.m4
   m4/errno_h.m4
   m4/extensions.m4
+  m4/fclose.m4
+  m4/fopen.m4
+  m4/fseeko.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4
   m4/getdelim.m4
@@ -309,6 +352,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-link.m4
   m4/lib-prefix.m4
   m4/longlong.m4
+  m4/lseek.m4
   m4/malloc.m4
   m4/manywarnings.m4
   m4/memxor.m4
@@ -320,7 +364,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stdint.m4
   m4/stdio_h.m4
   m4/stdlib_h.m4
+  m4/strdup.m4
   m4/string_h.m4
+  m4/strtok_r.m4
   m4/strverscmp.m4
   m4/sys_stat_h.m4
   m4/time_h.m4
