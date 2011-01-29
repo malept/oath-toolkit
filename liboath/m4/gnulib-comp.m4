@@ -26,12 +26,16 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  # Code from module alloca-opt:
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module canonicalize-lgpl:
   # Code from module close:
   # Code from module close-hook:
   # Code from module crypto/gc:
   # Code from module crypto/gc-hmac-sha1:
+  # Code from module dirname-lgpl:
+  # Code from module double-slash-root:
   # Code from module errno:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -46,9 +50,19 @@ AC_DEFUN([gl_EARLY],
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
   # Code from module lseek:
+  # Code from module lstat:
+  # Code from module malloc-posix:
+  # Code from module malloca:
   # Code from module manywarnings:
   # Code from module multiarch:
+  # Code from module pathmax:
+  # Code from module readlink:
   # Code from module realloc-posix:
+  # Code from module rename:
+  # Code from module rmdir:
+  # Code from module same-inode:
+  # Code from module stat:
+  # Code from module stdbool:
   # Code from module stddef:
   # Code from module stdint:
   # Code from module stdio:
@@ -60,6 +74,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module sys_stat:
   # Code from module time:
   # Code from module unistd:
+  # Code from module unlink:
+  # Code from module verify:
   # Code from module warn-on-use:
   # Code from module warnings:
   # Code from module wchar:
@@ -79,8 +95,15 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib'
+  # Code from module alloca-opt:
+  gl_FUNC_ALLOCA
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module canonicalize-lgpl:
+  gl_CANONICALIZE_LGPL
+  gl_MODULE_INDICATOR([canonicalize-lgpl])
+  gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
+  gl_STDLIB_MODULE_INDICATOR([realpath])
   # Code from module close:
   gl_FUNC_CLOSE
   gl_UNISTD_MODULE_INDICATOR([close])
@@ -94,6 +117,10 @@ AC_DEFUN([gl_INIT],
   # Code from module crypto/gc-hmac-sha1:
   gl_GC_HMAC_SHA1
   gl_MODULE_INDICATOR([gc-hmac-sha1])
+  # Code from module dirname-lgpl:
+  gl_DIRNAME_LGPL
+  # Code from module double-slash-root:
+  gl_DOUBLE_SLASH_ROOT
   # Code from module errno:
   gl_HEADER_ERRNO_H
   # Code from module extensions:
@@ -121,12 +148,37 @@ AC_DEFUN([gl_INIT],
   # Code from module lseek:
   gl_FUNC_LSEEK
   gl_UNISTD_MODULE_INDICATOR([lseek])
+  # Code from module lstat:
+  gl_FUNC_LSTAT
+  gl_SYS_STAT_MODULE_INDICATOR([lstat])
+  # Code from module malloc-posix:
+  gl_FUNC_MALLOC_POSIX
+  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+  # Code from module malloca:
+  gl_MALLOCA
   # Code from module manywarnings:
   # Code from module multiarch:
   gl_MULTIARCH
+  # Code from module pathmax:
+  gl_PATHMAX
+  # Code from module readlink:
+  gl_FUNC_READLINK
+  gl_UNISTD_MODULE_INDICATOR([readlink])
   # Code from module realloc-posix:
   gl_FUNC_REALLOC_POSIX
   gl_STDLIB_MODULE_INDICATOR([realloc-posix])
+  # Code from module rename:
+  gl_FUNC_RENAME
+  gl_STDIO_MODULE_INDICATOR([rename])
+  # Code from module rmdir:
+  gl_FUNC_RMDIR
+  gl_UNISTD_MODULE_INDICATOR([rmdir])
+  # Code from module same-inode:
+  # Code from module stat:
+  gl_FUNC_STAT
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
+  # Code from module stdbool:
+  AM_STDBOOL_H
   # Code from module stddef:
   gl_STDDEF_H
   # Code from module stdint:
@@ -153,6 +205,10 @@ AC_DEFUN([gl_INIT],
   gl_HEADER_TIME_H
   # Code from module unistd:
   gl_UNISTD_H
+  # Code from module unlink:
+  gl_FUNC_UNLINK
+  gl_UNISTD_MODULE_INDICATOR([unlink])
+  # Code from module verify:
   # Code from module warn-on-use:
   # Code from module warnings:
   AC_SUBST([WARN_CFLAGS])
@@ -298,9 +354,14 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/c++defs.h
   build-aux/config.rpath
   build-aux/warn-on-use.h
+  lib/alloca.in.h
+  lib/basename-lgpl.c
+  lib/canonicalize-lgpl.c
   lib/close-hook.c
   lib/close-hook.h
   lib/close.c
+  lib/dirname-lgpl.c
+  lib/dirname.h
   lib/errno.in.h
   lib/fclose.c
   lib/fopen.c
@@ -313,11 +374,23 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/hmac-sha1.c
   lib/hmac.h
   lib/lseek.c
+  lib/lstat.c
+  lib/malloc.c
+  lib/malloca.c
+  lib/malloca.h
+  lib/malloca.valgrind
   lib/memxor.c
   lib/memxor.h
+  lib/pathmax.h
+  lib/readlink.c
   lib/realloc.c
+  lib/rename.c
+  lib/rmdir.c
+  lib/same-inode.h
   lib/sha1.c
   lib/sha1.h
+  lib/stat.c
+  lib/stdbool.in.h
   lib/stddef.in.h
   lib/stdint.in.h
   lib/stdio-impl.h
@@ -326,15 +399,24 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdlib.in.h
   lib/strdup.c
   lib/string.in.h
+  lib/stripslash.c
   lib/strtok_r.c
   lib/strverscmp.c
   lib/sys_stat.in.h
   lib/time.in.h
   lib/unistd.in.h
+  lib/unlink.c
+  lib/verify.h
   lib/wchar.in.h
   m4/00gnulib.m4
+  m4/alloca.m4
   m4/asm-underscore.m4
+  m4/canonicalize.m4
   m4/close.m4
+  m4/dirname.m4
+  m4/dos.m4
+  m4/double-slash-root.m4
+  m4/eealloc.m4
   m4/errno_h.m4
   m4/extensions.m4
   m4/fclose.m4
@@ -353,13 +435,21 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-prefix.m4
   m4/longlong.m4
   m4/lseek.m4
+  m4/lstat.m4
   m4/malloc.m4
+  m4/malloca.m4
   m4/manywarnings.m4
   m4/memxor.m4
   m4/multiarch.m4
   m4/onceonly.m4
+  m4/pathmax.m4
+  m4/readlink.m4
   m4/realloc.m4
+  m4/rename.m4
+  m4/rmdir.m4
   m4/sha1.m4
+  m4/stat.m4
+  m4/stdbool.m4
   m4/stddef_h.m4
   m4/stdint.m4
   m4/stdio_h.m4
@@ -371,6 +461,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_stat_h.m4
   m4/time_h.m4
   m4/unistd_h.m4
+  m4/unlink.m4
   m4/visibility.m4
   m4/warn-on-use.m4
   m4/warnings.m4
