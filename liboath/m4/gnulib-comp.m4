@@ -67,7 +67,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module stdint:
   # Code from module stdio:
   # Code from module stdlib:
-  # Code from module strdup:
+  # Code from module strdup-posix:
   # Code from module string:
   # Code from module strtok_r:
   # Code from module strverscmp:
@@ -187,8 +187,8 @@ AC_DEFUN([gl_INIT],
   gl_STDIO_H
   # Code from module stdlib:
   gl_STDLIB_H
-  # Code from module strdup:
-  gl_FUNC_STRDUP
+  # Code from module strdup-posix:
+  gl_FUNC_STRDUP_POSIX
   gl_STRING_MODULE_INDICATOR([strdup])
   # Code from module string:
   gl_HEADER_STRING_H
