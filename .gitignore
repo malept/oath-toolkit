@@ -64,8 +64,15 @@ liboath/lib/.deps/
 liboath/lib/.libs/
 liboath/lib/Makefile
 liboath/lib/Makefile.in
+liboath/lib/alloca.h
 liboath/lib/arg-nonnull.h
+liboath/lib/basename-lgpl.lo
+liboath/lib/basename-lgpl.o
 liboath/lib/c++defs.h
+liboath/lib/close-hook.lo
+liboath/lib/close-hook.o
+liboath/lib/dirname-lgpl.lo
+liboath/lib/dirname-lgpl.o
 liboath/lib/dummy.lo
 liboath/lib/dummy.o
 liboath/lib/gc-gnulib.lo
@@ -73,6 +80,8 @@ liboath/lib/gc-gnulib.o
 liboath/lib/hmac-sha1.lo
 liboath/lib/hmac-sha1.o
 liboath/lib/libgnu.la
+liboath/lib/malloca.lo
+liboath/lib/malloca.o
 liboath/lib/memxor.lo
 liboath/lib/memxor.o
 liboath/lib/sha1.lo
@@ -80,6 +89,8 @@ liboath/lib/sha1.o
 liboath/lib/stdio.h
 liboath/lib/stdlib.h
 liboath/lib/string.h
+liboath/lib/stripslash.lo
+liboath/lib/stripslash.o
 liboath/lib/sys/
 liboath/lib/time.h
 liboath/lib/unistd.h
