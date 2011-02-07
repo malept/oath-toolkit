@@ -335,6 +335,8 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
   int auth_retval;
   struct cfg cfg;
 
+  parse_cfg (flags, argc, argv, &cfg);
+
   DBG (("called."));
 
   /* TODO: ? */
