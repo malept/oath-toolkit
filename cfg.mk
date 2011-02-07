@@ -46,16 +46,29 @@ ChangeLog:
 	git2cl > ChangeLog
 	cat .clcopying >> ChangeLog
 
+# Coverage.
 my-coverage:
 	$(MAKE) coverage WERROR_CFLAGS=
-
 web-coverage:
 	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
 	cp -rv $(COVERAGE_OUT)/* $(htmldir)/coverage/
-
 upload-web-coverage:
 	cd $(htmldir) && \
 		cvs commit -m "Update." coverage
+
+# Clang analyzis.
+clang:
+	make clean
+	scan-build ./configure
+	rm -rf scan.tmp
+	scan-build -o scan.tmp make
+clang-web:
+	rm -fv `find $(htmldir)/clang-analyzer -type f | grep -v CVS`
+	cp -rv scan.tmp/*/* $(htmldir)/clang-analyzer/
+clang-web-upload:
+	cd $(htmldir) && \
+		cvs add clang-analyzer/*.html || true && \
+		cvs commit -m "Update." clang-analyzer
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
