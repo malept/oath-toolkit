@@ -1,3 +1,124 @@
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.6.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Add clang analyze rules.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/lib/Makefile.am, liboath/lib/stdint.in.h,
+	liboath/lib/stdio.in.h, liboath/lib/sys_stat.in.h,
+	liboath/lib/time.in.h, liboath/lib/unistd.in.h,
+	liboath/lib/wchar.in.h, liboath/m4/stdbool.m4,
+	liboath/m4/stdint.m4, liboath/m4/wchar_h.m4,
+	oathtool/lib/Makefile.am, oathtool/lib/intprops.h,
+	oathtool/lib/mktime.c, oathtool/lib/printf-args.h,
+	oathtool/lib/printf-parse.c, oathtool/lib/printf-parse.h,
+	oathtool/lib/stdint.in.h, oathtool/lib/stdio.in.h,
+	oathtool/lib/sys_time.in.h, oathtool/lib/time.in.h,
+	oathtool/lib/unistd.in.h, oathtool/lib/vasnprintf.c,
+	oathtool/lib/wchar.in.h, oathtool/m4/mktime.m4,
+	oathtool/m4/parse-datetime.m4, oathtool/m4/setenv.m4,
+	oathtool/m4/stdbool.m4, oathtool/m4/stdint.m4,
+	oathtool/m4/wchar_h.m4: Update gnulib files.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/usersfile.c: Drop unused variable.  Noticed by cclang.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/pam_oath.c: Parse flags in pam_sm_setcred to make sure
+	debug messages are generated.
+
+2011-01-30  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add.
+
+2011-01-29  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, liboath/configure.ac, oathtool/configure.ac,
+	pam_oath/configure.ac: Use silent rules.
+
+2011-01-29  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/lib/Makefile.am, liboath/m4/gnulib-cache.m4,
+	liboath/m4/gnulib-comp.m4, oathtool/lib/mktime.c: Update gnulib
+	files.
+
+2011-01-29  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/build-aux/config.rpath, liboath/lib/Makefile.am,
+	liboath/lib/alloca.in.h, liboath/lib/basename-lgpl.c,
+	liboath/lib/canonicalize-lgpl.c, liboath/lib/dirname-lgpl.c,
+	liboath/lib/dirname.h, liboath/lib/lstat.c, liboath/lib/malloc.c,
+	liboath/lib/malloca.c, liboath/lib/malloca.h,
+	liboath/lib/malloca.valgrind, liboath/lib/pathmax.h,
+	liboath/lib/readlink.c, liboath/lib/rename.c, liboath/lib/rmdir.c,
+	liboath/lib/same-inode.h, liboath/lib/stat.c,
+	liboath/lib/stdbool.in.h, liboath/lib/stripslash.c,
+	liboath/lib/unlink.c, liboath/lib/verify.h, liboath/m4/alloca.m4,
+	liboath/m4/canonicalize.m4, liboath/m4/dirname.m4,
+	liboath/m4/dos.m4, liboath/m4/double-slash-root.m4,
+	liboath/m4/eealloc.m4, liboath/m4/gnulib-cache.m4,
+	liboath/m4/gnulib-comp.m4, liboath/m4/lstat.m4,
+	liboath/m4/malloca.m4, liboath/m4/pathmax.m4,
+	liboath/m4/readlink.m4, liboath/m4/rename.m4, liboath/m4/rmdir.m4,
+	liboath/m4/stat.m4, liboath/m4/stdbool.m4, liboath/m4/unlink.m4: Add
+	rename and unlink modules.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/global.c: Fix hex deoding.  Tricky beasts these.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/usersfile.c: Fix one gnulib complaint and silence the rest
+	for now.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/lib/Makefile.am, liboath/lib/close-hook.c,
+	liboath/lib/close-hook.h, liboath/lib/close.c, liboath/lib/dummy.c,
+	liboath/lib/fclose.c, liboath/lib/fopen.c, liboath/lib/fseeko.c,
+	liboath/lib/lseek.c, liboath/lib/stdio-impl.h,
+	liboath/lib/strdup.c, liboath/lib/strtok_r.c, liboath/m4/close.m4,
+	liboath/m4/fclose.m4, liboath/m4/fopen.m4, liboath/m4/fseeko.m4,
+	liboath/m4/gnulib-cache.m4, liboath/m4/gnulib-comp.m4,
+	liboath/m4/lseek.m4, liboath/m4/strdup.m4, liboath/m4/strtok_r.m4: 
+	Add more gnulib modules, for portability.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac: Enable gnulib POSIX checks.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/global.c: Avoid use of strchr which has platform and
+	multibyte specific quirks.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump version.
+
+2011-01-28  Simon Josefsson <simon@josefsson.org>
+
+	* README: Improve description.
+
+2011-01-27  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-01-27  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.4.5.
