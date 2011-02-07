@@ -1,17 +1,13 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.4.4
+Subject: OATH Toolkit 1.4.5
 <#part sign=pgpmime>
-I noticed that the version numbers in oath.h wasn't updated for the last
-release, now it is automatically generated instead.
+Fixing a license bug and upholding the tradition of more than one
+release per release-day...
 
 New in this release:
 
-** liboath: Fix OATH_VERSION and OATH_VERSION_NUMBER.
-I forgot to increment these symbols for the last release.  From now
-on, these symbols are generated from the package version instead.
-
-** oathtool: Fix typo in man page.
-Patch from Linus Nordberg <linus@nordberg.se>.
+** liboath: Make sure gnulib files are licensed under the LGPLv2.1+.
+Thanks to Tollef Fog Heen <tfheen@debian.org>.
 
 The OATH Toolkit attempts to collect several tools that are useful when
 deploying technologies related to OATH.  For example, see RFC 4226 on
@@ -43,8 +39,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.4.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.4.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.5.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.4.5.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -61,9 +57,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-b97fed8cfcc1c364007597661f6e6ae10d9e0957  oath-toolkit-1.4.4.tar.gz
+18ba210b210c2f816e11822bf2f326bbe60713b6  oath-toolkit-1.4.5.tar.gz
 
-3c0f2c223f8e48112f8cdb16a948573eb78aa5ba567f2f2dba0c2454  oath-toolkit-1.4.4.tar.gz
+62942a1ecef48aad2065f9558829ee488037b5a919dab41bc65158ec  oath-toolkit-1.4.5.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
