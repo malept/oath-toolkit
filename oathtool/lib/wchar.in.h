@@ -104,10 +104,12 @@
    On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
    implementing mbrtowc for encodings like UTF-8.  */
 #if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
+# if !GNULIB_defined_mbstate_t
 typedef int rpl_mbstate_t;
-# undef mbstate_t
-# define mbstate_t rpl_mbstate_t
-# define GNULIB_defined_mbstate_t 1
+#  undef mbstate_t
+#  define mbstate_t rpl_mbstate_t
+#  define GNULIB_defined_mbstate_t 1
+# endif
 #endif
 
 
@@ -424,6 +426,22 @@ _GL_CXXALIASWARN (wcwidth);
 # if HAVE_RAW_DECL_WCWIDTH
 _GL_WARN_ON_USE (wcwidth, "wcwidth is unportable - "
                  "use gnulib module wcwidth for portability");
+# endif
+#endif
+
+
+/* Search N wide characters of S for C.  */
+#if @GNULIB_WMEMCHR@
+# if !@HAVE_WMEMCHR@
+_GL_FUNCDECL_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN (wmemchr);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemchr
+# if HAVE_RAW_DECL_WMEMCHR
+_GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
+                 "use gnulib module wmemchr for portability");
 # endif
 #endif
 
