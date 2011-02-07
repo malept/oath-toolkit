@@ -59,9 +59,7 @@ parse_usersfile (const char *username,
 		 FILE * infh,
 		 char **lineptr, size_t * n, uint64_t * new_moving_factor)
 {
-  ssize_t t;
-
-  while ((t = getline (lineptr, n, infh)) != -1)
+  while (getline (lineptr, n, infh) != -1)
     {
       char *saveptr;
       char *p = strtok_r (*lineptr, whitespace, &saveptr);
@@ -163,9 +161,7 @@ update_usersfile2 (const char *username,
 		   char **lineptr,
 		   size_t * n, char *timestamp, uint64_t new_moving_factor)
 {
-  ssize_t t;
-
-  while ((t = getline (lineptr, n, infh)) != -1)
+  while (getline (lineptr, n, infh) != -1)
     {
       char *saveptr;
       char *origline;
