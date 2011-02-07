@@ -7,6 +7,8 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 Some non-portable constructions were fixed.  From now on gnulib will
 warn for some non-portable constructs.
 
+** Fix some minor clang warnings.
+
 * Version 1.4.5 (released 2011-01-27)
 
 ** liboath: Make sure gnulib files are licensed under the LGPLv2.1+.
