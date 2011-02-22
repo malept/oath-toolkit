@@ -195,9 +195,14 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
+  if (args_info.inputs_num > 2)
+    error (EXIT_FAILURE, 0, "too many parameters");
+
   if (args_info.verbose_flag)
     {
       printf ("Hex secret: %s\n", args_info.inputs[0]);
+      if (args_info.inputs_num == 2)
+	printf ("OTP: %s\n", args_info.inputs[1]);
       printf ("Digits: %d\n", digits);
       printf ("Window size: %ld\n", window);
     }
@@ -296,8 +301,8 @@ main (int argc, char *argv[])
 	error (EXIT_OTP_INVALID, 0,
 	       "password \"%s\" not found in range %ld .. %ld",
 	       args_info.inputs[1],
-	       (long) (when - t0) / time_step_size,
-	       (long) window + (when - t0) / time_step_size);
+	       (long) ((when - t0) / time_step_size - window / 2),
+	       (long) ((when - t0) / time_step_size + window / 2));
       else if (rc < 0)
 	error (EXIT_FAILURE, 0,
 	       "validating one-time password failed (%d)", rc);
