@@ -78,6 +78,41 @@ parse_time (const char *p, const time_t now)
   return thenspec.tv_sec;
 }
 
+static void
+verbose_hotp (uint64_t moving_factor)
+{
+  printf ("Start counter: 0x%lX (%ld)\n\n",
+	  moving_factor, moving_factor);
+}
+
+static void
+verbose_totp (time_t t0, time_t time_step_size, time_t when)
+{
+  struct tm tmp;
+  char outstr[200];
+
+  if (gmtime_r (&t0, &tmp) == NULL)
+    error (EXIT_FAILURE, 0, "gmtime_r");
+
+  if (strftime (outstr, sizeof(outstr),
+		"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+    error (EXIT_FAILURE, 0, "strftime");
+
+  printf ("Step size (seconds): %ld\n", time_step_size);
+  printf ("Start time: %s (%ld)\n", outstr, t0);
+
+  if (gmtime_r (&when, &tmp) == NULL)
+    error (EXIT_FAILURE, 0, "gmtime_r");
+
+  if (strftime (outstr, sizeof(outstr),
+		"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+    error (EXIT_FAILURE, 0, "strftime");
+
+  printf ("Current time: %s (%ld)\n", outstr, when);
+  printf ("Counter: 0x%lX (%ld)\n\n", (when - t0) / time_step_size,
+	  (when - t0) / time_step_size);
+}
+
 #define generate_otp_p(n) ((n) == 1)
 #define validate_otp_p(n) ((n) == 2)
 
@@ -94,6 +129,7 @@ main (int argc, char *argv[])
   uint64_t moving_factor;
   unsigned digits;
   char otp[10];
+  time_t now, when, t0, time_step_size;
 
   set_program_name (argv[0]);
 
@@ -166,13 +202,37 @@ main (int argc, char *argv[])
       printf ("Window size: %ld\n", window);
     }
 
+  if (args_info.totp_flag)
+    {
+      now = time (NULL);
+      when = parse_time (args_info.now_arg, now);
+      t0 = parse_time (args_info.start_time_arg, now);
+      time_step_size = parse_duration (args_info.time_step_size_arg);
+
+      if (when == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
+	       args_info.now_arg);
+
+      if (t0 == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
+	       args_info.start_time_arg);
+
+      if (time_step_size == BAD_TIME)
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
+	       args_info.time_step_size_arg);
+
+      if (args_info.verbose_flag)
+	verbose_totp (t0, time_step_size, when);
+    }
+  else
+    {
+      if (args_info.verbose_flag)
+	verbose_hotp (moving_factor);
+    }
+
   if (generate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {
       size_t iter = 0;
-
-      if (args_info.verbose_flag)
-	printf ("Start counter: 0x%lX (%ld)\n\n",
-		moving_factor, moving_factor);
 
       do
 	{
@@ -193,50 +253,6 @@ main (int argc, char *argv[])
     }
   else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
     {
-      time_t now = time (NULL);
-      time_t when = parse_time (args_info.now_arg, now);
-      time_t t0 = parse_time (args_info.start_time_arg, now);
-      time_t time_step_size = parse_duration (args_info.time_step_size_arg);
-
-      if (when == BAD_TIME)
-	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
-	       args_info.now_arg);
-
-      if (t0 == BAD_TIME)
-	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
-	       args_info.start_time_arg);
-
-      if (time_step_size == BAD_TIME)
-	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
-	       args_info.time_step_size_arg);
-
-      if (args_info.verbose_flag)
-	{
-	  struct tm tmp;
-	  char outstr[200];
-
-	  if (gmtime_r (&t0, &tmp) == NULL)
-	    error (EXIT_FAILURE, 0, "gmtime_r");
-
-	  if (strftime (outstr, sizeof(outstr),
-			"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
-	    error (EXIT_FAILURE, 0, "strftime");
-
-	  printf ("Step size (seconds): %ld\n", time_step_size);
-	  printf ("Start time: %s (%ld)\n", outstr, t0);
-
-	  if (gmtime_r (&when, &tmp) == NULL)
-	    error (EXIT_FAILURE, 0, "gmtime_r");
-
-	  if (strftime (outstr, sizeof(outstr),
-			"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
-	    error (EXIT_FAILURE, 0, "strftime");
-
-	  printf ("Time now: %s (%ld)\n", outstr, when);
-	  printf ("Counter: 0x%lX (%ld)\n\n", (when - t0) / time_step_size,
-		  (when - t0) / time_step_size);
-	}
-
       rc = oath_totp_generate (secret,
 			       secretlen,
 			       when,
@@ -250,12 +266,8 @@ main (int argc, char *argv[])
 
       printf ("%s\n", otp);
     }
-  else if (validate_otp_p (args_info.inputs_num))
+  else if (validate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {
-      if (args_info.verbose_flag)
-	printf ("Start counter: 0x%lX (%ld)\n\n",
-		moving_factor, moving_factor);
-
       rc = oath_hotp_validate (secret,
 			       secretlen,
 			       moving_factor,
@@ -266,6 +278,26 @@ main (int argc, char *argv[])
 	       "password \"%s\" not found in range %ld .. %ld",
 	       args_info.inputs[1],
 	       (long) moving_factor, (long) moving_factor + window);
+      else if (rc < 0)
+	error (EXIT_FAILURE, 0,
+	       "validating one-time password failed (%d)", rc);
+      printf ("%d\n", rc);
+    }
+  else if (validate_otp_p (args_info.inputs_num) && args_info.totp_flag)
+    {
+      rc = oath_totp_validate (secret,
+			       secretlen,
+			       when,
+			       time_step_size,
+			       t0,
+			       window,
+			       args_info.inputs[1]);
+      if (rc == OATH_INVALID_OTP)
+	error (EXIT_OTP_INVALID, 0,
+	       "password \"%s\" not found in range %ld .. %ld",
+	       args_info.inputs[1],
+	       (long) (when - t0) / time_step_size,
+	       (long) window + (when - t0) / time_step_size);
       else if (rc < 0)
 	error (EXIT_FAILURE, 0,
 	       "validating one-time password failed (%d)", rc);

@@ -68,6 +68,25 @@ The format is a mostly free format human readable date string such as
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
 
+You can validate a TOTP one-time password by supplying the secret and
+a window parameter (number of time steps before or after current
+time):
+
+   $ oathtool \-\-totp \-w 5 00 `oathtool \-\-totp 00`
+   0
+   $
+
+Similar when generating TOTPs, you can use a \-N (\-\-now) parameter
+to specify the time to use instead of the current time:
+
+  $ oathtool \-\-totp \-\-now="2005\-03\-18 01:58:29 UTC" \-w 10000000 3132333435363738393031323334353637383930 89005924
+  4115227
+  $
+
+The previous test uses values from the TOTP specification and will
+stress test the tool because the expected window is around 4 million
+time-steps.
+
 There are two system parameters for TOTP: the time-step size and the
 time start.
 
