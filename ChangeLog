@@ -1,3 +1,80 @@
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.6.0.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/oathtool.c: oathtool: Improve error handling and debug
+	output.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/totp.c: Fix Since: in docstrings.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, oathtool/oathtool.c, oathtool/oathtool.h2m,
+	oathtool/tests/tst_oathtool.sh: Make oathtool support TOTP
+	validation.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, liboath/Makefile.am, liboath/aux.c,
+	liboath/aux.h, liboath/gtk-doc/liboath-docs.sgml, liboath/hotp.c,
+	liboath/liboath.map, liboath/oath.h.in, liboath/tests/Makefile.am,
+	liboath/tests/tst_totp_validate.c, liboath/totp.c: Add TOTP
+	validation functions.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/git-version-gen, liboath/build-aux/arg-nonnull.h,
+	liboath/build-aux/c++defs.h, liboath/build-aux/config.rpath,
+	liboath/build-aux/warn-on-use.h, liboath/lib/Makefile.am,
+	liboath/lib/alloca.in.h, liboath/lib/gc-gnulib.c,
+	liboath/lib/gc-libgcrypt.c, liboath/lib/gc.h,
+	liboath/lib/getdelim.c, liboath/lib/getline.c,
+	liboath/lib/stdint.in.h, liboath/lib/stdio.in.h,
+	liboath/lib/stdlib.in.h, liboath/lib/string.in.h,
+	liboath/lib/wchar.in.h, liboath/m4/gnulib-comp.m4,
+	liboath/m4/lib-link.m4, liboath/m4/longlong.m4,
+	liboath/m4/stdint.m4, liboath/m4/stdlib_h.m4,
+	liboath/m4/wchar_h.m4, liboath/m4/wint_t.m4, maint.mk,
+	oathtool/build-aux/arg-nonnull.h, oathtool/build-aux/c++defs.h,
+	oathtool/build-aux/warn-on-use.h, oathtool/lib/Makefile.am,
+	oathtool/lib/error.h, oathtool/lib/gettext.h,
+	oathtool/lib/gettimeofday.c, oathtool/lib/stdint.in.h,
+	oathtool/lib/stdio.in.h, oathtool/lib/stdlib.in.h,
+	oathtool/lib/string.in.h, oathtool/lib/vasnprintf.h,
+	oathtool/lib/version-etc.h, oathtool/lib/wchar.in.h,
+	oathtool/lib/xalloc.h, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/longlong.m4, oathtool/m4/stdint.m4,
+	oathtool/m4/stdlib_h.m4, oathtool/m4/wchar_h.m4: Update gnulib
+	files.
+
+2011-02-08  Simon Josefsson <simon@josefsson.org>
+
+	* README: Improve description.
+
+2011-02-08  Simon Josefsson <simon@josefsson.org>
+
+	* README: Improve description.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.4.6.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.4.5.
+
+2011-02-07  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-02-07  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.4.6.
