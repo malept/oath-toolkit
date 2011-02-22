@@ -119,7 +119,7 @@ oath_totp_generate (const char *secret,
  *   or %OATH_INVALID_OTP if no OTP was found in OTP window, or an
  *   error code.
  *
- * Since: 1.4.0
+ * Since: 1.6.0
  **/
 int
 oath_totp_validate_callback (const char *secret,
@@ -195,6 +195,8 @@ oath_totp_validate_callback (const char *secret,
  * Returns: Returns position in OTP window (zero is first position),
  *   or %OATH_INVALID_OTP if no OTP was found in OTP window, or an
  *   error code.
+ *
+ * Since: 1.6.0
  **/
 int
 oath_totp_validate (const char *secret,
