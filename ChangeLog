@@ -1,5 +1,26 @@
 2011-02-22  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Add.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/tests/run-root-tests.sh: Check that files were written
+	OK.  Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump versions.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.6.0.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.6.0.
 
 2011-02-22  Simon Josefsson <simon@josefsson.org>
