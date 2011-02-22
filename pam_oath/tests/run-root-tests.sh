@@ -39,6 +39,16 @@ echo "auth requisite pam_oath.so debug usersfile=$ETCUSRCFG window=20 digits=6" 
 echo "HOTP user1 - 00" > $ETCUSRCFG
 echo "HOTP user2 pw 00" >> $ETCUSRCFG
 
+if ! test -f $ETCPAMCFG; then
+    echo "Writing to $ETCPAMCFG failed, skipping..."
+    exit 77
+fi
+
+if ! test -f $ETCUSRCFG; then
+    echo "Writing to $ETCUSRCFG failed, skipping..."
+    exit 77
+fi
+
 ./test-pam_oath-root
 rc=$?
 
