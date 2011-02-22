@@ -22,6 +22,7 @@
 #include <config.h>
 
 #include "oath.h"
+#include "aux.h" /* _oath_strcmp_callback */
 
 #include <stdio.h>		/* For snprintf. */
 
@@ -130,13 +131,6 @@ oath_hotp_generate (const char *secret,
   return OATH_OK;
 }
 
-static int
-strcmp_callback (void *handle, const char *test_otp)
-{
-  char *otp = handle;
-  return strcmp (otp, test_otp);
-}
-
 /**
  * oath_hotp_validate_callback:
  * @secret: the shared secret string
@@ -145,15 +139,16 @@ strcmp_callback (void *handle, const char *test_otp)
  * @window: how many OTPs after start counter to test
  * @digits: number of requested digits in the OTP
  * @strcmp_otp: function pointer to a strcmp-like function.
- * @strcmp_handle: caller handle to be passed on to @oath_strcmp.
+ * @strcmp_handle: caller handle to be passed on to @strcmp_otp.
  *
  * Validate an OTP according to OATH HOTP algorithm per RFC 4226.
  *
  * Validation is implemented by generating a number of potential OTPs
- * and performing a call to the @oath_strcmp function, to compare the
- * potential OTP against the given @otp.  It has the following prototype:
+ * and performing a call to the @strcmp_otp function, to compare the
+ * potential OTP against the given @otp.  It has the following
+ * prototype:
  *
- * int (*oath_hotp_validate_strcmp_function) (void *handle, const char *test_otp);
+ * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
  *
  * The function should behave like strcmp, i.e., only ever return 0 on
  * matches.
@@ -161,7 +156,7 @@ strcmp_callback (void *handle, const char *test_otp)
  * This callback interface is useful when you cannot compare OTPs
  * directly using normal strcmp, but instead for example only have a
  * hashed OTP.  You would then typically pass in the hashed OTP in the
- * @strcmp_handle and let your implementation of @oath_strcmp hash the
+ * @strcmp_handle and let your implementation of @strcmp_otp hash the
  * test_otp OTP using the same hash, and then compare the results.
  *
  * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
@@ -180,7 +175,7 @@ oath_hotp_validate_callback (const char *secret,
 			     uint64_t start_moving_factor,
 			     size_t window,
 			     unsigned digits,
-			     oath_hotp_validate_strcmp_function oath_strcmp,
+			     oath_validate_strcmp_function strcmp_otp,
 			     void *strcmp_handle)
 {
   unsigned iter = 0;
@@ -197,7 +192,7 @@ oath_hotp_validate_callback (const char *secret,
       if (rc != OATH_OK)
 	return rc;
 
-      if (oath_strcmp (strcmp_handle, tmp_otp) == 0)
+      if (strcmp_otp (strcmp_handle, tmp_otp) == 0)
 	return iter;
     }
   while (window - iter++ > 0);
@@ -232,5 +227,5 @@ oath_hotp_validate (const char *secret,
   return oath_hotp_validate_callback (secret, secret_length,
 				      start_moving_factor,
 				      window, strlen (otp),
-				      strcmp_callback, (void *) otp);
+				      _oath_strcmp_callback, (void *) otp);
 }

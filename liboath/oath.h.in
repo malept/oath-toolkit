@@ -142,12 +142,13 @@ oath_hotp_validate (const char *secret,
 		    size_t window, const char *otp);
 
 /**
- * oath_hotp_validate_strcmp_function:
+ * oath_validate_strcmp_function:
  * @handle: caller handle as passed to oath_hotp_validate_callback()
  * @test_otp: OTP to match against.
  *
  * Prototype of strcmp-like function that will be called by
- * oath_hotp_validate_callback() to validate OTPs.
+ * oath_hotp_validate_callback() or oath_totp_validate_callback() to
+ * validate OTPs.
  *
  * The function should behave like strcmp, i.e., only ever return 0 on
  * matches.
@@ -161,10 +162,13 @@ oath_hotp_validate (const char *secret,
  * Return value: 0 if and only if @test_otp is identical to the OTP to
  *   be validated.
  *
- * Since: 1.4.0
+ * Since: 1.6.0
  **/
-typedef int (*oath_hotp_validate_strcmp_function) (void *handle,
-						   const char *test_otp);
+typedef int (*oath_validate_strcmp_function) (void *handle,
+					      const char *test_otp);
+
+/* For backwards compatibility with 1.4.x. */
+#define oath_hotp_validate_strcmp_function oath_validate_strcmp_function
 
 extern OATHAPI int
 oath_hotp_validate_callback (const char *secret,
@@ -172,7 +176,7 @@ oath_hotp_validate_callback (const char *secret,
 			     uint64_t start_moving_factor,
 			     size_t window,
 			     unsigned digits,
-			     oath_hotp_validate_strcmp_function strcmp_otp,
+			     oath_validate_strcmp_function strcmp_otp,
 			     void *strcmp_handle);
 
 /* TOTP */
@@ -187,6 +191,25 @@ oath_totp_generate (const char *secret,
 		    unsigned time_step_size,
 		    time_t start_offset,
 		    unsigned digits, char *output_otp);
+
+extern OATHAPI int
+oath_totp_validate (const char *secret,
+		    size_t secret_length,
+		    time_t now,
+		    unsigned time_step_size,
+		    time_t start_offset,
+		    size_t window, const char *otp);
+
+extern OATHAPI int
+oath_totp_validate_callback (const char *secret,
+			     size_t secret_length,
+			     time_t now,
+			     unsigned time_step_size,
+			     time_t start_offset,
+			     unsigned digits,
+			     size_t window,
+			     oath_validate_strcmp_function strcmp_otp,
+			     void *strcmp_handle);
 
 /* Usersfile */
 

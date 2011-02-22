@@ -27,13 +27,15 @@ TESTS = \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile.sh \
-	tst_totp_algo$(EXEEXT)
+	tst_totp_algo$(EXEEXT) \
+	tst_totp_validate$(EXEEXT)
 check_PROGRAMS = \
 	tst_basic$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile$(EXEEXT) \
-	tst_totp_algo$(EXEEXT)
+	tst_totp_algo$(EXEEXT) \
+	tst_totp_validate$(EXEEXT)
 dist_check_SCRIPTS = tst_hotp_usersfile.sh
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)

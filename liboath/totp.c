@@ -22,6 +22,7 @@
 #include <config.h>
 
 #include "oath.h"
+#include "aux.h" /* _oath_strcmp_callback */
 
 /**
  * oath_totp_generate:
@@ -77,4 +78,135 @@ oath_totp_generate (const char *secret,
 			     nts,
 			     digits,
 			     false, OATH_HOTP_DYNAMIC_TRUNCATION, output_otp);
+}
+
+/**
+ * oath_totp_validate_callback:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @now: Unix time value to compute TOTP for
+ * @time_step_size: time step system parameter (typically 30)
+ * @start_offset: Unix time of when to start counting time steps (typically 0)
+ * @window: how many OTPs after start counter to test
+ * @digits: number of requested digits in the OTP
+ * @strcmp_otp: function pointer to a strcmp-like function.
+ * @strcmp_handle: caller handle to be passed on to @strcmp_otp.
+ *
+ * Validate an OTP according to OATH TOTP algorithm per
+ * draft-mraihi-totp-timebased-07.
+ *
+ * Validation is implemented by generating a number of potential OTPs
+ * and performing a call to the @strcmp_otp function, to compare the
+ * potential OTP against the given @otp.  It has the following
+ * prototype:
+ *
+ * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
+ *
+ * The function should behave like strcmp, i.e., only ever return 0 on
+ * matches.
+ *
+ * This callback interface is useful when you cannot compare OTPs
+ * directly using normal strcmp, but instead for example only have a
+ * hashed OTP.  You would then typically pass in the hashed OTP in the
+ * @strcmp_handle and let your implementation of @strcmp_otp hash the
+ * test_otp OTP using the same hash, and then compare the results.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns position in OTP window (zero is first position),
+ *   or %OATH_INVALID_OTP if no OTP was found in OTP window, or an
+ *   error code.
+ *
+ * Since: 1.4.0
+ **/
+int
+oath_totp_validate_callback (const char *secret,
+			     size_t secret_length,
+			     time_t now,
+			     unsigned time_step_size,
+			     time_t start_offset,
+			     unsigned digits,
+			     size_t window,
+			     oath_validate_strcmp_function strcmp_otp,
+			     void *strcmp_handle)
+{
+  unsigned iter = 0;
+  char tmp_otp[10];
+  int rc;
+  uint64_t nts;
+
+  if (time_step_size == 0)
+    time_step_size = OATH_TOTP_DEFAULT_TIME_STEP_SIZE;
+
+  nts = (now - start_offset) / time_step_size;
+
+  do
+    {
+      rc = oath_hotp_generate (secret,
+			       secret_length,
+			       nts + iter,
+			       digits,
+			       false, OATH_HOTP_DYNAMIC_TRUNCATION, tmp_otp);
+      if (rc != OATH_OK)
+	return rc;
+
+      if (strcmp_otp (strcmp_handle, tmp_otp) == 0)
+	return iter;
+
+      if (iter > 0)
+	{
+	  rc = oath_hotp_generate (secret,
+				   secret_length,
+				   nts - iter,
+				   digits,
+				   false, OATH_HOTP_DYNAMIC_TRUNCATION,
+				   tmp_otp);
+	  if (rc != OATH_OK)
+	    return rc;
+
+	  if (strcmp_otp (strcmp_handle, tmp_otp) == 0)
+	    return iter;
+	}
+    }
+  while (window - iter++ > 0);
+
+  return OATH_INVALID_OTP;
+}
+
+/**
+ * oath_totp_validate:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @now: Unix time value to validate TOTP for
+ * @time_step_size: time step system parameter (typically 30)
+ * @start_offset: Unix time of when to start counting time steps (typically 0)
+ * @window: how many OTPs after/before start OTP to test
+ * @otp: the OTP to validate.
+ *
+ * Validate an OTP according to OATH TOTP algorithm per
+ * draft-mraihi-totp-timebased-07.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns position in OTP window (zero is first position),
+ *   or %OATH_INVALID_OTP if no OTP was found in OTP window, or an
+ *   error code.
+ **/
+int
+oath_totp_validate (const char *secret,
+		    size_t secret_length,
+		    time_t now,
+		    unsigned time_step_size,
+		    time_t start_offset,
+		    size_t window,
+		    const char *otp)
+{
+  return oath_totp_validate_callback (secret, secret_length,
+				      now, time_step_size,
+				      start_offset, strlen (otp), window,
+				      _oath_strcmp_callback, (void *) otp);
 }

@@ -1,3 +1,4 @@
+*~
 .tarball-version
 .version
 INSTALL
@@ -16,6 +17,8 @@ liboath/Makefile
 liboath/Makefile.in
 liboath/aclocal.m4
 liboath/autom4te.cache/
+liboath/aux.lo
+liboath/aux.o
 liboath/build-aux/config.guess
 liboath/build-aux/config.sub
 liboath/build-aux/depcomp
