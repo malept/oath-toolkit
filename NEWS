@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.6.2 (unreleased)
+* Version 1.6.2 (released 2011-03-10)
 
 ** pam_oath: Add ./configure --enable-root-tests parameter.
 Now this configure parameter is needed to run the self-tests that
