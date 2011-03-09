@@ -1,3 +1,28 @@
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc.make: Fix syntax-check nits.
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.6.2.
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc.make: Update gtk-doc file.
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, cfg.mk, pam_oath/configure.ac, pam_oath/tests/Makefile.am: 
+	Add --enable-root-tests.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Don't use silent builds for developers.
+
+2011-02-22  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-02-22  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Add.
