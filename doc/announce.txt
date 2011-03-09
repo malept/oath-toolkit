@@ -1,16 +1,18 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.6.1
+Subject: OATH Toolkit 1.6.2
 <#part sign=pgpmime>
-A small fix for the root PAM self-test...  Debian packages are on
-mentors already, Ubuntu packages in PPA are building.
+Now the PAM self-check that requires root permissions and a
+pre-installed pam_oath.so is gone.
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** pam_oath: Improve reliability of root self test when /etc is not writable.
-Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
+** pam_oath: Add ./configure --enable-root-tests parameter.
+Now this configure parameter is needed to run the self-tests that
+needs root permission.  The fix in the last release was apparently not
+sufficient.  Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -44,8 +46,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.1.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.1.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.2.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.2.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -62,9 +64,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-06c4014fb4647b9057e0e13e36a891723960a635  oath-toolkit-1.6.1.tar.gz
+7e59c2d9672459aa6375b5691f151212b681b84c  oath-toolkit-1.6.2.tar.gz
 
-ef92fae9e1d7418af8baa9a3b2f0a490243f2aa256e2bb907d42326d  oath-toolkit-1.6.1.tar.gz
+296a5b7900e8fe43c5a0c6209832efa7d217c1aa54c2e8b69ef2da55  oath-toolkit-1.6.2.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
