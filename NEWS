@@ -1,6 +1,13 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.6.2 (unreleased)
+
+** pam_oath: Add ./configure --enable-root-tests parameter.
+Now this configure parameter is needed to run the self-tests that
+needs root permission.  The fix in the last release was apparently not
+sufficient.  Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
+
 * Version 1.6.1 (released 2011-02-22)
 
 ** pam_oath: Improve reliability of root self test when /etc is not writable.

@@ -46,6 +46,12 @@ AC_ARG_WITH(pam-dir,
    esac])
 AC_MSG_NOTICE([PAM installation path $PAMDIR])
 
+AC_ARG_ENABLE(root-tests,
+  AC_HELP_STRING([--enable-root-tests],
+                 [enable some self-tests that need root permissions]),
+  root_tests=yes, root_tests=$enableval)
+AM_CONDITIONAL([ROOT_TESTS], [test x$root_tests = xyes])
+
 AC_CONFIG_FILES([
   Makefile
   tests/Makefile
