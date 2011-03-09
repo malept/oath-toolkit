@@ -1,49 +1,16 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.6.0
+Subject: OATH Toolkit 1.6.1
 <#part sign=pgpmime>
-I finally found time to add TOTP validation to liboath and oathtool
-(usersfile and pam_oath will follow later).  The new APIs are available
-in the GTK-DOC manual:
-
-http://www.nongnu.org/oath-toolkit/reference/liboath-oath.html#oath-totp-validate
-
-The command line tool is used as follows, quoting the updated part of
-the man page:
-
-       You can validate a TOTP one-time password by supplying the secret and a
-       window parameter (number of time steps before or after current time):
-
-          $ oathtool --totp -w 5 00 `oathtool --totp 00`
-          0
-          $
-
-       Similar  when  generating  TOTPs, you can use a -N (--now) parameter to
-       specify the time to use instead of the current time:
-
-         $  oathtool  --totp  --now="2005-03-18  01:58:29  UTC"  -w   10000000
-       3132333435363738393031323334353637383930 89005924
-         4115227
-         $
-
-       The  previous  test  uses  values  from the TOTP specification and will
-       stress test the tool because the expected window is  around  4  million
-       time-steps.
+A small fix for the root PAM self-test...  Debian packages are on
+mentors already, Ubuntu packages in PPA are building.
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** liboath: Added APIs to perform TOTP validation.
-The APIs are oath_totp_validate and oath_totp_validate_callback,
-similar to the corresponding HOTP functions.
-
-** liboath: The function type oath_hotp_validate_strcmp_function was
-** renamed to oath_validate_strcmp_function.
-It is used by both HOTP and TOTP validation.  The old name will
-continue to work through a compatibility-#define.
-
-** oathtool: Support TOTP validation.
+** pam_oath: Improve reliability of root self test when /etc is not writable.
+Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -77,8 +44,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.0.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.0.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.1.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.1.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -95,9 +62,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-cbfa8f1479b3dfd5055d01f7ef54ffe044838b87  oath-toolkit-1.6.0.tar.gz
+06c4014fb4647b9057e0e13e36a891723960a635  oath-toolkit-1.6.1.tar.gz
 
-c55c26f9915a2907120fb469ec1b0194a386774102707dae0042b8b4  oath-toolkit-1.6.0.tar.gz
+ef92fae9e1d7418af8baa9a3b2f0a490243f2aa256e2bb907d42326d  oath-toolkit-1.6.1.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
