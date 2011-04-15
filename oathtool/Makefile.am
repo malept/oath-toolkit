@@ -17,7 +17,7 @@ SUBDIRS = lib . tests
 
 ACLOCAL_AMFLAGS = -I m4
 
-AM_CPPFLAGS = -I$(srcdir)/../liboath -I$(srcdir)/lib -I$(builddir)/lib
+AM_CPPFLAGS = -I$(builddir)/../liboath -I$(srcdir)/lib -I$(builddir)/lib
 
 bin_PROGRAMS = oathtool
 oathtool_SOURCES = oathtool.c
