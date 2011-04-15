@@ -1,6 +1,11 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.6.3 (unreleased)
+
+** Fix srcdir != builddir issues.
+Patches from Linus Nordberg <linus@nordberg.se>.
+
 * Version 1.6.2 (released 2011-03-10)
 
 ** pam_oath: Add ./configure --enable-root-tests parameter.
