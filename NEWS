@@ -3,7 +3,10 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.6.3 (unreleased)
 
-** Fix srcdir != builddir issues.
+** pam_oath: Work under SSH by no-op'ing the setcred function.
+Reported by Fanis Dokianakis <fanis@infloop.gr>.
+
+** build: Fix srcdir != builddir issues.
 Patches from Linus Nordberg <linus@nordberg.se>.
 
 * Version 1.6.2 (released 2011-03-10)
