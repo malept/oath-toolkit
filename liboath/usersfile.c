@@ -31,19 +31,47 @@
 #include <errno.h>		/* For errno. */
 #include <sys/stat.h>		/* For S_IRUSR, S_IWUSR. */
 
-static unsigned
-parse_type (const char *str)
+static int
+parse_type (const char *str, unsigned *digits, unsigned *totpstepsize)
 {
-  if (strcmp (str, "HOTP/E/6") == 0)
-    return 6;
-  if (strcmp (str, "HOTP/E/7") == 0)
-    return 7;
-  if (strcmp (str, "HOTP/E/8") == 0)
-    return 8;
-  if (strcmp (str, "HOTP/E") == 0)
-    return 6;
-  if (strcmp (str, "HOTP") == 0)
-    return 6;
+  *totpstepsize = 0;
+  if (strcmp (str, "HOTP/E/6") == 0
+      || strcmp (str, "HOTP/E") == 0
+      || strcmp (str, "HOTP") == 0)
+    *digits = 6;
+  else if (strcmp (str, "HOTP/E/7") == 0)
+    *digits = 7;
+  else if (strcmp (str, "HOTP/E/8") == 0)
+    *digits = 8;
+  else if (strncmp (str, "HOTP/T30", 8) == 0)
+    {
+      *totpstepsize = 30;
+      if (strcmp (str, "HOTP/T30") == 0
+	  || strcmp (str, "HOTP/T30/6") == 0)
+	*digits = 6;
+      else if (strcmp (str, "HOTP/T30/7") == 0)
+	*digits = 7;
+      else if (strcmp (str, "HOTP/T30/8") == 0)
+	*digits = 8;
+      else
+	return -1;
+    }
+  else if (strncmp (str, "HOTP/T60", 8) == 0)
+    {
+      *totpstepsize = 60;
+      if (strcmp (str, "HOTP/T60") == 0
+	  || strcmp (str, "HOTP/T60/6") == 0)
+	*digits = 6;
+      else if (strcmp (str, "HOTP/T60/7") == 0)
+	*digits = 7;
+      else if (strcmp (str, "HOTP/T60/8") == 0)
+	*digits = 8;
+      else
+	return -1;
+    }
+  else
+    return -1;
+
   return 0;
 }
 
@@ -63,7 +91,7 @@ parse_usersfile (const char *username,
     {
       char *saveptr;
       char *p = strtok_r (*lineptr, whitespace, &saveptr);
-      unsigned digits;
+      unsigned digits, totpstepsize;
       char secret[32];
       size_t secret_length = sizeof (secret);
       uint64_t start_moving_factor = 0;
@@ -74,9 +102,8 @@ parse_usersfile (const char *username,
 	continue;
 
       /* Read token type */
-      digits = parse_type (p);
-      if (digits == 0)
-	continue;
+      if (parse_type (p, &digits, &totpstepsize) != 0)
+	  continue;
 
       /* Read username */
       p = strtok_r (NULL, whitespace, &saveptr);
@@ -142,8 +169,12 @@ parse_usersfile (const char *username,
       if (prev_otp && strcmp (prev_otp, otp) == 0)
 	return OATH_REPLAYED_OTP;
 
-      rc = oath_hotp_validate (secret, secret_length,
-			       start_moving_factor, window, otp);
+      if (totpstepsize == 0)
+	rc = oath_hotp_validate (secret, secret_length,
+				 start_moving_factor, window, otp);
+      else
+	rc = oath_totp_validate (secret, secret_length,
+				 time (NULL), totpstepsize, 0, window, otp);
       if (rc < 0)
 	return rc;
       *new_moving_factor = start_moving_factor + rc;

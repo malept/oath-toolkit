@@ -131,9 +131,6 @@ liboath/tests/tst_errors.o
 liboath/tests/tst_hotp_algo
 liboath/tests/tst_hotp_algo.log
 liboath/tests/tst_hotp_algo.o
-liboath/tests/tst_hotp_usersfile
-liboath/tests/tst_hotp_usersfile.log
-liboath/tests/tst_hotp_usersfile.o
 liboath/tests/tst_hotp_validate
 liboath/tests/tst_hotp_validate.log
 liboath/tests/tst_hotp_validate.o
@@ -143,6 +140,9 @@ liboath/tests/tst_totp_algo.o
 liboath/tests/tst_totp_validate
 liboath/tests/tst_totp_validate.log
 liboath/tests/tst_totp_validate.o
+liboath/tests/tst_usersfile
+liboath/tests/tst_usersfile.log
+liboath/tests/tst_usersfile.o
 liboath/totp.lo
 liboath/totp.o
 liboath/usersfile.lo

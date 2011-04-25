@@ -1,5 +1,5 @@
 /*
- * tst_hotp_usersfile.c - self-tests for Liboath usersfile functions
+ * tst_usersfile.c - self-tests for Liboath usersfile functions
  * Copyright (C) 2009-2011 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -119,6 +119,30 @@ main (void)
 
   rc = oath_authenticate_usersfile (CREDS,
 				    "rms", "436521", 10, "6767", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "386397", 0, "4711", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "299833", 0, NULL, &last_otp);
+  if (rc != OATH_INVALID_OTP)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "299833", 1, NULL, &last_otp);
   if (rc != OATH_OK)
     {
       printf ("oath_authenticate_usersfile: %d\n", rc);

@@ -20,25 +20,25 @@ AM_LDFLAGS = -no-install -static
 
 LDADD = ../liboath.la
 
-EXTRA_DIST = users.hotp expect.hotp
+EXTRA_DIST = users.oath expect.oath
 
 TESTS = \
 	tst_basic$(EXEEXT) \
 	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
-	tst_hotp_usersfile.sh \
 	tst_totp_algo$(EXEEXT) \
-	tst_totp_validate$(EXEEXT)
+	tst_totp_validate$(EXEEXT) \
+	tst_usersfile.sh
 check_PROGRAMS = \
 	tst_basic$(EXEEXT) \
 	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
-	tst_hotp_usersfile$(EXEEXT) \
 	tst_totp_algo$(EXEEXT) \
-	tst_totp_validate$(EXEEXT)
-dist_check_SCRIPTS = tst_hotp_usersfile.sh
+	tst_totp_validate$(EXEEXT) \
+	tst_usersfile$(EXEEXT)
+dist_check_SCRIPTS = tst_usersfile.sh
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
 

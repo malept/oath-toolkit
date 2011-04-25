@@ -1,5 +1,5 @@
 #!/bin/sh
-# tst_hotp_usersfile.sh - Invoke tst_hotp_usersfile and check output.
+# tst_usersfile.sh - Invoke tst_usersfile and check output.
 # Copyright (C) 2009-2011 Simon Josefsson
 
 # This library is free software; you can redistribute it and/or modify
@@ -17,19 +17,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-# Check for datefudge
+cp $srcdir/users.oath tmp.oath
+
 TSTAMP=`datefudge "2006-09-23" date -u +%s`
 if test "$TSTAMP" != "1158962400"; then
     echo "Cannot fake timestamps, please install datefudge to check better."
-fi
-
-cp $srcdir/users.hotp tmp.oath
-
-if test "$TSTAMP" = "1158962400"; then
-    datefudge 2006-12-07 ./tst_hotp_usersfile$EXEEXT
-    diff -ur $srcdir/expect.hotp tmp.oath || exit 1
+    ./tst_usersfile$EXEEXT
+    rc=$?
 else
-    ./tst_hotp_usersfile$EXEEXT
+    datefudge 2006-12-07 ./tst_usersfile$EXEEXT
+    rc=$?
+    diff -ur $srcdir/expect.oath tmp.oath || rc=1
 fi
 
 rm -f tmp.oath
+
+exit $rc
