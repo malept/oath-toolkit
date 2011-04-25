@@ -9,6 +9,8 @@ Reported by Fanis Dokianakis <fanis@infloop.gr>.
 ** build: Fix srcdir != builddir issues.
 Patches from Linus Nordberg <linus@nordberg.se>.
 
+** build: Gnulib files were updated.
+
 * Version 1.6.2 (released 2011-03-10)
 
 ** pam_oath: Add ./configure --enable-root-tests parameter.

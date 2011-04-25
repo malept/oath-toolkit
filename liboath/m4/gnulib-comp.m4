@@ -31,15 +31,16 @@ AC_DEFUN([gl_EARLY],
   # Code from module c++defs:
   # Code from module canonicalize-lgpl:
   # Code from module close:
-  # Code from module close-hook:
   # Code from module crypto/gc:
   # Code from module crypto/gc-hmac-sha1:
   # Code from module dirname-lgpl:
+  # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module errno:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module fclose:
+  # Code from module fd-hook:
   # Code from module fopen:
   # Code from module fseeko:
   AC_REQUIRE([AC_FUNC_FSEEKO])
@@ -106,7 +107,6 @@ AC_DEFUN([gl_INIT],
   # Code from module close:
   gl_FUNC_CLOSE
   gl_UNISTD_MODULE_INDICATOR([close])
-  # Code from module close-hook:
   # Code from module crypto/gc:
   gl_GC
   if test $gl_cond_libtool = false; then
@@ -118,6 +118,7 @@ AC_DEFUN([gl_INIT],
   gl_MODULE_INDICATOR([gc-hmac-sha1])
   # Code from module dirname-lgpl:
   gl_DIRNAME_LGPL
+  # Code from module dosname:
   # Code from module double-slash-root:
   gl_DOUBLE_SLASH_ROOT
   # Code from module errno:
@@ -126,6 +127,7 @@ AC_DEFUN([gl_INIT],
   # Code from module fclose:
   gl_FUNC_FCLOSE
   gl_STDIO_MODULE_INDICATOR([fclose])
+  # Code from module fd-hook:
   # Code from module fopen:
   gl_FUNC_FOPEN
   gl_STDIO_MODULE_INDICATOR([fopen])
@@ -354,13 +356,14 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/alloca.in.h
   lib/basename-lgpl.c
   lib/canonicalize-lgpl.c
-  lib/close-hook.c
-  lib/close-hook.h
   lib/close.c
   lib/dirname-lgpl.c
   lib/dirname.h
+  lib/dosname.h
   lib/errno.in.h
   lib/fclose.c
+  lib/fd-hook.c
+  lib/fd-hook.h
   lib/fopen.c
   lib/fseeko.c
   lib/gc-gnulib.c
@@ -391,7 +394,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stddef.in.h
   lib/stdint.in.h
   lib/stdio-impl.h
-  lib/stdio-write.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/strdup.c
@@ -406,11 +408,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/verify.h
   m4/00gnulib.m4
   m4/alloca.m4
-  m4/asm-underscore.m4
   m4/canonicalize.m4
   m4/close.m4
   m4/dirname.m4
-  m4/dos.m4
   m4/double-slash-root.m4
   m4/eealloc.m4
   m4/errno_h.m4

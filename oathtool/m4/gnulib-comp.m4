@@ -77,6 +77,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module verify:
   # Code from module version-etc:
   # Code from module warn-on-use:
+  # Code from module wchar:
   # Code from module xalloc:
   # Code from module xalloc-die:
   # Code from module xsize:
@@ -195,6 +196,8 @@ AC_DEFUN([gl_INIT],
   # Code from module version-etc:
   gl_VERSION_ETC
   # Code from module warn-on-use:
+  # Code from module wchar:
+  gl_WCHAR_H
   # Code from module xalloc:
   gl_XALLOC
   # Code from module xalloc-die:
@@ -379,7 +382,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdbool.in.h
   lib/stddef.in.h
   lib/stdint.in.h
-  lib/stdio-write.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/strerror.c
@@ -396,13 +398,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/verify.h
   lib/version-etc.c
   lib/version-etc.h
+  lib/wchar.in.h
   lib/xalloc-die.c
   lib/xalloc.h
   lib/xmalloc.c
   lib/xsize.h
   m4/00gnulib.m4
   m4/alloca.m4
-  m4/asm-underscore.m4
   m4/bison.m4
   m4/clock_time.m4
   m4/eealloc.m4
@@ -448,6 +450,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/vasprintf.m4
   m4/version-etc.m4
   m4/warn-on-use.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
   m4/wint_t.m4
   m4/xalloc.m4
