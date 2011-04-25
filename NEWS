@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.6.3 (unreleased)
+* Version 1.6.3 (released 2011-04-25)
 
 ** pam_oath: Work under SSH by no-op'ing the setcred function.
 Reported by Fanis Dokianakis <fanis@infloop.gr>.
