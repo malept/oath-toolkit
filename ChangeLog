@@ -1,3 +1,83 @@
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.6.3.
+
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_cast_of_alloca_return_value, .x-sc_error_message_uppercase,
+	.x-sc_m4_quote_check, .x-sc_makefile_check, .x-sc_program_name,
+	.x-sc_prohibit_HAVE_MBRTOWC, .x-sc_prohibit_atoi_atof,
+	.x-sc_require_config_h, .x-sc_require_config_h_first,
+	.x-sc_space_tab, .x-sc_useless_cpp_parens, NEWS,
+	build-aux/useless-if-before-free, cfg.mk, liboath/lib/Makefile.am,
+	liboath/lib/canonicalize-lgpl.c, liboath/lib/close-hook.c,
+	liboath/lib/close-hook.h, liboath/lib/close.c,
+	liboath/lib/dirname.h, liboath/lib/dosname.h,
+	liboath/lib/fd-hook.c, liboath/lib/fd-hook.h, liboath/lib/malloc.c,
+	liboath/lib/malloca.c, liboath/lib/realloc.c, liboath/lib/rmdir.c,
+	liboath/lib/stat.c, liboath/lib/stdio-write.c,
+	liboath/lib/stdio.in.h, liboath/lib/stdlib.in.h,
+	liboath/lib/string.in.h, liboath/lib/sys_stat.in.h,
+	liboath/lib/unistd.in.h, liboath/lib/unlink.c,
+	liboath/lib/verify.h, liboath/m4/alloca.m4,
+	liboath/m4/asm-underscore.m4, liboath/m4/dirname.m4,
+	liboath/m4/dos.m4, liboath/m4/errno_h.m4, liboath/m4/fseeko.m4,
+	liboath/m4/gnulib-common.m4, liboath/m4/gnulib-comp.m4,
+	liboath/m4/rmdir.m4, liboath/m4/stat.m4, liboath/m4/stdbool.m4,
+	liboath/m4/stddef_h.m4, liboath/m4/stdint.m4,
+	liboath/m4/stdio_h.m4, liboath/m4/string_h.m4,
+	liboath/m4/unistd_h.m4, liboath/m4/unlink.m4, m4/gnulib-common.m4,
+	m4/gnulib-comp.m4, maint.mk, oathtool/lib/Makefile.am,
+	oathtool/lib/malloca.c, oathtool/lib/parse-duration.c,
+	oathtool/lib/setenv.c, oathtool/lib/stdio-write.c,
+	oathtool/lib/stdio.in.h, oathtool/lib/stdlib.in.h,
+	oathtool/lib/string.in.h, oathtool/lib/unistd.in.h,
+	oathtool/lib/vasnprintf.c, oathtool/lib/verify.h,
+	oathtool/lib/wchar.in.h, oathtool/lib/xmalloc.c,
+	oathtool/m4/alloca.m4, oathtool/m4/asm-underscore.m4,
+	oathtool/m4/errno_h.m4, oathtool/m4/float_h.m4,
+	oathtool/m4/gnulib-common.m4, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/stdarg.m4, oathtool/m4/stdbool.m4,
+	oathtool/m4/stddef_h.m4, oathtool/m4/stdint.m4,
+	oathtool/m4/stdio_h.m4, oathtool/m4/string_h.m4,
+	oathtool/m4/unistd_h.m4, oathtool/m4/wchar_h.m4: Update gnulib
+	files.
+
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/pam_oath.c: pam_oath: Remove even more of the setcred
+	function.
+
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, pam_oath/pam_oath.c: pam_oath: Work under SSH by no-op'ing
+	the setcred function.  Reported by Fanis Dokianakis <fanis@infloop.gr>.
+
+2011-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-04-15  Linus Nordberg <linus@nordberg.se>
+
+	* oathtool/Makefile.am: oath.h is generated and has to be searched
+	for in builddir.  Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2011-04-15  Linus Nordberg <linus@nordberg.se>
+
+	* oathtool/Makefile.am: Build oathtool.1 out-of-source-dir.  Look for oathtool.h2m in srcdir.  Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.6.2.
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.6.1.
+
+2011-03-10  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-03-10  Simon Josefsson <simon@josefsson.org>
 
 	* liboath/gtk-doc.make: Fix syntax-check nits.
