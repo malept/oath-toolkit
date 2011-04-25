@@ -323,15 +323,8 @@ done:
       retval = PAM_SUCCESS;
     }
   DBG (("done. [%s]", pam_strerror (pamh, retval)));
-  pam_set_data (pamh, "oath_setcred_return", (void*) (intptr_t) retval, NULL);
 
   return retval;
-}
-
-PAM_EXTERN int
-pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
-{
-  return PAM_SUCCESS;
 }
 
 #ifdef PAM_STATIC
@@ -339,7 +332,7 @@ pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
 struct pam_module _pam_oath_modstruct = {
   "pam_oath",
   pam_sm_authenticate,
-  pam_sm_setcred,
+  NULL,
   NULL,
   NULL,
   NULL,
