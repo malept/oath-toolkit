@@ -149,6 +149,14 @@ main (void)
       return 1;
     }
 
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "299833", 1, NULL, &last_otp);
+  if (rc != OATH_REPLAYED_OTP)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
   rc = oath_done ();
   if (rc != OATH_OK)
     {
