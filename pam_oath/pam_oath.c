@@ -327,12 +327,18 @@ done:
   return retval;
 }
 
+PAM_EXTERN int
+pam_sm_setcred (pam_handle_t * pamh, int flags, int argc, const char **argv)
+{
+  return PAM_SUCCESS;
+}
+
 #ifdef PAM_STATIC
 
 struct pam_module _pam_oath_modstruct = {
   "pam_oath",
   pam_sm_authenticate,
-  NULL,
+  pam_sm_setcred,
   NULL,
   NULL,
   NULL,
