@@ -21,9 +21,8 @@ AM_CPPFLAGS = -I. -I$(srcdir)/../liboath
 
 EXTRA_DIST = README
 
-libdir = $(PAMDIR)
-
-lib_LTLIBRARIES = pam_oath.la
+pammoddir = $(PAMDIR)
+pammod_LTLIBRARIES = pam_oath.la
 
 pam_oath_la_SOURCES = pam_oath.c
 # XXX add -Wl,-x too?  PAM documentation suggests it.

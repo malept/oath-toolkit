@@ -236,3 +236,5 @@ pam_oath/tests/Makefile
 pam_oath/tests/Makefile.in
 pam_oath/tests/test-pam_oath
 pam_oath/tests/test-pam_oath.o
+tests/test-pam_oath-root
+tests/test-pam_oath-root.o
