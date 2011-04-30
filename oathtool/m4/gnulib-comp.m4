@@ -80,6 +80,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module wchar:
   # Code from module xalloc:
   # Code from module xalloc-die:
+  # Code from module xalloc-oversized:
   # Code from module xsize:
 ])
 
@@ -201,6 +202,7 @@ AC_DEFUN([gl_INIT],
   # Code from module xalloc:
   gl_XALLOC
   # Code from module xalloc-die:
+  # Code from module xalloc-oversized:
   # Code from module xsize:
   gl_XSIZE
   # End of code from modules
@@ -400,6 +402,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/version-etc.h
   lib/wchar.in.h
   lib/xalloc-die.c
+  lib/xalloc-oversized.h
   lib/xalloc.h
   lib/xmalloc.c
   lib/xsize.h

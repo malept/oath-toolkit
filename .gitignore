@@ -125,6 +125,8 @@ liboath/tests/tst_hotp_validate
 liboath/tests/tst_hotp_validate.o
 liboath/tests/tst_totp_algo
 liboath/tests/tst_totp_algo.o
+liboath/tests/tst_totp_validate
+liboath/tests/tst_totp_validate.o
 liboath/totp.lo
 liboath/totp.o
 liboath/usersfile.lo
@@ -235,6 +237,8 @@ pam_oath/tests/.deps/
 pam_oath/tests/Makefile
 pam_oath/tests/Makefile.in
 pam_oath/tests/test-pam_oath
+pam_oath/tests/test-pam_oath-root
+pam_oath/tests/test-pam_oath-root.o
 pam_oath/tests/test-pam_oath.o
 tests/test-pam_oath-root
 tests/test-pam_oath-root.o

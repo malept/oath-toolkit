@@ -1163,6 +1163,13 @@ libgnu_la_SOURCES += xalloc-die.c
 
 ## end   gnulib module xalloc-die
 
+## begin gnulib module xalloc-oversized
+
+
+EXTRA_DIST += xalloc-oversized.h
+
+## end   gnulib module xalloc-oversized
+
 ## begin gnulib module xsize
 
 libgnu_la_SOURCES += xsize.h
