@@ -258,18 +258,24 @@ main (int argc, char *argv[])
     }
   else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
     {
-      rc = oath_totp_generate (secret,
-			       secretlen,
-			       when,
-			       time_step_size,
-			       t0,
-			       digits,
-			       otp);
-      if (rc != OATH_OK)
-	error (EXIT_FAILURE, 0,
-	       "generating one-time password failed (%d)", rc);
+      size_t iter = 0;
 
-      printf ("%s\n", otp);
+      do
+	{
+	  rc = oath_totp_generate (secret,
+				   secretlen,
+				   when + iter * time_step_size,
+				   time_step_size,
+				   t0,
+				   digits,
+				   otp);
+	  if (rc != OATH_OK)
+	    error (EXIT_FAILURE, 0,
+		   "generating one-time password failed (%d)", rc);
+
+	  printf ("%s\n", otp);
+	}
+      while (window - iter++ > 0);
     }
   else if (validate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
     {

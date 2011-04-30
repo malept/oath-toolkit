@@ -68,6 +68,20 @@ The format is a mostly free format human readable date string such as
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
 
+You may generate several TOTPs by specifying the \-\-window parameter,
+similar to how it works for HOTP.  The OTPs generated here will be for
+the initial time (normally current time) and then each following time
+step (e.g., 30 second window).
+
+   $ oathtool \-\-totp 00 \-w5
+   815120
+   003818
+   814756
+   184042
+   582326
+   733842
+   $
+
 You can validate a TOTP one-time password by supplying the secret and
 a window parameter (number of time steps before or after current
 time):
