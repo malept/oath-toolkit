@@ -15,6 +15,9 @@ Reported by Mitya <mitya@cargosoft.ru>.
 ** build: Use pammoddir automake variable instead of overriding libdir.
 Reported by Mitya <mitya@cargosoft.ru>.
 
+** build: Make autoreconf work in released tar archives.
+Reported by Mitya <mitya@cargosoft.ru>.
+
 * Version 1.6.3 (released 2011-04-25)
 
 ** pam_oath: Work under SSH by no-op'ing the setcred function.

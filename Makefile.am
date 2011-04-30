@@ -24,6 +24,7 @@ endif
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
+EXTRA_DIST += build-aux/git-version-gen
 
 # git-version-gen
 BUILT_SOURCES = $(top_srcdir)/.version
