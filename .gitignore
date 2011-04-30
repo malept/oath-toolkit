@@ -55,6 +55,7 @@ liboath/gtk-doc/liboath.types
 liboath/gtk-doc/pdf-build.stamp
 liboath/gtk-doc/pdf.stamp
 liboath/gtk-doc/scan-build.stamp
+liboath/gtk-doc/setup-build.stamp
 liboath/gtk-doc/sgml-build.stamp
 liboath/gtk-doc/sgml.stamp
 liboath/gtk-doc/tmpl-build.stamp
@@ -78,6 +79,8 @@ liboath/lib/dirname-lgpl.lo
 liboath/lib/dirname-lgpl.o
 liboath/lib/dummy.lo
 liboath/lib/dummy.o
+liboath/lib/fd-hook.lo
+liboath/lib/fd-hook.o
 liboath/lib/gc-gnulib.lo
 liboath/lib/gc-gnulib.o
 liboath/lib/hmac-sha1.lo
