@@ -1,20 +1,33 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.6.3
+Subject: OATH Toolkit 1.6.4
 <#part sign=pgpmime>
-Should work better under SSH now.
+A bunch of fixes, thank you Mitya!
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** pam_oath: Work under SSH by no-op'ing the setcred function.
-Reported by Fanis Dokianakis <fanis@infloop.gr>.
+** liboath: Increase usersfile max secret length to 32 bytes.
+Reported by Mitya <mitya@cargosoft.ru>.
 
-** build: Fix srcdir != builddir issues.
-Patches from Linus Nordberg <linus@nordberg.se>.
+** oathtool: Support --window together with --totp.
 
-** build: Gnulib files were updated.
+** pam_oath: Re-add the pam_sm_setcred function and make it return success.
+Apparently the function need to exist even if it is not used.
+Reported by Christian Hesse <list@eworm.de>.
+
+** pam_oath: Link to -lpam for PAM symbols.
+Reported by Mitya <mitya@cargosoft.ru>.
+
+** pam_oath: Don't install pam_oath.la file.
+Reported by Mitya <mitya@cargosoft.ru>.
+
+** build: Use pammoddir automake variable instead of overriding libdir.
+Reported by Mitya <mitya@cargosoft.ru>.
+
+** build: Make autoreconf work in released tar archives.
+Reported by Mitya <mitya@cargosoft.ru>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -48,8 +61,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.3.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.3.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.4.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.4.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -66,9 +79,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-3fbda60f127cd360d992dc15df49707e21658ed9  oath-toolkit-1.6.3.tar.gz
+ff7e2ff471561a29e7c0de2c63cf5ae944ea0147  oath-toolkit-1.6.4.tar.gz
 
-e5a59362cf7a4f4a7309938f164ba7c8b15df877b1395cf2d0efef90  oath-toolkit-1.6.3.tar.gz
+bddb8132cf0841e3e858ad4e4d23697eb2b5e42c2d171096147b92f7  oath-toolkit-1.6.4.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
