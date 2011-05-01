@@ -1,18 +1,20 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.6.2
+Subject: OATH Toolkit 1.6.3
 <#part sign=pgpmime>
-Now the PAM self-check that requires root permissions and a
-pre-installed pam_oath.so is gone.
+Should work better under SSH now.
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** pam_oath: Add ./configure --enable-root-tests parameter.
-Now this configure parameter is needed to run the self-tests that
-needs root permission.  The fix in the last release was apparently not
-sufficient.  Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
+** pam_oath: Work under SSH by no-op'ing the setcred function.
+Reported by Fanis Dokianakis <fanis@infloop.gr>.
+
+** build: Fix srcdir != builddir issues.
+Patches from Linus Nordberg <linus@nordberg.se>.
+
+** build: Gnulib files were updated.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -46,17 +48,17 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.2.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.2.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.3.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.3.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
 
-pub   1280R/B565716F 2002-05-05 [expires: 2011-03-30]
+pub   1280R/B565716F 2002-05-05 [expires: 2012-01-24]
       Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
-uid                  Simon Josefsson <jas@extundo.com>
 uid                  Simon Josefsson <simon@josefsson.org>
-sub   1280R/4D5D40AE 2002-05-05 [expires: 2011-03-30]
+uid                  Simon Josefsson <jas@extundo.com>
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2012-01-24]
 
 The key is available from:
   http://josefsson.org/key.txt
@@ -64,9 +66,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-7e59c2d9672459aa6375b5691f151212b681b84c  oath-toolkit-1.6.2.tar.gz
+3fbda60f127cd360d992dc15df49707e21658ed9  oath-toolkit-1.6.3.tar.gz
 
-296a5b7900e8fe43c5a0c6209832efa7d217c1aa54c2e8b69ef2da55  oath-toolkit-1.6.2.tar.gz
+e5a59362cf7a4f4a7309938f164ba7c8b15df877b1395cf2d0efef90  oath-toolkit-1.6.3.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
