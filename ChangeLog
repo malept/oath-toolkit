@@ -1,3 +1,62 @@
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.6.4.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/tests/expect.hotp, liboath/tests/tst_hotp_algo.c,
+	liboath/tests/tst_hotp_usersfile.c, liboath/tests/users.hotp,
+	liboath/usersfile.c: liboath: Increase usersfile max secret length
+	to 32 bytes.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, pam_oath/Makefile.am: pam_oath: Don't install pam_oath.la
+	file.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, build-aux/vc-list-files, liboath/lib/stdlib.in.h,
+	liboath/m4/manywarnings.m4, liboath/m4/stdio_h.m4, maint.mk,
+	oathtool/lib/Makefile.am, oathtool/lib/stdlib.in.h,
+	oathtool/lib/xalloc-oversized.h, oathtool/lib/xalloc.h,
+	oathtool/m4/gnulib-comp.m4, oathtool/m4/memchr.m4,
+	oathtool/m4/stdio_h.m4: Update gnulib files.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS: build: Make autoreconf work in released tar
+	archives.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, pam_oath/Makefile.am: build: Use pammoddir
+	automake variable instead of overriding libdir.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, pam_oath/configure.ac: pam_oath: Link to -lpam for PAM
+	symbols.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add to .gitignore.
+
+2011-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, oathtool/oathtool.c, oathtool/oathtool.h2m,
+	oathtool/tests/tst_oathtool.sh: oathtool: Support --window together
+	with --totp.
+
+2011-04-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, pam_oath/pam_oath.c: pam_oath: Re-add the pam_sm_setcred
+	function and make it return success.
+
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-04-25  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.6.3.
