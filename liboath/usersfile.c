@@ -64,7 +64,7 @@ parse_usersfile (const char *username,
       char *saveptr;
       char *p = strtok_r (*lineptr, whitespace, &saveptr);
       unsigned digits;
-      char secret[20];
+      char secret[32];
       size_t secret_length = sizeof (secret);
       uint64_t start_moving_factor = 0;
       int rc;

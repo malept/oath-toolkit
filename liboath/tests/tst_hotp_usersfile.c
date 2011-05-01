@@ -71,6 +71,30 @@ main (void)
       return 1;
     }
 
+  rc = oath_authenticate_usersfile (CREDS, "silver", "670691",
+				    0, "4711", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS, "silver", "599872",
+				    1, "4711", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS, "silver", "072768",
+				    1, "4711", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
   rc = oath_authenticate_usersfile (CREDS,
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != OATH_REPLAYED_OTP)

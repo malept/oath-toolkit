@@ -3,6 +3,9 @@ Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.6.4 (unreleased)
 
+** liboath: Increase usersfile max secret length to 32 bytes.
+Reported by Mitya <mitya@cargosoft.ru>.
+
 ** oathtool: Support --window together with --totp.
 
 ** pam_oath: Re-add the pam_sm_setcred function and make it return success.

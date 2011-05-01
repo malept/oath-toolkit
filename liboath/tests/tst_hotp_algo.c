@@ -117,9 +117,10 @@ int
 main (void)
 {
   oath_rc rc;
-  char secret[20] = "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
-    "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30";
-  size_t secretlen = sizeof (secret);
+  char secret[32] = "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+    "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+    "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30\x31\x32";
+  size_t secretlen = 20;
   char otp[10];
   uint64_t moving_factor;
   unsigned digits;
@@ -159,6 +160,15 @@ main (void)
 	    printf ("otp[%d][%ld] got %s expected %s\n",
 		    digits, (long) moving_factor, otp,
 		    expect[digits][moving_factor]);
+	    return 1;
+	  }
+
+	rc = oath_hotp_generate (secret, 32, moving_factor,
+				 digits, false, OATH_HOTP_DYNAMIC_TRUNCATION,
+				 otp);
+	if (rc != OATH_OK)
+	  {
+	    printf ("oath_hotp_generate: %d\n", rc);
 	    return 1;
 	  }
       }
