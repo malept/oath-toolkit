@@ -78,6 +78,7 @@ if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Wunreachable-code"     # any use of strchr provokes this
   nw="$nw -Wc++-compat"           # We don't care about C++ compilers
   nw="$nw -Wcast-qual"            # Triggers oath_hotp_validate, how to fix?
+  nw="$nw -Wpadded"               # Padding internal structs is useless.
   # Enable all GCC warnings not in this list.
   gl_MANYWARN_COMPLEMENT([warnings], [$warnings], [$nw])
   for w in $warnings; do

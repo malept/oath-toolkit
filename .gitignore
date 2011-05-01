@@ -30,6 +30,9 @@ liboath/config.h.in
 liboath/config.log
 liboath/config.status
 liboath/configure
+liboath/errors.c
+liboath/errors.lo
+liboath/errors.o
 liboath/global.lo
 liboath/global.o
 liboath/gtk-doc/Makefile
@@ -38,6 +41,7 @@ liboath/gtk-doc/html-build.stamp
 liboath/gtk-doc/html.stamp
 liboath/gtk-doc/html/
 liboath/gtk-doc/liboath-decl-list.txt
+liboath/gtk-doc/liboath-decl-list.txt.bak
 liboath/gtk-doc/liboath-decl.txt
 liboath/gtk-doc/liboath-decl.txt.bak
 liboath/gtk-doc/liboath-overrides.txt
@@ -117,6 +121,8 @@ liboath/tests/Makefile
 liboath/tests/Makefile.in
 liboath/tests/tst_basic
 liboath/tests/tst_basic.o
+liboath/tests/tst_errors
+liboath/tests/tst_errors.o
 liboath/tests/tst_hotp_algo
 liboath/tests/tst_hotp_algo.o
 liboath/tests/tst_hotp_usersfile

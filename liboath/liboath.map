@@ -47,3 +47,10 @@ LIBOATH_1.6.0
     oath_totp_validate;
     oath_totp_validate_callback;
 } LIBOATH_1.4.0;
+
+LIBOATH_1.8.0
+{
+  global:
+    oath_strerror;
+    oath_strerror_name;
+} LIBOATH_1.6.0;

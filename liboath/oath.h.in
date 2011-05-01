@@ -119,6 +119,9 @@ extern OATHAPI const char *oath_check_version (const char *req_version);
 
 extern OATHAPI int oath_hex2bin (char *hexstr, char *binstr, size_t * binlen);
 
+extern OATHAPI const char *oath_strerror (int err);
+extern OATHAPI const char *oath_strerror_name (int err);
+
 /* HOTP */
 
 #define OATH_HOTP_LENGTH(digits, checksum) (digits + (checksum ? 1 : 0))

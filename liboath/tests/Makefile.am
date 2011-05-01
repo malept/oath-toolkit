@@ -24,6 +24,7 @@ EXTRA_DIST = users.hotp expect.hotp
 
 TESTS = \
 	tst_basic$(EXEEXT) \
+	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile.sh \
@@ -31,6 +32,7 @@ TESTS = \
 	tst_totp_validate$(EXEEXT)
 check_PROGRAMS = \
 	tst_basic$(EXEEXT) \
+	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
 	tst_hotp_usersfile$(EXEEXT) \

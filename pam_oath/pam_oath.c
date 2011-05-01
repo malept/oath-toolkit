@@ -300,7 +300,9 @@ pam_sm_authenticate (pam_handle_t * pamh,
 				      cfg.window,
 				      onlypasswd,
 				      &last_otp);
-    DBG (("authenticate rc %d last otp %s", rc, ctime(&last_otp)));
+    DBG (("authenticate rc %d (%s: %s) last otp %s", rc,
+	  oath_strerror_name (rc) ? oath_strerror_name (rc) : "UNKNOWN",
+	  oath_strerror (rc), ctime(&last_otp)));
   }
 
   if (rc != OATH_OK)
