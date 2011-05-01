@@ -42,14 +42,14 @@ AC_DEFUN([gl_INIT],
   gl_cond_libtool=false
   gl_libdeps=
   gl_ltlibdeps=
-  gl_m4_base='m4'
+  gl_m4_base='gl/m4'
   m4_pushdef([AC_LIBOBJ], m4_defn([gl_LIBOBJ]))
   m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gl_REPLACE_FUNCS]))
   m4_pushdef([AC_LIBSOURCES], m4_defn([gl_LIBSOURCES]))
   m4_pushdef([gl_LIBSOURCES_LIST], [])
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='lib'
+  gl_source_base='gl'
   # Code from module git-version-gen:
   # Code from module gnumakefile:
   # Autoconf 2.61a.99 and earlier don't support linking a file only
@@ -172,7 +172,7 @@ AC_DEFUN([gl_REPLACE_FUNCS], [
 AC_DEFUN([gl_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gl_LIBSOURCES_DIR], [lib])
+      m4_define([gl_LIBSOURCES_DIR], [gl])
       m4_append([gl_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])

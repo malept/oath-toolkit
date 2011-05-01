@@ -21,10 +21,9 @@ if ENABLE_PAM
 SUBDIRS += pam_oath
 endif
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I gl/m4
 
 EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
-EXTRA_DIST += build-aux/git-version-gen
 
 # git-version-gen
 BUILT_SOURCES = $(top_srcdir)/.version

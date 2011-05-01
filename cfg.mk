@@ -43,7 +43,6 @@ buildit:
 
 glimport:
 	gnulib-tool --add-import
-	rm -rfv lib
 	cd liboath && gnulib-tool --add-import
 	cd oathtool && gnulib-tool --add-import
 
