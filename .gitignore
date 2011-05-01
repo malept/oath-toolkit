@@ -30,7 +30,6 @@ liboath/config.h.in
 liboath/config.log
 liboath/config.status
 liboath/configure
-liboath/errors.c
 liboath/errors.lo
 liboath/errors.o
 liboath/global.lo
