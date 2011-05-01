@@ -28,3 +28,7 @@ pam_oath_la_SOURCES = pam_oath.c
 # XXX add -Wl,-x too?  PAM documentation suggests it.
 pam_oath_la_LIBADD = ../liboath/liboath.la
 pam_oath_la_LDFLAGS = -module -avoid-version
+
+# PAM modules are always loaded dynamically, so the .la is unneeded.
+install-data-hook:
+	$(AM_V_at)rm -f $(DESTDIR)$(pammoddir)/pam_oath.la

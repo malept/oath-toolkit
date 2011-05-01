@@ -12,6 +12,9 @@ Reported by Christian Hesse <list@eworm.de>.
 ** pam_oath: Link to -lpam for PAM symbols.
 Reported by Mitya <mitya@cargosoft.ru>.
 
+** pam_oath: Don't install pam_oath.la file.
+Reported by Mitya <mitya@cargosoft.ru>.
+
 ** build: Use pammoddir automake variable instead of overriding libdir.
 Reported by Mitya <mitya@cargosoft.ru>.
 
