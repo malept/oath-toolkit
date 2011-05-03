@@ -1,3 +1,74 @@
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.8.0.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/tests/tst_basic.c: Test hex encoding/decoding of A-F
+	and a-f too.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc/liboath-docs.sgml: liboath: Fix GTK-DOC manual for
+	1.8.0 additions.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, liboath/lib/Makefile.am, liboath/m4/gnulib-cache.m4,
+	liboath/m4/gnulib-comp.m4, liboath/m4/valgrind-tests.m4,
+	liboath/tests/Makefile.am, liboath/tests/tst_totp_validate.c: 
+	liboath: Run self-tests under valgrind.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-comp.m4, liboath/lib/Makefile.am,
+	liboath/lib/fclose.c, liboath/lib/freading.c,
+	liboath/lib/freading.h, liboath/m4/freading.m4,
+	liboath/m4/gnulib-comp.m4, oathtool/m4/gnulib-comp.m4: Update gnulib
+	files.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, liboath/errors.c: Add liboath/errors.c, forgotten in
+	last commit.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, liboath/Makefile.am, liboath/configure.ac,
+	liboath/liboath.map, liboath/oath.h.in, liboath/tests/Makefile.am,
+	liboath/tests/tst_errors.c, pam_oath/pam_oath.c: liboath: Add new
+	APIs oath_strerror and oath_strerror_name.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, cfg.mk, gl/Makefile.am, gl/m4/00gnulib.m4,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-common.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/gnulib-tool.m4, gl/m4/onceonly.m4,
+	m4/00gnulib.m4, m4/gnulib-cache.m4, m4/gnulib-common.m4,
+	m4/gnulib-comp.m4, m4/gnulib-tool.m4, m4/onceonly.m4: Fix
+	git-version-gen dist by normal mean.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/configure.ac, oathtool/configure.ac,
+	pam_oath/configure.ac: Fix version generation in tarball.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.6.4.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.6.3.
+
+2011-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.6.4.
