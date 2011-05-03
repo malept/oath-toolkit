@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 Simon Josefsson
+# Copyright (C) 2009-2011 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,8 @@ exclude_file_name_regexp--sc_program_name = ^liboath/tests/|pam_oath/tests/
 exclude_file_name_regexp--sc_texinfo_acronym = ^oathtool/doc/parse-datetime.texi
 exclude_file_name_regexp--sc_error_message_uppercase = ^oathtool/oathtool.c
 
-update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson"
+update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=1
+
 buildit:
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)

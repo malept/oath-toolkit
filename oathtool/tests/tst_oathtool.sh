@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # tst_oathtool.sh - test that oathtool works
-# Copyright (C) 2009, 2010, 2011 Simon Josefsson
+# Copyright (C) 2009-2011 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

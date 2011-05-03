@@ -1,4 +1,4 @@
-Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -30,3 +30,6 @@ through this web page:
 
 Note that the OATH Toolkit project used to be called "HOTP Toolkit",
 and there are still references to the old project name.
+
+For any copyright year range specified as YYYY-ZZZZ in this package
+note that the range specifies every single year in that closed interval.
