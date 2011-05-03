@@ -1,5 +1,22 @@
 2011-05-03  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 1.8.1.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac: build: Make autoreconf work
+	again.  Reported by Christian Hesse <list@eworm.de>.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix coverage rules.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.8.0.
 
 2011-05-03  Simon Josefsson <simon@josefsson.org>
