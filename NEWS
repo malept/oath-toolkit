@@ -1,6 +1,11 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009, 2010, 2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.8.1 (unreleased)
+
+** build: Make autoreconf work again.
+Reported by Christian Hesse <list@eworm.de>.
+
 * Version 1.8.0 (released 2011-05-03)
 
 ** liboath: Add new APIs oath_strerror and oath_strerror_name.

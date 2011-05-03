@@ -42,7 +42,10 @@ AC_CONFIG_SUBDIRS([
 if test "x$enable_pam" = xyes; then
   AC_CONFIG_SUBDIRS([pam_oath])
 fi
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([
+  Makefile
+  gl/Makefile
+])
 AC_OUTPUT
 
 AC_MSG_NOTICE([summary of build options:

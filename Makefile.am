@@ -15,7 +15,7 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = liboath oathtool
+SUBDIRS = gl liboath oathtool
 
 if ENABLE_PAM
 SUBDIRS += pam_oath
