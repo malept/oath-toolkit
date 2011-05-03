@@ -29,7 +29,7 @@ int
 main (void)
 {
   oath_rc rc;
-  char *hexsecret = "3132333435363738393031323334353637383930";
+  char *hexsecret = "ABCDEF3435363738393031323334353637abcdef";
   char secret[20];
   size_t secretlen;
 
@@ -112,8 +112,8 @@ main (void)
       printf ("oath_hex2bin: 20 != %d\n", secretlen);
       return 1;
     }
-  if (memcmp (secret, "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
-	      "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30", 20) != 0)
+  if (memcmp (secret, "\xAB\xCD\xEF\x34\x35\x36\x37\x38\x39\x30"
+	      "\x31\x32\x33\x34\x35\x36\x37\xab\xcd\xef", 20) != 0)
     {
       printf ("oath_hex2bin: decode mismatch\n");
       return 1;
