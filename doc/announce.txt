@@ -1,19 +1,15 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.8.0
+Subject: OATH Toolkit 1.8.1
 <#part sign=pgpmime>
-Added new strerror APIs, bumping middle version number accordingly...
-Nothing else significant.
+Brown paper bag release to fix 'autoreconf -i' in tarball...
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** liboath: Add new APIs oath_strerror and oath_strerror_name.
-The functions are used to get a human readable description of liboath
-error codes.  Suggested by Christian Hesse <mail@eworm.de>.
-
-** liboath: Self-tests improvements.
+** build: Make autoreconf work again.
+Reported by Christian Hesse <list@eworm.de>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -47,8 +43,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.0.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.0.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.1.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.1.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -64,9 +60,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-882169ac7fb4372d2cc54061137c35efd8d5331c  oath-toolkit-1.8.0.tar.gz
+34ed57b7095d90ecbab2a31c0c04b913c820a2a4  oath-toolkit-1.8.1.tar.gz
 
-ddfc3bd01c43d07ef26c14eb246e0a87d9cd38fbe7a1d6fbaf0a009b  oath-toolkit-1.8.0.tar.gz
+ecdeabc78f5650e017bc07376b4051cf530c324f29870d5607c76a9a  oath-toolkit-1.8.1.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
