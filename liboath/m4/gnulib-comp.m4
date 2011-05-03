@@ -42,6 +42,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module fclose:
   # Code from module fd-hook:
   # Code from module fopen:
+  # Code from module freading:
   # Code from module fseeko:
   AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module getdelim:
@@ -95,124 +96,74 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib'
-  # Code from module alloca-opt:
-  gl_FUNC_ALLOCA
-  # Code from module arg-nonnull:
-  # Code from module c++defs:
-  # Code from module canonicalize-lgpl:
-  gl_CANONICALIZE_LGPL
-  gl_MODULE_INDICATOR([canonicalize-lgpl])
-  gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
-  gl_STDLIB_MODULE_INDICATOR([realpath])
-  # Code from module close:
-  gl_FUNC_CLOSE
-  gl_UNISTD_MODULE_INDICATOR([close])
-  # Code from module crypto/gc:
-  gl_GC
-  if test $gl_cond_libtool = false; then
-    gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
-    gl_libdeps="$gl_libdeps $LIBGCRYPT"
-  fi
-  # Code from module crypto/gc-hmac-sha1:
-  gl_GC_HMAC_SHA1
-  gl_MODULE_INDICATOR([gc-hmac-sha1])
-  # Code from module dirname-lgpl:
-  gl_DIRNAME_LGPL
-  # Code from module dosname:
-  # Code from module double-slash-root:
-  gl_DOUBLE_SLASH_ROOT
-  # Code from module errno:
-  gl_HEADER_ERRNO_H
-  # Code from module extensions:
-  # Code from module fclose:
-  gl_FUNC_FCLOSE
-  gl_STDIO_MODULE_INDICATOR([fclose])
-  # Code from module fd-hook:
-  # Code from module fopen:
-  gl_FUNC_FOPEN
-  gl_STDIO_MODULE_INDICATOR([fopen])
-  # Code from module fseeko:
-  gl_FUNC_FSEEKO
-  gl_STDIO_MODULE_INDICATOR([fseeko])
-  # Code from module getdelim:
-  gl_FUNC_GETDELIM
-  gl_STDIO_MODULE_INDICATOR([getdelim])
-  # Code from module getline:
-  gl_FUNC_GETLINE
-  gl_STDIO_MODULE_INDICATOR([getline])
-  # Code from module havelib:
-  # Code from module include_next:
-  # Code from module lib-symbol-versions:
-  gl_LD_VERSION_SCRIPT
-  # Code from module lib-symbol-visibility:
-  gl_VISIBILITY
-  # Code from module lseek:
-  gl_FUNC_LSEEK
-  gl_UNISTD_MODULE_INDICATOR([lseek])
-  # Code from module lstat:
-  gl_FUNC_LSTAT
-  gl_SYS_STAT_MODULE_INDICATOR([lstat])
-  # Code from module malloc-posix:
-  gl_FUNC_MALLOC_POSIX
-  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
-  # Code from module malloca:
-  gl_MALLOCA
-  # Code from module manywarnings:
-  # Code from module multiarch:
-  gl_MULTIARCH
-  # Code from module pathmax:
-  gl_PATHMAX
-  # Code from module readlink:
-  gl_FUNC_READLINK
-  gl_UNISTD_MODULE_INDICATOR([readlink])
-  # Code from module realloc-posix:
-  gl_FUNC_REALLOC_POSIX
-  gl_STDLIB_MODULE_INDICATOR([realloc-posix])
-  # Code from module rename:
-  gl_FUNC_RENAME
-  gl_STDIO_MODULE_INDICATOR([rename])
-  # Code from module rmdir:
-  gl_FUNC_RMDIR
-  gl_UNISTD_MODULE_INDICATOR([rmdir])
-  # Code from module same-inode:
-  # Code from module stat:
-  gl_FUNC_STAT
-  gl_SYS_STAT_MODULE_INDICATOR([stat])
-  # Code from module stdbool:
-  AM_STDBOOL_H
-  # Code from module stddef:
-  gl_STDDEF_H
-  # Code from module stdint:
-  gl_STDINT_H
-  # Code from module stdio:
-  gl_STDIO_H
-  # Code from module stdlib:
-  gl_STDLIB_H
-  # Code from module strdup-posix:
-  gl_FUNC_STRDUP_POSIX
-  gl_STRING_MODULE_INDICATOR([strdup])
-  # Code from module string:
-  gl_HEADER_STRING_H
-  # Code from module strtok_r:
-  gl_FUNC_STRTOK_R
-  gl_STRING_MODULE_INDICATOR([strtok_r])
-  # Code from module strverscmp:
-  gl_FUNC_STRVERSCMP
-  gl_STRING_MODULE_INDICATOR([strverscmp])
-  # Code from module sys_stat:
-  gl_HEADER_SYS_STAT_H
-  AC_PROG_MKDIR_P
-  # Code from module time:
-  gl_HEADER_TIME_H
-  # Code from module unistd:
-  gl_UNISTD_H
-  # Code from module unlink:
-  gl_FUNC_UNLINK
-  gl_UNISTD_MODULE_INDICATOR([unlink])
-  # Code from module verify:
-  # Code from module warn-on-use:
-  # Code from module warnings:
-  AC_SUBST([WARN_CFLAGS])
+gl_FUNC_ALLOCA
+gl_CANONICALIZE_LGPL
+gl_MODULE_INDICATOR([canonicalize-lgpl])
+gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
+gl_STDLIB_MODULE_INDICATOR([realpath])
+gl_FUNC_CLOSE
+gl_UNISTD_MODULE_INDICATOR([close])
+gl_GC
+if test $gl_cond_libtool = false; then
+  gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
+  gl_libdeps="$gl_libdeps $LIBGCRYPT"
+fi
+gl_GC_HMAC_SHA1
+gl_MODULE_INDICATOR([gc-hmac-sha1])
+gl_DIRNAME_LGPL
+gl_DOUBLE_SLASH_ROOT
+gl_HEADER_ERRNO_H
+gl_FUNC_FCLOSE
+gl_STDIO_MODULE_INDICATOR([fclose])
+gl_FUNC_FOPEN
+gl_STDIO_MODULE_INDICATOR([fopen])
+gl_FUNC_FREADING
+gl_FUNC_FSEEKO
+gl_STDIO_MODULE_INDICATOR([fseeko])
+gl_FUNC_GETDELIM
+gl_STDIO_MODULE_INDICATOR([getdelim])
+gl_FUNC_GETLINE
+gl_STDIO_MODULE_INDICATOR([getline])
+gl_LD_VERSION_SCRIPT
+gl_VISIBILITY
+gl_FUNC_LSEEK
+gl_UNISTD_MODULE_INDICATOR([lseek])
+gl_FUNC_LSTAT
+gl_SYS_STAT_MODULE_INDICATOR([lstat])
+gl_FUNC_MALLOC_POSIX
+gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+gl_MALLOCA
+gl_MULTIARCH
+gl_PATHMAX
+gl_FUNC_READLINK
+gl_UNISTD_MODULE_INDICATOR([readlink])
+gl_FUNC_REALLOC_POSIX
+gl_STDLIB_MODULE_INDICATOR([realloc-posix])
+gl_FUNC_RENAME
+gl_STDIO_MODULE_INDICATOR([rename])
+gl_FUNC_RMDIR
+gl_UNISTD_MODULE_INDICATOR([rmdir])
+gl_FUNC_STAT
+gl_SYS_STAT_MODULE_INDICATOR([stat])
+AM_STDBOOL_H
+gl_STDDEF_H
+gl_STDINT_H
+gl_STDIO_H
+gl_STDLIB_H
+gl_FUNC_STRDUP_POSIX
+gl_STRING_MODULE_INDICATOR([strdup])
+gl_HEADER_STRING_H
+gl_FUNC_STRTOK_R
+gl_STRING_MODULE_INDICATOR([strtok_r])
+gl_FUNC_STRVERSCMP
+gl_STRING_MODULE_INDICATOR([strverscmp])
+gl_HEADER_SYS_STAT_H
+AC_PROG_MKDIR_P
+gl_HEADER_TIME_H
+gl_UNISTD_H
+gl_FUNC_UNLINK
+gl_UNISTD_MODULE_INDICATOR([unlink])
+AC_SUBST([WARN_CFLAGS])
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -365,6 +316,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fd-hook.c
   lib/fd-hook.h
   lib/fopen.c
+  lib/freading.c
+  lib/freading.h
   lib/fseeko.c
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
@@ -417,6 +370,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/extensions.m4
   m4/fclose.m4
   m4/fopen.m4
+  m4/freading.m4
   m4/fseeko.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4

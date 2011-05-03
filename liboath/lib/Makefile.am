@@ -223,6 +223,14 @@ EXTRA_libgnu_la_SOURCES += fopen.c
 
 ## end   gnulib module fopen
 
+## begin gnulib module freading
+
+libgnu_la_SOURCES += freading.c
+
+EXTRA_DIST += freading.h stdio-impl.h
+
+## end   gnulib module freading
+
 ## begin gnulib module fseeko
 
 
