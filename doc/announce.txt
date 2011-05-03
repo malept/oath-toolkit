@@ -1,33 +1,19 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.6.4
+Subject: OATH Toolkit 1.8.0
 <#part sign=pgpmime>
-A bunch of fixes, thank you Mitya!
+Added new strerror APIs, bumping middle version number accordingly...
+Nothing else significant.
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** liboath: Increase usersfile max secret length to 32 bytes.
-Reported by Mitya <mitya@cargosoft.ru>.
+** liboath: Add new APIs oath_strerror and oath_strerror_name.
+The functions are used to get a human readable description of liboath
+error codes.  Suggested by Christian Hesse <mail@eworm.de>.
 
-** oathtool: Support --window together with --totp.
-
-** pam_oath: Re-add the pam_sm_setcred function and make it return success.
-Apparently the function need to exist even if it is not used.
-Reported by Christian Hesse <list@eworm.de>.
-
-** pam_oath: Link to -lpam for PAM symbols.
-Reported by Mitya <mitya@cargosoft.ru>.
-
-** pam_oath: Don't install pam_oath.la file.
-Reported by Mitya <mitya@cargosoft.ru>.
-
-** build: Use pammoddir automake variable instead of overriding libdir.
-Reported by Mitya <mitya@cargosoft.ru>.
-
-** build: Make autoreconf work in released tar archives.
-Reported by Mitya <mitya@cargosoft.ru>.
+** liboath: Self-tests improvements.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -61,8 +47,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.4.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.6.4.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.0.tar.gz (1.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.0.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -70,7 +56,6 @@ key identified by the following information:
 pub   1280R/B565716F 2002-05-05 [expires: 2012-01-24]
       Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
 uid                  Simon Josefsson <simon@josefsson.org>
-uid                  Simon Josefsson <jas@extundo.com>
 sub   1280R/4D5D40AE 2002-05-05 [expires: 2012-01-24]
 
 The key is available from:
@@ -79,9 +64,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-ff7e2ff471561a29e7c0de2c63cf5ae944ea0147  oath-toolkit-1.6.4.tar.gz
+882169ac7fb4372d2cc54061137c35efd8d5331c  oath-toolkit-1.8.0.tar.gz
 
-bddb8132cf0841e3e858ad4e4d23697eb2b5e42c2d171096147b92f7  oath-toolkit-1.6.4.tar.gz
+ddfc3bd01c43d07ef26c14eb246e0a87d9cd38fbe7a1d6fbaf0a009b  oath-toolkit-1.8.0.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
