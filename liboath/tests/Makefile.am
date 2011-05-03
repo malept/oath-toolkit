@@ -16,7 +16,7 @@
 # 02110-1301 USA
 
 AM_CPPFLAGS = -I$(srcdir)/..
-AM_LDFLAGS = -no-install
+AM_LDFLAGS = -no-install -static
 
 LDADD = ../liboath.la
 
@@ -41,3 +41,7 @@ check_PROGRAMS = \
 dist_check_SCRIPTS = tst_hotp_usersfile.sh
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
+
+AUTOMAKE_OPTIONS = parallel-tests
+TEST_EXTENSIONS = .sh
+LOG_COMPILER = $(VALGRIND)

@@ -77,6 +77,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module time:
   # Code from module unistd:
   # Code from module unlink:
+  # Code from module valgrind-tests:
   # Code from module verify:
   # Code from module warn-on-use:
   # Code from module warnings:
@@ -163,6 +164,7 @@ gl_HEADER_TIME_H
 gl_UNISTD_H
 gl_FUNC_UNLINK
 gl_UNISTD_MODULE_INDICATOR([unlink])
+gl_VALGRIND_TESTS
 AC_SUBST([WARN_CFLAGS])
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
@@ -210,6 +212,7 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+gl_VALGRIND_TESTS
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -412,6 +415,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/time_h.m4
   m4/unistd_h.m4
   m4/unlink.m4
+  m4/valgrind-tests.m4
   m4/visibility.m4
   m4/warn-on-use.m4
   m4/warnings.m4

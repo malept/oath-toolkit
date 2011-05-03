@@ -70,7 +70,7 @@ main (void)
       return 1;
     }
 
-  for (i < 0; i < sizeof (tv) / sizeof (tv[0]); i++)
+  for (i = 0; i < sizeof (tv) / sizeof (tv[0]); i++)
     {
       rc = oath_totp_validate (secret, secretlen, tv[i].now, time_step_size,
 			       start_offset, tv[i].window, tv[i].otp);
