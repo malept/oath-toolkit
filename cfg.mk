@@ -51,12 +51,12 @@ ChangeLog:
 	cat .clcopying >> ChangeLog
 
 # Coverage.
-my-coverage:
-	$(MAKE) coverage WERROR_CFLAGS=
-web-coverage:
+coverage-my:
+	$(MAKE) coverage WERROR_CFLAGS= VALGRIND=
+coverage-web:
 	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
 	cp -rv $(COVERAGE_OUT)/* $(htmldir)/coverage/
-upload-web-coverage:
+coverage-web-upload:
 	cd $(htmldir) && \
 		cvs commit -m "Update." coverage
 
