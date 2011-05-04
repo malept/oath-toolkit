@@ -1,3 +1,51 @@
+2011-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.8.2.
+
+2011-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* oathtool/tests/tst_hyphen.sh: oathtool/tst_hyphen: Don't detect
+	copyright year as man page problem.
+
+2011-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* m4/dummy.m4: Add m4/ by putting a dummmy.m4 file in there.
+
+2011-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS: build: Fix conflict between ACLOCAL_AMFLAGS and
+	AC_CONFIG_MACRO_DIR.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, AUTHORS, COPYING, ChangeLog, Makefile.am, NEWS,
+	README, cfg.mk, configure.ac, liboath/Makefile.am,
+	liboath/configure.ac, liboath/global.c, liboath/hotp.c,
+	liboath/liboath.map, liboath/liboath.pc.in, liboath/oath.h.in,
+	liboath/tests/Makefile.am, liboath/tests/tst_basic.c,
+	liboath/tests/tst_hotp_algo.c, liboath/tests/tst_hotp_usersfile.c,
+	liboath/tests/tst_hotp_usersfile.sh,
+	liboath/tests/tst_hotp_validate.c, liboath/tests/tst_totp_algo.c,
+	liboath/tests/tst_totp_validate.c, liboath/usersfile.c,
+	oathtool/Makefile.am, oathtool/configure.ac, oathtool/oathtool.c,
+	oathtool/oathtool.ggo, oathtool/oathtool.h2m,
+	oathtool/tests/Makefile.am, oathtool/tests/tst_oathtool.sh,
+	pam_oath/Makefile.am, pam_oath/README, pam_oath/configure.ac,
+	pam_oath/pam_oath.c, pam_oath/tests/Makefile.am,
+	pam_oath/tests/test-pam_oath.c: Use copyright year ranges.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.8.1.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.8.0.
+
+2011-05-03  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-05-03  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.8.1.
