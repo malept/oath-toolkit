@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# tst_hyphen.sh - test that oathtool.h2m is lintian compliant
+# tst_hyphen.sh - test that man page part of oathtool.h2m is lintian compliant
 # Copyright (C) 2011 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,4 +18,4 @@
 
 srcdir="${srcdir:-.}"
 
-! egrep '[^a-z\\]-' $srcdir/../oathtool.h2m
+! tail -n +2 $srcdir/../oathtool.h2m | egrep '[^a-z\\]-'
