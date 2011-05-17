@@ -31,7 +31,7 @@ const struct {
   char *otp;
   int expected_rc;
 } tv[] = {
-  /* Derived from draft-mraihi-totp-timebased-07 */
+  /* Derived from RFC 6238. */
   { 0, 10, "94287082", 1},
   { 1111111100, 10, "07081804", 0},
   { 1111111109, 10, "07081804", 0},

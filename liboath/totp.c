@@ -35,8 +35,8 @@
  * @output_otp: output buffer, must have room for the output OTP plus zero
  *
  * Generate a one-time-password using the time-variant TOTP algorithm
- * described in draft-mraihi-totp-timebased-07.  The input parameters
- * are taken as time values.
+ * described in RFC 6238.  The input parameters are taken as time
+ * values.
  *
  * The system parameter @time_step_size describes how long the time
  * window for each OTP is.  The recommended value is 30 seconds, and
@@ -92,8 +92,7 @@ oath_totp_generate (const char *secret,
  * @strcmp_otp: function pointer to a strcmp-like function.
  * @strcmp_handle: caller handle to be passed on to @strcmp_otp.
  *
- * Validate an OTP according to OATH TOTP algorithm per
- * draft-mraihi-totp-timebased-07.
+ * Validate an OTP according to OATH TOTP algorithm per RFC 6238.
  *
  * Validation is implemented by generating a number of potential OTPs
  * and performing a call to the @strcmp_otp function, to compare the
@@ -185,8 +184,7 @@ oath_totp_validate_callback (const char *secret,
  * @window: how many OTPs after/before start OTP to test
  * @otp: the OTP to validate.
  *
- * Validate an OTP according to OATH TOTP algorithm per
- * draft-mraihi-totp-timebased-07.
+ * Validate an OTP according to OATH TOTP algorithm per RFC 6238.
  *
  * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
  * restrictions may be lifted in future versions, although some

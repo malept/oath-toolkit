@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 
-/* From draft-mraihi-totp-timebased-07 */
+/* From RFC 6238. */
 const struct {
   time_t secs;
   uint64_t T;
