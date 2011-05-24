@@ -30,17 +30,18 @@ const struct {
   unsigned window;
   char *otp;
   int expected_rc;
+  int otp_pos;
 } tv[] = {
   /* Derived from RFC 6238. */
-  { 0, 10, "94287082", 1},
-  { 1111111100, 10, "07081804", 0},
-  { 1111111109, 10, "07081804", 0},
-  { 1111111000, 10, "07081804", 3},
-  { 1111112000, 99, "07081804", 30},
-  { 1111111100, 10, "14050471", 1},
-  { 1111111109, 10, "14050471", 1},
-  { 1111111000, 10, "14050471", 4},
-  { 1111112000, 99, "14050471", 29},
+  { 0, 10, "94287082", 1, 1},
+  { 1111111100, 10, "07081804", 0, 0},
+  { 1111111109, 10, "07081804", 0, 0},
+  { 1111111000, 10, "07081804", 3, 3},
+  { 1111112000, 99, "07081804", 30, -30},
+  { 1111111100, 10, "14050471", 1, 1},
+  { 1111111109, 10, "14050471", 1, 1},
+  { 1111111000, 10, "14050471", 4, 4},
+  { 1111112000, 99, "14050471", 29, -29},
 };
 
 static int
@@ -72,6 +73,8 @@ main (void)
 
   for (i = 0; i < sizeof (tv) / sizeof (tv[0]); i++)
     {
+      int otp_pos;
+
       rc = oath_totp_validate (secret, secretlen, tv[i].now, time_step_size,
 			       start_offset, tv[i].window, tv[i].otp);
       if (rc != tv[i].expected_rc)
@@ -87,8 +90,45 @@ main (void)
 					my_strcmp, (void *) tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
-	  printf ("validate loop %d failed (rc %d != %d)?!\n",
+	  printf ("validate_callback loop %d failed (rc %d != %d)?!\n",
 		  i, rc, tv[i].expected_rc);
+	  return 1;
+	}
+
+      otp_pos = 23;
+
+      rc = oath_totp_validate2 (secret, secretlen, tv[i].now, time_step_size,
+				start_offset, tv[i].window, &otp_pos,
+				tv[i].otp);
+      if (rc != tv[i].expected_rc)
+	{
+	  printf ("validate2 loop %d failed (rc %d != %d)?!\n",
+		  i, rc, tv[i].expected_rc);
+	  return 1;
+	}
+      if (otp_pos != tv[i].otp_pos)
+	{
+	  printf ("validate2 loop %d failed (cmp %d != %d)?!\n",
+		  i, otp_pos, tv[i].otp_pos);
+	  return 1;
+	}
+
+      otp_pos = 47;
+
+      rc = oath_totp_validate2_callback (secret, secretlen, tv[i].now,
+					 time_step_size, start_offset,
+					 8, tv[i].window, &otp_pos,
+					 my_strcmp, (void *) tv[i].otp);
+      if (rc != tv[i].expected_rc)
+	{
+	  printf ("validate2_callback loop %d failed (rc %d != %d)?!\n",
+		  i, rc, tv[i].expected_rc);
+	  return 1;
+	}
+      if (otp_pos != tv[i].otp_pos)
+	{
+	  printf ("validate2_callback loop %d failed (cmp %d != %d)?!\n",
+		  i, otp_pos, tv[i].otp_pos);
 	  return 1;
 	}
     }

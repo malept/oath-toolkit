@@ -1,6 +1,17 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.10.0 (unreleased)
+
+** liboath: Added new TOTP validation functions that return search position.
+Before the absolute value of the search position was in the return
+code of the TOTP validate function, but it seems we need to know
+whether the search position was before or after the current time.  The
+new functions are oath_totp_validate2 and oath_totp_validate2_callback
+and behave the same asoath_totp_validate and
+oath_totp_validate_callback, respectively, but they take another
+optional 'int*' parameter to store the search position.
+
 * Version 1.8.2 (released 2011-05-04)
 
 ** build: Fix conflict between ACLOCAL_AMFLAGS and AC_CONFIG_MACRO_DIR.
