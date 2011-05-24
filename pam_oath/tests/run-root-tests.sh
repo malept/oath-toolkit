@@ -20,6 +20,8 @@ if test `id -u` != "0"; then
     exit 77
 fi
 
+srcdir=${srcdir:-.}
+
 ETCPAMCFG=/etc/pam.d/pam_oath1
 ETCUSRCFG=/etc/tst-pam_oath.users
 
@@ -38,6 +40,7 @@ fi
 echo "auth requisite pam_oath.so debug usersfile=$ETCUSRCFG window=20 digits=6" > $ETCPAMCFG
 echo "HOTP user1 - 00" > $ETCUSRCFG
 echo "HOTP user2 pw 00" >> $ETCUSRCFG
+echo "HOTP/T30 user3 - 00" >> $ETCUSRCFG
 
 if ! test -f $ETCPAMCFG; then
     echo "Writing to $ETCPAMCFG failed, skipping..."
@@ -49,8 +52,16 @@ if ! test -f $ETCUSRCFG; then
     exit 77
 fi
 
-./test-pam_oath-root
-rc=$?
+TSTAMP=`datefudge "2006-09-23" date -u +%s`
+if test "$TSTAMP" != "1158962400"; then
+    echo "Cannot fake timestamps, please install datefudge to check better."
+    ./test-pam_oath-root
+    rc=$?
+else
+    datefudge 2006-12-07 ./test-pam_oath-root user3
+    rc=$?
+    diff -ur $srcdir/expect.oath $ETCUSRCFG || rc=1
+fi
 
 rm -f $ETCPAMCFG $ETCUSRCFG
 

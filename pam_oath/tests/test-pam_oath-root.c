@@ -28,6 +28,30 @@
 
 static size_t loop;
 
+/*
+  Run 'oathtool 00 -w4' to generate:
+
+  328482
+  812658
+  073348
+  887919
+  320986
+
+  Run 'oathtool --totp --now=2006-12-07 00 -w10' to generate:
+
+  140852
+  299833
+  044488
+  584072
+  000706
+  512368
+  094088
+  755942
+  936706
+  369736
+  787399
+*/
+
 static const struct {
   const char *user;
   const char *passwd;
@@ -44,6 +68,13 @@ static const struct {
   { "user2", "pw812658", PAM_AUTH_ERR },
   { "user2", "bad887919", PAM_AUTH_ERR },
   { "user2", "pw887919", PAM_SUCCESS },
+  { "user3", "bad", PAM_AUTH_ERR },
+  { "user3", "299833", PAM_SUCCESS },
+  { "user3", "299833", PAM_AUTH_ERR },
+  { "user3", "140852", PAM_AUTH_ERR },
+  { "user3", "936706", PAM_SUCCESS },
+  { "user3", "512368", PAM_AUTH_ERR },
+  { "user3", "787399", PAM_SUCCESS },
 };
 
 static int
