@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.10.0 (unreleased)
+* Version 1.10.0 (released 2011-05-24)
 
 ** liboath: Added new TOTP validation functions that return search position.
 Before the absolute value of the search position was in the return
