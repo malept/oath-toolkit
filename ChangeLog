@@ -1,3 +1,54 @@
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.10.0.
+
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc/liboath-docs.sgml: Document new symbols in 1.10.0.
+
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_usersfile.c, pam_oath/tests/expect.oath,
+	pam_oath/tests/run-root-tests.sh,
+	pam_oath/tests/test-pam_oath-root.c: pam_oath: Test TOTPs too (for
+	root).
+
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/tests/expect.oath, liboath/tests/tst_usersfile.c,
+	liboath/tests/tst_usersfile.sh, liboath/usersfile.c: liboath:
+	Improve usersfile TOTP validation logic.
+
+2011-04-26  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_usersfile.c: Also attempt to replay a TOTP.
+
+2011-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, liboath/tests/Makefile.am, liboath/tests/expect.hotp,
+	liboath/tests/expect.oath, liboath/tests/tst_hotp_usersfile.c,
+	liboath/tests/tst_hotp_usersfile.sh, liboath/tests/tst_usersfile.c,
+	liboath/tests/tst_usersfile.sh, liboath/tests/users.hotp,
+	liboath/tests/users.oath, liboath/usersfile.c: Support TOTPs in
+	usersfile code.  Inspired by Rien Broekstra <rien@rename-it.nl> and Max Thoursie
+	<max@maxnet.se>.
+
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/liboath.map, liboath/oath.h.in,
+	liboath/tests/tst_totp_validate.c, liboath/totp.c: liboath: Add
+	oath_totp_validate2 and oath_totp_validate2_callback.
+
+2011-05-17  Simon Josefsson <simon@josefsson.org>
+
+	* README, doc/announce.txt, liboath/tests/tst_totp_algo.c,
+	liboath/tests/tst_totp_validate.c, liboath/totp.c: Reference RFC
+	6238 instead of draft.
+
+2011-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-05-04  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.8.2.
