@@ -12,6 +12,10 @@ and behave the same asoath_totp_validate and
 oath_totp_validate_callback, respectively, but they take another
 optional 'int*' parameter to store the search position.
 
+** liboath: Usersfile can now validate TOTP as well.
+Supported algorithms are HOTP/T30/D and HOTP/T60/D where D is 6, 7, or
+8 digits.  This means that the PAM module now supports TOTP as well.
+
 * Version 1.8.2 (released 2011-05-04)
 
 ** build: Fix conflict between ACLOCAL_AMFLAGS and AC_CONFIG_MACRO_DIR.

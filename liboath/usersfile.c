@@ -172,6 +172,20 @@ parse_usersfile (const char *username,
       if (totpstepsize == 0)
 	rc = oath_hotp_validate (secret, secret_length,
 				 start_moving_factor, window, otp);
+      else if (prev_otp)
+	{
+	  int prev_otp_pos, this_otp_pos, tmprc;
+	  rc = oath_totp_validate2 (secret, secret_length,
+				    time (NULL), totpstepsize, 0, window,
+				    &this_otp_pos, otp);
+	  if (rc < 0)
+	    return rc;
+	  tmprc = oath_totp_validate2 (secret, secret_length,
+				       time (NULL), totpstepsize, 0, window,
+				       &prev_otp_pos, prev_otp);
+	  if (tmprc >= 0 && prev_otp_pos >= this_otp_pos)
+	    return OATH_REPLAYED_OTP;
+	}
       else
 	rc = oath_totp_validate (secret, secret_length,
 				 time (NULL), totpstepsize, 0, window, otp);
@@ -342,13 +356,18 @@ update_usersfile (const char *usersfile,
  * @usersfile: string with user credential filename, in UsersFile format
  * @username: string with name of user
  * @otp: string with one-time password to authenticate
- * @window: how many future OTPs to search
+ * @window: how many past/future OTPs to search
  * @passwd: string with password, or NULL to disable password checking
  * @last_otp: output variable holding last successful authentication
  *
  * Authenticate user named @username with the one-time password @otp
  * and (optional) password @passwd.  Credentials are read (and
  * updated) from a text file named @usersfile.
+ *
+ * Note that for TOTP the usersfile will only record the last OTP and
+ * use that to make sure more recent OTPs have not been seen yet when
+ * validating a new OTP.  That logics relies on using the same search
+ * window for the same user.
  *
  * Returns: On successful validation, %OATH_OK is returned.  If the
  *   supplied @otp is the same as the last successfully authenticated

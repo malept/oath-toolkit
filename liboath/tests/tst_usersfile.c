@@ -125,6 +125,21 @@ main (void)
       return 1;
     }
 
+  /* Run 'oathtool --totp --now=2006-12-07 00 -w10' to generate:
+     140852
+     299833
+     044488
+     584072
+     000706
+     512368
+     094088
+     755942
+     936706
+     369736
+     787399
+   */
+
+  /* Test completely invalid OTP */
   rc = oath_authenticate_usersfile (CREDS,
 				    "eve", "386397", 0, "4711", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
@@ -133,6 +148,7 @@ main (void)
       return 1;
     }
 
+  /* Test the next OTP but search window = 0. */
   rc = oath_authenticate_usersfile (CREDS,
 				    "eve", "299833", 0, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
@@ -141,6 +157,7 @@ main (void)
       return 1;
     }
 
+  /* Test the next OTP with search window = 1. */
   rc = oath_authenticate_usersfile (CREDS,
 				    "eve", "299833", 1, NULL, &last_otp);
   if (rc != OATH_OK)
@@ -149,8 +166,45 @@ main (void)
       return 1;
     }
 
+  /* Test to replay last OTP. */
   rc = oath_authenticate_usersfile (CREDS,
 				    "eve", "299833", 1, NULL, &last_otp);
+  if (rc != OATH_REPLAYED_OTP)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  /* Test to replay previous OTP. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "140852", 1, NULL, &last_otp);
+  if (rc != OATH_REPLAYED_OTP)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  /* Try an OTP in the future but outside search window. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "369736", 1, NULL, &last_otp);
+  if (rc != OATH_INVALID_OTP)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  /* Try OTP in the future with good search window. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "369736", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile: %d\n", rc);
+      return 1;
+    }
+
+  /* Now try a rather old OTP within search window. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "eve", "000706", 10, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
       printf ("oath_authenticate_usersfile: %d\n", rc);
