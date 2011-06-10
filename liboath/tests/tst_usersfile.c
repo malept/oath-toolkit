@@ -102,12 +102,34 @@ main (void)
       printf ("oath_authenticate_usersfile: %d\n", rc);
       return 1;
     }
-  if (last_otp != 1260203142)
-    {
-      printf ("oath_authenticate_usersfile timestamp %d != 1260203142\n",
-	      last_otp);
-      return 1;
-    }
+  {
+    struct tm tm;
+    char *ts;
+    time_t expected_last_otp;
+
+    /* We need to convert local time 2009-12-07T17:25:42L into Unix
+       time.  The values depends on local timezone on host.  */
+
+    ts = strptime ("2009-12-07T17:25:42L", "%Y-%m-%dT%H:%M:%SL", &tm);
+    if (ts == NULL || *ts != '\0')
+      {
+	printf ("strptime failed\n");
+	return 1;
+      }
+    tm.tm_isdst = -1;
+    expected_last_otp = mktime (&tm);
+    if (expected_last_otp == (time_t) - 1)
+      {
+	printf ("mktime failed\n");
+	return 1;
+      }
+    if (last_otp != expected_last_otp)
+      {
+	printf ("oath_authenticate_usersfile timestamp %d != %d\n",
+		last_otp, expected_last_otp);
+	return 1;
+      }
+  }
 
   rc = oath_authenticate_usersfile (CREDS,
 				    "rms", "755224", 0, "4321", &last_otp);
