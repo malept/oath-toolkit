@@ -5,6 +5,8 @@ Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
 ** liboath: Fix self tests to work regardless of local time zone.
 
+** Update gnulib files.
+
 * Version 1.10.0 (released 2011-05-24)
 
 ** liboath: Added new TOTP validation functions that return search position.

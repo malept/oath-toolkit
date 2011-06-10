@@ -65,6 +65,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module stdio:
   # Code from module stdlib:
   # Code from module strerror:
+  # Code from module strerror-override:
   # Code from module string:
   # Code from module sys_time:
   # Code from module time:
@@ -134,7 +135,16 @@ gl_STDINT_H
 gl_STDIO_H
 gl_STDLIB_H
 gl_FUNC_STRERROR
+if test $REPLACE_STRERROR = 1; then
+  AC_LIBOBJ([strerror])
+fi
+gl_MODULE_INDICATOR([strerror])
 gl_STRING_MODULE_INDICATOR([strerror])
+AC_REQUIRE([gl_HEADER_ERRNO_H])
+if test -n "$ERRNO_H"; then
+  AC_LIBOBJ([strerror-override])
+  gl_PREREQ_SYS_H_WINSOCK2
+fi
 gl_HEADER_STRING_H
 gl_HEADER_SYS_TIME_H
 AC_PROG_MKDIR_P
@@ -336,6 +346,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdint.in.h
   lib/stdio.in.h
   lib/stdlib.in.h
+  lib/strerror-override.c
+  lib/strerror-override.h
   lib/strerror.c
   lib/string.in.h
   lib/sys_time.in.h
@@ -393,6 +405,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stdlib_h.m4
   m4/strerror.m4
   m4/string_h.m4
+  m4/sys_socket_h.m4
   m4/sys_time_h.m4
   m4/time_h.m4
   m4/time_r.m4

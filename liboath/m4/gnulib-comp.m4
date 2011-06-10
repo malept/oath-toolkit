@@ -41,9 +41,14 @@ AC_DEFUN([gl_EARLY],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module fclose:
   # Code from module fd-hook:
+  # Code from module fflush:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module fopen:
+  # Code from module fpurge:
   # Code from module freading:
   # Code from module fseeko:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module ftello:
   AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module getdelim:
   # Code from module getline:
@@ -57,6 +62,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module malloca:
   # Code from module manywarnings:
   # Code from module multiarch:
+  # Code from module nocrash:
   # Code from module pathmax:
   # Code from module readlink:
   # Code from module realloc-posix:
@@ -116,11 +122,18 @@ gl_DOUBLE_SLASH_ROOT
 gl_HEADER_ERRNO_H
 gl_FUNC_FCLOSE
 gl_STDIO_MODULE_INDICATOR([fclose])
+gl_FUNC_FFLUSH
+gl_MODULE_INDICATOR([fflush])
+gl_STDIO_MODULE_INDICATOR([fflush])
 gl_FUNC_FOPEN
 gl_STDIO_MODULE_INDICATOR([fopen])
+gl_FUNC_FPURGE
+gl_STDIO_MODULE_INDICATOR([fpurge])
 gl_FUNC_FREADING
 gl_FUNC_FSEEKO
 gl_STDIO_MODULE_INDICATOR([fseeko])
+gl_FUNC_FTELLO
+gl_STDIO_MODULE_INDICATOR([ftello])
 gl_FUNC_GETDELIM
 gl_STDIO_MODULE_INDICATOR([getdelim])
 gl_FUNC_GETLINE
@@ -318,10 +331,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fclose.c
   lib/fd-hook.c
   lib/fd-hook.h
+  lib/fflush.c
   lib/fopen.c
+  lib/fpurge.c
   lib/freading.c
   lib/freading.h
   lib/fseeko.c
+  lib/ftello.c
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
   lib/gc.h
@@ -372,9 +388,12 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/errno_h.m4
   m4/extensions.m4
   m4/fclose.m4
+  m4/fflush.m4
   m4/fopen.m4
+  m4/fpurge.m4
   m4/freading.m4
   m4/fseeko.m4
+  m4/ftello.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4
   m4/getdelim.m4
@@ -394,6 +413,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/manywarnings.m4
   m4/memxor.m4
   m4/multiarch.m4
+  m4/nocrash.m4
   m4/onceonly.m4
   m4/pathmax.m4
   m4/readlink.m4

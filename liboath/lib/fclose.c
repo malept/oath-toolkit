@@ -32,6 +32,7 @@ rpl_fclose (FILE *fp)
 {
   int saved_errno = 0;
   int fd;
+  int result = 0;
 
   /* Don't change behavior on memstreams.  */
   fd = fileno (fp);
@@ -45,15 +46,39 @@ rpl_fclose (FILE *fp)
       && fflush (fp))
     saved_errno = errno;
 
+  /* fclose() calls close(), but we need to also invoke all hooks that our
+     overridden close() function invokes.  See lib/close.c.  */
+#if WINDOWS_SOCKETS
+  /* Call the overridden close(), then the original fclose().
+     Note about multithread-safety: There is a race condition where some
+     other thread could open fd between our close and fclose.  */
   if (close (fd) < 0 && saved_errno == 0)
     saved_errno = errno;
 
-  fclose (fp); /* will fail with errno = EBADF */
+  fclose (fp); /* will fail with errno = EBADF, if we did not lose a race */
+
+#else /* !WINDOWS_SOCKETS */
+  /* Call fclose() and invoke all hooks of the overridden close().  */
+
+# if REPLACE_FCHDIR
+  /* Note about multithread-safety: There is a race condition here as well.
+     Some other thread could open fd between our calls to fclose and
+     _gl_unregister_fd.  */
+  result = fclose (fp);
+  if (result == 0)
+    _gl_unregister_fd (fd);
+# else
+  /* No race condition here.  */
+  result = fclose (fp);
+# endif
+
+#endif /* !WINDOWS_SOCKETS */
 
   if (saved_errno != 0)
     {
       errno = saved_errno;
-      return EOF;
+      result = EOF;
     }
-  return 0;
+
+  return result;
 }
