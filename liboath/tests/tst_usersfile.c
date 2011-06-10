@@ -51,7 +51,7 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_NO_SUCH_FILE)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[1]: %d\n", rc);
       return 1;
     }
 
@@ -59,7 +59,7 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[2]: %d\n", rc);
       return 1;
     }
 
@@ -67,7 +67,7 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[3]: %d\n", rc);
       return 1;
     }
 
@@ -75,7 +75,7 @@ main (void)
 				    0, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[4]: %d\n", rc);
       return 1;
     }
 
@@ -83,7 +83,7 @@ main (void)
 				    1, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[5]: %d\n", rc);
       return 1;
     }
 
@@ -91,7 +91,7 @@ main (void)
 				    1, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[6]: %d\n", rc);
       return 1;
     }
 
@@ -99,7 +99,7 @@ main (void)
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[7]: %d\n", rc);
       return 1;
     }
   {
@@ -135,7 +135,7 @@ main (void)
 				    "rms", "755224", 0, "4321", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[8]: %d\n", rc);
       return 1;
     }
 
@@ -143,7 +143,7 @@ main (void)
 				    "rms", "436521", 10, "6767", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[9]: %d\n", rc);
       return 1;
     }
 
@@ -168,7 +168,7 @@ main (void)
 				    "eve", "386397", 0, "4711", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[10]: %d\n", rc);
       return 1;
     }
 
@@ -177,7 +177,7 @@ main (void)
 				    "eve", "299833", 0, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[11]: %d\n", rc);
       return 1;
     }
 
@@ -186,7 +186,7 @@ main (void)
 				    "eve", "299833", 1, NULL, &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[12]: %d\n", rc);
       return 1;
     }
 
@@ -195,7 +195,7 @@ main (void)
 				    "eve", "299833", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[13]: %d\n", rc);
       return 1;
     }
 
@@ -204,7 +204,7 @@ main (void)
 				    "eve", "140852", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[14]: %d\n", rc);
       return 1;
     }
 
@@ -213,7 +213,7 @@ main (void)
 				    "eve", "369736", 1, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[15]: %d\n", rc);
       return 1;
     }
 
@@ -222,7 +222,7 @@ main (void)
 				    "eve", "369736", 10, NULL, &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[16]: %d\n", rc);
       return 1;
     }
 
@@ -231,7 +231,7 @@ main (void)
 				    "eve", "000706", 10, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile: %d\n", rc);
+      printf ("oath_authenticate_usersfile[17]: %d\n", rc);
       return 1;
     }
 
