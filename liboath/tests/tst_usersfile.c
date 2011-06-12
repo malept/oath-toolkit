@@ -102,34 +102,12 @@ main (void)
       printf ("oath_authenticate_usersfile[7]: %d\n", rc);
       return 1;
     }
-  {
-    struct tm tm;
-    char *ts;
-    time_t expected_last_otp;
-
-    /* We need to convert local time 2009-12-07T17:25:42L into Unix
-       time.  The values depends on local timezone on host.  */
-
-    ts = strptime ("2009-12-07T17:25:42L", "%Y-%m-%dT%H:%M:%SL", &tm);
-    if (ts == NULL || *ts != '\0')
-      {
-	printf ("strptime failed\n");
-	return 1;
-      }
-    tm.tm_isdst = -1;
-    expected_last_otp = mktime (&tm);
-    if (expected_last_otp == (time_t) - 1)
-      {
-	printf ("mktime failed\n");
-	return 1;
-      }
-    if (last_otp != expected_last_otp)
-      {
-	printf ("oath_authenticate_usersfile timestamp %d != %d\n",
-		last_otp, expected_last_otp);
-	return 1;
-      }
-  }
+  if (last_otp != 1260206742)
+    {
+      printf ("oath_authenticate_usersfile timestamp %d != 1260203142\n",
+	      last_otp);
+      return 1;
+    }
 
   rc = oath_authenticate_usersfile (CREDS,
 				    "rms", "755224", 0, "4321", &last_otp);
@@ -148,19 +126,19 @@ main (void)
     }
 
   /*
-    Run 'oathtool --totp --now=2006-12-07 00 -w10' to generate:
+    Run 'TZ=UTC oathtool --totp --now=2006-12-07 00 -w10' to generate:
 
-    140852
-    299833
-    044488
-    584072
-    000706
-    512368
-    094088
-    755942
-    936706
-    369736
-    787399
+    963013
+    068866
+    734019
+    038980
+    630208
+    533058
+    042289
+    046988
+    047407
+    892423
+    619507
    */
 
   /* Test completely invalid OTP */
@@ -174,7 +152,7 @@ main (void)
 
   /* Test the next OTP but search window = 0. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "299833", 0, NULL, &last_otp);
+				    "eve", "068866", 0, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
       printf ("oath_authenticate_usersfile[11]: %d\n", rc);
@@ -183,7 +161,7 @@ main (void)
 
   /* Test the next OTP with search window = 1. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "299833", 1, NULL, &last_otp);
+				    "eve", "068866", 1, NULL, &last_otp);
   if (rc != OATH_OK)
     {
       printf ("oath_authenticate_usersfile[12]: %d\n", rc);
@@ -192,7 +170,7 @@ main (void)
 
   /* Test to replay last OTP. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "299833", 1, NULL, &last_otp);
+				    "eve", "068866", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
       printf ("oath_authenticate_usersfile[13]: %d\n", rc);
@@ -201,7 +179,7 @@ main (void)
 
   /* Test to replay previous OTP. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "140852", 1, NULL, &last_otp);
+				    "eve", "963013", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
       printf ("oath_authenticate_usersfile[14]: %d\n", rc);
@@ -210,7 +188,7 @@ main (void)
 
   /* Try an OTP in the future but outside search window. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "369736", 1, NULL, &last_otp);
+				    "eve", "892423", 1, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
       printf ("oath_authenticate_usersfile[15]: %d\n", rc);
@@ -219,7 +197,7 @@ main (void)
 
   /* Try OTP in the future with good search window. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "369736", 10, NULL, &last_otp);
+				    "eve", "892423", 10, NULL, &last_otp);
   if (rc != OATH_OK)
     {
       printf ("oath_authenticate_usersfile[16]: %d\n", rc);
@@ -228,7 +206,7 @@ main (void)
 
   /* Now try a rather old OTP within search window. */
   rc = oath_authenticate_usersfile (CREDS,
-				    "eve", "000706", 10, NULL, &last_otp);
+				    "eve", "630208", 10, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
       printf ("oath_authenticate_usersfile[17]: %d\n", rc);

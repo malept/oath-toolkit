@@ -21,9 +21,12 @@ srcdir=${srcdir:-.}
 
 cp $srcdir/users.oath tmp.oath
 
+TZ=UTC
+export TZ
+
 TSTAMP=`datefudge "2006-09-23" date -u +%s`
-if test "$TSTAMP" != "1158962400"; then
-    echo "Cannot fake timestamps, please install datefudge to check better."
+if test "$TSTAMP" != "1158969600"; then
+    echo "Could not fake timestamps with datefudge."
     ./tst_usersfile$EXEEXT
     rc=$?
 else
