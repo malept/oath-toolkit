@@ -1,3 +1,62 @@
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.10.1.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/expect.oath, liboath/tests/tst_usersfile.c,
+	liboath/tests/tst_usersfile.sh: liboath: Make self-test use TZ=UTC
+	instead, to use same TOTPs.
+
+2011-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_usersfile.c: liboath: Improve self test error
+	messages.
+
+2011-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, build-aux/vc-list-files, gl/Makefile.am,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-common.m4,
+	liboath/lib/Makefile.am, liboath/lib/errno.in.h,
+	liboath/lib/fclose.c, liboath/lib/fflush.c, liboath/lib/fpurge.c,
+	liboath/lib/ftello.c, liboath/lib/gc.h, liboath/lib/stddef.in.h,
+	liboath/lib/stdint.in.h, liboath/lib/stdio.in.h,
+	liboath/lib/stdlib.in.h, liboath/lib/string.in.h,
+	liboath/lib/sys_stat.in.h, liboath/lib/time.in.h,
+	liboath/lib/unistd.in.h, liboath/lib/verify.h,
+	liboath/m4/canonicalize.m4, liboath/m4/fclose.m4,
+	liboath/m4/fflush.m4, liboath/m4/fpurge.m4, liboath/m4/fseeko.m4,
+	liboath/m4/ftello.m4, liboath/m4/gc.m4, liboath/m4/gnulib-cache.m4,
+	liboath/m4/gnulib-common.m4, liboath/m4/gnulib-comp.m4,
+	liboath/m4/nocrash.m4, liboath/m4/readlink.m4,
+	liboath/m4/stdint.m4, liboath/m4/unistd_h.m4,
+	liboath/m4/warnings.m4, maint.mk, oathtool/lib/Makefile.am,
+	oathtool/lib/errno.in.h, oathtool/lib/error.c,
+	oathtool/lib/float.in.h, oathtool/lib/intprops.h,
+	oathtool/lib/parse-datetime.y, oathtool/lib/setenv.c,
+	oathtool/lib/stdarg.in.h, oathtool/lib/stddef.in.h,
+	oathtool/lib/stdint.in.h, oathtool/lib/stdio.in.h,
+	oathtool/lib/stdlib.in.h, oathtool/lib/strerror-override.c,
+	oathtool/lib/strerror-override.h, oathtool/lib/strerror.c,
+	oathtool/lib/string.in.h, oathtool/lib/sys_time.in.h,
+	oathtool/lib/time.in.h, oathtool/lib/unistd.in.h,
+	oathtool/lib/unsetenv.c, oathtool/lib/verify.h,
+	oathtool/lib/wchar.in.h, oathtool/m4/gnulib-cache.m4,
+	oathtool/m4/gnulib-common.m4, oathtool/m4/gnulib-comp.m4,
+	oathtool/m4/mktime.m4, oathtool/m4/setenv.m4,
+	oathtool/m4/stdint.m4, oathtool/m4/strerror.m4,
+	oathtool/m4/sys_socket_h.m4, oathtool/m4/unistd_h.m4,
+	oathtool/m4/wchar_h.m4: Update gnulib files.
+
+2011-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/tests/tst_usersfile.c: liboath: Fix self tests to
+	work regardless of local time zone.
+
+2011-05-24  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2011-05-24  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.10.0.
