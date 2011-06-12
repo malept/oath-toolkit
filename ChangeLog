@@ -1,5 +1,43 @@
 2011-06-12  Simon Josefsson <simon@josefsson.org>
 
+	* cfg.mk: Fix release targets.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/oath.h.in: Fix typo.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.10.2.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Rewrite release rules.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/tests/tst_usersfile.sh: liboath: Fix self tests to
+	cope with slow build hosts.  Reported by Christoph Egger <christoph@debian.org> in
+	<http://bugs.debian.org/630222>.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.1.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.0.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.8.2.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-06-12  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.10.1.
 
 2011-06-12  Simon Josefsson <simon@josefsson.org>
