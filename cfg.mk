@@ -132,6 +132,8 @@ release-upload-www: man-upload gtkdoc-upload coverage-upload clang-upload
 release-upload-ftp:
 	git push
 	git push --tags
+	gpg -b $(distdir).tar.gz
+	gpg --verify $(distdir).tar.gz.sig
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 	scp $(distdir).tar.gz $(distdir).tar.gz.sig jas@dl.sv.nongnu.org:/releases/oath-toolkit/
 
