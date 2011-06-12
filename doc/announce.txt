@@ -1,26 +1,18 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.10.0
+Subject: OATH Toolkit 1.10.1
 <#part sign=pgpmime>
-Finally there is TOTP support in the PAM module...  I have added self
-tests but not done any extensive testing.  Please pick it apart!
+The TOTP code introduced some new time zone problems in the self tests,
+this should take care of that.  I will now try to get this into Debian,
+so it has a more modern version.
 
 Happy hacking,
 Simon
 
-* Version 1.10.0 (released 2011-05-24)
+* Version 1.10.1 (released 2011-06-12)
 
-** liboath: Added new TOTP validation functions that return search position.
-Before the absolute value of the search position was in the return
-code of the TOTP validate function, but it seems we need to know
-whether the search position was before or after the current time.  The
-new functions are oath_totp_validate2 and oath_totp_validate2_callback
-and behave the same asoath_totp_validate and
-oath_totp_validate_callback, respectively, but they take another
-optional 'int*' parameter to store the search position.
+** liboath: Fix self tests to work regardless of local time zone.
 
-** liboath: Usersfile can now validate TOTP as well.
-Supported algorithms are HOTP/T30/D and HOTP/T60/D where D is 6, 7, or
-8 digits.  This means that the PAM module now supports TOTP as well.
+** Update gnulib files.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -54,8 +46,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.0.tar.gz (1.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.0.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.1.tar.gz (1.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.1.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -71,9 +63,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-b3da003d2e4c8e4ae7d5c8ad6f000b2452f185c8  oath-toolkit-1.10.0.tar.gz
+8fe98ffd676c893285aaa09534a2d08b30019367  oath-toolkit-1.10.1.tar.gz
 
-98974eceb6a5de50a7c6d378669ace49894897509e815898d04ee022  oath-toolkit-1.10.0.tar.gz
+b939106757ebdf9e8ced1a6d5c663fe89e311ef19b0357b8f88d923e  oath-toolkit-1.10.1.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
