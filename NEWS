@@ -1,6 +1,12 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.10.2 (unreleased)
+
+** liboath: Fix self tests to cope with slow build hosts.
+Reported by Christoph Egger <christoph@debian.org> in
+<http://bugs.debian.org/630222>.
+
 * Version 1.10.1 (released 2011-06-12)
 
 ** liboath: Fix self tests to work regardless of local time zone.

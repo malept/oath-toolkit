@@ -32,9 +32,10 @@ if test "$TSTAMP" != "1158969600"; then
 else
     datefudge 2006-12-07 ./tst_usersfile$EXEEXT
     rc=$?
-    diff -ur $srcdir/expect.oath tmp.oath || rc=1
+    sed 's/2006-12-07T00:00:0.L/2006-12-07T00:00:00L/g' < tmp.oath > tmp2.oath
+    diff -ur $srcdir/expect.oath tmp2.oath || rc=1
 fi
 
-rm -f tmp.oath
+rm -f tmp.oath tmp2.oath
 
 exit $rc
