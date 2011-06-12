@@ -97,23 +97,9 @@ tarball:
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 
-gendoc-copy:
-	cd doc && ../build-aux/gendocs.sh \
-		--html "--css-include=texinfo.css" \
-		-o ../$(htmldir)/manual/ $(PACKAGE) "$(PACKAGE_NAME)"
-
-gendoc-upload:
-	cd $(htmldir) && \
-		cvs add manual || true && \
-		cvs add manual/html_node || true && \
-		cvs add -kb manual/*.gz manual/*.pdf || true && \
-		cvs add manual/*.txt manual/*.html \
-			manual/html_node/*.html || true && \
-		cvs commit -m "Update." manual/
-
 gtkdoc-copy:
 	mkdir -p $(htmldir)/reference/
-	cp -v liboath/gtk-doc/$(PACKAGE).pdf \
+	cp -v liboath/gtk-doc/liboath.pdf \
 		liboath/gtk-doc/html/*.html \
 		liboath/gtk-doc/html/*.png \
 		liboath/gtk-doc/html/*.devhelp \
@@ -139,9 +125,9 @@ source:
 	-git commit -m Generated. ChangeLog
 	git tag -u b565716f! -m $(VERSION) $(PACKAGE)-$(VERSION)
 
-release-check: syntax-check tarball man-copy gendoc-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
+release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
 
-release-upload-www: man-upload gendoc-upload gtkdoc-upload coverage-upload clang-upload
+release-upload-www: man-upload gtkdoc-upload coverage-upload clang-upload
 
 release-upload-ftp:
 	git push
