@@ -20,85 +20,133 @@ ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := buildit
 endif
 
-# SYNTAX CHECK
+buildit:
+	test -f configure || autoreconf --force --install
+	test -f Makefile || ./configure $(CFGFLAGS)
+	make
+
+# syntax-check
 VC_LIST_ALWAYS_EXCLUDE_REGEX = ^maint.mk|(oathtool|liboath)/(m4|lib)/.*$$
-# Project wide exceptions on philosophical grounds.
+# syntax-check: Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
 	sc_prohibit_strcmp
-# Re-add when we have translation.
+# syntax-check: Re-add when we have translation.
 local-checks-to-skip += sc_unmarked_diagnostics sc_bindtextdomain
-# Revisit these soon.
+# syntax-check: Revisit these soon.
 local-checks-to-skip += sc_prohibit_atoi_atof
-
-# Explicit syntax-check exceptions.
+# syntax-check: Explicit syntax-check exceptions.
 exclude_file_name_regexp--sc_program_name = ^liboath/tests/|pam_oath/tests/
 exclude_file_name_regexp--sc_texinfo_acronym = ^oathtool/doc/parse-datetime.texi
 exclude_file_name_regexp--sc_error_message_uppercase = ^oathtool/oathtool.c
 
 update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=1
 
-buildit:
-	test -f configure || autoreconf --force --install
-	test -f Makefile || ./configure $(CFGFLAGS)
-	make
-
 glimport:
 	gnulib-tool --add-import
 	cd liboath && gnulib-tool --add-import
 	cd oathtool && gnulib-tool --add-import
 
-ChangeLog:
-	git2cl > ChangeLog
-	cat .clcopying >> ChangeLog
+# Release
 
-# Coverage.
+tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
+htmldir = ../www-$(PACKAGE)
+
 coverage-my:
 	$(MAKE) coverage WERROR_CFLAGS= VALGRIND=
-coverage-web:
-	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
-	cp -rv $(COVERAGE_OUT)/* $(htmldir)/coverage/
-coverage-web-upload:
-	cd $(htmldir) && \
-		cvs commit -m "Update." coverage
 
-# Clang analyzis.
+coverage-copy:
+	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
+	mkdir -p $(htmldir)/coverage/
+	cp -rv $(COVERAGE_OUT)/* $(htmldir)/coverage/
+
+coverage-upload:
+	cd $(htmldir) && \
+	find coverage -type d -! -name CVS -! -name '.' \
+		-exec cvs add {} \; && \
+	find coverage -type d -! -name CVS -! -name '.' \
+		-exec sh -c "cvs add -kb {}/*.png" \; && \
+	find coverage -type d -! -name CVS -! -name '.' \
+		-exec sh -c "cvs add {}/*.html" \; && \
+	cvs add coverage/$(PACKAGE).info coverage/gcov.css || true && \
+	cvs commit -m "Update." coverage
+
 clang:
 	make clean
 	scan-build ./configure
 	rm -rf scan.tmp
 	scan-build -o scan.tmp make
-clang-web:
+
+clang-copy:
 	rm -fv `find $(htmldir)/clang-analyzer -type f | grep -v CVS`
+	mkdir -p $(htmldir)/clang-analyzer/
 	cp -rv scan.tmp/*/* $(htmldir)/clang-analyzer/
-clang-web-upload:
+
+clang-upload:
 	cd $(htmldir) && \
-		cvs add clang-analyzer/*.html || true && \
+		cvs add clang-analyzer || true && \
+		cvs add clang-analyzer/*.css clang-analyzer/*.js \
+			clang-analyzer/*.html || true && \
 		cvs commit -m "Update." clang-analyzer
 
-tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
-htmldir = ../www-$(PACKAGE)
+ChangeLog:
+	git2cl > ChangeLog
+	cat .clcopying >> ChangeLog
 
-release: syntax-check prepare upload web upload-web
-
-prepare:
+tarball:
 	test `git describe` = `git tag -l $(tag)`
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
-	gpg -b $(distdir).tar.gz
-	gpg --verify $(distdir).tar.gz.sig
-	git commit -m Generated. ChangeLog
-	git tag -f -u b565716f! -m $(VERSION) $(tag)
 
-upload:
+gendoc-copy:
+	cd doc && ../build-aux/gendocs.sh \
+		--html "--css-include=texinfo.css" \
+		-o ../$(htmldir)/manual/ $(PACKAGE) "$(PACKAGE_NAME)"
+
+gendoc-upload:
+	cd $(htmldir) && \
+		cvs add manual || true && \
+		cvs add manual/html_node || true && \
+		cvs add -kb manual/*.gz manual/*.pdf || true && \
+		cvs add manual/*.txt manual/*.html \
+			manual/html_node/*.html || true && \
+		cvs commit -m "Update." manual/
+
+gtkdoc-copy:
+	mkdir -p $(htmldir)/reference/
+	cp -v liboath/gtk-doc/$(PACKAGE).pdf \
+		liboath/gtk-doc/html/*.html \
+		liboath/gtk-doc/html/*.png \
+		liboath/gtk-doc/html/*.devhelp \
+		liboath/gtk-doc/html/*.css \
+		$(htmldir)/reference/
+
+gtkdoc-upload:
+	cd $(htmldir) && \
+		cvs add reference || true && \
+		cvs add -kb reference/*.png reference/*.pdf || true && \
+		cvs add reference/*.html reference/*.css \
+			reference/*.devhelp || true && \
+		cvs commit -m "Update." reference/
+
+man-copy:
+	groff -man -T html oathtool/oathtool.1  > $(htmldir)/man-oathtool.html
+
+man-upload:
+	cd $(htmldir) && \
+		cvs commit -m "Update." man-oathtool.html
+
+source:
+	-git commit -m Generated. ChangeLog
+	git tag -u b565716f! -m $(VERSION) $(PACKAGE)-$(VERSION)
+
+release-check: syntax-check tarball man-copy gendoc-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
+
+release-upload-www: man-upload gendoc-upload gtkdoc-upload coverage-upload clang-upload
+
+release-upload-ftp:
 	git push
 	git push --tags
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 	scp $(distdir).tar.gz $(distdir).tar.gz.sig jas@dl.sv.nongnu.org:/releases/oath-toolkit/
 
-web:
-	groff -man -T html oathtool/oathtool.1  > $(htmldir)/man-oathtool.html
-	cp -v liboath/gtk-doc/html/*.html liboath/gtk-doc/html/*.png liboath/gtk-doc/html/*.devhelp liboath/gtk-doc/html/*.css $(htmldir)/reference/
-
-upload-web:
-	cd $(htmldir) && \
-		cvs commit -m "Update." man-oathtool.html reference/
+release: release-check release-upload-www source release-upload-ftp
