@@ -1,22 +1,22 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.8.1
+Subject: OATH Toolkit 1.8.2
 <#part sign=pgpmime>
-Brown paper bag release to fix 'autoreconf -i' in tarball...
+This fixes libtoolize in tarball...
 
 Happy hacking,
 Simon
 
 New in this release:
 
-** build: Make autoreconf work again.
-Reported by Christian Hesse <list@eworm.de>.
+** build: Fix conflict between ACLOCAL_AMFLAGS and AC_CONFIG_MACRO_DIR.
+Reported by Mitya <mitya@cargosoft.ru>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
 tool and a PAM module.  Supported technologies include the event-based
-HOTP algorithm (RFC4226) and the time-based TOTP algorithm (RFC6238).
-OATH stands for Open AuTHentication, which is the organization that
-specify the algorithms.
+HOTP algorithm (RFC 4226) and the time-based TOTP algorithm
+(draft-mraihi-totp-timebased-07).  OATH stands for Open
+AuTHentication, which is the organization that specify the algorithms.
 
 The components included in the package is:
 
@@ -43,8 +43,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.1.tar.gz (1.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.1.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.2.tar.gz (1.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.8.2.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -60,9 +60,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-34ed57b7095d90ecbab2a31c0c04b913c820a2a4  oath-toolkit-1.8.1.tar.gz
+69fd362190e43d697d54872b4f8d68e499b8ee52  oath-toolkit-1.8.2.tar.gz
 
-ecdeabc78f5650e017bc07376b4051cf530c324f29870d5607c76a9a  oath-toolkit-1.8.1.tar.gz
+ac25f88ec907884b67b0bfa2a45580509f700e03f657c814b1697f51  oath-toolkit-1.8.2.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
