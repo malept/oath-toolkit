@@ -123,7 +123,7 @@ man-upload:
 
 source:
 	-git commit -m Generated. ChangeLog
-	git tag -u b565716f! -m $(VERSION) $(PACKAGE)-$(VERSION)
+	git tag -u b565716f! -m $(VERSION) $(tag)
 
 release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
 
