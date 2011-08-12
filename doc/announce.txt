@@ -1,18 +1,18 @@
 To: oath-toolkit-help@nongnu.org
 Subject: OATH Toolkit 1.10.1
 <#part sign=pgpmime>
-The TOTP code introduced some new time zone problems in the self tests,
-this should take care of that.  I will now try to get this into Debian,
-so it has a more modern version.
+More TOTP-induced timing issues in self checks, discovered by Debian
+build bots...  most Debian architectures has 1.10.1 already, soon they
+will all have 1.10.2.
 
 Happy hacking,
 Simon
 
-* Version 1.10.1 (released 2011-06-12)
+* Version 1.10.2 (released 2011-06-12)
 
-** liboath: Fix self tests to work regardless of local time zone.
-
-** Update gnulib files.
+** liboath: Fix self tests to cope with slow build hosts.
+Reported by Christoph Egger <christoph@debian.org> in
+<http://bugs.debian.org/630222>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -46,8 +46,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.1.tar.gz (1.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.1.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.2.tar.gz (1.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.2.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -63,9 +63,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-8fe98ffd676c893285aaa09534a2d08b30019367  oath-toolkit-1.10.1.tar.gz
+899b6435011c9bd92be471ce2b5d252199c50289  oath-toolkit-1.10.2.tar.gz
 
-b939106757ebdf9e8ced1a6d5c663fe89e311ef19b0357b8f88d923e  oath-toolkit-1.10.1.tar.gz
+1e99cbe431d8e6645230313a7c775fb7f3eaa20de4253ea04399d514  oath-toolkit-1.10.2.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
