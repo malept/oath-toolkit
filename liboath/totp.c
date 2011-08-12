@@ -136,8 +136,10 @@ oath_totp_validate (const char *secret,
  *
  * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
  *
- * The function should behave like strcmp, i.e., only ever return 0 on
- * matches.
+ * The function should be similar to strcmp in that it return 0 only
+ * on matches.  It differs by permitting use of negative return codes
+ * as indication of internal failures in the callback.  Positive
+ * values indicate OTP mismatch.
  *
  * This callback interface is useful when you cannot compare OTPs
  * directly using normal strcmp, but instead for example only have a
@@ -233,8 +235,10 @@ oath_totp_validate2 (const char *secret,
  *
  * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
  *
- * The function should behave like strcmp, i.e., only ever return 0 on
- * matches.
+ * The function should be similar to strcmp in that it return 0 only
+ * on matches.  It differs by permitting use of negative return codes
+ * as indication of internal failures in the callback.  Positive
+ * values indicate OTP mismatch.
  *
  * This callback interface is useful when you cannot compare OTPs
  * directly using normal strcmp, but instead for example only have a
@@ -284,12 +288,14 @@ oath_totp_validate2_callback (const char *secret,
       if (rc != OATH_OK)
 	return rc;
 
-      if (strcmp_otp (strcmp_handle, tmp_otp) == 0)
+      if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	{
 	  if (otp_pos)
 	    *otp_pos = iter;
 	  return iter;
 	}
+      if (rc < 0)
+	return OATH_STRCMP_ERROR;
 
       if (iter > 0)
 	{

@@ -150,8 +150,10 @@ oath_hotp_generate (const char *secret,
  *
  * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
  *
- * The function should behave like strcmp, i.e., only ever return 0 on
- * matches.
+ * The function should be similar to strcmp in that it return 0 only
+ * on matches.  It differs by permitting use of negative return codes
+ * as indication of internal failures in the callback.  Positive
+ * values indicate OTP mismatch.
  *
  * This callback interface is useful when you cannot compare OTPs
  * directly using normal strcmp, but instead for example only have a
