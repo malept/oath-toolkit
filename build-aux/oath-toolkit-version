@@ -1,4 +1,6 @@
-# Copyright (C) 2009-2011 Simon Josefsson
+#!/bin/sh
+
+# Copyright (C) 2011 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,28 +15,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([oathtool],
-  m4_esyscmd([../build-aux/oath-toolkit-version ../.tarball-version]),
-  [oath-toolkit-help@nongnu.org],,
-  [http://www.nongnu.org/oath-toolkit/])
-
-AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AM_SILENT_RULES([yes])
-
-AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
-
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_CC
-gl_EARLY
-AC_PROG_LIBTOOL
-gl_INIT
-
-AC_CONFIG_FILES([
-  Makefile
-  lib/Makefile
-  tests/Makefile
-])
-AC_OUTPUT
+`dirname $0`/git-version-gen $1 \
+	 's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)\(-\([0-9]*\)\)\?.*/v\1.\2.\3.\5/;s/\.$//'
