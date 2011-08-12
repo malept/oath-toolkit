@@ -1,6 +1,12 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.10.4 (unreleased)
+
+** liboath: Fix build so that OATH_VERSION_NUMBER is actually defined.
+It was an empty value in the last release due to a bug in the build
+scripts.
+
 * Version 1.10.3 (released 2011-08-12)
 
 ** liboath: Allow strcmp callback to return negative to signal errors.
