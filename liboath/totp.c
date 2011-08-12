@@ -302,7 +302,7 @@ oath_totp_validate2_callback (const char *secret,
 	  if (rc != OATH_OK)
 	    return rc;
 
-	  if ((rc = (strcmp_otp (strcmp_handle, tmp_otp)) == 0)
+	  if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	    {
 	      if (otp_pos)
 		*otp_pos = -iter;
