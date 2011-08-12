@@ -1,6 +1,15 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2011 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.10.3 (unreleased)
+
+** liboath: Allow strcmp callback to return negative to signal errors.
+Patch by Daniel Pocock <daniel@pocock.com.au>.
+
+** Fix bugs in build scripts for generating version numbers.
+
+** Update gnulib files.
+
 * Version 1.10.2 (released 2011-06-12)
 
 ** liboath: Fix self tests to cope with slow build hosts.
