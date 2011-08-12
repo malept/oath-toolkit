@@ -25,10 +25,8 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
-  AC_REQUIRE([AC_PROG_RANLIB])
+  AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
-  # Code from module arg-nonnull:
-  # Code from module c++defs:
   # Code from module c-ctype:
   # Code from module clock-time:
   # Code from module environ:
@@ -53,6 +51,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module progname:
   # Code from module setenv:
   # Code from module size_max:
+  # Code from module snippet/_Noreturn:
+  # Code from module snippet/arg-nonnull:
+  # Code from module snippet/c++defs:
+  # Code from module snippet/warn-on-use:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
@@ -77,7 +79,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module vasprintf:
   # Code from module verify:
   # Code from module version-etc:
-  # Code from module warn-on-use:
   # Code from module wchar:
   # Code from module xalloc:
   # Code from module xalloc-die:
@@ -105,20 +106,39 @@ gl_ENVIRON
 gl_UNISTD_MODULE_INDICATOR([environ])
 gl_HEADER_ERRNO_H
 gl_ERROR
+if test $ac_cv_lib_error_at_line = no; then
+  AC_LIBOBJ([error])
+  gl_PREREQ_ERROR
+fi
 m4_ifdef([AM_XGETTEXT_OPTION],
   [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
    AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
 gl_FLOAT_H
+if test $REPLACE_FLOAT_LDBL = 1; then
+  AC_LIBOBJ([float])
+fi
 AC_SUBST([LIBINTL])
 AC_SUBST([LTLIBINTL])
 gl_GETTIME
 gl_FUNC_GETTIMEOFDAY
+if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
+  AC_LIBOBJ([gettimeofday])
+  gl_PREREQ_GETTIMEOFDAY
+fi
 gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
 gl_INLINE
 gl_MALLOCA
 gl_FUNC_MEMCHR
+if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  AC_LIBOBJ([memchr])
+  gl_PREREQ_MEMCHR
+fi
 gl_STRING_MODULE_INDICATOR([memchr])
 gl_FUNC_MKTIME
+if test $REPLACE_MKTIME = 1; then
+  AC_LIBOBJ([mktime])
+  gl_PREREQ_MKTIME
+fi
 gl_TIME_MODULE_INDICATOR([mktime])
 gl_MULTIARCH
 gl_PARSE_DATETIME
@@ -126,6 +146,9 @@ AC_REQUIRE([AC_C_INLINE])
 AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
 AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
 gl_FUNC_SETENV
+if test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1; then
+  AC_LIBOBJ([setenv])
+fi
 gl_STDLIB_MODULE_INDICATOR([setenv])
 gl_SIZE_MAX
 gl_STDARG_H
@@ -141,7 +164,8 @@ fi
 gl_MODULE_INDICATOR([strerror])
 gl_STRING_MODULE_INDICATOR([strerror])
 AC_REQUIRE([gl_HEADER_ERRNO_H])
-if test -n "$ERRNO_H"; then
+AC_REQUIRE([gl_FUNC_STRERROR_0])
+if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
   AC_LIBOBJ([strerror-override])
   gl_PREREQ_SYS_H_WINSOCK2
 fi
@@ -150,10 +174,18 @@ gl_HEADER_SYS_TIME_H
 AC_PROG_MKDIR_P
 gl_HEADER_TIME_H
 gl_TIME_R
+if test $HAVE_LOCALTIME_R = 0 || test $REPLACE_LOCALTIME_R = 1; then
+  AC_LIBOBJ([time_r])
+  gl_PREREQ_TIME_R
+fi
 gl_TIME_MODULE_INDICATOR([time_r])
 gl_TIMESPEC
 gl_UNISTD_H
 gl_FUNC_UNSETENV
+if test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1; then
+  AC_LIBOBJ([unsetenv])
+  gl_PREREQ_UNSETENV
+fi
 gl_STDLIB_MODULE_INDICATOR([unsetenv])
 gl_FUNC_VASNPRINTF
 gl_FUNC_VASPRINTF
@@ -301,9 +333,10 @@ AC_DEFUN([gltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
-  build-aux/arg-nonnull.h
-  build-aux/c++defs.h
-  build-aux/warn-on-use.h
+  build-aux/snippet/_Noreturn.h
+  build-aux/snippet/arg-nonnull.h
+  build-aux/snippet/c++defs.h
+  build-aux/snippet/warn-on-use.h
   doc/parse-datetime.texi
   lib/alloca.in.h
   lib/asnprintf.c
@@ -316,6 +349,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/exitfail.c
   lib/exitfail.h
   lib/float+.h
+  lib/float.c
   lib/float.in.h
   lib/gettext.h
   lib/gettime.c

@@ -25,7 +25,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
-  AC_REQUIRE([AC_PROG_RANLIB])
+  AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module git-version-gen:
   # Code from module gnumakefile:
   # Code from module maintainer-makefile:

@@ -1,7 +1,6 @@
-/* Report a memory allocation failure and exit.
-
-   Copyright (C) 1997-2000, 2002-2004, 2006, 2009-2011 Free Software
-   Foundation, Inc.
+/* Auxiliary definitions for <float.h>.
+   Copyright (C) 2011 Free Software Foundation, Inc.
+   Written by Bruno Haible <bruno@clisp.org>, 2011.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,24 +17,17 @@
 
 #include <config.h>
 
-#include "xalloc.h"
+/* Specification.  */
+#include <float.h>
 
-#include <stdlib.h>
-
-#include "error.h"
-#include "exitfail.h"
-
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
-
-void
-xalloc_die (void)
-{
-  error (exit_failure, 0, "%s", _("memory exhausted"));
-
-  /* _Noreturn cannot be given to error, since it may return if
-     its first argument is 0.  To help compilers understand the
-     xalloc_die does not return, call abort.  Also, the abort is a
-     safety feature if exit_failure is 0 (which shouldn't happen).  */
-  abort ();
-}
+#if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
+const union gl_long_double_union gl_LDBL_MAX =
+  { { DBL_MAX, DBL_MAX / (double)134217728UL / (double)134217728UL } };
+#elif defined __i386__
+const union gl_long_double_union gl_LDBL_MAX =
+  { { 0xFFFFFFFF, 0xFFFFFFFF, 32766 } };
+#else
+/* This declaration is solely to ensure that after preprocessing
+   this file is never empty.  */
+typedef int dummy;
+#endif

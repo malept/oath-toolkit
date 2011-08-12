@@ -63,54 +63,6 @@ EXTRA_DIST += alloca.in.h
 
 ## end   gnulib module alloca-opt
 
-## begin gnulib module arg-nonnull
-
-# The BUILT_SOURCES created by this Makefile snippet are not used via #include
-# statements but through direct file reference. Therefore this snippet must be
-# present in all Makefile.am that need it. This is ensured by the applicability
-# 'all' defined above.
-
-BUILT_SOURCES += arg-nonnull.h
-# The arg-nonnull.h that gets inserted into generated .h files is the same as
-# build-aux/arg-nonnull.h, except that it has the copyright header cut off.
-arg-nonnull.h: $(top_srcdir)/build-aux/arg-nonnull.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	sed -n -e '/GL_ARG_NONNULL/,$$p' \
-	  < $(top_srcdir)/build-aux/arg-nonnull.h \
-	  > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += arg-nonnull.h arg-nonnull.h-t
-
-ARG_NONNULL_H=arg-nonnull.h
-
-EXTRA_DIST += $(top_srcdir)/build-aux/arg-nonnull.h
-
-## end   gnulib module arg-nonnull
-
-## begin gnulib module c++defs
-
-# The BUILT_SOURCES created by this Makefile snippet are not used via #include
-# statements but through direct file reference. Therefore this snippet must be
-# present in all Makefile.am that need it. This is ensured by the applicability
-# 'all' defined above.
-
-BUILT_SOURCES += c++defs.h
-# The c++defs.h that gets inserted into generated .h files is the same as
-# build-aux/c++defs.h, except that it has the copyright header cut off.
-c++defs.h: $(top_srcdir)/build-aux/c++defs.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	sed -n -e '/_GL_CXXDEFS/,$$p' \
-	  < $(top_srcdir)/build-aux/c++defs.h \
-	  > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += c++defs.h c++defs.h-t
-
-CXXDEFS_H=c++defs.h
-
-EXTRA_DIST += $(top_srcdir)/build-aux/c++defs.h
-
-## end   gnulib module c++defs
-
 ## begin gnulib module c-ctype
 
 libgnu_la_SOURCES += c-ctype.h c-ctype.c
@@ -192,7 +144,9 @@ float.h: $(top_builddir)/config.status
 endif
 MOSTLYCLEANFILES += float.h float.h-t
 
-EXTRA_DIST += float.in.h
+EXTRA_DIST += float.c float.in.h
+
+EXTRA_libgnu_la_SOURCES += float.c
 
 ## end   gnulib module float
 
@@ -204,10 +158,7 @@ libgnu_la_SOURCES += gettext.h
 
 ## begin gnulib module gettime
 
-
-EXTRA_DIST += gettime.c
-
-EXTRA_libgnu_la_SOURCES += gettime.c
+libgnu_la_SOURCES += gettime.c
 
 ## end   gnulib module gettime
 
@@ -304,6 +255,87 @@ EXTRA_libgnu_la_SOURCES += setenv.c
 libgnu_la_SOURCES += size_max.h
 
 ## end   gnulib module size_max
+
+## begin gnulib module snippet/_Noreturn
+
+# Because this Makefile snippet defines a variable used by other
+# gnulib Makefile snippets, it must be present in all Makefile.am that
+# need it. This is ensured by the applicability 'all' defined above.
+
+_NORETURN_H=$(top_srcdir)/build-aux/snippet/_Noreturn.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/_Noreturn.h
+
+## end   gnulib module snippet/_Noreturn
+
+## begin gnulib module snippet/arg-nonnull
+
+# The BUILT_SOURCES created by this Makefile snippet are not used via #include
+# statements but through direct file reference. Therefore this snippet must be
+# present in all Makefile.am that need it. This is ensured by the applicability
+# 'all' defined above.
+
+BUILT_SOURCES += arg-nonnull.h
+# The arg-nonnull.h that gets inserted into generated .h files is the same as
+# build-aux/snippet/arg-nonnull.h, except that it has the copyright header cut
+# off.
+arg-nonnull.h: $(top_srcdir)/build-aux/snippet/arg-nonnull.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/GL_ARG_NONNULL/,$$p' \
+	  < $(top_srcdir)/build-aux/snippet/arg-nonnull.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += arg-nonnull.h arg-nonnull.h-t
+
+ARG_NONNULL_H=arg-nonnull.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/arg-nonnull.h
+
+## end   gnulib module snippet/arg-nonnull
+
+## begin gnulib module snippet/c++defs
+
+# The BUILT_SOURCES created by this Makefile snippet are not used via #include
+# statements but through direct file reference. Therefore this snippet must be
+# present in all Makefile.am that need it. This is ensured by the applicability
+# 'all' defined above.
+
+BUILT_SOURCES += c++defs.h
+# The c++defs.h that gets inserted into generated .h files is the same as
+# build-aux/snippet/c++defs.h, except that it has the copyright header cut off.
+c++defs.h: $(top_srcdir)/build-aux/snippet/c++defs.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/_GL_CXXDEFS/,$$p' \
+	  < $(top_srcdir)/build-aux/snippet/c++defs.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += c++defs.h c++defs.h-t
+
+CXXDEFS_H=c++defs.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/c++defs.h
+
+## end   gnulib module snippet/c++defs
+
+## begin gnulib module snippet/warn-on-use
+
+BUILT_SOURCES += warn-on-use.h
+# The warn-on-use.h that gets inserted into generated .h files is the same as
+# build-aux/snippet/warn-on-use.h, except that it has the copyright header cut
+# off.
+warn-on-use.h: $(top_srcdir)/build-aux/snippet/warn-on-use.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/^.ifndef/,$$p' \
+	  < $(top_srcdir)/build-aux/snippet/warn-on-use.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += warn-on-use.h warn-on-use.h-t
+
+WARN_ON_USE_H=warn-on-use.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/warn-on-use.h
+
+## end   gnulib module snippet/warn-on-use
 
 ## begin gnulib module stdarg
 
@@ -566,7 +598,8 @@ BUILT_SOURCES += stdlib.h
 
 # We need the following in order to create <stdlib.h> when the system
 # doesn't have one that works with the given compiler.
-stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
+  $(_NORETURN_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
@@ -640,6 +673,7 @@ stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_UNSETENV''@|$(REPLACE_UNSETENV)|g' \
 	      -e 's|@''REPLACE_WCTOMB''@|$(REPLACE_WCTOMB)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _Noreturn/r $(_NORETURN_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)'; \
 	} > $@-t && \
@@ -682,6 +716,8 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_STRING_H''@|$(NEXT_STRING_H)|g' \
+	      -e 's/@''GNULIB_FFSL''@/$(GNULIB_FFSL)/g' \
+	      -e 's/@''GNULIB_FFSLL''@/$(GNULIB_FFSLL)/g' \
 	      -e 's/@''GNULIB_MBSLEN''@/$(GNULIB_MBSLEN)/g' \
 	      -e 's/@''GNULIB_MBSNLEN''@/$(GNULIB_MBSNLEN)/g' \
 	      -e 's/@''GNULIB_MBSCHR''@/$(GNULIB_MBSCHR)/g' \
@@ -718,7 +754,9 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_STRSIGNAL''@/$(GNULIB_STRSIGNAL)/g' \
 	      -e 's/@''GNULIB_STRVERSCMP''@/$(GNULIB_STRVERSCMP)/g' \
 	      < $(srcdir)/string.in.h | \
-	  sed -e 's|@''HAVE_MBSLEN''@|$(HAVE_MBSLEN)|g' \
+	  sed -e 's|@''HAVE_FFSL''@|$(HAVE_FFSL)|g' \
+	      -e 's|@''HAVE_FFSLL''@|$(HAVE_FFSLL)|g' \
+	      -e 's|@''HAVE_MBSLEN''@|$(HAVE_MBSLEN)|g' \
 	      -e 's|@''HAVE_MEMCHR''@|$(HAVE_MEMCHR)|g' \
 	      -e 's|@''HAVE_DECL_MEMMEM''@|$(HAVE_DECL_MEMMEM)|g' \
 	      -e 's|@''HAVE_MEMPCPY''@|$(HAVE_MEMPCPY)|g' \
@@ -1032,25 +1070,6 @@ libgnu_la_SOURCES += version-etc.h version-etc.c
 
 ## end   gnulib module version-etc
 
-## begin gnulib module warn-on-use
-
-BUILT_SOURCES += warn-on-use.h
-# The warn-on-use.h that gets inserted into generated .h files is the same as
-# build-aux/warn-on-use.h, except that it has the copyright header cut off.
-warn-on-use.h: $(top_srcdir)/build-aux/warn-on-use.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	sed -n -e '/^.ifndef/,$$p' \
-	  < $(top_srcdir)/build-aux/warn-on-use.h \
-	  > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += warn-on-use.h warn-on-use.h-t
-
-WARN_ON_USE_H=warn-on-use.h
-
-EXTRA_DIST += $(top_srcdir)/build-aux/warn-on-use.h
-
-## end   gnulib module warn-on-use
-
 ## begin gnulib module wchar
 
 BUILT_SOURCES += wchar.h
@@ -1174,10 +1193,9 @@ EXTRA_DIST += wchar.in.h
 
 ## begin gnulib module xalloc
 
+libgnu_la_SOURCES += xmalloc.c
 
-EXTRA_DIST += xalloc.h xmalloc.c
-
-EXTRA_libgnu_la_SOURCES += xmalloc.c
+EXTRA_DIST += xalloc.h
 
 ## end   gnulib module xalloc
 
