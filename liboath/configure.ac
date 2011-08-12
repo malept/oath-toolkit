@@ -20,12 +20,7 @@ AC_INIT([liboath],
   [oath-toolkit-help@nongnu.org],,
   [http://www.nongnu.org/oath-toolkit/])
 
-VERSION_MAJOR=`echo $PACKAGE_VERSION | sed 's/\(.*\)\..*\..*\(\..*\)\?/\1/g'`
-VERSION_MINOR=`echo $PACKAGE_VERSION | sed 's/.*\.\(.*\)\..*\(\..*\)\?/\1/g'`
-VERSION_PATCH=`echo $PACKAGE_VERSION | sed 's/.*\..*\.\(.*\)\(\..*\)\?/\1/g'`
-VERSION_COMMIT=`echo $PACKAGE_VERSION | sed 's/.*\..*\..*\(\.\(.*\)\)\?/\2/g;s/-dirty//g;'`
-VERSION_NUMBER=`printf "0x%02x%02x%02x%02x" \
-  $VERSION_MAJOR $VERSION_MINOR $VERSION_PATCH $VERSION_COMMIT`
+VERSION_NUMBER=`../build-aux/oath-toolkit-version ../.tarball-version vn`
 AC_SUBST(VERSION_NUMBER)
 
 # Library code modified:                              REVISION++

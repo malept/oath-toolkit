@@ -15,5 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-`dirname $0`/git-version-gen $1 \
-	 's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)\(-\([0-9]*\)\)\?.*/v\1.\2.\3.\5/;s/\.$//'
+if test "x$2" = "xvn"; then
+    VERSION=`$0 $1`
+    MAJOR=`echo $VERSION | sed 's/^\([^.]*\)\..*/\1/g'`
+    MINOR=`echo $VERSION | sed 's/^[^.]*\.\([^.]*\)\..*/\1/g'`
+    PATCH=`echo $VERSION | sed 's/^[^.]*\.[^.]*\.\([^.]*\)\..*/\1/g'`
+    printf "0x%02x%02x%02x00" $MAJOR $MINOR $PATCH
+else
+    `dirname $0`/git-version-gen $1 \
+	's/[a-z-]*-\([0-9]*\)-\([0-9]*\)-\([0-9]*\)\(-\([0-9]*\)\)\?.*/v\1.\2.\3.\5/;s/\.$//'
+fi
