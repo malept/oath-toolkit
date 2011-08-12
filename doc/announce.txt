@@ -1,5 +1,5 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.10.1
+Subject: OATH Toolkit 1.10.2
 <#part sign=pgpmime>
 More TOTP-induced timing issues in self checks, discovered by Debian
 build bots...  most Debian architectures has 1.10.1 already, soon they
