@@ -98,5 +98,6 @@ AC_CONFIG_FILES([
   lib/Makefile
   tests/Makefile
   gtk-doc/Makefile
+  gtk-doc/version.xml
 ])
 AC_OUTPUT

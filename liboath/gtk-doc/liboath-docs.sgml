@@ -1,9 +1,20 @@
 <?xml version="1.0"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+	  [
+	  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	  <!ENTITY version SYSTEM "version.xml">
+	  ]>
+<book id="index">
   <bookinfo>
     <title>Liboath API Reference Manual</title>
+    <releaseinfo>
+      for Liboath &version;
+      The latest version of this documentation can be found on-line at
+      <ulink role="online-location"
+	     url="http://www.nongnu.org/oath-toolkit/reference/">
+	http://www.nongnu.org/oath-toolkit/reference/</ulink>.
+    </releaseinfo>
   </bookinfo>
 
   <chapter>
