@@ -48,7 +48,7 @@ static int
 my_strcmp (void *handle, const char *test_otp)
 {
   const char *otp = handle;
-  return strcmp (otp, test_otp);
+  return strcmp (otp, test_otp) == 0 ? 0 : 1;
 }
 
 int

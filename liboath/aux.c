@@ -29,5 +29,5 @@ int
 _oath_strcmp_callback (void *handle, const char *test_otp)
 {
   char *otp = handle;
-  return strcmp (otp, test_otp);
+  return strcmp (otp, test_otp) == 0 ? 0 : 1;
 }
