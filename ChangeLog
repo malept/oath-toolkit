@@ -1,5 +1,45 @@
 2011-08-12  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 1.10.4.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix release target to create the proper tag.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/configure.ac: Fix path in AC_INIT.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.3.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Fix typo.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.2.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Dist build-aux/oath-toolkit-version.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/configure.ac: Fix AC_INIT in pam_oath too.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2011-08-12  Simon Josefsson <simon@josefsson.org>
+
 	* liboath/gtk-doc/version.xml.in: Silence gnulib syntax-check
 	warning.
 
