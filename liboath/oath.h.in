@@ -79,6 +79,7 @@
  * @OATH_FILE_RENAME_ERROR: System error when renaming file
  * @OATH_FILE_UNLINK_ERROR: System error when removing file
  * @OATH_TIME_ERROR: System error for time manipulation
+ * @OATH_STRCMP_ERROR: A strcmp callback returned an error
  *
  * Return codes for OATH functions.  All return codes are negative
  * except for the successful code OATH_OK which are guaranteed to be
@@ -107,7 +108,8 @@ typedef enum
   OATH_FILE_LOCK_ERROR = -15,
   OATH_FILE_RENAME_ERROR = -16,
   OATH_FILE_UNLINK_ERROR = -17,
-  OATH_TIME_ERROR = -18
+  OATH_TIME_ERROR = -18,
+  OATH_STRCMP_ERROR = -19
 } oath_rc;
 
 /* Global */
@@ -163,7 +165,8 @@ oath_hotp_validate (const char *secret,
  * test_otp OTP using the same hash, and then compare the results.
  *
  * Return value: 0 if and only if @test_otp is identical to the OTP to
- *   be validated.
+ *   be validated.  Negative value if an internal failure occurs.
+ *   Positive value if the test_otp simply doesn't match.
  *
  * Since: 1.6.0
  **/

@@ -192,8 +192,10 @@ oath_hotp_validate_callback (const char *secret,
       if (rc != OATH_OK)
 	return rc;
 
-      if (strcmp_otp (strcmp_handle, tmp_otp) == 0)
+      if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	return iter;
+      if (rc < 0)
+        return OATH_STRCMP_ERROR;
     }
   while (window - iter++ > 0);
 
