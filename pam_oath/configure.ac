@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_INIT([pam_oath],
-  m4_esyscmd([build-aux/oath-toolkit-version .tarball-version]),
+  m4_esyscmd([../build-aux/oath-toolkit-version .tarball-version]),
   [oath-toolkit-help@nongnu.org],,
   [http://www.nongnu.org/oath-toolkit/])
 
