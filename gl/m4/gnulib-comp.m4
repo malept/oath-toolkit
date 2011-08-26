@@ -206,6 +206,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/update-copyright
   build-aux/useless-if-before-free
   build-aux/vc-list-files
+  lib/dummy.c
   m4/00gnulib.m4
   m4/gnulib-common.m4
   m4/onceonly.m4
