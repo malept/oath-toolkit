@@ -204,6 +204,18 @@ List of all parameters
   "window": Specify search depth, an integer typically from 5 to 50
             but other values can be useful too.
 
+SSH Configuration
+-----------------
+
+Configuring pam_oath for use with SSH is straight forward, however you
+must make sure the /etc/ssh/sshd_config file contains the following:
+
+UsePAM yes
+ChallengeResponseAuthentication yes
+
+Another reported cause of problems has been SELinux, and you could
+experiment with disabling SELinux by doing "/usr/sbin/setenforce 0".
+
 Debug hint
 ----------
 
