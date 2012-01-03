@@ -1,18 +1,19 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.10.4
+Subject: OATH Toolkit 1.10.5
 <#part sign=pgpmime>
-Ouch, my build "fixes" in the last released apparently made oath.h say
-'#define OATH_VERSION' without any version number.  This is a quick fix
-release.
+I realized we had some fixes that have been waiting for way to long for
+a release, so here it is (finally).
 
 Happy hacking,
 Simon
 
-* Version 1.10.4 (released 2011-08-12)
+* Version 1.10.5 (released 2012-01-03)
 
-** liboath: Fix build so that OATH_VERSION_NUMBER is actually defined.
-It was an empty value in the last release due to a bug in the build
-scripts.
+** Build fixes.
+From Linus Nordberg <linus@nordberg.se> and Arno Hautala
+<arno@alum.wpi.edu>.
+
+** Update gnulib files.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -46,8 +47,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.4.tar.gz (1.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.4.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.5.tar.gz (1.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.5.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -63,9 +64,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-0188b49c8634ec7331daf94dc229ec946eb171a9  oath-toolkit-1.10.4.tar.gz
+b3fddfbc442c7cffe854ec159466155ef6ce0cbc  oath-toolkit-1.10.5.tar.gz
 
-62f139f4b22b53f673278a6cedacec23f8ff9483b2f11b416f278673  oath-toolkit-1.10.4.tar.gz
+d4d7bba29559d81693513195a8f21ed4ab85b04d661976fd62728ed8  oath-toolkit-1.10.5.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
