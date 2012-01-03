@@ -7,6 +7,8 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 From Linus Nordberg <linus@nordberg.se> and Arno Hautala
 <arno@alum.wpi.edu>.
 
+** Update gnulib files.
+
 * Version 1.10.4 (released 2011-08-12)
 
 ** liboath: Fix build so that OATH_VERSION_NUMBER is actually defined.
