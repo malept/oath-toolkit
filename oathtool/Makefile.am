@@ -13,20 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = lib . tests
+SUBDIRS = gl . tests
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I gl/m4
 
-AM_CPPFLAGS = -I$(builddir)/../liboath -I$(srcdir)/lib -I$(builddir)/lib
+AM_CPPFLAGS = -I$(builddir)/../liboath -I$(srcdir)/gl -I$(builddir)/gl
 
 bin_PROGRAMS = oathtool
 oathtool_SOURCES = oathtool.c
-oathtool_LDADD = ../liboath/liboath.la lib/libgnu.la liboathtool_cmd.la
+oathtool_LDADD = ../liboath/liboath.la gl/libgnu.la liboathtool_cmd.la
 
 noinst_LTLIBRARIES = liboathtool_cmd.la
 BUILT_SOURCES = oathtool_cmd.c oathtool_cmd.h
 liboathtool_cmd_la_SOURCES = $(BUILT_SOURCES) oathtool.ggo
-liboathtool_cmd_la_LIBADD = lib/libgnu.la
+liboathtool_cmd_la_LIBADD = gl/libgnu.la
 liboathtool_cmd_la_CFLAGS =
 
 $(BUILT_SOURCES): oathtool.ggo Makefile.am

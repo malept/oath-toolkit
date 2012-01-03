@@ -17,12 +17,12 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = lib . tests gtk-doc
+SUBDIRS = gl . tests gtk-doc
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I gl/m4
 
 AM_CPPFLAGS = -DLIBOATH_BUILDING
-AM_CPPFLAGS += -I$(srcdir)/lib -I$(builddir)/lib
+AM_CPPFLAGS += -I$(srcdir)/gl -I$(builddir)/gl
 
 AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
 AM_CFLAGS += $(CFLAG_VISIBILITY)
@@ -34,7 +34,7 @@ oath_include_HEADERS = oath.h
 
 liboath_la_SOURCES = oath.h global.c usersfile.c hotp.c totp.c
 liboath_la_SOURCES += liboath.map aux.c aux.h errors.c
-liboath_la_LIBADD = lib/libgnu.la
+liboath_la_LIBADD = gl/libgnu.la
 liboath_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -no-undefined
 
