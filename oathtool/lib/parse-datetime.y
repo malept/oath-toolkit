@@ -1,7 +1,7 @@
 %{
 /* Parse a string into an internal time stamp.
 
-   Copyright (C) 1999-2000, 2002-2011 Free Software Foundation, Inc.
+   Copyright (C) 1999-2000, 2002-2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -285,8 +285,8 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
 %parse-param { parser_control *pc }
 %lex-param { parser_control *pc }
 
-/* This grammar has 20 shift/reduce conflicts. */
-%expect 20
+/* This grammar has 31 shift/reduce conflicts. */
+%expect 31
 
 %union
 {
@@ -296,7 +296,8 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
   relative_time rel;
 }
 
-%token tAGO tDST
+%token <intval> tAGO
+%token tDST
 
 %token tYEAR_UNIT tMONTH_UNIT tHOUR_UNIT tMINUTE_UNIT tSEC_UNIT
 %token <intval> tDAY_UNIT tDAY_SHIFT
@@ -307,7 +308,7 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
 %token <textintval> tSNUMBER tUNUMBER
 %token <timespec> tSDECIMAL_NUMBER tUDECIMAL_NUMBER
 
-%type <intval> o_colon_minutes o_merid
+%type <intval> o_colon_minutes
 %type <timespec> seconds signed_seconds unsigned_seconds
 
 %type <rel> relunit relunit_snumber dayshift
@@ -333,7 +334,9 @@ items:
   ;
 
 item:
-    time
+    datetime
+      { pc->times_seen++; pc->dates_seen++; }
+  | time
       { pc->times_seen++; }
   | local_zone
       { pc->local_zones_seen++; }
@@ -348,35 +351,61 @@ item:
   | hybrid
   ;
 
+datetime:
+    iso_8601_datetime
+  ;
+
+iso_8601_datetime:
+    iso_8601_date 'T' iso_8601_time
+  ;
+
 time:
     tUNUMBER tMERIDIAN
       {
         set_hhmmss (pc, $1.value, 0, 0, 0);
         pc->meridian = $2;
       }
-  | tUNUMBER ':' tUNUMBER o_merid
+  | tUNUMBER ':' tUNUMBER tMERIDIAN
       {
         set_hhmmss (pc, $1.value, $3.value, 0, 0);
         pc->meridian = $4;
       }
-  | tUNUMBER ':' tUNUMBER tSNUMBER o_colon_minutes
-      {
-        set_hhmmss (pc, $1.value, $3.value, 0, 0);
-        pc->meridian = MER24;
-        pc->zones_seen++;
-        pc->time_zone = time_zone_hhmm (pc, $4, $5);
-      }
-  | tUNUMBER ':' tUNUMBER ':' unsigned_seconds o_merid
+  | tUNUMBER ':' tUNUMBER ':' unsigned_seconds tMERIDIAN
       {
         set_hhmmss (pc, $1.value, $3.value, $5.tv_sec, $5.tv_nsec);
         pc->meridian = $6;
       }
-  | tUNUMBER ':' tUNUMBER ':' unsigned_seconds tSNUMBER o_colon_minutes
+  | iso_8601_time
+  ;
+
+iso_8601_time:
+    tUNUMBER zone_offset
+      {
+        set_hhmmss (pc, $1.value, 0, 0, 0);
+        pc->meridian = MER24;
+      }
+  | tUNUMBER ':' tUNUMBER o_zone_offset
+      {
+        set_hhmmss (pc, $1.value, $3.value, 0, 0);
+        pc->meridian = MER24;
+      }
+  | tUNUMBER ':' tUNUMBER ':' unsigned_seconds o_zone_offset
       {
         set_hhmmss (pc, $1.value, $3.value, $5.tv_sec, $5.tv_nsec);
         pc->meridian = MER24;
+      }
+  ;
+
+o_zone_offset:
+  /* empty */
+  | zone_offset
+  ;
+
+zone_offset:
+    tSNUMBER o_colon_minutes
+      {
         pc->zones_seen++;
-        pc->time_zone = time_zone_hhmm (pc, $6, $7);
+        pc->time_zone = time_zone_hhmm (pc, $1, $2);
       }
   ;
 
@@ -393,11 +422,18 @@ local_zone:
       }
   ;
 
+/* Note 'T' is a special case, as it is used as the separator in ISO
+   8601 date and time of day representation. */
 zone:
     tZONE
       { pc->time_zone = $1; }
+  | 'T'
+      { pc->time_zone = HOUR(7); }
   | tZONE relunit_snumber
       { pc->time_zone = $1;
+        apply_relative_time (pc, $2, 1); }
+  | 'T' relunit_snumber
+      { pc->time_zone = HOUR(7);
         apply_relative_time (pc, $2, 1); }
   | tZONE tSNUMBER o_colon_minutes
       { pc->time_zone = $1 + time_zone_hhmm (pc, $2, $3); }
@@ -456,13 +492,6 @@ date:
             pc->year = $5;
           }
       }
-  | tUNUMBER tSNUMBER tSNUMBER
-      {
-        /* ISO 8601 format.  YYYY-MM-DD.  */
-        pc->year = $1;
-        pc->month = -$2.value;
-        pc->day = -$3.value;
-      }
   | tUNUMBER tMONTH tSNUMBER
       {
         /* e.g. 17-JUN-1992.  */
@@ -501,11 +530,22 @@ date:
         pc->month = $2;
         pc->year = $3;
       }
+  | iso_8601_date
+  ;
+
+iso_8601_date:
+    tUNUMBER tSNUMBER tSNUMBER
+      {
+        /* ISO 8601 format.  YYYY-MM-DD.  */
+        pc->year = $1;
+        pc->month = -$2.value;
+        pc->day = -$3.value;
+      }
   ;
 
 rel:
     relunit tAGO
-      { apply_relative_time (pc, $1, -1); }
+      { apply_relative_time (pc, $1, $2); }
   | relunit
       { apply_relative_time (pc, $1, 1); }
   | dayshift
@@ -612,13 +652,6 @@ o_colon_minutes:
       { $$ = $2.value; }
   ;
 
-o_merid:
-    /* empty */
-      { $$ = MER24; }
-  | tMERIDIAN
-      { $$ = $1; }
-  ;
-
 %%
 
 static table const meridian_table[] =
@@ -701,7 +734,8 @@ static table const relative_time_table[] =
   { "TENTH",    tORDINAL,       10 },
   { "ELEVENTH", tORDINAL,       11 },
   { "TWELFTH",  tORDINAL,       12 },
-  { "AGO",      tAGO,            1 },
+  { "AGO",      tAGO,           -1 },
+  { "HENCE",    tAGO,            1 },
   { NULL, 0, 0 }
 };
 
@@ -773,7 +807,10 @@ static table const time_zone_table[] =
   { NULL, 0, 0 }
 };
 
-/* Military time zone table. */
+/* Military time zone table.
+
+   Note 'T' is a special case, as it is used as the separator in ISO
+   8601 date and time of day representation. */
 static table const military_table[] =
 {
   { "A", tZONE, -HOUR ( 1) },
@@ -794,7 +831,7 @@ static table const military_table[] =
   { "Q", tZONE,  HOUR ( 4) },
   { "R", tZONE,  HOUR ( 5) },
   { "S", tZONE,  HOUR ( 6) },
-  { "T", tZONE,  HOUR ( 7) },
+  { "T", 'T',    0 },
   { "U", tZONE,  HOUR ( 8) },
   { "V", tZONE,  HOUR ( 9) },
   { "W", tZONE,  HOUR (10) },
@@ -868,7 +905,7 @@ to_year (textint textyear)
   return year;
 }
 
-static table const *
+static table const * _GL_ATTRIBUTE_PURE
 lookup_zone (parser_control const *pc, char const *name)
 {
   table const *tp;

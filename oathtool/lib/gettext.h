@@ -1,5 +1,5 @@
 /* Convenience header for conditional use of GNU <libintl.h>.
-   Copyright (C) 1995-1998, 2000-2002, 2004-2006, 2009-2011 Free Software
+   Copyright (C) 1995-1998, 2000-2002, 2004-2006, 2009-2012 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -185,7 +185,7 @@ npgettext_aux (const char *domain,
 #include <string.h>
 
 #define _LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS \
-  (((__GNUC__ >= 3 || __GNUG__ >= 2) && !__STRICT_ANSI__) \
+  (((__GNUC__ >= 3 || __GNUG__ >= 2) && !defined __STRICT_ANSI__) \
    /* || __STDC_VERSION__ >= 199901L */ )
 
 #if !_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS

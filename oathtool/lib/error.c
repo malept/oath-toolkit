@@ -1,5 +1,5 @@
 /* Error handler for noninteractive utilities
-   Copyright (C) 1990-1998, 2000-2007, 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 1990-1998, 2000-2007, 2009-2012 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -92,6 +92,8 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 /* Get declarations of the Win32 API functions.  */
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
+/* Get _get_osfhandle.  */
+#  include "msvc-nothrow.h"
 # endif
 
 /* The gnulib override of fcntl is not needed in this file.  */

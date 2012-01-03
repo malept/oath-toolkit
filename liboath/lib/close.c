@@ -1,5 +1,5 @@
 /* close replacement.
-   Copyright (C) 2008-2011 Free Software Foundation, Inc.
+   Copyright (C) 2008-2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -19,18 +19,45 @@
 /* Specification.  */
 #include <unistd.h>
 
+#include <errno.h>
+
 #include "fd-hook.h"
+#include "msvc-inval.h"
+
+#undef close
+
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static int
+close_nothrow (int fd)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = close (fd);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+#else
+# define close_nothrow close
+#endif
 
 /* Override close() to call into other gnulib modules.  */
 
 int
 rpl_close (int fd)
-#undef close
 {
 #if WINDOWS_SOCKETS
-  int retval = execute_all_close_hooks (close, fd);
+  int retval = execute_all_close_hooks (close_nothrow, fd);
 #else
-  int retval = close (fd);
+  int retval = close_nothrow (fd);
 #endif
 
 #if REPLACE_FCHDIR

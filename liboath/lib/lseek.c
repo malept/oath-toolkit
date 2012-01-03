@@ -1,5 +1,5 @@
 /* An lseek() function that detects pipes.
-   Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,8 @@
 /* Windows platforms.  */
 /* Get GetFileType.  */
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #else
 # include <sys/stat.h>
 #endif
