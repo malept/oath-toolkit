@@ -1,20 +1,18 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.10.3
+Subject: OATH Toolkit 1.10.4
 <#part sign=pgpmime>
-This release is mostly to get Daniel's patch included, but it has some
-other minor changes to the build system as well.
+Ouch, my build "fixes" in the last released apparently made oath.h say
+'#define OATH_VERSION' without any version number.  This is a quick fix
+release.
 
 Happy hacking,
 Simon
 
-* Version 1.10.3 (released 2011-08-12)
+* Version 1.10.4 (released 2011-08-12)
 
-** liboath: Allow strcmp callback to return negative to signal errors.
-Patch by Daniel Pocock <daniel@pocock.com.au>.
-
-** Fix bugs in build scripts for generating version numbers.
-
-** Update gnulib files.
+** liboath: Fix build so that OATH_VERSION_NUMBER is actually defined.
+It was an empty value in the last release due to a bug in the build
+scripts.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -48,8 +46,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.3.tar.gz (1.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.3.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.4.tar.gz (1.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.4.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -65,9 +63,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-97846fb44e812f926db042d9f784f0e22ceaa446  oath-toolkit-1.10.3.tar.gz
+0188b49c8634ec7331daf94dc229ec946eb171a9  oath-toolkit-1.10.4.tar.gz
 
-ff60c66382d98903e30b8f54aa9cdaf86eeddc7d3502c0a983b4f6ce  oath-toolkit-1.10.3.tar.gz
+62f139f4b22b53f673278a6cedacec23f8ff9483b2f11b416f278673  oath-toolkit-1.10.4.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
