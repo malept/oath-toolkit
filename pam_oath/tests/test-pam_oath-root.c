@@ -82,7 +82,6 @@ oath_conv (int num_msg, const struct pam_message **msg,
 	   struct pam_response **resp, void *appdata_ptr)
 {
   struct pam_response *out;
-  size_t i;
 
   if (num_msg != 1)
     {
@@ -127,7 +126,7 @@ main (int argc, char **argv)
       rc = pam_authenticate (pamh, 0);
       if (rc != tv[loop].expectrc)
 	{
-	  printf ("pam_authenticate[%d] %d\n", loop, rc);
+	  printf ("pam_authenticate[%ld] %d\n", loop, rc);
 	  return 1;
 	}
 
