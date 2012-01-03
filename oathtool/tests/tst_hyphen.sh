@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # tst_hyphen.sh - test that man page part of oathtool.h2m is lintian compliant
-# Copyright (C) 2011 Simon Josefsson
+# Copyright (C) 2011-2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /*
  * tst_hotp_algo.c - self-tests for liboath HOTP algorithm functions
- * Copyright (C) 2009-2011 Simon Josefsson
+ * Copyright (C) 2009-2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

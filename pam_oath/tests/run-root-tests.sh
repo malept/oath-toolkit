@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2011 Simon Josefsson
+# Copyright (C) 2011-2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

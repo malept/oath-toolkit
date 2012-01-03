@@ -1,4 +1,4 @@
-# Copyright (C) 2009-2011 Simon Josefsson
+# Copyright (C) 2009-2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ buildit:
 	make
 
 # syntax-check
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^maint.mk|(oathtool|liboath)/(m4|lib)/.*$$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|oathtool/doc/parse-datetime.texi|(oathtool|liboath)/(build-aux|m4|lib)/.*$$
 # syntax-check: Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
 	sc_prohibit_strcmp
