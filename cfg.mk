@@ -26,7 +26,7 @@ buildit:
 	make
 
 # syntax-check
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|oathtool/doc/parse-datetime.texi|(oathtool|liboath)/(build-aux|m4|lib)/.*$$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|oathtool/doc/parse-datetime.texi|liboath/gtk-doc.make|(oathtool|liboath)/(build-aux|gl)/.*$$
 # syntax-check: Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
 	sc_prohibit_strcmp
