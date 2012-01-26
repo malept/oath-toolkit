@@ -1,4 +1,4 @@
-# Having a separate GNUmakefile lets me `include' the dynamically
+# Having a separate GNUmakefile lets me 'include' the dynamically
 # generated rules created via cfg.mk (package-local configuration)
 # as well as maint.mk (generic maintainer rules).
 # This makefile is used only if you run GNU Make.
@@ -114,7 +114,7 @@ endif
 
 abort-due-to-no-makefile:
 	@echo There seems to be no Makefile in this directory.   1>&2
-	@echo "You must run ./configure before running \`make'." 1>&2
+	@echo "You must run ./configure before running 'make'." 1>&2
 	@exit 1
 
 endif
