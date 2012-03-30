@@ -12,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License along
-   with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* This file can be parametrized with the following macros:
      VASNPRINTF         The name of the function being defined.
@@ -2814,7 +2813,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (has_width)
                     {
 #  if ENABLE_UNISTDIO
-                      /* Outside POSIX, it's preferrable to compare the width
+                      /* Outside POSIX, it's preferable to compare the width
                          against the number of _characters_ of the converted
                          value.  */
                       w = DCHAR_MBSNLEN (result + length, characters);
@@ -5417,7 +5416,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       {
                         size_t w;
 # if ENABLE_UNISTDIO
-                        /* Outside POSIX, it's preferrable to compare the width
+                        /* Outside POSIX, it's preferable to compare the width
                            against the number of _characters_ of the converted
                            value.  */
                         w = DCHAR_MBSNLEN (result + length, count);

@@ -12,8 +12,7 @@
    GNU Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public License along
-   with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
 
@@ -89,6 +88,9 @@ fseeko (FILE *fp, off_t offset, int whence)
       && fp->__get_limit == fp->__bufp
       && fp->__put_limit == fp->__bufp
       && !fp->__pushed_back)
+#elif defined EPLAN9                /* Plan9 */
+  if (fp->rp == fp->buf
+      && fp->wp == fp->buf)
 #else
   #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
 #endif
