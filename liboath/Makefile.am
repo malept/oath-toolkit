@@ -32,7 +32,7 @@ lib_LTLIBRARIES = liboath.la
 oath_includedir=$(includedir)/liboath
 oath_include_HEADERS = oath.h
 
-liboath_la_SOURCES = oath.h global.c usersfile.c hotp.c totp.c
+liboath_la_SOURCES = oath.h global.c coding.c usersfile.c hotp.c totp.c
 liboath_la_SOURCES += liboath.map aux.c aux.h errors.c
 liboath_la_LIBADD = gl/libgnu.la
 liboath_la_LDFLAGS = \

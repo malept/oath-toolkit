@@ -119,7 +119,8 @@ extern OATHAPI int oath_done (void);
 
 extern OATHAPI const char *oath_check_version (const char *req_version);
 
-extern OATHAPI int oath_hex2bin (char *hexstr, char *binstr, size_t * binlen);
+extern OATHAPI int oath_hex2bin (const char *hexstr,
+				 char *binstr, size_t * binlen);
 
 extern OATHAPI const char *oath_strerror (int err);
 extern OATHAPI const char *oath_strerror_name (int err);
