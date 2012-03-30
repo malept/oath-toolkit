@@ -39,6 +39,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
+  # Code from module base32:
   # Code from module canonicalize-lgpl:
   # Code from module chdir:
   # Code from module close:
@@ -79,6 +80,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module malloc-posix:
   # Code from module malloca:
   # Code from module manywarnings:
+  # Code from module memchr:
   # Code from module memxor:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
@@ -130,6 +132,7 @@ AC_DEFUN([gl_INIT],
   gl_COMMON
   gl_source_base='gl'
 gl_FUNC_ALLOCA
+gl_FUNC_BASE32
 gl_CANONICALIZE_LGPL
 if test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1; then
   AC_LIBOBJ([canonicalize-lgpl])
@@ -240,6 +243,12 @@ if test $REPLACE_MALLOC = 1; then
 fi
 gl_STDLIB_MODULE_INDICATOR([malloc-posix])
 gl_MALLOCA
+gl_FUNC_MEMCHR
+if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  AC_LIBOBJ([memchr])
+  gl_PREREQ_MEMCHR
+fi
+gl_STRING_MODULE_INDICATOR([memchr])
 gl_MEMXOR
 gl_MSVC_INVAL
 if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
@@ -458,6 +467,8 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/alloca.in.h
+  lib/base32.c
+  lib/base32.h
   lib/basename-lgpl.c
   lib/canonicalize-lgpl.c
   lib/close.c
@@ -491,6 +502,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/malloca.c
   lib/malloca.h
   lib/malloca.valgrind
+  lib/memchr.c
+  lib/memchr.valgrind
   lib/memxor.c
   lib/memxor.h
   lib/msvc-inval.c
@@ -525,6 +538,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/verify.h
   m4/00gnulib.m4
   m4/alloca.m4
+  m4/base32.m4
   m4/canonicalize.m4
   m4/close.m4
   m4/dirname.m4
@@ -559,7 +573,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/malloc.m4
   m4/malloca.m4
   m4/manywarnings.m4
+  m4/memchr.m4
   m4/memxor.m4
+  m4/mmap-anon.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
