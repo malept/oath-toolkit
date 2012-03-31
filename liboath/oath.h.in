@@ -80,6 +80,9 @@
  * @OATH_FILE_UNLINK_ERROR: System error when removing file
  * @OATH_TIME_ERROR: System error for time manipulation
  * @OATH_STRCMP_ERROR: A strcmp callback returned an error
+ * @OATH_INVALID_BASE32: Base32 string is invalid
+ * @OATH_BASE32_OVERFLOW: Base32 encoding would overflow
+ * @OATH_MALLOC_ERROR: Memory allocation failed
  *
  * Return codes for OATH functions.  All return codes are negative
  * except for the successful code OATH_OK which are guaranteed to be
@@ -109,7 +112,10 @@ typedef enum
   OATH_FILE_RENAME_ERROR = -16,
   OATH_FILE_UNLINK_ERROR = -17,
   OATH_TIME_ERROR = -18,
-  OATH_STRCMP_ERROR = -19
+  OATH_STRCMP_ERROR = -19,
+  OATH_INVALID_BASE32 = -20,
+  OATH_BASE32_OVERFLOW = -21,
+  OATH_MALLOC_ERROR = -22
 } oath_rc;
 
 /* Global */
@@ -119,11 +125,22 @@ extern OATHAPI int oath_done (void);
 
 extern OATHAPI const char *oath_check_version (const char *req_version);
 
-extern OATHAPI int oath_hex2bin (const char *hexstr,
-				 char *binstr, size_t * binlen);
+/* Error handling */
 
 extern OATHAPI const char *oath_strerror (int err);
 extern OATHAPI const char *oath_strerror_name (int err);
+
+/* Data encoding */
+
+extern OATHAPI int oath_hex2bin (const char *hexstr,
+				 char *binstr, size_t * binlen);
+extern OATHAPI void oath_bin2hex (const char *binstr, size_t binlen,
+				  char *hexstr);
+
+extern OATHAPI int oath_base32_decode (const char *in, size_t inlen,
+				       char **out, size_t *outlen);
+extern OATHAPI int oath_base32_encode (const char *in, size_t inlen,
+				       char **out, size_t *outlen);
 
 /* HOTP */
 

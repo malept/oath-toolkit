@@ -24,6 +24,7 @@ EXTRA_DIST = users.oath expect.oath
 
 TESTS = \
 	tst_basic$(EXEEXT) \
+	tst_coding$(EXEEXT) \
 	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \
@@ -32,6 +33,7 @@ TESTS = \
 	tst_usersfile.sh
 check_PROGRAMS = \
 	tst_basic$(EXEEXT) \
+	tst_coding$(EXEEXT) \
 	tst_errors$(EXEEXT) \
 	tst_hotp_algo$(EXEEXT) \
 	tst_hotp_validate$(EXEEXT) \

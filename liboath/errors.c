@@ -55,7 +55,10 @@ static const err_t errors[] = {
   ERR (OATH_FILE_RENAME_ERROR, N_("System error when renaming file")),
   ERR (OATH_FILE_UNLINK_ERROR, N_("System error when removing file")),
   ERR (OATH_TIME_ERROR, N_("System error for time manipulation")),
-  ERR (OATH_STRCMP_ERROR, N_("String comparison error"))
+  ERR (OATH_STRCMP_ERROR, N_("A strcmp callback returned an error")),
+  ERR (OATH_INVALID_BASE32, N_("Base32 string is invalid")),
+  ERR (OATH_BASE32_OVERFLOW, N_("Base32 encoding would overflow")),
+  ERR (OATH_MALLOC_ERROR, N_("Memory allocation failed"))
 };
 
 /**

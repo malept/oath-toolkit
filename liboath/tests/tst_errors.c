@@ -30,7 +30,7 @@ main (int argc, char *argv[])
 {
   int i;
 
-  for (i = 3; i > -22; i--)
+  for (i = 3; i > -26; i--)
     {
       const char *name = oath_strerror_name (i);
       const char *err = oath_strerror (i);
@@ -48,6 +48,8 @@ main (int argc, char *argv[])
 	  printf ("Error string for unknown return code %d\n", i);
 	  return 1;
 	}
+
+      printf ("%d: %s: %s\n", i, name, err);
     }
 
   return 0;

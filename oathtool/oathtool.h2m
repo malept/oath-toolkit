@@ -9,9 +9,9 @@ To generate the first event-based (HOTP) one-time password for an all-zero key:
    328482
    $
 
-To generate the first 10 event-based one-time passwords using the same
-secret key which is used in the examples of RFC 4226 use the \-w
-(\-\-window) parameter:
+Sometime you want to generate more than a single OTP.  To generate 10
+additional event-based one-time passwords, with the secret key used in
+the examples of RFC 4226, use the \-w (\-\-window) parameter:
 
    $ oathtool \-w 10 3132333435363738393031323334353637383930
    755224
@@ -28,7 +28,17 @@ secret key which is used in the examples of RFC 4226 use the \-w
    $
 
 In the last output, the counter for the first OTP was 0, the second
-OTP had a counter of 1, and so on.
+OTP had a counter of 1, and so on up to 10.
+
+In order to use keys encoded in Base32 instead of hex, you may provide
+the \-b (\-\-base32) parameter:
+
+   $ oathtool \-\-base32 \-w 3 GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
+   755224
+   287082
+   359152
+   969429
+   $
 
 To generate a particular OTP, use the \-c (\-\-counter) parameter to
 give the exact position directly:
@@ -129,6 +139,7 @@ you can invoke the tool like this:
 
    $ oathtool \-\-totp \-v \-N "2033\-05\-18 03:33:20 UTC" \-d8 3132333435363738393031323334353637383930
    Hex secret: 3132333435363738393031323334353637383930
+   Base32 secret: GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
    Digits: 8
    Window size: 0
    Step size (seconds): 30

@@ -29,9 +29,8 @@ int
 main (void)
 {
   oath_rc rc;
-  char *hexsecret = "ABCDEF3435363738393031323334353637abcdef";
-  char secret[20];
-  size_t secretlen;
+
+  /* Check version. */
 
   if (!oath_check_version (OATH_VERSION))
     {
@@ -52,6 +51,8 @@ main (void)
       return 1;
     }
 
+  /* Test initialization. */
+
   rc = oath_init ();
   if (rc != OATH_OK)
     {
@@ -59,65 +60,7 @@ main (void)
       return 1;
     }
 
-  secretlen = 0;
-  rc = oath_hex2bin (hexsecret, secret, &secretlen);
-  if (rc != OATH_TOO_SMALL_BUFFER)
-    {
-      printf ("oath_hex2bin too small: %d\n", rc);
-      return 1;
-    }
-  if (secretlen != 20)
-    {
-      printf ("oath_hex2bin too small: 20 != %d\n", secretlen);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("abcd", secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin lower case failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("ABCD", secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin upper case failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("ABC", secret, &secretlen);
-  if (rc != OATH_INVALID_HEX)
-    {
-      printf ("oath_hex2bin too small failed: %d\n", rc);
-      return 1;
-    }
-
-  rc = oath_hex2bin ("JUNK", secret, &secretlen);
-  if (rc != OATH_INVALID_HEX)
-    {
-      printf ("oath_hex2bin junk failed: %d\n", rc);
-      return 1;
-    }
-
-  secretlen = sizeof (secret);
-  rc = oath_hex2bin (hexsecret, secret, &secretlen);
-  if (rc != OATH_OK)
-    {
-      printf ("oath_hex2bin: %d\n", rc);
-      return 1;
-    }
-  if (secretlen != 20)
-    {
-      printf ("oath_hex2bin: 20 != %d\n", secretlen);
-      return 1;
-    }
-  if (memcmp (secret, "\xAB\xCD\xEF\x34\x35\x36\x37\x38\x39\x30"
-	      "\x31\x32\x33\x34\x35\x36\x37\xab\xcd\xef", 20) != 0)
-    {
-      printf ("oath_hex2bin: decode mismatch\n");
-      return 1;
-    }
+  /* Test deinitialization. */
 
   rc = oath_done ();
   if (rc != OATH_OK)

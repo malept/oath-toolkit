@@ -61,3 +61,11 @@ LIBOATH_1.10.0
     oath_totp_validate2;
     oath_totp_validate2_callback;
 } LIBOATH_1.8.0;
+
+LIBOATH_1.12.0
+{
+  global:
+    oath_bin2hex;
+    oath_base32_decode;
+    oath_base32_encode;
+} LIBOATH_1.10.0;

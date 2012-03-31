@@ -18,6 +18,7 @@ purpose "Generate and validate OATH one-time passwords."
 option "hotp" - "use event-based HOTP mode" flag on
 option "totp" - "use time-variant TOTP mode" flag off
 
+option "base32" b "use base32 encoding of KEY instead of hex" flag off
 option "counter" c "HOTP counter value" int typestr="COUNTER" no
 option "time-step-size" s "TOTP time-step duration" string typestr="DURATION" default="30s" no
 option "start-time" S "when to start counting time steps for TOTP" string typestr="TIME" default="1970-01-01 00:00:00 UTC" no

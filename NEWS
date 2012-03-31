@@ -1,7 +1,16 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.10.6 (unreleased)
+* Version 1.12.0 (unreleased)
+
+** oathtool: Added --base32 parameter to decode base32 keys.
+Suggested by Martin Michlmayr <tbm@cyrius.com>.
+
+** oathtool: Verbose output (-v) now print key in base32 and hex.
+
+** liboath: Added base32 functions.  Added hex encoding function.
+The new APIs are oath_bin2hex, oath_base32_decode, and
+oath_base32_encode.
 
 * Version 1.10.5 (released 2012-01-03)
 

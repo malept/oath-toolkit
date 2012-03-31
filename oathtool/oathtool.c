@@ -24,6 +24,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 /* Gnulib. */
 #include "progname.h"
@@ -123,7 +124,7 @@ main (int argc, char *argv[])
 {
   struct gengetopt_args_info args_info;
   char *secret;
-  size_t secretlen;
+  size_t secretlen = 0;
   int rc;
   size_t window;
   uint64_t moving_factor;
@@ -163,12 +164,26 @@ main (int argc, char *argv[])
       return EXIT_SUCCESS;
     }
 
-  secretlen = 1 + strlen (args_info.inputs[0]) / 2;
-  secret = malloc (secretlen);
+  if (args_info.base32_flag)
+    {
+      rc = oath_base32_decode (args_info.inputs[0],
+			       strlen (args_info.inputs[0]),
+			       &secret, &secretlen);
+      if (rc != OATH_OK)
+	error (EXIT_FAILURE, 0, "base32 decoding failed: %s",
+	       oath_strerror (rc));
+    }
+  else
+    {
+      secretlen = 1 + strlen (args_info.inputs[0]) / 2;
+      secret = malloc (secretlen);
+      if (!secret)
+	error (EXIT_FAILURE, errno, "malloc");
 
-  rc = oath_hex2bin (args_info.inputs[0], secret, &secretlen);
-  if (rc != OATH_OK)
-    error (EXIT_FAILURE, 0, "hex decoding of secret key failed");
+      rc = oath_hex2bin (args_info.inputs[0], secret, &secretlen);
+      if (rc != OATH_OK)
+	error (EXIT_FAILURE, 0, "hex decoding of secret key failed");
+    }
 
   if (args_info.counter_orig)
     moving_factor = args_info.counter_arg;
@@ -200,7 +215,25 @@ main (int argc, char *argv[])
 
   if (args_info.verbose_flag)
     {
-      printf ("Hex secret: %s\n", args_info.inputs[0]);
+      char *tmp;
+
+      tmp = malloc (2 * secretlen + 1);
+      if (!tmp)
+	error (EXIT_FAILURE, errno, "malloc");
+
+      oath_bin2hex (secret, secretlen, tmp);
+
+      printf ("Hex secret: %s\n", tmp);
+      free (tmp);
+
+      rc = oath_base32_encode (secret, secretlen, &tmp, NULL);
+      if (rc != OATH_OK)
+	error (EXIT_FAILURE, 0, "base32 encoding failed: %s",
+	       oath_strerror (rc));
+
+      printf ("Base32 secret: %s\n", tmp);
+      free (tmp);
+
       if (args_info.inputs_num == 2)
 	printf ("OTP: %s\n", args_info.inputs[1]);
       printf ("Digits: %d\n", digits);
@@ -314,6 +347,8 @@ main (int argc, char *argv[])
 	       "validating one-time password failed (%d)", rc);
       printf ("%d\n", rc);
     }
+
+  free (secret);
 
   return EXIT_SUCCESS;
 }
