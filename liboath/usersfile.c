@@ -20,7 +20,7 @@
  */
 
 #include <config.h>
-#undef GNULIB_POSIXCHECK /* too many complaints for now */
+#undef GNULIB_POSIXCHECK	/* too many complaints for now */
 
 #include "oath.h"
 
@@ -36,8 +36,7 @@ parse_type (const char *str, unsigned *digits, unsigned *totpstepsize)
 {
   *totpstepsize = 0;
   if (strcmp (str, "HOTP/E/6") == 0
-      || strcmp (str, "HOTP/E") == 0
-      || strcmp (str, "HOTP") == 0)
+      || strcmp (str, "HOTP/E") == 0 || strcmp (str, "HOTP") == 0)
     *digits = 6;
   else if (strcmp (str, "HOTP/E/7") == 0)
     *digits = 7;
@@ -46,8 +45,7 @@ parse_type (const char *str, unsigned *digits, unsigned *totpstepsize)
   else if (strncmp (str, "HOTP/T30", 8) == 0)
     {
       *totpstepsize = 30;
-      if (strcmp (str, "HOTP/T30") == 0
-	  || strcmp (str, "HOTP/T30/6") == 0)
+      if (strcmp (str, "HOTP/T30") == 0 || strcmp (str, "HOTP/T30/6") == 0)
 	*digits = 6;
       else if (strcmp (str, "HOTP/T30/7") == 0)
 	*digits = 7;
@@ -59,8 +57,7 @@ parse_type (const char *str, unsigned *digits, unsigned *totpstepsize)
   else if (strncmp (str, "HOTP/T60", 8) == 0)
     {
       *totpstepsize = 60;
-      if (strcmp (str, "HOTP/T60") == 0
-	  || strcmp (str, "HOTP/T60/6") == 0)
+      if (strcmp (str, "HOTP/T60") == 0 || strcmp (str, "HOTP/T60/6") == 0)
 	*digits = 6;
       else if (strcmp (str, "HOTP/T60/7") == 0)
 	*digits = 7;
@@ -103,7 +100,7 @@ parse_usersfile (const char *username,
 
       /* Read token type */
       if (parse_type (p, &digits, &totpstepsize) != 0)
-	  continue;
+	continue;
 
       /* Read username */
       p = strtok_r (NULL, whitespace, &saveptr);

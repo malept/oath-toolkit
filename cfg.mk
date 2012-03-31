@@ -20,6 +20,8 @@ ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := buildit
 endif
 
+INDENT_SOURCES = `find . -name '*.[ch]' | grep -v -e /gl/ -e build-aux`
+
 buildit:
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)

@@ -22,7 +22,7 @@
 #include <config.h>
 
 #include "oath.h"
-#include "aux.h" /* _oath_strcmp_callback */
+#include "aux.h"		/* _oath_strcmp_callback */
 
 /**
  * oath_totp_generate:
@@ -107,9 +107,7 @@ oath_totp_validate (const char *secret,
 		    size_t secret_length,
 		    time_t now,
 		    unsigned time_step_size,
-		    time_t start_offset,
-		    size_t window,
-		    const char *otp)
+		    time_t start_offset, size_t window, const char *otp)
 {
   return oath_totp_validate2 (secret, secret_length, now, time_step_size,
 			      start_offset, window, NULL, otp);
@@ -203,9 +201,7 @@ oath_totp_validate2 (const char *secret,
 		     time_t now,
 		     unsigned time_step_size,
 		     time_t start_offset,
-		     size_t window,
-		     int *otp_pos,
-		     const char *otp)
+		     size_t window, int *otp_pos, const char *otp)
 {
   return oath_totp_validate2_callback (secret, secret_length, now,
 				       time_step_size, start_offset,
@@ -314,8 +310,8 @@ oath_totp_validate2_callback (const char *secret,
 		*otp_pos = -iter;
 	      return iter;
 	    }
-          if (rc < 0)
-            return OATH_STRCMP_ERROR;
+	  if (rc < 0)
+	    return OATH_STRCMP_ERROR;
 	}
     }
   while (window - iter++ > 0);

@@ -144,7 +144,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
   int nargs = 1;
   struct cfg cfg;
   char *query_prompt = NULL;
-  char *onlypasswd = strdup(""); /* empty passwords never match */
+  char *onlypasswd = strdup ("");	/* empty passwords never match */
 
   parse_cfg (flags, argc, argv, &cfg);
 
@@ -162,7 +162,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
       if (retval != PAM_SUCCESS)
 	{
 	  DBG (("get password returned error: %s",
-	      pam_strerror (pamh, retval)));
+		pam_strerror (pamh, retval)));
 	  goto done;
 	}
       DBG (("get password returned: %s", password));
@@ -251,8 +251,7 @@ pam_sm_authenticate (pam_handle_t * pamh,
     }
   else if (cfg.digits != 0 && password_len < cfg.digits)
     {
-      DBG (("OTP shorter than digits=%d: %s",
-	    cfg.digits, password));
+      DBG (("OTP shorter than digits=%d: %s", cfg.digits, password));
       retval = PAM_AUTH_ERR;
       goto done;
     }
@@ -296,19 +295,15 @@ pam_sm_authenticate (pam_handle_t * pamh,
 
     rc = oath_authenticate_usersfile (cfg.usersfile,
 				      user,
-				      otp,
-				      cfg.window,
-				      onlypasswd,
-				      &last_otp);
+				      otp, cfg.window, onlypasswd, &last_otp);
     DBG (("authenticate rc %d (%s: %s) last otp %s", rc,
 	  oath_strerror_name (rc) ? oath_strerror_name (rc) : "UNKNOWN",
-	  oath_strerror (rc), ctime(&last_otp)));
+	  oath_strerror (rc), ctime (&last_otp)));
   }
 
   if (rc != OATH_OK)
     {
-      DBG (("One-time password not authorized to login as user '%s'",
-	    user));
+      DBG (("One-time password not authorized to login as user '%s'", user));
       retval = PAM_AUTH_ERR;
       goto done;
     }

@@ -23,7 +23,7 @@
 
 #include "aux.h"
 
-#include <string.h> /* strcmp */
+#include <string.h>		/* strcmp */
 
 int
 _oath_strcmp_callback (void *handle, const char *test_otp)

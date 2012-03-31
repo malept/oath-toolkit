@@ -22,7 +22,7 @@
 #include <config.h>
 
 #include "oath.h"
-#include "aux.h" /* _oath_strcmp_callback */
+#include "aux.h"		/* _oath_strcmp_callback */
 
 #include <stdio.h>		/* For snprintf. */
 
@@ -197,7 +197,7 @@ oath_hotp_validate_callback (const char *secret,
       if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	return iter;
       if (rc < 0)
-        return OATH_STRCMP_ERROR;
+	return OATH_STRCMP_ERROR;
     }
   while (window - iter++ > 0);
 

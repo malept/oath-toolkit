@@ -52,6 +52,7 @@ static size_t loop;
   787399
 */
 
+/* *INDENT-OFF* */
 static const struct {
   const char *user;
   const char *passwd;
@@ -76,6 +77,7 @@ static const struct {
   { "user3", "512368", PAM_AUTH_ERR },
   { "user3", "787399", PAM_SUCCESS },
 };
+/* *INDENT-ON* */
 
 static int
 oath_conv (int num_msg, const struct pam_message **msg,

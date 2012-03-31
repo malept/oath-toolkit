@@ -25,12 +25,13 @@
 
 #include <stdio.h>
 
-/* From RFC 6238. */
+/* *INDENT-OFF* */
 const struct {
   time_t secs;
   uint64_t T;
   char *otp;
 } tv[] = {
+  /* From RFC 6238. */
   { 59, 0x0000000000000001, "94287082" },
   { 1111111109, 0x00000000023523EC, "07081804" },
   { 1111111111, 0x00000000023523ED, "14050471" },
@@ -38,6 +39,7 @@ const struct {
   { 2000000000, 0x0000000003F940AA, "69279037" },
   { 20000000000, 0x0000000027BC86AA, "65353130" }
 };
+/* *INDENT-ON* */
 
 int
 main (void)
@@ -87,8 +89,7 @@ main (void)
 
       if (strcmp (otp, tv[i].otp) != 0)
 	{
-	  printf ("otp[%d] got %s expected %s\n",
-		  i, otp, tv[i].otp);
+	  printf ("otp[%d] got %s expected %s\n", i, otp, tv[i].otp);
 	  if (strcmp (otp, "82762030") == 0
 	      && strcmp (tv[i].otp, "65353130") == 0)
 	    printf ("Mismatch due to 32-bit time_t...\n");
@@ -96,8 +97,7 @@ main (void)
 	    return 1;
 	}
 
-      rc = oath_totp_generate (secret, secretlen, tv[i].secs,
-			       0, 0, 8, otp);
+      rc = oath_totp_generate (secret, secretlen, tv[i].secs, 0, 0, 8, otp);
       if (rc != OATH_OK)
 	{
 	  printf ("oath_totp_generate_time2: %d\n", rc);
@@ -107,8 +107,7 @@ main (void)
 
       if (strcmp (otp, tv[i].otp) != 0)
 	{
-	  printf ("otp[%d] got %s expected2 %s\n",
-		  i, otp, tv[i].otp);
+	  printf ("otp[%d] got %s expected2 %s\n", i, otp, tv[i].otp);
 	  if (strcmp (otp, "82762030") == 0
 	      && strcmp (tv[i].otp, "65353130") == 0)
 	    printf ("Mismatch due to 32-bit time_t...\n");

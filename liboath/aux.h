@@ -20,7 +20,7 @@
  */
 
 #ifndef AUX_H
-# define AUX_H
+#define AUX_H
 
 int _oath_strcmp_callback (void *handle, const char *test_otp);
 

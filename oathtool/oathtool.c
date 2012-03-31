@@ -43,20 +43,22 @@ const char version_etc_copyright[] =
 
 /* This feature is available in gcc versions 2.5 and later.  */
 #if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
-# define OATH_ATTR_NO_RETRUN
+#define OATH_ATTR_NO_RETURN
 #else
-# define OATH_ATTR_NO_RETRUN __attribute__ ((__noreturn__))
+#define OATH_ATTR_NO_RETURN __attribute__ ((__noreturn__))
 #endif
 
+/* *INDENT-OFF* */
 static void
-usage (int status) OATH_ATTR_NO_RETRUN;
+usage (int status)
+  OATH_ATTR_NO_RETURN;
+/* *INDENT-ON* */
 
 static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, "Try `%s --help' for more information.\n",
-	     program_name);
+    fprintf (stderr, "Try `%s --help' for more information.\n", program_name);
   else
     {
       cmdline_parser_print_help ();
@@ -82,8 +84,7 @@ parse_time (const char *p, const time_t now)
 static void
 verbose_hotp (uint64_t moving_factor)
 {
-  printf ("Start counter: 0x%lX (%ld)\n\n",
-	  moving_factor, moving_factor);
+  printf ("Start counter: 0x%lX (%ld)\n\n", moving_factor, moving_factor);
 }
 
 static void
@@ -95,8 +96,7 @@ verbose_totp (time_t t0, time_t time_step_size, time_t when)
   if (gmtime_r (&t0, &tmp) == NULL)
     error (EXIT_FAILURE, 0, "gmtime_r");
 
-  if (strftime (outstr, sizeof(outstr),
-		"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+  if (strftime (outstr, sizeof (outstr), "%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
     error (EXIT_FAILURE, 0, "strftime");
 
   printf ("Step size (seconds): %ld\n", time_step_size);
@@ -105,8 +105,7 @@ verbose_totp (time_t t0, time_t time_step_size, time_t when)
   if (gmtime_r (&when, &tmp) == NULL)
     error (EXIT_FAILURE, 0, "gmtime_r");
 
-  if (strftime (outstr, sizeof(outstr),
-		"%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
+  if (strftime (outstr, sizeof (outstr), "%Y-%m-%d %H:%M:%S UTC", &tmp) == 0)
     error (EXIT_FAILURE, 0, "strftime");
 
   printf ("Current time: %s (%ld)\n", outstr, when);
@@ -140,7 +139,7 @@ main (int argc, char *argv[])
   if (args_info.version_given)
     {
       char *p;
-      if (strcmp (oath_check_version ( NULL), OATH_VERSION) != 0)
+      if (strcmp (oath_check_version (NULL), OATH_VERSION) != 0)
 	asprintf (&p, "OATH Toolkit liboath.so %s oath.h %s",
 		  oath_check_version (NULL), OATH_VERSION);
       else if (strcmp (OATH_VERSION, PACKAGE_VERSION) != 0)
@@ -248,8 +247,7 @@ main (int argc, char *argv[])
       time_step_size = parse_duration (args_info.time_step_size_arg);
 
       if (when == BAD_TIME)
-	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
-	       args_info.now_arg);
+	error (EXIT_FAILURE, 0, "cannot parse time `%s'", args_info.now_arg);
 
       if (t0 == BAD_TIME)
 	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
@@ -278,9 +276,7 @@ main (int argc, char *argv[])
 				   secretlen,
 				   moving_factor + iter,
 				   digits,
-				   false,
-				   OATH_HOTP_DYNAMIC_TRUNCATION,
-				   otp);
+				   false, OATH_HOTP_DYNAMIC_TRUNCATION, otp);
 	  if (rc != OATH_OK)
 	    error (EXIT_FAILURE, 0,
 		   "generating one-time password failed (%d)", rc);
@@ -298,10 +294,7 @@ main (int argc, char *argv[])
 	  rc = oath_totp_generate (secret,
 				   secretlen,
 				   when + iter * time_step_size,
-				   time_step_size,
-				   t0,
-				   digits,
-				   otp);
+				   time_step_size, t0, digits, otp);
 	  if (rc != OATH_OK)
 	    error (EXIT_FAILURE, 0,
 		   "generating one-time password failed (%d)", rc);
@@ -314,9 +307,7 @@ main (int argc, char *argv[])
     {
       rc = oath_hotp_validate (secret,
 			       secretlen,
-			       moving_factor,
-			       window,
-			       args_info.inputs[1]);
+			       moving_factor, window, args_info.inputs[1]);
       if (rc == OATH_INVALID_OTP)
 	error (EXIT_OTP_INVALID, 0,
 	       "password \"%s\" not found in range %ld .. %ld",
@@ -333,9 +324,7 @@ main (int argc, char *argv[])
 			       secretlen,
 			       when,
 			       time_step_size,
-			       t0,
-			       window,
-			       args_info.inputs[1]);
+			       t0, window, args_info.inputs[1]);
       if (rc == OATH_INVALID_OTP)
 	error (EXIT_OTP_INVALID, 0,
 	       "password \"%s\" not found in range %ld .. %ld",

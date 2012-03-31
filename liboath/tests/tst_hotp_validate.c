@@ -43,74 +43,73 @@ const char *expect[MAX_DIGIT + 1][MAX_ITER] = {
   {},
   /* digit 6 */
   {
-    /* The first ten of these match the values in RFC 4226. */
-    "755224",
-    "287082",
-    "359152",
-    "969429",
-    "338314",
-    "254676",
-    "287922",
-    "162583",
-    "399871",
-    "520489",
-    "403154",
-    "481090",
-    "868912",
-    "736127",
-    "229903",
-    "436521",
-    "186581",
-    "447589",
-    "903435",
-    "578337"
-  },
+   /* The first ten of these match the values in RFC 4226. */
+   "755224",
+   "287082",
+   "359152",
+   "969429",
+   "338314",
+   "254676",
+   "287922",
+   "162583",
+   "399871",
+   "520489",
+   "403154",
+   "481090",
+   "868912",
+   "736127",
+   "229903",
+   "436521",
+   "186581",
+   "447589",
+   "903435",
+   "578337"},
   /* digit 7 */
   {
-    "4755224",
-    "4287082",
-    "7359152",
-    "6969429",
-    "0338314",
-    "8254676",
-    "8287922",
-    "2162583",
-    "3399871",
-    "5520489",
-    "2403154",
-    "3481090",
-    "7868912",
-    "3736127",
-    "5229903",
-    "3436521",
-    "2186581",
-    "4447589",
-    "1903435",
-    "1578337",
-  },
+   "4755224",
+   "4287082",
+   "7359152",
+   "6969429",
+   "0338314",
+   "8254676",
+   "8287922",
+   "2162583",
+   "3399871",
+   "5520489",
+   "2403154",
+   "3481090",
+   "7868912",
+   "3736127",
+   "5229903",
+   "3436521",
+   "2186581",
+   "4447589",
+   "1903435",
+   "1578337",
+   },
   /* digit 8 */
   {
-    "84755224",
-    "94287082",
-    "37359152",
-    "26969429",
-    "40338314",
-    "68254676",
-    "18287922",
-    "82162583",
-    "73399871",
-    "45520489",
-    "72403154",
-    "43481090",
-    "47868912",
-    "33736127",
-    "35229903",
-    "23436521",
-    "22186581",
-    "94447589",
-    "71903435",
-    "21578337",
-  }
+   "84755224",
+   "94287082",
+   "37359152",
+   "26969429",
+   "40338314",
+   "68254676",
+   "18287922",
+   "82162583",
+   "73399871",
+   "45520489",
+   "72403154",
+   "43481090",
+   "47868912",
+   "33736127",
+   "35229903",
+   "23436521",
+   "22186581",
+   "94447589",
+   "71903435",
+   "21578337",
+   }
 };
 
 static int
@@ -142,7 +141,8 @@ main (void)
       {
 	size_t i;
 
-	rc = oath_hotp_validate (secret, secretlen, 0, 20, expect[digits][moving_factor]);
+	rc = oath_hotp_validate (secret, secretlen, 0, 20,
+				 expect[digits][moving_factor]);
 	if (rc != moving_factor)
 	  {
 	    printf ("validate failed on digits %d moving factor %ld\n",
@@ -152,19 +152,21 @@ main (void)
 
 	for (i = 0; i < moving_factor; i++)
 	  {
-	    rc = oath_hotp_validate (secret, secretlen, 0, i, expect[digits][moving_factor]);
+	    rc = oath_hotp_validate (secret, secretlen, 0, i,
+				     expect[digits][moving_factor]);
 	    if (rc != OATH_INVALID_OTP)
 	      {
-		printf ("unexpected return code %d for digits %d and iter %d\n",
-			rc, digits, i);
+		printf ("unexpected return code %d for "
+			"digits %d and iter %d\n", rc, digits, i);
 		return 1;
 	      }
 	  }
 
 	rc = oath_hotp_validate_callback (secret, secretlen, 0, 20,
-					  strlen (expect[digits][moving_factor]),
-					  my_strcmp,
-					  (void *) expect[digits][moving_factor]);
+					  strlen (expect[digits]
+						  [moving_factor]), my_strcmp,
+					  (void *)
+					  expect[digits][moving_factor]);
 	if (rc != moving_factor)
 	  {
 	    printf ("validate failed on digits %d moving factor %ld\n",
@@ -175,13 +177,15 @@ main (void)
 	for (i = 0; i < moving_factor; i++)
 	  {
 	    rc = oath_hotp_validate_callback (secret, secretlen, 0, i,
-					      strlen (expect[digits][moving_factor]),
+					      strlen (expect[digits]
+						      [moving_factor]),
 					      my_strcmp,
-					      (void *) expect[digits][moving_factor]);
+					      (void *)
+					      expect[digits][moving_factor]);
 	    if (rc != OATH_INVALID_OTP)
 	      {
-		printf ("unexpected return code %d for digits %d and iter %d\n",
-			rc, digits, i);
+		printf ("unexpected return code %d for "
+			"digits %d and iter %d\n", rc, digits, i);
 		return 1;
 	      }
 	  }

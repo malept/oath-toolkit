@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 
+/* *INDENT-OFF* */
 const struct {
   time_t now;
   unsigned window;
@@ -43,6 +44,7 @@ const struct {
   { 1111111000, 10, "14050471", 4, 4},
   { 1111112000, 99, "14050471", 29, -29},
 };
+/* *INDENT-ON* */
 
 static int
 my_strcmp (void *handle, const char *test_otp)
