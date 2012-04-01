@@ -1,12 +1,12 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.12.0 (unreleased)
+* Version 1.12.0 (released 2012-04-01)
 
 ** oathtool: Added --base32 parameter to decode base32 keys.
 Suggested by Martin Michlmayr <tbm@cyrius.com>.
 
-** oathtool: Verbose output (-v) now print key in base32 and hex.
+** oathtool: Verbose output (-v) now print key data in base32 format too.
 
 ** liboath: Added base32 functions.  Added hex encoding function.
 The new APIs are oath_bin2hex, oath_base32_decode, and
@@ -15,6 +15,14 @@ oath_base32_encode.
 ** liboath: Gnulib's snprintf is used for better portability.
 The system snprintf is known to have bugs on some systems, see the
 Gnulib manual for more information.
+
+** API and ABI is backwards compatible with the previous version.
+oath_bin2hex: New function.
+oath_base32_decode: New function.
+oath_base32_encode: New function.
+OATH_INVALID_BASE32: New error code.
+OATH_BASE32_OVERFLOW: New error code.
+OATH_MALLOC_ERROR: New error code.
 
 * Version 1.10.5 (released 2012-01-03)
 
