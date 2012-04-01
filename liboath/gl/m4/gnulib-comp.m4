@@ -40,6 +40,7 @@ AC_DEFUN([gl_EARLY],
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
   # Code from module base32:
+  # Code from module c-ctype:
   # Code from module canonicalize-lgpl:
   # Code from module chdir:
   # Code from module close:
@@ -493,6 +494,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/base32.c
   lib/base32.h
   lib/basename-lgpl.c
+  lib/c-ctype.c
+  lib/c-ctype.h
   lib/canonicalize-lgpl.c
   lib/close.c
   lib/dirname-lgpl.c

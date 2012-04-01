@@ -1,6 +1,11 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 1.12.1 (unreleased)
+
+** liboath, oathtool: Base32 decoding now permit lowercase characters.
+Reported by Martin Michlmayr <tbm@cyrius.com>.
+
 * Version 1.12.0 (released 2012-04-01)
 
 ** oathtool: Added --base32 parameter to decode base32 keys.

@@ -52,6 +52,8 @@ liboath/gl/base32.o
 liboath/gl/basename-lgpl.lo
 liboath/gl/basename-lgpl.o
 liboath/gl/c++defs.h
+liboath/gl/c-ctype.lo
+liboath/gl/c-ctype.o
 liboath/gl/dirname-lgpl.lo
 liboath/gl/dirname-lgpl.o
 liboath/gl/fclose.lo

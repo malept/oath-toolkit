@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include "base32.h"
+#include "c-ctype.h"
 
 static int
 hex_decode (char hex)
@@ -203,9 +204,21 @@ oath_bin2hex (const char *binstr, size_t binlen, char *hexstr)
 int
 oath_base32_decode (const char *in, size_t inlen, char **out, size_t * outlen)
 {
-  size_t tmplen = 0;
+  size_t i, tmplen = 0;
+  char *in_upcase;
   char *tmp;
-  bool ok = base32_decode_alloc (in, inlen, &tmp, &tmplen);
+  bool ok;
+
+  in_upcase = malloc (inlen);
+  if (!in_upcase)
+    return OATH_MALLOC_ERROR;
+
+  for (i = 0; i < inlen; i++)
+    in_upcase[i] = c_toupper (in[i]);
+
+  ok = base32_decode_alloc (in_upcase, inlen, &tmp, &tmplen);
+
+  free (in_upcase);
 
   if (ok && !tmp)
     return OATH_MALLOC_ERROR;
