@@ -57,6 +57,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module fd-hook:
   # Code from module fflush:
   AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module float:
   # Code from module fopen:
   # Code from module fpurge:
   # Code from module freading:
@@ -92,11 +93,13 @@ AC_DEFUN([gl_EARLY],
   # Code from module rename:
   # Code from module rmdir:
   # Code from module same-inode:
+  # Code from module size_max:
   # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/unused-parameter:
   # Code from module snippet/warn-on-use:
+  # Code from module snprintf:
   # Code from module ssize_t:
   # Code from module stat:
   # Code from module stdalign:
@@ -114,8 +117,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module unistd:
   # Code from module unlink:
   # Code from module valgrind-tests:
+  # Code from module vasnprintf:
   # Code from module verify:
   # Code from module warnings:
+  # Code from module wchar:
+  # Code from module xsize:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -175,6 +181,13 @@ if test $REPLACE_FFLUSH = 1; then
 fi
 gl_MODULE_INDICATOR([fflush])
 gl_STDIO_MODULE_INDICATOR([fflush])
+gl_FLOAT_H
+if test $REPLACE_FLOAT_LDBL = 1; then
+  AC_LIBOBJ([float])
+fi
+if test $REPLACE_ITOLD = 1; then
+  AC_LIBOBJ([itold])
+fi
 gl_FUNC_FOPEN
 if test $REPLACE_FOPEN = 1; then
   AC_LIBOBJ([fopen])
@@ -282,6 +295,10 @@ if test $REPLACE_RMDIR = 1; then
   AC_LIBOBJ([rmdir])
 fi
 gl_UNISTD_MODULE_INDICATOR([rmdir])
+gl_SIZE_MAX
+gl_FUNC_SNPRINTF
+gl_STDIO_MODULE_INDICATOR([snprintf])
+gl_MODULE_INDICATOR([snprintf])
 gt_TYPE_SSIZE_T
 gl_FUNC_STAT
 if test $REPLACE_STAT = 1; then
@@ -324,7 +341,10 @@ if test $REPLACE_UNLINK = 1; then
 fi
 gl_UNISTD_MODULE_INDICATOR([unlink])
 gl_VALGRIND_TESTS
+gl_FUNC_VASNPRINTF
 AC_SUBST([WARN_CFLAGS])
+gl_WCHAR_H
+gl_XSIZE
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -469,6 +489,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/unused-parameter.h
   build-aux/snippet/warn-on-use.h
   lib/alloca.in.h
+  lib/asnprintf.c
   lib/base32.c
   lib/base32.h
   lib/basename-lgpl.c
@@ -482,6 +503,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fd-hook.c
   lib/fd-hook.h
   lib/fflush.c
+  lib/float+.h
+  lib/float.c
+  lib/float.in.h
   lib/fopen.c
   lib/fpurge.c
   lib/freading.c
@@ -498,6 +522,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getline.c
   lib/hmac-sha1.c
   lib/hmac.h
+  lib/itold.c
   lib/lseek.c
   lib/lstat.c
   lib/malloc.c
@@ -513,6 +538,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
   lib/pathmax.h
+  lib/printf-args.c
+  lib/printf-args.h
+  lib/printf-parse.c
+  lib/printf-parse.h
   lib/readlink.c
   lib/realloc.c
   lib/rename.c
@@ -520,6 +549,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/same-inode.h
   lib/sha1.c
   lib/sha1.h
+  lib/size_max.h
+  lib/snprintf.c
   lib/stat.c
   lib/stdalign.in.h
   lib/stdbool.in.h
@@ -537,7 +568,11 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/time.in.h
   lib/unistd.in.h
   lib/unlink.c
+  lib/vasnprintf.c
+  lib/vasnprintf.h
   lib/verify.h
+  lib/wchar.in.h
+  lib/xsize.h
   m4/00gnulib.m4
   m4/alloca.m4
   m4/base32.m4
@@ -547,9 +582,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/double-slash-root.m4
   m4/eealloc.m4
   m4/errno_h.m4
+  m4/exponentd.m4
   m4/extensions.m4
   m4/fclose.m4
   m4/fflush.m4
+  m4/float_h.m4
   m4/fopen.m4
   m4/fpurge.m4
   m4/freading.m4
@@ -564,6 +601,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/getline.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/intmax_t.m4
+  m4/inttypes_h.m4
   m4/largefile.m4
   m4/ld-version-script.m4
   m4/lib-ld.m4
@@ -575,6 +614,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/malloc.m4
   m4/malloca.m4
   m4/manywarnings.m4
+  m4/math_h.m4
   m4/memchr.m4
   m4/memxor.m4
   m4/mmap-anon.m4
@@ -584,17 +624,21 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/nocrash.m4
   m4/onceonly.m4
   m4/pathmax.m4
+  m4/printf.m4
   m4/readlink.m4
   m4/realloc.m4
   m4/rename.m4
   m4/rmdir.m4
   m4/sha1.m4
+  m4/size_max.m4
+  m4/snprintf.m4
   m4/ssize_t.m4
   m4/stat.m4
   m4/stdalign.m4
   m4/stdbool.m4
   m4/stddef_h.m4
   m4/stdint.m4
+  m4/stdint_h.m4
   m4/stdio_h.m4
   m4/stdlib_h.m4
   m4/strdup.m4
@@ -606,8 +650,12 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/unistd_h.m4
   m4/unlink.m4
   m4/valgrind-tests.m4
+  m4/vasnprintf.m4
   m4/visibility.m4
   m4/warn-on-use.m4
   m4/warnings.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
+  m4/wint_t.m4
+  m4/xsize.m4
 ])

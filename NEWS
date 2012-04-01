@@ -12,6 +12,10 @@ Suggested by Martin Michlmayr <tbm@cyrius.com>.
 The new APIs are oath_bin2hex, oath_base32_decode, and
 oath_base32_encode.
 
+** liboath: Gnulib's snprintf is used for better portability.
+The system snprintf is known to have bugs on some systems, see the
+Gnulib manual for more information.
+
 * Version 1.10.5 (released 2012-01-03)
 
 ** Build fixes.
