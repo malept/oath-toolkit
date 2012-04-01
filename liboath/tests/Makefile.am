@@ -16,31 +16,25 @@
 # 02110-1301 USA
 
 AM_CPPFLAGS = -I$(srcdir)/..
-AM_LDFLAGS = -no-install -static
+AM_LDFLAGS = -no-install
 
 LDADD = ../liboath.la
 
 EXTRA_DIST = users.oath expect.oath
 
-TESTS = \
-	tst_basic$(EXEEXT) \
-	tst_coding$(EXEEXT) \
-	tst_errors$(EXEEXT) \
-	tst_hotp_algo$(EXEEXT) \
-	tst_hotp_validate$(EXEEXT) \
-	tst_totp_algo$(EXEEXT) \
-	tst_totp_validate$(EXEEXT) \
-	tst_usersfile.sh
-check_PROGRAMS = \
-	tst_basic$(EXEEXT) \
-	tst_coding$(EXEEXT) \
-	tst_errors$(EXEEXT) \
-	tst_hotp_algo$(EXEEXT) \
-	tst_hotp_validate$(EXEEXT) \
-	tst_totp_algo$(EXEEXT) \
-	tst_totp_validate$(EXEEXT) \
-	tst_usersfile$(EXEEXT)
+ctests = \
+	tst_basic \
+	tst_coding \
+	tst_errors \
+	tst_hotp_algo \
+	tst_hotp_validate \
+	tst_totp_algo \
+	tst_totp_validate
+
+check_PROGRAMS = $(ctests) tst_usersfile
 dist_check_SCRIPTS = tst_usersfile.sh
+
+TESTS = $(ctests) $(dist_check_SCRIPTS)
 
 TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
 
