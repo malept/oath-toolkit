@@ -125,7 +125,6 @@ man-upload:
 
 source:
 	-git commit -m Generated. ChangeLog
-	git tag -u b565716f! -m $(VERSION) $(tag)
 
 release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
 
@@ -138,5 +137,8 @@ release-upload-ftp:
 	gpg --verify $(distdir).tar.gz.sig
 	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 	scp $(distdir).tar.gz $(distdir).tar.gz.sig jas@dl.sv.nongnu.org:/releases/oath-toolkit/
+
+tag: # Use "make tag VERSION=1.2.3"
+	git tag -s -u b565716f -m $(VERSION) $(tag)
 
 release: release-check release-upload-www source release-upload-ftp
