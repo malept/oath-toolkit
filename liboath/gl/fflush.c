@@ -28,6 +28,8 @@
 
 #include "stdio-impl.h"
 
+#include "unused-parameter.h"
+
 #undef fflush
 
 
@@ -88,8 +90,8 @@ restore_seek_optimization (FILE *fp, int saved_flags)
 #endif
 
 static inline void
-update_fpos_cache (FILE *fp,
-                   off_t pos)
+update_fpos_cache (FILE *fp _GL_UNUSED_PARAMETER,
+                   off_t pos _GL_UNUSED_PARAMETER)
 {
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 # if defined __CYGWIN__

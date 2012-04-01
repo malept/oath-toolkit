@@ -488,6 +488,31 @@ EXTRA_DIST += $(top_srcdir)/build-aux/snippet/c++defs.h
 
 ## end   gnulib module snippet/c++defs
 
+## begin gnulib module snippet/unused-parameter
+
+# The BUILT_SOURCES created by this Makefile snippet are not used via #include
+# statements but through direct file reference. Therefore this snippet must be
+# present in all Makefile.am that need it. This is ensured by the applicability
+# 'all' defined above.
+
+BUILT_SOURCES += unused-parameter.h
+# The unused-parameter.h that gets inserted into generated .h files is the same
+# as build-aux/snippet/unused-parameter.h, except that it has the copyright
+# header cut off.
+unused-parameter.h: $(top_srcdir)/build-aux/snippet/unused-parameter.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/GL_UNUSED_PARAMETER/,$$p' \
+	  < $(top_srcdir)/build-aux/snippet/unused-parameter.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += unused-parameter.h unused-parameter.h-t
+
+UNUSED_PARAMETER_H=unused-parameter.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/unused-parameter.h
+
+## end   gnulib module snippet/unused-parameter
+
 ## begin gnulib module snippet/warn-on-use
 
 BUILT_SOURCES += warn-on-use.h

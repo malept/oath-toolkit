@@ -95,6 +95,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
+  # Code from module snippet/unused-parameter:
   # Code from module snippet/warn-on-use:
   # Code from module ssize_t:
   # Code from module stat:
@@ -465,6 +466,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/_Noreturn.h
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
+  build-aux/snippet/unused-parameter.h
   build-aux/snippet/warn-on-use.h
   lib/alloca.in.h
   lib/base32.c
