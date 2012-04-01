@@ -1,3 +1,185 @@
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.12.0.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/errors.c: Drop fake gettext calls to avoid compiler
+	warnings.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, liboath/gl/Makefile.am, liboath/gl/asnprintf.c,
+	liboath/gl/float+.h, liboath/gl/float.c, liboath/gl/float.in.h,
+	liboath/gl/itold.c, liboath/gl/m4/exponentd.m4,
+	liboath/gl/m4/float_h.m4, liboath/gl/m4/gnulib-cache.m4,
+	liboath/gl/m4/gnulib-comp.m4, liboath/gl/m4/intmax_t.m4,
+	liboath/gl/m4/inttypes_h.m4, liboath/gl/m4/math_h.m4,
+	liboath/gl/m4/printf.m4, liboath/gl/m4/size_max.m4,
+	liboath/gl/m4/snprintf.m4, liboath/gl/m4/stdint_h.m4,
+	liboath/gl/m4/vasnprintf.m4, liboath/gl/m4/wchar_h.m4,
+	liboath/gl/m4/wint_t.m4, liboath/gl/m4/xsize.m4,
+	liboath/gl/printf-args.c, liboath/gl/printf-args.h,
+	liboath/gl/printf-parse.c, liboath/gl/printf-parse.h,
+	liboath/gl/size_max.h, liboath/gl/snprintf.c,
+	liboath/gl/vasnprintf.c, liboath/gl/vasnprintf.h,
+	liboath/gl/wchar.in.h, liboath/gl/xsize.h: Use gnulib snprintf for
+	portability.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix git tagging.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/build-aux/snippet/unused-parameter.h,
+	liboath/gl/Makefile.am, liboath/gl/fflush.c,
+	liboath/gl/m4/gnulib-comp.m4: Update gnulib files.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk, liboath/aux.c, liboath/aux.h, liboath/hotp.c,
+	liboath/tests/tst_hotp_algo.c, liboath/tests/tst_hotp_validate.c,
+	liboath/tests/tst_totp_algo.c, liboath/tests/tst_totp_validate.c,
+	liboath/tests/tst_usersfile.c, liboath/totp.c, liboath/usersfile.c,
+	oathtool/oathtool.c, pam_oath/pam_oath.c,
+	pam_oath/tests/test-pam_oath-root.c: Indent code.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, liboath/coding.c, liboath/errors.c,
+	liboath/gtk-doc/liboath-docs.sgml, liboath/liboath.map,
+	liboath/oath.h.in, liboath/tests/Makefile.am,
+	liboath/tests/tst_basic.c, liboath/tests/tst_coding.c,
+	liboath/tests/tst_errors.c, oathtool/oathtool.c,
+	oathtool/oathtool.ggo, oathtool/oathtool.h2m,
+	oathtool/tests/tst_oathtool.sh: liboath, oathtool: Add base32
+	decoding support.  Suggested by Martin Michlmayr <tbm@cyrius.com>.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gl/fflush.c: Temporarily fix broken gnulib code.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/errors.c: Fix gsasl_strerror (OATH_STRCMP_ERROR).
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gl/Makefile.am, liboath/gl/base32.c, liboath/gl/base32.h,
+	liboath/gl/m4/base32.m4, liboath/gl/m4/gnulib-cache.m4,
+	liboath/gl/m4/gnulib-comp.m4, liboath/gl/m4/memchr.m4,
+	liboath/gl/m4/mmap-anon.m4, liboath/gl/memchr.c,
+	liboath/gl/memchr.valgrind: Add base32 gnulib module.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/git-version-gen,
+	build-aux/update-copyright, liboath/gl/Makefile.am,
+	liboath/gl/alloca.in.h, liboath/gl/canonicalize-lgpl.c,
+	liboath/gl/errno.in.h, liboath/gl/fflush.c, liboath/gl/fpurge.c,
+	liboath/gl/freading.c, liboath/gl/fseeko.c, liboath/gl/gc-gnulib.c,
+	liboath/gl/gc-libgcrypt.c, liboath/gl/gc.h, liboath/gl/getdelim.c,
+	liboath/gl/getline.c, liboath/gl/hmac-sha1.c, liboath/gl/hmac.h,
+	liboath/gl/lseek.c, liboath/gl/m4/stdalign.m4,
+	liboath/gl/m4/stdio_h.m4, liboath/gl/m4/warn-on-use.m4,
+	liboath/gl/m4/warnings.m4, liboath/gl/malloc.c,
+	liboath/gl/malloca.c, liboath/gl/malloca.h, liboath/gl/memxor.c,
+	liboath/gl/memxor.h, liboath/gl/msvc-inval.c,
+	liboath/gl/msvc-inval.h, liboath/gl/msvc-nothrow.c,
+	liboath/gl/msvc-nothrow.h, liboath/gl/pathmax.h, liboath/gl/sha1.c,
+	liboath/gl/sha1.h, liboath/gl/stdalign.in.h,
+	liboath/gl/stdbool.in.h, liboath/gl/stddef.in.h,
+	liboath/gl/stdint.in.h, liboath/gl/stdio-impl.h,
+	liboath/gl/stdio.in.h, liboath/gl/stdlib.in.h, liboath/gl/strdup.c,
+	liboath/gl/string.in.h, liboath/gl/strverscmp.c,
+	liboath/gl/sys_stat.in.h, liboath/gl/time.in.h,
+	liboath/gl/unistd.in.h, maint.mk, oathtool/gl/Makefile.am,
+	oathtool/gl/alloca.in.h, oathtool/gl/asnprintf.c,
+	oathtool/gl/asprintf.c, oathtool/gl/c-ctype.c,
+	oathtool/gl/c-ctype.h, oathtool/gl/errno.in.h,
+	oathtool/gl/float+.h, oathtool/gl/gettext.h,
+	oathtool/gl/gettimeofday.c, oathtool/gl/m4/exponentd.m4,
+	oathtool/gl/m4/gettimeofday.m4, oathtool/gl/m4/math_h.m4,
+	oathtool/gl/m4/stdio_h.m4, oathtool/gl/m4/sys_time_h.m4,
+	oathtool/gl/m4/vasnprintf.m4, oathtool/gl/m4/warn-on-use.m4,
+	oathtool/gl/malloca.c, oathtool/gl/malloca.h, oathtool/gl/mktime.c,
+	oathtool/gl/msvc-inval.c, oathtool/gl/msvc-inval.h,
+	oathtool/gl/msvc-nothrow.c, oathtool/gl/msvc-nothrow.h,
+	oathtool/gl/parse-datetime.y, oathtool/gl/parse-duration.h,
+	oathtool/gl/printf-args.c, oathtool/gl/printf-args.h,
+	oathtool/gl/printf-parse.c, oathtool/gl/printf-parse.h,
+	oathtool/gl/size_max.h, oathtool/gl/stdarg.in.h,
+	oathtool/gl/stdbool.in.h, oathtool/gl/stddef.in.h,
+	oathtool/gl/stdint.in.h, oathtool/gl/stdio.in.h,
+	oathtool/gl/stdlib.in.h, oathtool/gl/string.in.h,
+	oathtool/gl/sys_time.in.h, oathtool/gl/time.in.h,
+	oathtool/gl/time_r.c, oathtool/gl/unistd.in.h,
+	oathtool/gl/vasnprintf.c, oathtool/gl/vasnprintf.h,
+	oathtool/gl/vasprintf.c, oathtool/gl/version-etc.h,
+	oathtool/gl/wchar.in.h, oathtool/gl/xsize.h: Update gnulib files.
+
+2012-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/Makefile.am, liboath/coding.c, liboath/global.c,
+	liboath/oath.h.in: Move oath_hex2bin to new file coding.c.  Use
+	const in prototype.
+
+2012-01-26  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/git-version-gen,
+	build-aux/useless-if-before-free, gl/m4/gnulib-common.m4,
+	gl/m4/onceonly.m4, liboath/build-aux/config.rpath,
+	liboath/gl/Makefile.am, liboath/gl/canonicalize-lgpl.c,
+	liboath/gl/dirname-lgpl.c, liboath/gl/lstat.c,
+	liboath/gl/m4/alloca.m4, liboath/gl/m4/extensions.m4,
+	liboath/gl/m4/gnulib-common.m4, liboath/gl/m4/include_next.m4,
+	liboath/gl/m4/ld-version-script.m4, liboath/gl/m4/longlong.m4,
+	liboath/gl/m4/lstat.m4, liboath/gl/m4/onceonly.m4,
+	liboath/gl/m4/stdalign.m4, liboath/gl/m4/stdlib_h.m4,
+	liboath/gl/m4/time_h.m4, liboath/gl/malloca.c,
+	liboath/gl/msvc-inval.c, liboath/gl/msvc-inval.h,
+	liboath/gl/msvc-nothrow.c, liboath/gl/stdalign.in.h,
+	liboath/gl/stdint.in.h, liboath/gl/stdio.in.h,
+	liboath/gl/stdlib.in.h, liboath/gl/stripslash.c,
+	liboath/gl/strverscmp.c, liboath/gl/sys_stat.in.h,
+	liboath/gl/unistd.in.h, liboath/gl/verify.h, maint.mk,
+	oathtool/gl/Makefile.am, oathtool/gl/error.c, oathtool/gl/error.h,
+	oathtool/gl/m4/alloca.m4, oathtool/gl/m4/bison.m4,
+	oathtool/gl/m4/extensions.m4, oathtool/gl/m4/gnulib-common.m4,
+	oathtool/gl/m4/include_next.m4, oathtool/gl/m4/longlong.m4,
+	oathtool/gl/m4/onceonly.m4, oathtool/gl/m4/printf.m4,
+	oathtool/gl/m4/stdlib_h.m4, oathtool/gl/m4/time_h.m4,
+	oathtool/gl/malloca.c, oathtool/gl/mktime.c,
+	oathtool/gl/msvc-inval.c, oathtool/gl/msvc-inval.h,
+	oathtool/gl/msvc-nothrow.c, oathtool/gl/parse-datetime.y,
+	oathtool/gl/printf-parse.c, oathtool/gl/setenv.c,
+	oathtool/gl/stdint.in.h, oathtool/gl/stdio.in.h,
+	oathtool/gl/stdlib.in.h, oathtool/gl/unistd.in.h,
+	oathtool/gl/unsetenv.c, oathtool/gl/vasnprintf.c,
+	oathtool/gl/verify.h, oathtool/gl/version-etc.h: Update gnulib
+	files.
+
+2012-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump version.
+
+2012-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* pam_oath/tests/test-pam_oath-root.c: Silence warnings.
+
+2012-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.5.
+
+2012-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.10.4.
+
+2012-01-03  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2012-01-03  Simon Josefsson <simon@josefsson.org>
 
 	* build-aux/oath-toolkit-version: Fix version number generation.
