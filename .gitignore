@@ -1,3 +1,6 @@
+*.gcda
+*.gcno
+*.gcov
 *~
 .version
 INSTALL
@@ -11,6 +14,7 @@ build-aux/missing
 config.log
 config.status
 configure
+doc/coverage/
 gl/.deps/
 gl/dummy.o
 gl/libgnu.a
@@ -41,6 +45,8 @@ liboath/gl/.deps/
 liboath/gl/.libs/
 liboath/gl/alloca.h
 liboath/gl/arg-nonnull.h
+liboath/gl/asnprintf.lo
+liboath/gl/asnprintf.o
 liboath/gl/base32.lo
 liboath/gl/base32.o
 liboath/gl/basename-lgpl.lo
@@ -71,6 +77,10 @@ liboath/gl/malloca.lo
 liboath/gl/malloca.o
 liboath/gl/memxor.lo
 liboath/gl/memxor.o
+liboath/gl/printf-args.lo
+liboath/gl/printf-args.o
+liboath/gl/printf-parse.lo
+liboath/gl/printf-parse.o
 liboath/gl/sha1.lo
 liboath/gl/sha1.o
 liboath/gl/stdalign.h
@@ -82,7 +92,11 @@ liboath/gl/stripslash.o
 liboath/gl/sys/
 liboath/gl/time.h
 liboath/gl/unistd.h
+liboath/gl/unused-parameter.h
+liboath/gl/vasnprintf.lo
+liboath/gl/vasnprintf.o
 liboath/gl/warn-on-use.h
+liboath/gl/wchar.h
 liboath/global.lo
 liboath/global.o
 liboath/gtk-doc/Makefile
@@ -202,6 +216,7 @@ liboath/totp.o
 liboath/usersfile.lo
 liboath/usersfile.o
 oath-toolkit-*.tar.gz
+oath-toolkit-*.tar.gz.sig
 oathtool/.deps/
 oathtool/.libs/
 oathtool/Makefile
@@ -358,5 +373,6 @@ pam_oath/tests/test-pam_oath
 pam_oath/tests/test-pam_oath-root
 pam_oath/tests/test-pam_oath-root.o
 pam_oath/tests/test-pam_oath.o
+scan.tmp/
 tests/test-pam_oath-root
 tests/test-pam_oath-root.o
