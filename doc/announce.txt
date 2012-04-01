@@ -1,19 +1,33 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.10.5
+Subject: OATH Toolkit 1.12.0
 <#part sign=pgpmime>
-I realized we had some fixes that have been waiting for way to long for
-a release, so here it is (finally).
+This implements the base32 idea.
 
 Happy hacking,
 Simon
 
-* Version 1.10.5 (released 2012-01-03)
+* Version 1.12.0 (released 2012-04-01)
 
-** Build fixes.
-From Linus Nordberg <linus@nordberg.se> and Arno Hautala
-<arno@alum.wpi.edu>.
+** oathtool: Added --base32 parameter to decode base32 keys.
+Suggested by Martin Michlmayr <tbm@cyrius.com>.
 
-** Update gnulib files.
+** oathtool: Verbose output (-v) now print key data in base32 format too.
+
+** liboath: Added base32 functions.  Added hex encoding function.
+The new APIs are oath_bin2hex, oath_base32_decode, and
+oath_base32_encode.
+
+** liboath: Gnulib's snprintf is used for better portability.
+The system snprintf is known to have bugs on some systems, see the
+Gnulib manual for more information.
+
+** API and ABI is backwards compatible with the previous version.
+oath_bin2hex: New function.
+oath_base32_decode: New function.
+oath_base32_encode: New function.
+OATH_INVALID_BASE32: New error code.
+OATH_BASE32_OVERFLOW: New error code.
+OATH_MALLOC_ERROR: New error code.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains a shared library, a command line
@@ -47,16 +61,20 @@ are invited to join our oath-toolkit-help mailing list, see:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.5.tar.gz (1.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.10.5.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.0.tar.gz (1.9MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.0.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
 
-pub   1280R/B565716F 2002-05-05 [expires: 2012-01-24]
+pub   1280R/B565716F 2002-05-05 [expires: 2013-05-10]
       Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
 uid                  Simon Josefsson <simon@josefsson.org>
-sub   1280R/4D5D40AE 2002-05-05 [expires: 2012-01-24]
+uid                  Simon Josefsson <simon@yubico.com>
+sub   2048R/105E722E 2012-03-13 [expires: 2013-07-26]
+sub   2048R/728AB82C 2012-03-13 [expires: 2013-07-26]
+sub   2048R/9394F626 2012-03-13 [expires: 2013-07-26]
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2013-05-10]
 
 The key is available from:
   http://josefsson.org/key.txt
@@ -64,9 +82,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-b3fddfbc442c7cffe854ec159466155ef6ce0cbc  oath-toolkit-1.10.5.tar.gz
-
-d4d7bba29559d81693513195a8f21ed4ab85b04d661976fd62728ed8  oath-toolkit-1.10.5.tar.gz
+d839ed4748220fc77cc80743816b48cef1a75f5b  oath-toolkit-1.12.0.tar.gz
+b5bc793e8db05fa9b9f5f1b8bcf4cae90218d8fd816bba2ed00f59af  oath-toolkit-1.12.0.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
