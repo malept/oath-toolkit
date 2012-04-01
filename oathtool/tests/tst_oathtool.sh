@@ -61,6 +61,7 @@ dotest "-z" "fail" fail
 dotest "Z" "fail" fail
 dotest "00" "328482"
 dotest "--base32 GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ" "755224"
+dotest "--base32 gezdgnbvgy3tqojqgezdgnbvgy3tqojq" "755224"
 dotest "-d 6 00" "328482"
 dotest "-d 9 00" "fail" fail
 dotest "--digits=6 00" "328482"

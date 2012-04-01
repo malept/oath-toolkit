@@ -242,6 +242,18 @@ main (void)
       return 1;
     }
 
+  rc = oath_base32_decode ("mzxw6===", 8, NULL, &len);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_base32_decode: %d\n", rc);
+      return 1;
+    }
+  if (len != strlen ("foo"))
+    {
+      printf ("oath_base32_decode length mismatch: %d\n", len);
+      return 1;
+    }
+
   rc = oath_base32_decode ("MZXW6===", 8, &tmp, NULL);
   if (rc != OATH_OK)
     {
