@@ -1,5 +1,33 @@
 2012-04-01  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 1.12.1.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_coding.c, oathtool/tests/tst_oathtool.sh: tests:
+	Check that lowercase base32 works.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, liboath/coding.c, liboath/gl/Makefile.am,
+	liboath/gl/c-ctype.c, liboath/gl/c-ctype.h,
+	liboath/gl/m4/gnulib-cache.m4, liboath/gl/m4/gnulib-comp.m4: 
+	liboath, oathtool: Base32 decoding now permit lowercase characters.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/Makefile.am: Don't use -static for self-tests.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Ignore more.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 1.12.0.
 
 2012-04-01  Simon Josefsson <simon@josefsson.org>
