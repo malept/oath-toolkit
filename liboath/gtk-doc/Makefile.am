@@ -101,5 +101,3 @@ TESTS_ENVIRONMENT = cd $(srcdir) && \
   SRCDIR=$(abs_srcdir) BUILDDIR=$(abs_builddir)
 #TESTS = $(GTKDOC_CHECK)
 endif
-
--include $(top_srcdir)/git.mk
