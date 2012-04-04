@@ -27,14 +27,13 @@ export TZ
 TSTAMP=`datefudge "2006-09-23" date -u +%s`
 if test "$TSTAMP" != "1158969600"; then
     echo "Could not fake timestamps with datefudge."
-    ./tst_usersfile$EXEEXT
-    rc=$?
-else
-    datefudge 2006-12-07 ./tst_usersfile$EXEEXT
-    rc=$?
-    sed 's/2006-12-07T00:00:0.L/2006-12-07T00:00:00L/g' < tmp.oath > tmp2.oath
-    diff -ur $srcdir/expect.oath tmp2.oath || rc=1
+    exit 77
 fi
+
+datefudge 2006-12-07 ./tst_usersfile$EXEEXT
+rc=$?
+sed 's/2006-12-07T00:00:0.L/2006-12-07T00:00:00L/g' < tmp.oath > tmp2.oath
+diff -ur $srcdir/expect.oath tmp2.oath || rc=1
 
 rm -f tmp.oath tmp2.oath
 
