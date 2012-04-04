@@ -1,3 +1,43 @@
+2012-04-04  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/usersfile.c: Fix last commit.  Origline already contains
+	newline.
+
+2012-04-04  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.12.2.
+
+2012-04-04  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2012-04-04  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/tests/tst_usersfile.sh: Skip test if we don't have
+	datefudge.  Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
+
+2012-04-04  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/usersfile.c: Use fprintf instead of fputs.  On FreeBSD, fputs returns 0 on success which we treated as an error.
+	Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
+
+2012-04-02  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.12.1.
+
+2012-04-02  Simon Josefsson <simon@josefsson.org>
+
+	* liboath/gtk-doc/Makefile.am: liboath/gtk-doc/Makefile.am: Don't
+	use 'include', for portability.  Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.12.0.
+
+2012-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2012-04-01  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.12.1.
