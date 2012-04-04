@@ -220,7 +220,7 @@ update_usersfile2 (const char *username,
       user = strtok_r (NULL, whitespace, &saveptr);
       if (user == NULL || strcmp (user, username) != 0)
 	{
-	  r = fputs (origline, outfh);
+	  r = fprintf (outfh, "%s\n", origline);
 	  if (r <= 0)
 	    return OATH_PRINTF_ERROR;
 	  continue;
