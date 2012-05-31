@@ -105,7 +105,7 @@ gtkdoc-copy:
 	cp -v liboath/gtk-doc/liboath.pdf \
 		liboath/gtk-doc/html/*.html \
 		liboath/gtk-doc/html/*.png \
-		liboath/gtk-doc/html/*.devhelp \
+		liboath/gtk-doc/html/*.devhelp2 \
 		liboath/gtk-doc/html/*.css \
 		$(htmldir)/reference/
 
@@ -114,7 +114,7 @@ gtkdoc-upload:
 		cvs add reference || true && \
 		cvs add -kb reference/*.png reference/*.pdf || true && \
 		cvs add reference/*.html reference/*.css \
-			reference/*.devhelp || true && \
+			reference/*.devhelp2 || true && \
 		cvs commit -m "Update." reference/
 
 man-copy:
