@@ -55,7 +55,9 @@ generate some one-time passwords.  The "oathtool" is handy for this purpose:
 435986
 #
 
-So let's test this by running 'su':
+So let's test this by running 'su'.  At the prompt, you type the
+password (in this example, "pw") concatenated with the OTP (in this
+example, "328482").
 
 jas@mocca:~$ su
 [pam_oath.c:parse_cfg(122)] called.
@@ -208,13 +210,16 @@ SSH Configuration
 -----------------
 
 Configuring pam_oath for use with SSH is straight forward, however you
-must make sure the /etc/ssh/sshd_config file contains the following:
+should make sure the /etc/ssh/sshd_config file contains the following:
 
 UsePAM yes
 ChallengeResponseAuthentication yes
 
 Another reported cause of problems has been SELinux, and you could
 experiment with disabling SELinux by doing "/usr/sbin/setenforce 0".
+
+Alternatively, instead of "ChallengeResponseAuthentication" it should
+work to enable "PasswordAuthentication" instead.
 
 Debug hint
 ----------
