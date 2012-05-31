@@ -85,6 +85,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module strerror-override:
   # Code from module string:
   # Code from module sys_time:
+  # Code from module sys_types:
   # Code from module time:
   # Code from module time_r:
   # Code from module timespec:
@@ -198,6 +199,8 @@ if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
 fi
 gl_HEADER_STRING_H
 gl_HEADER_SYS_TIME_H
+AC_PROG_MKDIR_P
+gl_SYS_TYPES_H
 AC_PROG_MKDIR_P
 gl_HEADER_TIME_H
 gl_TIME_R
@@ -417,6 +420,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strerror.c
   lib/string.in.h
   lib/sys_time.in.h
+  lib/sys_types.in.h
   lib/time.in.h
   lib/time_r.c
   lib/timespec.h
@@ -461,6 +465,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
+  m4/off_t.m4
   m4/onceonly.m4
   m4/parse-datetime.m4
   m4/printf.m4
@@ -478,6 +483,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/string_h.m4
   m4/sys_socket_h.m4
   m4/sys_time_h.m4
+  m4/sys_types_h.m4
   m4/time_h.m4
   m4/time_r.m4
   m4/timespec.m4

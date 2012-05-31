@@ -114,6 +114,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module strtok_r:
   # Code from module strverscmp:
   # Code from module sys_stat:
+  # Code from module sys_types:
   # Code from module time:
   # Code from module unistd:
   # Code from module unlink:
@@ -209,6 +210,7 @@ gl_STDIO_MODULE_INDICATOR([fseek])
 gl_FUNC_FSEEKO
 if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
   AC_LIBOBJ([fseeko])
+  gl_PREREQ_FSEEKO
 fi
 gl_STDIO_MODULE_INDICATOR([fseeko])
 gl_FUNC_FSTAT
@@ -225,6 +227,7 @@ gl_STDIO_MODULE_INDICATOR([ftell])
 gl_FUNC_FTELLO
 if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
   AC_LIBOBJ([ftello])
+  gl_PREREQ_FTELLO
 fi
 gl_STDIO_MODULE_INDICATOR([ftello])
 gl_FUNC_GETDELIM
@@ -239,6 +242,7 @@ if test $REPLACE_GETLINE = 1; then
   gl_PREREQ_GETLINE
 fi
 gl_STDIO_MODULE_INDICATOR([getline])
+AC_REQUIRE([gl_LARGEFILE])
 gl_LD_VERSION_SCRIPT
 gl_VISIBILITY
 gl_FUNC_LSEEK
@@ -334,6 +338,8 @@ fi
 gl_STRING_MODULE_INDICATOR([strverscmp])
 gl_HEADER_SYS_STAT_H
 AC_PROG_MKDIR_P
+gl_SYS_TYPES_H
+AC_PROG_MKDIR_P
 gl_HEADER_TIME_H
 gl_UNISTD_H
 gl_FUNC_UNLINK
@@ -343,7 +349,6 @@ fi
 gl_UNISTD_MODULE_INDICATOR([unlink])
 gl_VALGRIND_TESTS
 gl_FUNC_VASNPRINTF
-AC_SUBST([WARN_CFLAGS])
 gl_WCHAR_H
 gl_XSIZE
   # End of code from modules
@@ -568,6 +573,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strtok_r.c
   lib/strverscmp.c
   lib/sys_stat.in.h
+  lib/sys_types.in.h
   lib/time.in.h
   lib/unistd.in.h
   lib/unlink.c
@@ -625,6 +631,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/msvc-nothrow.m4
   m4/multiarch.m4
   m4/nocrash.m4
+  m4/off_t.m4
   m4/onceonly.m4
   m4/pathmax.m4
   m4/printf.m4
@@ -649,6 +656,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strtok_r.m4
   m4/strverscmp.m4
   m4/sys_stat_h.m4
+  m4/sys_types_h.m4
   m4/time_h.m4
   m4/unistd_h.m4
   m4/unlink.m4
