@@ -121,21 +121,24 @@ main (int argc, char **argv)
       rc = pam_start ("pam_oath1", tv[loop].user, &conv, &pamh);
       if (rc != PAM_SUCCESS)
 	{
-	  printf ("pam_start %d\n", rc);
+	  printf ("pam_start failed loop %ld rc %d: %s\n", loop, rc,
+		  pam_strerror (pamh, rc));
 	  return 1;
 	}
 
       rc = pam_authenticate (pamh, 0);
       if (rc != tv[loop].expectrc)
 	{
-	  printf ("pam_authenticate[%ld] %d\n", loop, rc);
+	  printf ("pam_authenticate failed loop %ld rc %d: %s\n", loop, rc,
+		  pam_strerror (pamh, rc));
 	  return 1;
 	}
 
       rc = pam_end (pamh, rc);
       if (rc != PAM_SUCCESS)
 	{
-	  printf ("pam_end %d\n", rc);
+	  printf ("pam_end failed loop %ld rc %d: %s\n", loop, rc,
+		  pam_strerror (pamh, rc));
 	  return 1;
 	}
     }

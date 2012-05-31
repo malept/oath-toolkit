@@ -35,7 +35,7 @@ main (int argc, char **argv)
 
   rc = pam_sm_authenticate (pamh, 0, 1, (const char **) argv);
 
-  printf ("rc %d\n", rc);
+  printf ("rc %d: %s\n", rc, pam_strerror (pamh, rc));
 
   return 0;
 }
