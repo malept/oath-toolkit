@@ -1,25 +1,25 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.12.1
+Subject: OATH Toolkit 1.12.2
 <#part sign=pgpmime>
-This fixes the base32 code to permit lowercase strings.
-
-I note that we followed the tradition of two releases per day
-today.. :-)
+FreeBSD fixes.
 
 Happy hacking,
 Simon
 
-* Version 1.12.1 (released 2012-04-01)
+* Version 1.12.2 (released 2012-04-04)
 
-** liboath, oathtool: Base32 decoding now permit lowercase characters.
-Reported by Martin Michlmayr <tbm@cyrius.com>.
+** liboath: usersfile function now works on FreeBSD.
+Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
 
-The OATH Toolkit makes it easy to build one-time password
-authentication systems.  It contains a shared library, a command line
-tool and a PAM module.  Supported technologies include the event-based
-HOTP algorithm (RFC4226) and the time-based TOTP algorithm (RFC6238).
-OATH stands for Open AuTHentication, which is the organization that
-specify the algorithms.
+** tests: liboath usersfile self-test is skipped if there is no datefudge.
+Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
+
+The OATH Toolkit makes it easy to build one-time password authentication
+systems.  It contains a shared library, a command line tool and a PAM
+module.  Supported technologies include the event-based HOTP algorithm
+(RFC4226) and the time-based TOTP algorithm (RFC6238).  OATH stands for
+Open AuTHentication, which is the organization that specify the
+algorithms.
 
 The components included in the package is:
 
@@ -46,8 +46,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.1.tar.gz (1.9MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.1.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.2.tar.gz (1.9MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.2.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -67,8 +67,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-9d2d7ae7c5811a809b0664bec3bc6d773112416a  oath-toolkit-1.12.1.tar.gz
-683941eae03cfb8ad9ccefb527e0186edc7e9a7378041144d593cdb0  oath-toolkit-1.12.1.tar.gz
+4e19fb9c1465a3ab53c39b355b551f3a338b7c53  oath-toolkit-1.12.2.tar.gz
+99e34a10311569488a2f171dbb1eebd657f1b6c402c59201a6eb3124  oath-toolkit-1.12.2.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
