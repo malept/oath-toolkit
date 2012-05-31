@@ -272,15 +272,15 @@ pam_sm_authenticate (pam_handle_t * pamh,
 
       DBG (("Password: %s ", onlypasswd));
 
+      strncpy (otp, password + password_len - cfg.digits, cfg.digits);
+      otp[cfg.digits] = '\0';
+
       retval = pam_set_item (pamh, PAM_AUTHTOK, onlypasswd);
       if (retval != PAM_SUCCESS)
 	{
 	  DBG (("set_item returned error: %s", pam_strerror (pamh, retval)));
 	  goto done;
 	}
-
-      strncpy (otp, password + password_len - cfg.digits, cfg.digits);
-      otp[cfg.digits] = '\0';
     }
   else
     {
