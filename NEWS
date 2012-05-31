@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.12.3 (unreleased)
+* Version 1.12.3 (released 2012-05-31)
 
 ** pam_oath: Fix "try_first_pass".
 Patch from Christian Hesse <list@eworm.de>.
