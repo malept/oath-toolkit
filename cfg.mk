@@ -23,6 +23,7 @@ endif
 INDENT_SOURCES = `find . -name '*.[ch]' | grep -v -e /gl/ -e build-aux`
 
 buildit:
+	touch ChangeLog
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)
 	make
@@ -123,9 +124,6 @@ man-upload:
 	cd $(htmldir) && \
 		cvs commit -m "Update." man-oathtool.html
 
-source:
-	-git commit -m Generated. ChangeLog
-
 release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
 
 release-upload-www: man-upload gtkdoc-upload coverage-upload clang-upload
@@ -141,4 +139,4 @@ release-upload-ftp:
 tag: # Use "make tag VERSION=1.2.3"
 	git tag -s -u b565716f -m $(VERSION) $(tag)
 
-release: release-check release-upload-www source release-upload-ftp
+release: release-check release-upload-www release-upload-ftp
