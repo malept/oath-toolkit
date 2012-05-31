@@ -58,8 +58,8 @@ AC_ARG_ENABLE([gcc-warnings],
 if test "$gl_gcc_warnings" = yes; then
   gl_WARN_ADD([-Werror], [WERROR_CFLAGS])
   AC_SUBST([WERROR_CFLAGS])
-
   gl_MANYWARN_ALL_GCC([warnings])
+
   # Set up the list of the pointless, undesired warnings.
   nw=
   nw="$nw -Wsystem-headers"       # Don't let system headers trigger warnings
@@ -73,6 +73,9 @@ if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Wc++-compat"           # We don't care about C++ compilers
   nw="$nw -Wcast-qual"            # Triggers oath_hotp_validate, how to fix?
   nw="$nw -Wpadded"               # Padding internal structs is useless.
+  nw="$nw -Wsuggest-attribute=pure" # Is it worth using attributes?
+  nw="$nw -Wsuggest-attribute=const" # Is it worth using attributes?
+
   # Enable all GCC warnings not in this list.
   gl_MANYWARN_COMPLEMENT([warnings], [$warnings], [$nw])
   for w in $warnings; do
