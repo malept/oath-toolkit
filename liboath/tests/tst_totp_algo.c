@@ -89,7 +89,7 @@ main (void)
 
       if (strcmp (otp, tv[i].otp) != 0)
 	{
-	  printf ("otp[%d] got %s expected %s\n", i, otp, tv[i].otp);
+	  printf ("otp[%ld] got %s expected %s\n", i, otp, tv[i].otp);
 	  if (strcmp (otp, "82762030") == 0
 	      && strcmp (tv[i].otp, "65353130") == 0)
 	    printf ("Mismatch due to 32-bit time_t...\n");
@@ -107,7 +107,7 @@ main (void)
 
       if (strcmp (otp, tv[i].otp) != 0)
 	{
-	  printf ("otp[%d] got %s expected2 %s\n", i, otp, tv[i].otp);
+	  printf ("otp[%ld] got %s expected2 %s\n", i, otp, tv[i].otp);
 	  if (strcmp (otp, "82762030") == 0
 	      && strcmp (tv[i].otp, "65353130") == 0)
 	    printf ("Mismatch due to 32-bit time_t...\n");

@@ -157,7 +157,7 @@ main (void)
 	    if (rc != OATH_INVALID_OTP)
 	      {
 		printf ("unexpected return code %d for "
-			"digits %d and iter %d\n", rc, digits, i);
+			"digits %d and iter %ld\n", rc, digits, i);
 		return 1;
 	      }
 	  }
@@ -185,7 +185,7 @@ main (void)
 	    if (rc != OATH_INVALID_OTP)
 	      {
 		printf ("unexpected return code %d for "
-			"digits %d and iter %d\n", rc, digits, i);
+			"digits %d and iter %ld\n", rc, digits, i);
 		return 1;
 	      }
 	  }

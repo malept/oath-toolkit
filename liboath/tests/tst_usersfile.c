@@ -104,7 +104,7 @@ main (void)
     }
   if (last_otp != 1260206742)
     {
-      printf ("oath_authenticate_usersfile timestamp %d != 1260203142\n",
+      printf ("oath_authenticate_usersfile timestamp %ld != 1260203142\n",
 	      last_otp);
       return 1;
     }

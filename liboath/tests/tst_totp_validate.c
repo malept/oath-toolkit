@@ -81,7 +81,7 @@ main (void)
 			       start_offset, tv[i].window, tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
-	  printf ("validate loop %d failed (rc %d != %d)?!\n",
+	  printf ("validate loop %ld failed (rc %d != %d)?!\n",
 		  i, rc, tv[i].expected_rc);
 	  return 1;
 	}
@@ -92,7 +92,7 @@ main (void)
 					my_strcmp, (void *) tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
-	  printf ("validate_callback loop %d failed (rc %d != %d)?!\n",
+	  printf ("validate_callback loop %ld failed (rc %d != %d)?!\n",
 		  i, rc, tv[i].expected_rc);
 	  return 1;
 	}
@@ -104,13 +104,13 @@ main (void)
 				tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
-	  printf ("validate2 loop %d failed (rc %d != %d)?!\n",
+	  printf ("validate2 loop %ld failed (rc %d != %d)?!\n",
 		  i, rc, tv[i].expected_rc);
 	  return 1;
 	}
       if (otp_pos != tv[i].otp_pos)
 	{
-	  printf ("validate2 loop %d failed (cmp %d != %d)?!\n",
+	  printf ("validate2 loop %ld failed (cmp %d != %d)?!\n",
 		  i, otp_pos, tv[i].otp_pos);
 	  return 1;
 	}
@@ -123,13 +123,13 @@ main (void)
 					 my_strcmp, (void *) tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
-	  printf ("validate2_callback loop %d failed (rc %d != %d)?!\n",
+	  printf ("validate2_callback loop %ld failed (rc %d != %d)?!\n",
 		  i, rc, tv[i].expected_rc);
 	  return 1;
 	}
       if (otp_pos != tv[i].otp_pos)
 	{
-	  printf ("validate2_callback loop %d failed (cmp %d != %d)?!\n",
+	  printf ("validate2_callback loop %ld failed (cmp %d != %d)?!\n",
 		  i, otp_pos, tv[i].otp_pos);
 	  return 1;
 	}

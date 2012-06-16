@@ -47,7 +47,7 @@ main (void)
     }
   if (secretlen != 20)
     {
-      printf ("oath_hex2bin too small: 20 != %d\n", secretlen);
+      printf ("oath_hex2bin too small: 20 != %ld\n", secretlen);
       return 1;
     }
 
@@ -88,7 +88,7 @@ main (void)
     }
   if (secretlen != 20)
     {
-      printf ("oath_hex2bin: 20 != %d\n", secretlen);
+      printf ("oath_hex2bin: 20 != %ld\n", secretlen);
       return 1;
     }
   if (memcmp (secret, "\xAB\xCD\xEF\x34\x35\x36\x37\x38\x39\x30"
@@ -238,7 +238,7 @@ main (void)
     }
   if (len != strlen ("foo"))
     {
-      printf ("oath_base32_decode length mismatch: %d\n", len);
+      printf ("oath_base32_decode length mismatch: %ld\n", len);
       return 1;
     }
 
@@ -250,7 +250,7 @@ main (void)
     }
   if (len != strlen ("foo"))
     {
-      printf ("oath_base32_decode length mismatch: %d\n", len);
+      printf ("oath_base32_decode length mismatch: %ld\n", len);
       return 1;
     }
 
@@ -275,7 +275,7 @@ main (void)
     }
   if (len != 3 || memcmp (tmp, "foo", len) != 0)
     {
-      printf ("oath_base32_decode failure: %d/%s\n", len, tmp);
+      printf ("oath_base32_decode failure: %ld/%s\n", len, tmp);
       return 1;
     }
   free (tmp);
@@ -289,7 +289,7 @@ main (void)
     }
   if (len != 6 || memcmp (tmp, "foobar", len) != 0)
     {
-      printf ("oath_base32_decode failure: %d/%s\n", len, tmp);
+      printf ("oath_base32_decode failure: %ld/%s\n", len, tmp);
       return 1;
     }
   free (tmp);

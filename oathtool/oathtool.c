@@ -139,17 +139,18 @@ main (int argc, char *argv[])
   if (args_info.version_given)
     {
       char *p;
+      int l = -1;
+
       if (strcmp (oath_check_version (NULL), OATH_VERSION) != 0)
-	asprintf (&p, "OATH Toolkit liboath.so %s oath.h %s",
-		  oath_check_version (NULL), OATH_VERSION);
+	l = asprintf (&p, "OATH Toolkit liboath.so %s oath.h %s",
+		      oath_check_version (NULL), OATH_VERSION);
       else if (strcmp (OATH_VERSION, PACKAGE_VERSION) != 0)
-	asprintf (&p, "OATH Toolkit %s",
-		  oath_check_version (NULL), OATH_VERSION);
-      else
-	asprintf (&p, "OATH Toolkit");
-      version_etc (stdout, "oathtool", p, PACKAGE_VERSION,
-		   "Simon Josefsson", (char *) NULL);
-      free (p);
+	l = asprintf (&p, "OATH Toolkit %s",
+		      oath_check_version (NULL), OATH_VERSION);
+      version_etc (stdout, "oathtool", l == -1 ? "OATH Toolkit" : p,
+		   PACKAGE_VERSION, "Simon Josefsson", (char *) NULL);
+      if (l != -1)
+	free (p);
       return EXIT_SUCCESS;
     }
 
@@ -206,7 +207,8 @@ main (int argc, char *argv[])
     digits = strlen (args_info.inputs[1]);
   else if (validate_otp_p (args_info.inputs_num) && args_info.digits_orig &&
 	   args_info.digits_arg != strlen (args_info.inputs[1]))
-    error (EXIT_FAILURE, 0, "given one-time password has bad length %d != %d",
+    error (EXIT_FAILURE, 0,
+	   "given one-time password has bad length %d != %ld",
 	   args_info.digits_arg, strlen (args_info.inputs[1]));
 
   if (args_info.inputs_num > 2)
