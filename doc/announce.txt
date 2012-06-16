@@ -1,16 +1,12 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.12.3
+Subject: OATH Toolkit 1.12.4
 <#part sign=pgpmime>
-Please test if you can make the "try_first_pass" stuff work with this
-release.
+* Version 1.12.4 (released 2012-06-17)
 
-Happy hacking,
-Simon
-
-* Version 1.12.3 (released 2012-05-31)
-
-** pam_oath: Fix "try_first_pass".
-Patch from Christian Hesse <list@eworm.de>.
+** liboath: Usersfile code handles multiple lines for a single user.
+This can be used when a single user carries multiple tokens (with
+different OATH secrets) and any of them should be permitted.
+Suggested by Tim Eggleston <lists@timeggleston.co.uk>.
 
 The OATH Toolkit makes it easy to build one-time password authentication
 systems.  It contains a shared library, a command line tool and a PAM
@@ -44,8 +40,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.3.tar.gz (1.9MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.3.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.4.tar.gz (2.0MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.4.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -53,7 +49,6 @@ key identified by the following information:
 pub   1280R/B565716F 2002-05-05 [expires: 2013-05-10]
       Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
 uid                  Simon Josefsson <simon@josefsson.org>
-uid                  Simon Josefsson <simon@yubico.com>
 sub   2048R/105E722E 2012-03-13 [expires: 2013-07-26]
 sub   2048R/728AB82C 2012-03-13 [expires: 2013-07-26]
 sub   2048R/9394F626 2012-03-13 [expires: 2013-07-26]
@@ -65,8 +60,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-f28fd4f05d470f532f2357b0d26d6b15d55ca373  oath-toolkit-1.12.3.tar.gz
-ecf5269a9d53ffbfb8c66723f3943e73bfd7e6ff7a682a28e1e45ee6  oath-toolkit-1.12.3.tar.gz
+57c58848e3ad8312ce2122a9e41f9d0ec0ba34b9  oath-toolkit-1.12.4.tar.gz
+fd4620e1745201f004a4ee79ff939f254021a8392e8826696b1845ff  oath-toolkit-1.12.4.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
