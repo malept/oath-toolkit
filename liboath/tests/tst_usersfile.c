@@ -43,7 +43,7 @@ main (void)
   rc = oath_init ();
   if (rc != OATH_OK)
     {
-      printf ("oath_init: %d\n", rc);
+      printf ("oath_init: %s (%d)\n", oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -51,7 +51,8 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_NO_SUCH_FILE)
     {
-      printf ("oath_authenticate_usersfile[1]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[1]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -59,7 +60,8 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile[2]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[2]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -67,7 +69,8 @@ main (void)
 				    0, "1234", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile[3]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[3]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -75,7 +78,8 @@ main (void)
 				    0, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[4]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[4]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -83,7 +87,8 @@ main (void)
 				    1, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[5]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[5]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -91,7 +96,8 @@ main (void)
 				    1, "4711", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[6]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[6]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -99,7 +105,8 @@ main (void)
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile[7]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[7]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
   if (last_otp != 1260206742)
@@ -113,7 +120,8 @@ main (void)
 				    "rms", "755224", 0, "4321", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile[8]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[8]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -121,7 +129,8 @@ main (void)
 				    "rms", "436521", 10, "6767", &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[9]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[9]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -146,7 +155,8 @@ main (void)
 				    "eve", "386397", 0, "4711", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
-      printf ("oath_authenticate_usersfile[10]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[10]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -155,7 +165,8 @@ main (void)
 				    "eve", "068866", 0, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
-      printf ("oath_authenticate_usersfile[11]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[11]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -164,7 +175,8 @@ main (void)
 				    "eve", "068866", 1, NULL, &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[12]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[12]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -173,7 +185,8 @@ main (void)
 				    "eve", "068866", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile[13]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[13]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -182,7 +195,8 @@ main (void)
 				    "eve", "963013", 1, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile[14]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[14]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -191,7 +205,8 @@ main (void)
 				    "eve", "892423", 1, NULL, &last_otp);
   if (rc != OATH_INVALID_OTP)
     {
-      printf ("oath_authenticate_usersfile[15]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[15]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -200,7 +215,8 @@ main (void)
 				    "eve", "892423", 10, NULL, &last_otp);
   if (rc != OATH_OK)
     {
-      printf ("oath_authenticate_usersfile[16]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[16]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
@@ -209,14 +225,105 @@ main (void)
 				    "eve", "630208", 10, NULL, &last_otp);
   if (rc != OATH_REPLAYED_OTP)
     {
-      printf ("oath_authenticate_usersfile[17]: %d\n", rc);
+      printf ("oath_authenticate_usersfile[17]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try OTP that matches user's second line. */
+  rc = oath_authenticate_usersfile (CREDS, "twouser",
+				    "874680", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[18]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try OTP that matches user's third and final line. */
+  rc = oath_authenticate_usersfile (CREDS, "threeuser",
+				    "255509", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[19]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try OTP that matches user's third and next-to-last line. */
+  rc = oath_authenticate_usersfile (CREDS, "fouruser",
+				    "663447", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[19]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try incorrect OTP for user with five lines. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "812658", 10, NULL, &last_otp);
+  if (rc != OATH_INVALID_OTP)
+    {
+      printf ("oath_authenticate_usersfile[20]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try OTP that matches user's second line. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "123001", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[21]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try OTP that matches user's fourth line. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "893841", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[22]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try another OTP that matches user's second line. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "746888", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[23]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try another OTP that matches user's fifth line. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "730790", 10, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[24]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Try too old OTP for user's second line. */
+  rc = oath_authenticate_usersfile (CREDS, "fiveuser",
+				    "692901", 10, NULL, &last_otp);
+  if (rc != OATH_INVALID_OTP)
+    {
+      printf ("oath_authenticate_usersfile[25]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
       return 1;
     }
 
   rc = oath_done ();
   if (rc != OATH_OK)
     {
-      printf ("oath_done: %d\n", rc);
+      printf ("oath_done: %s (%d)\n", oath_strerror_name (rc), rc);
       return 1;
     }
 

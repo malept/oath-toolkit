@@ -82,8 +82,11 @@ parse_usersfile (const char *username,
 		 const char *passwd,
 		 time_t * last_otp,
 		 FILE * infh,
-		 char **lineptr, size_t * n, uint64_t * new_moving_factor)
+		 char **lineptr, size_t * n, uint64_t * new_moving_factor,
+		 size_t * skipped_users)
 {
+  *skipped_users = 0;
+
   while (getline (lineptr, n, infh) != -1)
     {
       char *saveptr;
@@ -175,6 +178,11 @@ parse_usersfile (const char *username,
 	  rc = oath_totp_validate2 (secret, secret_length,
 				    time (NULL), totpstepsize, 0, window,
 				    &this_otp_pos, otp);
+	  if (rc == OATH_INVALID_OTP)
+	    {
+	      (*skipped_users)++;
+	      continue;
+	    }
 	  if (rc < 0)
 	    return rc;
 	  tmprc = oath_totp_validate2 (secret, secret_length,
@@ -186,11 +194,19 @@ parse_usersfile (const char *username,
       else
 	rc = oath_totp_validate (secret, secret_length,
 				 time (NULL), totpstepsize, 0, window, otp);
+      if (rc == OATH_INVALID_OTP)
+	{
+	  (*skipped_users)++;
+	  continue;
+	}
       if (rc < 0)
 	return rc;
       *new_moving_factor = start_moving_factor + rc;
       return OATH_OK;
     }
+
+  if (*skipped_users)
+    return OATH_INVALID_OTP;
 
   return OATH_UNKNOWN_USER;
 }
@@ -201,8 +217,11 @@ update_usersfile2 (const char *username,
 		   FILE * infh,
 		   FILE * outfh,
 		   char **lineptr,
-		   size_t * n, char *timestamp, uint64_t new_moving_factor)
+		   size_t * n, char *timestamp, uint64_t new_moving_factor,
+		   size_t skipped_users)
 {
+  size_t got_users = 0;
+
   while (getline (lineptr, n, infh) != -1)
     {
       char *saveptr;
@@ -218,7 +237,8 @@ update_usersfile2 (const char *username,
 
       /* Read username */
       user = strtok_r (NULL, whitespace, &saveptr);
-      if (user == NULL || strcmp (user, username) != 0)
+      if (user == NULL || strcmp (user, username) != 0
+	  || got_users++ != skipped_users)
 	{
 	  r = fprintf (outfh, "%s", origline);
 	  if (r <= 0)
@@ -250,7 +270,8 @@ update_usersfile (const char *usersfile,
 		  const char *otp,
 		  FILE * infh,
 		  char **lineptr,
-		  size_t * n, char *timestamp, uint64_t new_moving_factor)
+		  size_t * n, char *timestamp, uint64_t new_moving_factor,
+		  size_t skipped_users)
 {
   FILE *outfh, *lockfh;
   int rc;
@@ -325,7 +346,7 @@ update_usersfile (const char *usersfile,
   }
 
   rc = update_usersfile2 (username, otp, infh, outfh, lineptr, n,
-			  timestamp, new_moving_factor);
+			  timestamp, new_moving_factor, skipped_users);
 
   fclose (lockfh);
   fclose (outfh);
@@ -386,13 +407,14 @@ oath_authenticate_usersfile (const char *usersfile,
   size_t n = 0;
   uint64_t new_moving_factor;
   int rc;
+  size_t skipped_users;
 
   infh = fopen (usersfile, "r");
   if (!infh)
     return OATH_NO_SUCH_FILE;
 
   rc = parse_usersfile (username, otp, window, passwd, last_otp,
-			infh, &line, &n, &new_moving_factor);
+			infh, &line, &n, &new_moving_factor, &skipped_users);
 
   if (rc == OATH_OK)
     {
@@ -416,7 +438,8 @@ oath_authenticate_usersfile (const char *usersfile,
       old_umask = umask (~(S_IRUSR | S_IWUSR));
 
       rc = update_usersfile (usersfile, username, otp, infh,
-			     &line, &n, timestamp, new_moving_factor);
+			     &line, &n, timestamp, new_moving_factor,
+			     skipped_users);
 
       umask (old_umask);
     }
