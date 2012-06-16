@@ -1,18 +1,16 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.12.2
+Subject: OATH Toolkit 1.12.3
 <#part sign=pgpmime>
-FreeBSD fixes.
+Please test if you can make the "try_first_pass" stuff work with this
+release.
 
 Happy hacking,
 Simon
 
-* Version 1.12.2 (released 2012-04-04)
+* Version 1.12.3 (released 2012-05-31)
 
-** liboath: usersfile function now works on FreeBSD.
-Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
-
-** tests: liboath usersfile self-test is skipped if there is no datefudge.
-Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
+** pam_oath: Fix "try_first_pass".
+Patch from Christian Hesse <list@eworm.de>.
 
 The OATH Toolkit makes it easy to build one-time password authentication
 systems.  It contains a shared library, a command line tool and a PAM
@@ -46,8 +44,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.2.tar.gz (1.9MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.2.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.3.tar.gz (1.9MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.3.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -67,8 +65,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-4e19fb9c1465a3ab53c39b355b551f3a338b7c53  oath-toolkit-1.12.2.tar.gz
-99e34a10311569488a2f171dbb1eebd657f1b6c402c59201a6eb3124  oath-toolkit-1.12.2.tar.gz
+f28fd4f05d470f532f2357b0d26d6b15d55ca373  oath-toolkit-1.12.3.tar.gz
+ecf5269a9d53ffbfb8c66723f3943e73bfd7e6ff7a682a28e1e45ee6  oath-toolkit-1.12.3.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
