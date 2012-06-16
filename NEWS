@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.12.4 (unreleased)
+* Version 1.12.4 (released 2012-06-17)
 
 ** liboath: Usersfile code handles multiple lines for a single user.
 This can be used when a single user carries multiple tokens (with
