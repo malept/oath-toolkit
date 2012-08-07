@@ -958,6 +958,7 @@ EXTRA_libgnu_la_SOURCES += time_r.c
 
 ## begin gnulib module timespec
 
+libgnu_la_SOURCES += timespec.c
 
 EXTRA_DIST += timespec.h
 

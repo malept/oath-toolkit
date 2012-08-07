@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 24
+# canonicalize.m4 serial 26
 
 dnl Copyright (C) 2003-2007, 2009-2012 Free Software Foundation, Inc.
 
@@ -16,8 +16,11 @@ AC_DEFUN([gl_FUNC_CANONICALIZE_FILENAME_MODE],
   AC_REQUIRE([gl_FUNC_REALPATH_WORKS])
   if test $ac_cv_func_canonicalize_file_name = no; then
     HAVE_CANONICALIZE_FILE_NAME=0
-  elif test "$gl_cv_func_realpath_works" != yes; then
-    REPLACE_CANONICALIZE_FILE_NAME=1
+  else
+    case "$gl_cv_func_realpath_works" in
+      *yes) ;;
+      *)    REPLACE_CANONICALIZE_FILE_NAME=1 ;;
+    esac
   fi
 ])
 
@@ -30,12 +33,21 @@ AC_DEFUN([gl_CANONICALIZE_LGPL],
     HAVE_CANONICALIZE_FILE_NAME=0
     if test $ac_cv_func_realpath = no; then
       HAVE_REALPATH=0
-    elif test "$gl_cv_func_realpath_works" != yes; then
-      REPLACE_REALPATH=1
+    else
+      case "$gl_cv_func_realpath_works" in
+	*yes) ;;
+	*)    REPLACE_REALPATH=1 ;;
+      esac
     fi
-  elif test "$gl_cv_func_realpath_works" != yes; then
-    REPLACE_CANONICALIZE_FILE_NAME=1
-    REPLACE_REALPATH=1
+  else
+    case "$gl_cv_func_realpath_works" in
+      *yes)
+        ;;
+      *)
+        REPLACE_CANONICALIZE_FILE_NAME=1
+        REPLACE_REALPATH=1
+        ;;
+    esac
   fi
 ])
 
@@ -94,10 +106,10 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
      [gl_cv_func_realpath_works=yes],
      [gl_cv_func_realpath_works=no],
      [case "$host_os" in
-                # Guess yes on glibc systems.
-        *-gnu*) gl_cv_func_realpath_works="guessing yes" ;;
-                # If we don't know, assume the worst.
-        *)      gl_cv_func_realpath_works="guessing no" ;;
+                       # Guess yes on glibc systems.
+        *-gnu* | gnu*) gl_cv_func_realpath_works="guessing yes" ;;
+                       # If we don't know, assume the worst.
+        *)             gl_cv_func_realpath_works="guessing no" ;;
       esac
      ])
     rm -rf conftest.a conftest.d

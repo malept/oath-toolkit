@@ -47,6 +47,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module exitfail:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module extern-inline:
   # Code from module float:
   # Code from module gettext-h:
   # Code from module gettime:
@@ -129,6 +130,7 @@ fi
 m4_ifdef([AM_XGETTEXT_OPTION],
   [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
    AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+AC_REQUIRE([gl_EXTERN_INLINE])
 gl_FLOAT_H
 if test $REPLACE_FLOAT_LDBL = 1; then
   AC_LIBOBJ([float])
@@ -423,6 +425,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_types.in.h
   lib/time.in.h
   lib/time_r.c
+  lib/timespec.c
   lib/timespec.h
   lib/unistd.in.h
   lib/unsetenv.c
@@ -448,6 +451,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/error.m4
   m4/exponentd.m4
   m4/extensions.m4
+  m4/extern-inline.m4
   m4/float_h.m4
   m4/gettime.m4
   m4/gettimeofday.m4
