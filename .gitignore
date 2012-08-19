@@ -3,6 +3,7 @@
 *.gcov
 *~
 .version
+ChangeLog
 INSTALL
 Makefile
 Makefile.in
@@ -92,6 +93,14 @@ liboath/gl/string.h
 liboath/gl/stripslash.lo
 liboath/gl/stripslash.o
 liboath/gl/sys/
+liboath/gl/tests/.deps/
+liboath/gl/tests/arg-nonnull.h
+liboath/gl/tests/c++defs.h
+liboath/gl/tests/dirent.h
+liboath/gl/tests/fcntl.h
+liboath/gl/tests/inttypes.h
+liboath/gl/tests/unused-parameter.h
+liboath/gl/tests/warn-on-use.h
 liboath/gl/time.h
 liboath/gl/unistd.h
 liboath/gl/unused-parameter.h
@@ -273,7 +282,14 @@ oathtool/gl/stdio.h
 oathtool/gl/stdlib.h
 oathtool/gl/string.h
 oathtool/gl/sys/
+oathtool/gl/tests/.deps/
+oathtool/gl/tests/arg-nonnull.h
+oathtool/gl/tests/c++defs.h
+oathtool/gl/tests/inttypes.h
+oathtool/gl/tests/warn-on-use.h
 oathtool/gl/time.h
+oathtool/gl/timespec.lo
+oathtool/gl/timespec.o
 oathtool/gl/unistd.h
 oathtool/gl/vasnprintf.lo
 oathtool/gl/vasnprintf.o
