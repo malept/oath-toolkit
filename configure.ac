@@ -44,6 +44,7 @@ fi
 AC_CONFIG_FILES([
   Makefile
   gl/Makefile
+  gl/tests/Makefile
 ])
 AC_OUTPUT
 

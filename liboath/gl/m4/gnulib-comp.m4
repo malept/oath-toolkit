@@ -39,60 +39,129 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
+  # Code from module alloca-opt-tests:
   # Code from module base32:
+  # Code from module base32-tests:
+  # Code from module binary-io:
+  # Code from module binary-io-tests:
   # Code from module c-ctype:
+  # Code from module c-ctype-tests:
   # Code from module canonicalize-lgpl:
+  # Code from module canonicalize-lgpl-tests:
   # Code from module chdir:
+  # Code from module chdir-tests:
   # Code from module close:
+  # Code from module close-tests:
+  # Code from module closedir:
   # Code from module crypto/gc:
   # Code from module crypto/gc-hmac-sha1:
+  # Code from module crypto/gc-hmac-sha1-tests:
+  # Code from module crypto/gc-tests:
   # Code from module crypto/hmac-sha1:
+  # Code from module crypto/hmac-sha1-tests:
   # Code from module crypto/sha1:
+  # Code from module crypto/sha1-tests:
+  # Code from module dirent:
+  # Code from module dirent-tests:
   # Code from module dirname-lgpl:
   # Code from module dosname:
   # Code from module double-slash-root:
+  # Code from module environ:
+  # Code from module environ-tests:
   # Code from module errno:
+  # Code from module errno-tests:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module fclose:
+  # Code from module fclose-tests:
+  # Code from module fcntl-h:
+  # Code from module fcntl-h-tests:
   # Code from module fd-hook:
+  # Code from module fdopen:
+  # Code from module fdopen-tests:
   # Code from module fflush:
   AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module fflush-tests:
+  # Code from module fgetc-tests:
+  # Code from module filename:
   # Code from module float:
+  # Code from module float-tests:
   # Code from module fopen:
+  # Code from module fopen-tests:
+  # Code from module fpieee:
+  AC_REQUIRE([gl_FP_IEEE])
+  # Code from module fpucw:
   # Code from module fpurge:
+  # Code from module fpurge-tests:
+  # Code from module fputc-tests:
+  # Code from module fread-tests:
   # Code from module freading:
+  # Code from module freading-tests:
   # Code from module fseek:
+  # Code from module fseek-tests:
   # Code from module fseeko:
   AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module fseeko-tests:
   # Code from module fstat:
+  # Code from module fstat-tests:
   # Code from module ftell:
+  # Code from module ftell-tests:
   # Code from module ftello:
   AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module ftello-tests:
+  # Code from module fwrite-tests:
+  # Code from module getcwd-lgpl:
+  # Code from module getcwd-lgpl-tests:
   # Code from module getdelim:
+  # Code from module getdelim-tests:
   # Code from module getline:
+  # Code from module getline-tests:
+  # Code from module getpagesize:
   # Code from module havelib:
+  # Code from module ignore-value:
+  # Code from module ignore-value-tests:
   # Code from module include_next:
+  # Code from module intprops:
+  # Code from module intprops-tests:
+  # Code from module inttypes:
+  # Code from module inttypes-incomplete:
+  # Code from module inttypes-tests:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
+  # Code from module link:
+  # Code from module link-tests:
   # Code from module lseek:
+  # Code from module lseek-tests:
   # Code from module lstat:
+  # Code from module lstat-tests:
   # Code from module malloc-posix:
   # Code from module malloca:
+  # Code from module malloca-tests:
   # Code from module manywarnings:
   # Code from module memchr:
+  # Code from module memchr-tests:
   # Code from module memxor:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
   # Code from module nocrash:
+  # Code from module opendir:
   # Code from module pathmax:
+  # Code from module pathmax-tests:
+  # Code from module priv-set:
+  # Code from module priv-set-tests:
+  # Code from module putenv:
+  # Code from module readdir:
   # Code from module readlink:
+  # Code from module readlink-tests:
   # Code from module realloc-posix:
   # Code from module rename:
+  # Code from module rename-tests:
   # Code from module rmdir:
+  # Code from module rmdir-tests:
+  # Code from module root-uid:
   # Code from module same-inode:
   # Code from module size_max:
   # Code from module snippet/_Noreturn:
@@ -101,28 +170,53 @@ AC_DEFUN([gl_EARLY],
   # Code from module snippet/unused-parameter:
   # Code from module snippet/warn-on-use:
   # Code from module snprintf:
+  # Code from module snprintf-tests:
   # Code from module ssize_t:
   # Code from module stat:
+  # Code from module stat-tests:
   # Code from module stdalign:
+  # Code from module stdalign-tests:
   # Code from module stdbool:
+  # Code from module stdbool-tests:
   # Code from module stddef:
+  # Code from module stddef-tests:
   # Code from module stdint:
+  # Code from module stdint-tests:
   # Code from module stdio:
+  # Code from module stdio-tests:
   # Code from module stdlib:
+  # Code from module stdlib-tests:
   # Code from module strdup-posix:
   # Code from module string:
+  # Code from module string-tests:
   # Code from module strtok_r:
   # Code from module strverscmp:
+  # Code from module strverscmp-tests:
+  # Code from module symlink:
+  # Code from module symlink-tests:
   # Code from module sys_stat:
+  # Code from module sys_stat-tests:
   # Code from module sys_types:
+  # Code from module sys_types-tests:
+  # Code from module test-framework-sh:
+  # Code from module test-framework-sh-tests:
   # Code from module time:
+  # Code from module time-tests:
   # Code from module unistd:
+  # Code from module unistd-tests:
   # Code from module unlink:
+  # Code from module unlink-tests:
+  # Code from module unlinkdir:
+  # Code from module unsetenv:
+  # Code from module unsetenv-tests:
   # Code from module valgrind-tests:
   # Code from module vasnprintf:
+  # Code from module vasnprintf-tests:
   # Code from module verify:
+  # Code from module verify-tests:
   # Code from module warnings:
   # Code from module wchar:
+  # Code from module wchar-tests:
   # Code from module xsize:
 ])
 
@@ -390,13 +484,85 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gltests_LIBSOURCES_LIST], [])
   m4_pushdef([gltests_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='tests'
+  gl_source_base='gl/tests'
 changequote(,)dnl
   gltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
 changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  AC_REQUIRE([AC_C_INLINE])
+  gl_FUNC_CLOSEDIR
+  if test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1; then
+    AC_LIBOBJ([closedir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([closedir])
+  gl_DIRENT_H
+  gl_ENVIRON
+  gl_UNISTD_MODULE_INDICATOR([environ])
+  gl_FCNTL_H
+  gl_FUNC_FDOPEN
+  if test $REPLACE_FDOPEN = 1; then
+    AC_LIBOBJ([fdopen])
+    gl_PREREQ_FDOPEN
+  fi
+  gl_STDIO_MODULE_INDICATOR([fdopen])
+  gl_FUNC_UNGETC_WORKS
+  gl_FUNC_UNGETC_WORKS
+  gl_FUNC_UNGETC_WORKS
+  gl_FUNC_UNGETC_WORKS
+  gl_FUNC_GETCWD_LGPL
+  if test $REPLACE_GETCWD = 1; then
+    AC_LIBOBJ([getcwd-lgpl])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([getcwd])
+  gl_FUNC_GETPAGESIZE
+  if test $REPLACE_GETPAGESIZE = 1; then
+    AC_LIBOBJ([getpagesize])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([getpagesize])
+  AC_REQUIRE([AC_C_INLINE])
+  gl_INTTYPES_H
+  gl_INTTYPES_INCOMPLETE
+  gl_FUNC_LINK
+  if test $HAVE_LINK = 0 || test $REPLACE_LINK = 1; then
+    AC_LIBOBJ([link])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([link])
+  dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  gl_FUNC_OPENDIR
+  if test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1; then
+    AC_LIBOBJ([opendir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([opendir])
+  gl_PRIV_SET
+  gl_FUNC_PUTENV
+  if test $REPLACE_PUTENV = 1; then
+    AC_LIBOBJ([putenv])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([putenv])
+  gl_FUNC_READDIR
+  if test $HAVE_READDIR = 0; then
+    AC_LIBOBJ([readdir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([readdir])
+  gt_TYPE_WCHAR_T
+  gt_TYPE_WINT_T
+  gl_FUNC_SYMLINK
+  if test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1; then
+    AC_LIBOBJ([symlink])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([symlink])
+  gl_UNLINKDIR
+  gl_FUNC_UNSETENV
+  if test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1; then
+    AC_LIBOBJ([unsetenv])
+    gl_PREREQ_UNSETENV
+  fi
+  gl_STDLIB_MODULE_INDICATOR([unsetenv])
   gl_VALGRIND_TESTS
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
@@ -429,6 +595,8 @@ changequote([, ])dnl
     AC_SUBST([gltests_LIBOBJS], [$gltests_libobjs])
     AC_SUBST([gltests_LTLIBOBJS], [$gltests_ltlibobjs])
   ])
+  LIBTESTS_LIBDEPS="$gltests_libdeps"
+  AC_SUBST([LIBTESTS_LIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -479,7 +647,7 @@ AC_DEFUN([gltests_REPLACE_FUNCS], [
 AC_DEFUN([gltests_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gltests_LIBSOURCES_DIR], [tests])
+      m4_define([gltests_LIBSOURCES_DIR], [gl/tests])
       m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
@@ -587,16 +755,23 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/base32.m4
   m4/canonicalize.m4
   m4/close.m4
+  m4/closedir.m4
+  m4/dirent_h.m4
   m4/dirname.m4
   m4/double-slash-root.m4
   m4/eealloc.m4
+  m4/environ.m4
   m4/errno_h.m4
   m4/exponentd.m4
   m4/extensions.m4
   m4/fclose.m4
+  m4/fcntl-o.m4
+  m4/fcntl_h.m4
+  m4/fdopen.m4
   m4/fflush.m4
   m4/float_h.m4
   m4/fopen.m4
+  m4/fpieee.m4
   m4/fpurge.m4
   m4/freading.m4
   m4/fseek.m4
@@ -606,17 +781,22 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ftello.m4
   m4/gc-hmac-sha1.m4
   m4/gc.m4
+  m4/getcwd.m4
   m4/getdelim.m4
   m4/getline.m4
+  m4/getpagesize.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/intmax_t.m4
+  m4/inttypes-pri.m4
+  m4/inttypes.m4
   m4/inttypes_h.m4
   m4/largefile.m4
   m4/ld-version-script.m4
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/link.m4
   m4/longlong.m4
   m4/lseek.m4
   m4/lstat.m4
@@ -633,12 +813,17 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/nocrash.m4
   m4/off_t.m4
   m4/onceonly.m4
+  m4/opendir.m4
   m4/pathmax.m4
   m4/printf.m4
+  m4/priv-set.m4
+  m4/putenv.m4
+  m4/readdir.m4
   m4/readlink.m4
   m4/realloc.m4
   m4/rename.m4
   m4/rmdir.m4
+  m4/setenv.m4
   m4/sha1.m4
   m4/size_max.m4
   m4/snprintf.m4
@@ -655,11 +840,14 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/string_h.m4
   m4/strtok_r.m4
   m4/strverscmp.m4
+  m4/symlink.m4
   m4/sys_stat_h.m4
   m4/sys_types_h.m4
   m4/time_h.m4
+  m4/ungetc.m4
   m4/unistd_h.m4
   m4/unlink.m4
+  m4/unlinkdir.m4
   m4/valgrind-tests.m4
   m4/vasnprintf.m4
   m4/visibility.m4
@@ -669,4 +857,131 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/wchar_t.m4
   m4/wint_t.m4
   m4/xsize.m4
+  tests/init.sh
+  tests/macros.h
+  tests/signature.h
+  tests/test-alloca-opt.c
+  tests/test-base32.c
+  tests/test-binary-io.c
+  tests/test-binary-io.sh
+  tests/test-c-ctype.c
+  tests/test-canonicalize-lgpl.c
+  tests/test-chdir.c
+  tests/test-close.c
+  tests/test-dirent.c
+  tests/test-environ.c
+  tests/test-errno.c
+  tests/test-fclose.c
+  tests/test-fcntl-h.c
+  tests/test-fdopen.c
+  tests/test-fflush.c
+  tests/test-fflush2.c
+  tests/test-fflush2.sh
+  tests/test-fgetc.c
+  tests/test-float.c
+  tests/test-fopen.c
+  tests/test-fopen.h
+  tests/test-fpurge.c
+  tests/test-fputc.c
+  tests/test-fread.c
+  tests/test-freading.c
+  tests/test-fseek.c
+  tests/test-fseek.sh
+  tests/test-fseek2.sh
+  tests/test-fseeko.c
+  tests/test-fseeko.sh
+  tests/test-fseeko2.sh
+  tests/test-fseeko3.c
+  tests/test-fseeko3.sh
+  tests/test-fseeko4.c
+  tests/test-fseeko4.sh
+  tests/test-fstat.c
+  tests/test-ftell.c
+  tests/test-ftell.sh
+  tests/test-ftell2.sh
+  tests/test-ftell3.c
+  tests/test-ftello.c
+  tests/test-ftello.sh
+  tests/test-ftello2.sh
+  tests/test-ftello3.c
+  tests/test-ftello4.c
+  tests/test-ftello4.sh
+  tests/test-fwrite.c
+  tests/test-gc-hmac-sha1.c
+  tests/test-gc.c
+  tests/test-getcwd-lgpl.c
+  tests/test-getdelim.c
+  tests/test-getline.c
+  tests/test-hmac-sha1.c
+  tests/test-ignore-value.c
+  tests/test-init.sh
+  tests/test-intprops.c
+  tests/test-inttypes.c
+  tests/test-link.c
+  tests/test-link.h
+  tests/test-lseek.c
+  tests/test-lseek.sh
+  tests/test-lstat.c
+  tests/test-lstat.h
+  tests/test-malloca.c
+  tests/test-memchr.c
+  tests/test-pathmax.c
+  tests/test-priv-set.c
+  tests/test-readlink.c
+  tests/test-readlink.h
+  tests/test-rename.c
+  tests/test-rename.h
+  tests/test-rmdir.c
+  tests/test-rmdir.h
+  tests/test-sha1.c
+  tests/test-snprintf.c
+  tests/test-stat.c
+  tests/test-stat.h
+  tests/test-stdalign.c
+  tests/test-stdbool.c
+  tests/test-stddef.c
+  tests/test-stdint.c
+  tests/test-stdio.c
+  tests/test-stdlib.c
+  tests/test-string.c
+  tests/test-strverscmp.c
+  tests/test-symlink.c
+  tests/test-symlink.h
+  tests/test-sys_stat.c
+  tests/test-sys_types.c
+  tests/test-sys_wait.h
+  tests/test-time.c
+  tests/test-unistd.c
+  tests/test-unlink.c
+  tests/test-unlink.h
+  tests/test-unsetenv.c
+  tests/test-vasnprintf.c
+  tests/test-verify.c
+  tests/test-verify.sh
+  tests/test-wchar.c
+  tests/zerosize-ptr.h
+  tests=lib/binary-io.h
+  tests=lib/closedir.c
+  tests=lib/dirent-private.h
+  tests=lib/dirent.in.h
+  tests=lib/fcntl.in.h
+  tests=lib/fdopen.c
+  tests=lib/filename.h
+  tests=lib/fpucw.h
+  tests=lib/getcwd-lgpl.c
+  tests=lib/getpagesize.c
+  tests=lib/ignore-value.h
+  tests=lib/intprops.h
+  tests=lib/inttypes.in.h
+  tests=lib/link.c
+  tests=lib/opendir.c
+  tests=lib/priv-set.c
+  tests=lib/priv-set.h
+  tests=lib/putenv.c
+  tests=lib/readdir.c
+  tests=lib/root-uid.h
+  tests=lib/symlink.c
+  tests=lib/unlinkdir.c
+  tests=lib/unlinkdir.h
+  tests=lib/unsetenv.c
 ])

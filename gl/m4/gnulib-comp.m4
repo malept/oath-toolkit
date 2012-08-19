@@ -41,9 +41,13 @@ AC_DEFUN([gl_EARLY],
   # Code from module git-version-gen:
   # Code from module gnumakefile:
   # Code from module maintainer-makefile:
+  # Code from module test-framework-sh:
+  # Code from module test-framework-sh-tests:
   # Code from module update-copyright:
+  # Code from module update-copyright-tests:
   # Code from module useless-if-before-free:
   # Code from module vc-list-files:
+  # Code from module vc-list-files-tests:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -113,13 +117,17 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gltests_LIBSOURCES_LIST], [])
   m4_pushdef([gltests_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='tests'
+  gl_source_base='gl/tests'
 changequote(,)dnl
   gltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
 changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  abs_aux_dir=`cd "$ac_aux_dir"; pwd`
+  AC_SUBST([abs_aux_dir])
+  abs_aux_dir=`cd "$ac_aux_dir"; pwd`
+  AC_SUBST([abs_aux_dir])
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -205,7 +213,7 @@ AC_DEFUN([gltests_REPLACE_FUNCS], [
 AC_DEFUN([gltests_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gltests_LIBSOURCES_DIR], [tests])
+      m4_define([gltests_LIBSOURCES_DIR], [gl/tests])
       m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
@@ -222,6 +230,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/00gnulib.m4
   m4/gnulib-common.m4
   m4/onceonly.m4
+  tests/init.sh
+  tests/test-init.sh
+  tests/test-update-copyright.sh
+  tests/test-vc-list-files-cvs.sh
+  tests/test-vc-list-files-git.sh
   top/GNUmakefile
   top/maint.mk
 ])

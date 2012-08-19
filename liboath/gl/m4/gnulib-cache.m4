@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --lgpl=2 --no-conditional-dependencies --libtool --macro-prefix=gl base32 c-ctype crypto/gc-hmac-sha1 fclose fopen fseeko getline lib-symbol-versions lib-symbol-visibility manywarnings rename snprintf strdup-posix strtok_r strverscmp sys_stat unlink valgrind-tests
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --with-tests --lgpl=2 --no-conditional-dependencies --libtool --macro-prefix=gl base32 c-ctype crypto/gc-hmac-sha1 fclose fopen fseeko getline lib-symbol-versions lib-symbol-visibility manywarnings rename snprintf strdup-posix strtok_r strverscmp sys_stat unlink valgrind-tests
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
@@ -56,7 +56,8 @@ gl_SOURCE_BASE([gl])
 gl_M4_BASE([gl/m4])
 gl_PO_BASE([])
 gl_DOC_BASE([doc])
-gl_TESTS_BASE([tests])
+gl_TESTS_BASE([gl/tests])
+gl_WITH_TESTS
 gl_LIB([libgnu])
 gl_LGPL([2])
 gl_MAKEFILE_NAME([])

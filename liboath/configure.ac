@@ -95,6 +95,7 @@ AC_CONFIG_FILES([
   liboath.pc
   oath.h
   gl/Makefile
+  gl/tests/Makefile
   tests/Makefile
   gtk-doc/Makefile
   gtk-doc/version.xml

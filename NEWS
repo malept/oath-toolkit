@@ -9,6 +9,8 @@ Needed for eSecuTech tokens as they use a 64-bit value for their
 initial counter.  Reported by <cameron.bradley@wiretap.net.nz> see
 <https://savannah.nongnu.org/support/?108114>.
 
+** Added gnulib self-tests.
+
 * Version 1.12.4 (released 2012-06-17)
 
 ** liboath: Usersfile code handles multiple lines for a single user.

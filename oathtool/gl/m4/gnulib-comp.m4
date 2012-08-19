@@ -39,32 +39,59 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
+  # Code from module alloca-opt-tests:
   # Code from module c-ctype:
+  # Code from module c-ctype-tests:
   # Code from module clock-time:
   # Code from module environ:
+  # Code from module environ-tests:
   # Code from module errno:
+  # Code from module errno-tests:
   # Code from module error:
   # Code from module exitfail:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module extern-inline:
+  # Code from module fdopen:
+  # Code from module fdopen-tests:
+  # Code from module fgetc-tests:
   # Code from module float:
+  # Code from module float-tests:
+  # Code from module fpieee:
+  AC_REQUIRE([gl_FP_IEEE])
+  # Code from module fpucw:
+  # Code from module fputc-tests:
+  # Code from module fread-tests:
+  # Code from module fwrite-tests:
+  # Code from module getpagesize:
   # Code from module gettext-h:
   # Code from module gettime:
   # Code from module gettimeofday:
+  # Code from module gettimeofday-tests:
   # Code from module include_next:
   # Code from module inline:
   # Code from module intprops:
+  # Code from module intprops-tests:
+  # Code from module inttypes:
+  # Code from module inttypes-incomplete:
+  # Code from module inttypes-tests:
+  # Code from module malloc-posix:
   # Code from module malloca:
+  # Code from module malloca-tests:
   # Code from module memchr:
+  # Code from module memchr-tests:
   # Code from module mktime:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
   # Code from module parse-datetime:
+  # Code from module parse-datetime-tests:
   # Code from module parse-duration:
+  # Code from module parse-duration-tests:
   # Code from module progname:
+  # Code from module putenv:
   # Code from module setenv:
+  # Code from module setenv-tests:
   # Code from module size_max:
   # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
@@ -78,27 +105,48 @@ AC_DEFUN([gl_EARLY],
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   gl_PROG_CC_C99
   # Code from module stdbool:
+  # Code from module stdbool-tests:
   # Code from module stddef:
+  # Code from module stddef-tests:
   # Code from module stdint:
+  # Code from module stdint-tests:
   # Code from module stdio:
+  # Code from module stdio-tests:
   # Code from module stdlib:
+  # Code from module stdlib-tests:
   # Code from module strerror:
   # Code from module strerror-override:
+  # Code from module strerror-tests:
   # Code from module string:
+  # Code from module string-tests:
   # Code from module sys_time:
+  # Code from module sys_time-tests:
   # Code from module sys_types:
+  # Code from module sys_types-tests:
+  # Code from module test-framework-sh:
+  # Code from module test-framework-sh-tests:
   # Code from module time:
+  # Code from module time-tests:
   # Code from module time_r:
   # Code from module timespec:
   # Code from module unistd:
+  # Code from module unistd-tests:
   # Code from module unsetenv:
+  # Code from module unsetenv-tests:
   # Code from module vasnprintf:
+  # Code from module vasnprintf-tests:
   # Code from module vasprintf:
+  # Code from module vasprintf-tests:
   # Code from module verify:
+  # Code from module verify-tests:
   # Code from module version-etc:
+  # Code from module version-etc-fsf:
+  # Code from module version-etc-tests:
   # Code from module wchar:
+  # Code from module wchar-tests:
   # Code from module xalloc:
   # Code from module xalloc-die:
+  # Code from module xalloc-die-tests:
   # Code from module xalloc-oversized:
   # Code from module xsize:
 ])
@@ -268,13 +316,42 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gltests_LIBSOURCES_LIST], [])
   m4_pushdef([gltests_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='tests'
+  gl_source_base='gl/tests'
 changequote(,)dnl
   gltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
 changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  gl_FUNC_FDOPEN
+  if test $REPLACE_FDOPEN = 1; then
+    AC_LIBOBJ([fdopen])
+    gl_PREREQ_FDOPEN
+  fi
+  gl_STDIO_MODULE_INDICATOR([fdopen])
+  gl_FUNC_GETPAGESIZE
+  if test $REPLACE_GETPAGESIZE = 1; then
+    AC_LIBOBJ([getpagesize])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([getpagesize])
+  gl_INTTYPES_H
+  gl_INTTYPES_INCOMPLETE
+  gl_FUNC_MALLOC_POSIX
+  if test $REPLACE_MALLOC = 1; then
+    AC_LIBOBJ([malloc])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+  dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  gl_FUNC_PUTENV
+  if test $REPLACE_PUTENV = 1; then
+    AC_LIBOBJ([putenv])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([putenv])
+  gt_TYPE_WCHAR_T
+  gt_TYPE_WINT_T
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -306,6 +383,8 @@ changequote([, ])dnl
     AC_SUBST([gltests_LIBOBJS], [$gltests_libobjs])
     AC_SUBST([gltests_LTLIBOBJS], [$gltests_ltlibobjs])
   ])
+  LIBTESTS_LIBDEPS="$gltests_libdeps"
+  AC_SUBST([LIBTESTS_LIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -356,7 +435,7 @@ AC_DEFUN([gltests_REPLACE_FUNCS], [
 AC_DEFUN([gltests_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gltests_LIBSOURCES_DIR], [tests])
+      m4_define([gltests_LIBSOURCES_DIR], [gl/tests])
       m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
@@ -452,15 +531,21 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/exponentd.m4
   m4/extensions.m4
   m4/extern-inline.m4
+  m4/fdopen.m4
   m4/float_h.m4
+  m4/fpieee.m4
+  m4/getpagesize.m4
   m4/gettime.m4
   m4/gettimeofday.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/inline.m4
   m4/intmax_t.m4
+  m4/inttypes-pri.m4
+  m4/inttypes.m4
   m4/inttypes_h.m4
   m4/longlong.m4
+  m4/malloc.m4
   m4/malloca.m4
   m4/math_h.m4
   m4/memchr.m4
@@ -473,6 +558,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/onceonly.m4
   m4/parse-datetime.m4
   m4/printf.m4
+  m4/putenv.m4
   m4/setenv.m4
   m4/size_max.m4
   m4/ssize_t.m4
@@ -502,4 +588,57 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/wint_t.m4
   m4/xalloc.m4
   m4/xsize.m4
+  tests/init.sh
+  tests/macros.h
+  tests/signature.h
+  tests/test-alloca-opt.c
+  tests/test-c-ctype.c
+  tests/test-environ.c
+  tests/test-errno.c
+  tests/test-fdopen.c
+  tests/test-fgetc.c
+  tests/test-float.c
+  tests/test-fputc.c
+  tests/test-fread.c
+  tests/test-fwrite.c
+  tests/test-gettimeofday.c
+  tests/test-init.sh
+  tests/test-intprops.c
+  tests/test-inttypes.c
+  tests/test-malloca.c
+  tests/test-memchr.c
+  tests/test-parse-datetime.c
+  tests/test-parse-duration.c
+  tests/test-parse-duration.sh
+  tests/test-setenv.c
+  tests/test-stdbool.c
+  tests/test-stddef.c
+  tests/test-stdint.c
+  tests/test-stdio.c
+  tests/test-stdlib.c
+  tests/test-strerror.c
+  tests/test-string.c
+  tests/test-sys_time.c
+  tests/test-sys_types.c
+  tests/test-sys_wait.h
+  tests/test-time.c
+  tests/test-unistd.c
+  tests/test-unsetenv.c
+  tests/test-vasnprintf.c
+  tests/test-vasprintf.c
+  tests/test-verify.c
+  tests/test-verify.sh
+  tests/test-version-etc.c
+  tests/test-version-etc.sh
+  tests/test-wchar.c
+  tests/test-xalloc-die.c
+  tests/test-xalloc-die.sh
+  tests/zerosize-ptr.h
+  tests=lib/fdopen.c
+  tests=lib/fpucw.h
+  tests=lib/getpagesize.c
+  tests=lib/inttypes.in.h
+  tests=lib/malloc.c
+  tests=lib/putenv.c
+  tests=lib/version-etc-fsf.c
 ])
