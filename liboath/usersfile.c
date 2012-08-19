@@ -348,6 +348,26 @@ update_usersfile (const char *usersfile,
   rc = update_usersfile2 (username, otp, infh, outfh, lineptr, n,
 			  timestamp, new_moving_factor, skipped_users);
 
+  /* Flush the buffers */
+  if(fflush(outfh) != 0)
+  {
+    fclose (lockfh);
+    fclose (outfh);
+    unlink (newfilename);
+    free (newfilename);
+    return OATH_FILE_FLUSH_ERROR;
+  }
+  
+  /* sync the disks */
+  if(fsync(fileno(outfh)) < 0)
+  {
+    fclose (lockfh);
+    fclose (outfh);
+    unlink (newfilename);
+    free (newfilename);
+    return OATH_FILE_SYNC_ERROR;
+  }
+
   fclose (lockfh);
   fclose (outfh);
 

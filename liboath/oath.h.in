@@ -83,6 +83,8 @@
  * @OATH_INVALID_BASE32: Base32 string is invalid
  * @OATH_BASE32_OVERFLOW: Base32 encoding would overflow
  * @OATH_MALLOC_ERROR: Memory allocation failed
+ * @OATH_FILE_FLUSH_ERROR: System error when flushing file buffer
+ * @OATH_FILE_SYNC_ERROR: System error when syncing file to disk
  *
  * Return codes for OATH functions.  All return codes are negative
  * except for the successful code OATH_OK which are guaranteed to be
@@ -115,7 +117,9 @@ typedef enum
   OATH_STRCMP_ERROR = -19,
   OATH_INVALID_BASE32 = -20,
   OATH_BASE32_OVERFLOW = -21,
-  OATH_MALLOC_ERROR = -22
+  OATH_MALLOC_ERROR = -22,
+  OATH_FILE_FLUSH_ERROR = -23,
+  OATH_FILE_SYNC_ERROR = -24
 } oath_rc;
 
 /* Global */
