@@ -345,46 +345,44 @@ update_usersfile (const char *usersfile,
       }
   }
 
+  /* Create the new usersfile content */
   rc = update_usersfile2 (username, otp, infh, outfh, lineptr, n,
 			  timestamp, new_moving_factor, skipped_users);
 
   /* Flush the buffers */
-  if(fflush(outfh) != 0)
+  if (rc == 0 && fflush(outfh) != 0)
   {
-    fclose (lockfh);
-    fclose (outfh);
-    unlink (newfilename);
-    free (newfilename);
-    return OATH_FILE_FLUSH_ERROR;
+    rc = OATH_FILE_FLUSH_ERROR;
   }
   
   /* sync the disks */
-  if(fsync(fileno(outfh)) < 0)
+  if (rc == 0 && fsync(fileno(outfh)) < 0)
   {
-    fclose (lockfh);
-    fclose (outfh);
-    unlink (newfilename);
-    free (newfilename);
-    return OATH_FILE_SYNC_ERROR;
+    rc = OATH_FILE_SYNC_ERROR;
   }
 
-  fclose (lockfh);
   fclose (outfh);
 
+  if (rc == 0)
   {
-    int tmprc1, tmprc2;
-
-    tmprc1 = rename (newfilename, usersfile);
-    free (newfilename);
-
-    tmprc2 = unlink (lockfile);
-    free (lockfile);
-
-    if (tmprc1 == -1)
-      return OATH_FILE_RENAME_ERROR;
-    if (tmprc2 == -1)
-      return OATH_FILE_UNLINK_ERROR;
+    /* Overwrite the usersfile with the new copy */
+    if (rename (newfilename, usersfile) < 0)
+    {
+      rc = OATH_FILE_RENAME_ERROR; 
+    }
   }
+  else
+  {
+    /* Failed, don't leave garbage lying around */
+    unlink (newfilename);
+  }
+  
+  free (newfilename);
+
+  /* Complete, close the lockfile */
+  fclose (lockfh);
+  unlink (lockfile);
+  free (lockfile);
 
   return rc;
 }
