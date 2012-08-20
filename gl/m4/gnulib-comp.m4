@@ -38,6 +38,8 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module autobuild:
+  AB_INIT
   # Code from module git-version-gen:
   # Code from module gnumakefile:
   # Code from module maintainer-makefile:
@@ -228,6 +230,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/vc-list-files
   lib/dummy.c
   m4/00gnulib.m4
+  m4/autobuild.m4
   m4/gnulib-common.m4
   m4/onceonly.m4
   tests/init.sh
