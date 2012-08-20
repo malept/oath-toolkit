@@ -243,8 +243,11 @@ update_usersfile2 (const char *username,
 	  r = fprintf (outfh, "%s", origline);
 	  if (r <= 0)
 	    return OATH_PRINTF_ERROR;
+        free (origline);
 	  continue;
 	}
+
+      free (origline);
 
       passwd = strtok_r (NULL, whitespace, &saveptr);
       if (passwd == NULL)
