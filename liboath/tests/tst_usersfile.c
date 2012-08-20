@@ -25,6 +25,8 @@
 
 #include <stdio.h>
 
+#include <sys/stat.h>
+
 #define CREDS "tmp.oath"
 
 int
@@ -32,6 +34,8 @@ main (void)
 {
   oath_rc rc;
   time_t last_otp;
+  struct stat ufstat1;
+  struct stat ufstat2;
 
   if (!oath_check_version (OATH_VERSION))
     {
@@ -56,12 +60,23 @@ main (void)
       return 1;
     }
 
+  /* Record the current usersfile inode */
+  stat(CREDS, &ufstat1);
+
   rc = oath_authenticate_usersfile (CREDS, "joe", "755224",
 				    0, "1234", &last_otp);
   if (rc != OATH_BAD_PASSWORD)
     {
       printf ("oath_authenticate_usersfile[2]: %s (%d)\n",
 	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Check that we do not update usersfile on not OATH_OK */
+  stat(CREDS, &ufstat2);
+  if(ufstat1.st_ino != ufstat2.st_ino)
+    {
+      printf ("oath_authenticate_usersfile[26]: usersfile %s changed on OATH_BAD_PASSWORD \n", CREDS);
       return 1;
     }
 
@@ -83,6 +98,13 @@ main (void)
       return 1;
     }
 
+  stat(CREDS, &ufstat2);
+  if(ufstat1.st_ino == ufstat2.st_ino)
+    {
+      printf ("oath_authenticate_usersfile[27]: usersfile %s did not change on OATH_OK\n", CREDS);
+      return 1;
+    }
+
   rc = oath_authenticate_usersfile (CREDS, "silver", "599872",
 				    1, "4711", &last_otp);
   if (rc != OATH_OK)
@@ -101,6 +123,7 @@ main (void)
       return 1;
     }
 
+  stat(CREDS, &ufstat1);
   rc = oath_authenticate_usersfile (CREDS,
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != OATH_REPLAYED_OTP)
@@ -113,6 +136,13 @@ main (void)
     {
       printf ("oath_authenticate_usersfile timestamp %ld != 1260203142\n",
 	      last_otp);
+      return 1;
+    }
+
+  stat(CREDS, &ufstat2);
+  if(ufstat1.st_ino != ufstat2.st_ino)
+    {
+      printf ("oath_authenticate_usersfile[28]: usersfile %s changed on OATH_REPLAYED_OTP \n", CREDS);
       return 1;
     }
 
