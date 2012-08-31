@@ -196,6 +196,8 @@ AC_DEFUN([gl_INIT],
   fi
   gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   gl_INLINE
+  gl_INTTYPES_H
+  gl_INTTYPES_INCOMPLETE
   gl_MALLOCA
   gl_FUNC_MEMCHR
   if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
@@ -334,8 +336,6 @@ changequote([, ])dnl
     AC_LIBOBJ([getpagesize])
   fi
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
-  gl_INTTYPES_H
-  gl_INTTYPES_INCOMPLETE
   gl_FUNC_MALLOC_POSIX
   if test $REPLACE_MALLOC = 1; then
     AC_LIBOBJ([malloc])
@@ -466,6 +466,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/gettime.c
   lib/gettimeofday.c
   lib/intprops.h
+  lib/inttypes.in.h
   lib/itold.c
   lib/malloca.c
   lib/malloca.h
@@ -637,7 +638,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/fdopen.c
   tests=lib/fpucw.h
   tests=lib/getpagesize.c
-  tests=lib/inttypes.in.h
   tests=lib/malloc.c
   tests=lib/putenv.c
   tests=lib/version-etc-fsf.c
