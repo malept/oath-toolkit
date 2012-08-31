@@ -116,6 +116,7 @@ int
 main (void)
 {
   oath_rc rc;
+  char nulls[1] = "\x00";
   char secret[32] = "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
     "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
     "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30\x31\x32";
@@ -128,6 +129,21 @@ main (void)
   if (rc != OATH_OK)
     {
       printf ("oath_init: %d\n", rc);
+      return 1;
+    }
+
+  moving_factor = 1099511627776ULL;
+  rc = oath_hotp_generate (nulls, 1, moving_factor, 6, false,
+			   OATH_HOTP_DYNAMIC_TRUNCATION, otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_hotp_generate %llu: %d\n",
+	      (long long unsigned) moving_factor, rc);
+      return 1;
+    }
+  if (strcmp ("363425", otp) != 0)
+    {
+      printf ("oath_hotp_generate got otp %s\n", otp);
       return 1;
     }
 
