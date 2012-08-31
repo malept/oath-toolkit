@@ -25,6 +25,7 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
 EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
 EXTRA_DIST += build-aux/oath-toolkit-version m4/dummy.m4
+EXTRA_DIST += HACKING
 
 # git-version-gen
 BUILT_SOURCES = $(top_srcdir)/.version

@@ -17,6 +17,18 @@ The components included in the package is:
 
 See each sub-directory for more information.
 
+The file INSTALL contains generic installation and configuration
+instructions, however briefly the typical process is:
+
+$ ./configure
+$ make check install
+
+If the builtin self-tests fail, you should report it as a bug and not
+install the software.
+
+The file HACKING contains information that is useful if you are
+building for version controlled sources.
+
 For updates on the project please visit our web page:
 
   https://savannah.nongnu.org/projects/oath-toolkit/
@@ -29,7 +41,8 @@ through this web page:
   http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Note that the OATH Toolkit project used to be called "HOTP Toolkit",
-and there are still references to the old project name.
+and there are still references to the old project name elsewhere.
+Please help and change them to point at OATH Toolkit instead.
 
 For any copyright year range specified as YYYY-ZZZZ in this package
 note that the range specifies every single year in that closed interval.
