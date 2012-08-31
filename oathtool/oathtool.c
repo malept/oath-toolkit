@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <inttypes.h>
 
 /* Gnulib. */
 #include "progname.h"
@@ -84,7 +85,8 @@ parse_time (const char *p, const time_t now)
 static void
 verbose_hotp (uint64_t moving_factor)
 {
-  printf ("Start counter: 0x%lX (%ld)\n\n", moving_factor, moving_factor);
+  printf ("Start counter: 0x%" PRIX64 " (%" PRIu64 ")\n\n",
+	  moving_factor, moving_factor);
 }
 
 static void
