@@ -521,7 +521,6 @@ changequote([, ])dnl
     AC_LIBOBJ([getpagesize])
   fi
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
-  AC_REQUIRE([AC_C_INLINE])
   gl_INTTYPES_H
   gl_INTTYPES_INCOMPLETE
   gl_FUNC_LINK
