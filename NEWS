@@ -3,6 +3,8 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.12.5 (unreleased)
 
+** oathtool: The --counter parameter now works on 32-bit platforms.
+
 * Version 1.12.5 (released 2012-08-19)
 
 ** oathtool: The --counter parameter now supports larger values.
