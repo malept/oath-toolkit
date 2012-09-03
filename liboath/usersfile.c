@@ -241,13 +241,11 @@ update_usersfile2 (const char *username,
 	  || got_users++ != skipped_users)
 	{
 	  r = fprintf (outfh, "%s", origline);
+	  free (origline);
 	  if (r <= 0)
 	    return OATH_PRINTF_ERROR;
-        free (origline);
 	  continue;
 	}
-
-      free (origline);
 
       passwd = strtok_r (NULL, whitespace, &saveptr);
       if (passwd == NULL)
@@ -260,6 +258,7 @@ update_usersfile2 (const char *username,
       r = fprintf (outfh, "%s\t%s\t%s\t%s\t%llu\t%s\t%s\n",
 		   type, username, passwd, secret,
 		   (unsigned long long) new_moving_factor, otp, timestamp);
+      free (origline);
       if (r <= 0)
 	return OATH_PRINTF_ERROR;
     }
@@ -348,43 +347,37 @@ update_usersfile (const char *usersfile,
       }
   }
 
-  /* Create the new usersfile content */
+  /* Create the new usersfile content. */
   rc = update_usersfile2 (username, otp, infh, outfh, lineptr, n,
 			  timestamp, new_moving_factor, skipped_users);
 
-  /* Flush the buffers */
-  if (rc == 0 && fflush(outfh) != 0)
-  {
+  /* On success, flush the buffers. */
+  if (rc == OATH_OK && fflush (outfh) != 0)
     rc = OATH_FILE_FLUSH_ERROR;
-  }
-  
-  /* sync the disks */
-  if (rc == 0 && fsync(fileno(outfh)) < 0)
-  {
+
+  /* On success, sync the disks. */
+  if (rc == OATH_OK && fsync (fileno (outfh)) != 0)
     rc = OATH_FILE_SYNC_ERROR;
-  }
 
-  fclose (outfh);
+  /* On success, close the file. */
+  if (rc == OATH_OK && fclose (outfh) != 0)
+    rc = OATH_FILE_CLOSE_ERROR;
 
-  if (rc == 0)
-  {
-    /* Overwrite the usersfile with the new copy */
-    if (rename (newfilename, usersfile) < 0)
-    {
-      rc = OATH_FILE_RENAME_ERROR; 
-    }
-  }
-  else
-  {
-    /* Failed, don't leave garbage lying around */
+  /* On success, overwrite the usersfile with the new copy. */
+  if (rc == OATH_OK && rename (newfilename, usersfile) != 0)
+    rc = OATH_FILE_RENAME_ERROR;
+
+  /* Something has failed, don't leave garbage lying around. */
+  if (rc != OATH_OK)
     unlink (newfilename);
-  }
-  
+
   free (newfilename);
 
   /* Complete, close the lockfile */
-  fclose (lockfh);
-  unlink (lockfile);
+  if (fclose (lockfh) != 0)
+    rc = OATH_FILE_CLOSE_ERROR;
+  if (unlink (lockfile) != 0)
+    rc = OATH_FILE_UNLINK_ERROR;
   free (lockfile);
 
   return rc;

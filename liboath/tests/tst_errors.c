@@ -26,24 +26,21 @@
 #include <stdio.h>
 
 int
-main (int argc, char *argv[])
+main (void)
 {
-  int i;
+  signed i;
 
-  for (i = 3; i > -26; i--)
+  for (i = 3; i >= OATH_LAST_ERROR - 3; i--)
     {
       const char *name = oath_strerror_name (i);
       const char *err = oath_strerror (i);
 
-      if (argc > 1)
-	printf ("Return code %3d name: %-25s text: %s\n", i, name, err);
-
-      if (i <= 0 && i >= -18 && name == NULL)
+      if ((i <= 0 && i >= OATH_LAST_ERROR) && name == NULL)
 	{
 	  printf ("No error string for return code %d\n", i);
 	  return 1;
 	}
-      else if (i > 0 && i < -18 && name != NULL)
+      if ((i > 0 || i < OATH_LAST_ERROR) && name != NULL)
 	{
 	  printf ("Error string for unknown return code %d\n", i);
 	  return 1;

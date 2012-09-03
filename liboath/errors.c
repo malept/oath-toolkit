@@ -55,7 +55,8 @@ static const err_t errors[] = {
   ERR (OATH_BASE32_OVERFLOW, "Base32 encoding would overflow"),
   ERR (OATH_MALLOC_ERROR, "Memory allocation failed"),
   ERR (OATH_FILE_FLUSH_ERROR, "System error when flushing file buffer"),
-  ERR (OATH_FILE_SYNC_ERROR, "System error when syncing file to disk")
+  ERR (OATH_FILE_SYNC_ERROR, "System error when syncing file to disk"),
+  ERR (OATH_FILE_CLOSE_ERROR, "System error when closing file")
 };
 
 /**

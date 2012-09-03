@@ -85,6 +85,9 @@
  * @OATH_MALLOC_ERROR: Memory allocation failed
  * @OATH_FILE_FLUSH_ERROR: System error when flushing file buffer
  * @OATH_FILE_SYNC_ERROR: System error when syncing file to disk
+ * @OATH_FILE_CLOSE_ERROR: System error when closing file
+ * @OATH_LAST_ERROR: Meta-error indicating the last error code, for use
+ *   when iterating over all error codes or similar.
  *
  * Return codes for OATH functions.  All return codes are negative
  * except for the successful code OATH_OK which are guaranteed to be
@@ -119,7 +122,11 @@ typedef enum
   OATH_BASE32_OVERFLOW = -21,
   OATH_MALLOC_ERROR = -22,
   OATH_FILE_FLUSH_ERROR = -23,
-  OATH_FILE_SYNC_ERROR = -24
+  OATH_FILE_SYNC_ERROR = -24,
+  OATH_FILE_CLOSE_ERROR = -25,
+  /* When adding anything here, update OATH_LAST_ERROR, errors.c
+     and tests/tst_errors.c. */
+  OATH_LAST_ERROR = -25
 } oath_rc;
 
 /* Global */

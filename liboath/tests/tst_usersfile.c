@@ -61,7 +61,7 @@ main (void)
     }
 
   /* Record the current usersfile inode */
-  stat(CREDS, &ufstat1);
+  stat (CREDS, &ufstat1);
 
   rc = oath_authenticate_usersfile (CREDS, "joe", "755224",
 				    0, "1234", &last_otp);
@@ -73,10 +73,11 @@ main (void)
     }
 
   /* Check that we do not update usersfile on not OATH_OK */
-  stat(CREDS, &ufstat2);
-  if(ufstat1.st_ino != ufstat2.st_ino)
+  stat (CREDS, &ufstat2);
+  if (ufstat1.st_ino != ufstat2.st_ino)
     {
-      printf ("oath_authenticate_usersfile[26]: usersfile %s changed on OATH_BAD_PASSWORD \n", CREDS);
+      printf ("oath_authenticate_usersfile[26]: usersfile %s changed "
+	      "on OATH_BAD_PASSWORD\n", CREDS);
       return 1;
     }
 
@@ -98,10 +99,11 @@ main (void)
       return 1;
     }
 
-  stat(CREDS, &ufstat2);
-  if(ufstat1.st_ino == ufstat2.st_ino)
+  stat (CREDS, &ufstat2);
+  if (ufstat1.st_ino == ufstat2.st_ino)
     {
-      printf ("oath_authenticate_usersfile[27]: usersfile %s did not change on OATH_OK\n", CREDS);
+      printf ("oath_authenticate_usersfile[27]: usersfile %s did not "
+	      "change on OATH_OK\n", CREDS);
       return 1;
     }
 
@@ -123,7 +125,7 @@ main (void)
       return 1;
     }
 
-  stat(CREDS, &ufstat1);
+  stat (CREDS, &ufstat1);
   rc = oath_authenticate_usersfile (CREDS,
 				    "foo", "755224", 0, "8989", &last_otp);
   if (rc != OATH_REPLAYED_OTP)
@@ -139,10 +141,11 @@ main (void)
       return 1;
     }
 
-  stat(CREDS, &ufstat2);
-  if(ufstat1.st_ino != ufstat2.st_ino)
+  stat (CREDS, &ufstat2);
+  if (ufstat1.st_ino != ufstat2.st_ino)
     {
-      printf ("oath_authenticate_usersfile[28]: usersfile %s changed on OATH_REPLAYED_OTP \n", CREDS);
+      printf ("oath_authenticate_usersfile[28]: usersfile %s changed "
+	      "on OATH_REPLAYED_OTP\n", CREDS);
       return 1;
     }
 
