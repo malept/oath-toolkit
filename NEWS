@@ -3,7 +3,17 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.12.5 (unreleased)
 
+** liboath: The usersfile is now fflush'ed and fsync'ed.
+** liboath: A memory leak fixed.
+Patch from Jed Laundry <jlaundry@jlaundry.com>, somewhat modified.
+
 ** oathtool: The --counter parameter now works on 32-bit platforms.
+
+** API and ABI is backwards compatible with the previous version.
+OATH_FILE_FLUSH_ERROR: Added.
+OATH_FILE_SYNC_ERROR: Added.
+OATH_FILE_CLOSE_ERROR: Added.
+OATH_LAST_ERROR: Added.
 
 * Version 1.12.5 (released 2012-08-19)
 
@@ -15,6 +25,8 @@ initial counter.  Reported by <cameron.bradley@wiretap.net.nz> see
 
 ** Added gnulib self-tests.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.12.4 (released 2012-06-17)
 
 ** liboath: Usersfile code handles multiple lines for a single user.
@@ -22,10 +34,14 @@ This can be used when a single user carries multiple tokens (with
 different OATH secrets) and any of them should be permitted.
 Suggested by Tim Eggleston <lists@timeggleston.co.uk>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.12.3 (released 2012-05-31)
 
 ** pam_oath: Fix "try_first_pass".
 Patch from Christian Hesse <list@eworm.de>.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.12.2 (released 2012-04-04)
 
@@ -35,10 +51,14 @@ Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
 ** tests: liboath usersfile self-test is skipped if there is no datefudge.
 Reported by Fredrik Lindgren <fredrik@lindgren.pp.se>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.12.1 (released 2012-04-01)
 
 ** liboath, oathtool: Base32 decoding now permit lowercase characters.
 Reported by Martin Michlmayr <tbm@cyrius.com>.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.12.0 (released 2012-04-01)
 
@@ -71,11 +91,15 @@ From Linus Nordberg <linus@nordberg.se> and Arno Hautala
 
 ** Update gnulib files.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.10.4 (released 2011-08-12)
 
 ** liboath: Fix build so that OATH_VERSION_NUMBER is actually defined.
 It was an empty value in the last release due to a bug in the build
 scripts.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.10.3 (released 2011-08-12)
 
@@ -86,17 +110,23 @@ Patch by Daniel Pocock <daniel@pocock.com.au>.
 
 ** Update gnulib files.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.10.2 (released 2011-06-12)
 
 ** liboath: Fix self tests to cope with slow build hosts.
 Reported by Christoph Egger <christoph@debian.org> in
 <http://bugs.debian.org/630222>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.10.1 (released 2011-06-12)
 
 ** liboath: Fix self tests to work regardless of local time zone.
 
 ** Update gnulib files.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.10.0 (released 2011-05-24)
 
@@ -113,15 +143,21 @@ optional 'int*' parameter to store the search position.
 Supported algorithms are HOTP/T30/D and HOTP/T60/D where D is 6, 7, or
 8 digits.  This means that the PAM module now supports TOTP as well.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.8.2 (released 2011-05-04)
 
 ** build: Fix conflict between ACLOCAL_AMFLAGS and AC_CONFIG_MACRO_DIR.
 Reported by Mitya <mitya@cargosoft.ru>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.8.1 (released 2011-05-03)
 
 ** build: Make autoreconf work again.
 Reported by Christian Hesse <list@eworm.de>.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.8.0 (released 2011-05-03)
 
@@ -130,6 +166,8 @@ The functions are used to get a human readable description of liboath
 error codes.  Suggested by Christian Hesse <mail@eworm.de>.
 
 ** liboath: Self-tests improvements.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.6.4 (released 2011-05-01)
 
@@ -154,6 +192,8 @@ Reported by Mitya <mitya@cargosoft.ru>.
 ** build: Make autoreconf work in released tar archives.
 Reported by Mitya <mitya@cargosoft.ru>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.6.3 (released 2011-04-25)
 
 ** pam_oath: Work under SSH by no-op'ing the setcred function.
@@ -164,6 +204,8 @@ Patches from Linus Nordberg <linus@nordberg.se>.
 
 ** build: Gnulib files were updated.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.6.2 (released 2011-03-10)
 
 ** pam_oath: Add ./configure --enable-root-tests parameter.
@@ -171,10 +213,14 @@ Now this configure parameter is needed to run the self-tests that
 needs root permission.  The fix in the last release was apparently not
 sufficient.  Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.6.1 (released 2011-02-22)
 
 ** pam_oath: Improve reliability of root self test when /etc is not writable.
 Reported by Jean-Michel Pouré - GOOZE <jmpoure@gooze.eu>.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.6.0 (released 2011-02-22)
 
@@ -189,6 +235,8 @@ continue to work through a compatibility-#define.
 
 ** oathtool: Support TOTP validation.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.4.6 (released 2011-02-07)
 
 ** liboath: Improve portability by using more gnulib modules.
@@ -197,10 +245,14 @@ warn for some non-portable constructs.
 
 ** Fix some minor clang warnings.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.4.5 (released 2011-01-27)
 
 ** liboath: Make sure gnulib files are licensed under the LGPLv2.1+.
 Thanks to Tollef Fog Heen <tfheen@debian.org>.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.4.4 (released 2011-01-27)
 
@@ -211,12 +263,16 @@ on, these symbols are generated from the package version instead.
 ** oathtool: Fix typo in man page.
 Patch from Linus Nordberg <linus@nordberg.se>.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.4.3 (released 2011-01-20)
 
 ** liboath: Really make usersfile logic for '-' passwords work.
 Reported by Michael Stevens <mstevens@etla.org>.
 
 ** pam_oath: Added better self-test suite (requires root privileges).
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.4.2 (released 2011-01-16)
 
@@ -226,6 +282,8 @@ We now also have a self check to catch any regressions in this area.
 ** liboath: Make TOTP self check work on platforms with 32-bit time_t.
 The final test requires >32 bit time_t.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.4.1 (released 2011-01-16)
 
 ** liboath: New configure parameter --enable-gcc-warnings.
@@ -233,6 +291,8 @@ Use to enable many compiler warnings.  Enabled by default during
 development.
 
 ** oathtool: Replace - with \- in man page, pointed out by lintian.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.4.0 (released 2011-01-15)
 
@@ -253,14 +313,20 @@ specify TOTP configuration.
 
 ** liboath: Added self-tests of validate functions.
 
+** API and ABI is backwards compatible with the previous version.
+
 * Version 1.2.2 (released 2011-01-01)
 
 ** Cleanups related to name change.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.2.1 (released 2010-12-28)
 
 ** liboath: Install header file "oath.h".
 And various other namespace cleanups.
+
+** API and ABI is backwards compatible with the previous version.
 
 * Version 1.2.0 (released 2010-12-27)
 
@@ -274,6 +340,8 @@ is a matter of changing the symbol names only.
 This is to plan for the future when the tool will also support TOTP/OCRA.
 
 ** pam_oath: Renamed from pam_hotp.
+
+** API and ABI is not backwards compatible.
 
 * Version 1.0.1 (released 2010-12-27)
 
