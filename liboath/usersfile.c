@@ -359,8 +359,8 @@ update_usersfile (const char *usersfile,
   if (rc == OATH_OK && fsync (fileno (outfh)) != 0)
     rc = OATH_FILE_SYNC_ERROR;
 
-  /* On success, close the file. */
-  if (rc == OATH_OK && fclose (outfh) != 0)
+  /* Close the file regardless of success. */
+  if (fclose (outfh) != 0)
     rc = OATH_FILE_CLOSE_ERROR;
 
   /* On success, overwrite the usersfile with the new copy. */
