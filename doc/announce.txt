@@ -1,12 +1,15 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.12.4
+Subject: OATH Toolkit 1.12.5
 <#part sign=pgpmime>
-* Version 1.12.4 (released 2012-06-17)
+* Version 1.12.5 (released 2012-08-19)
 
-** liboath: Usersfile code handles multiple lines for a single user.
-This can be used when a single user carries multiple tokens (with
-different OATH secrets) and any of them should be permitted.
-Suggested by Tim Eggleston <lists@timeggleston.co.uk>.
+** oathtool: The --counter parameter now supports larger values.
+Before it used an 'int' type and now it uses a 'longlong' type.
+Needed for eSecuTech tokens as they use a 64-bit value for their
+initial counter.  Reported by <cameron.bradley@wiretap.net.nz> see
+<https://savannah.nongnu.org/support/?108114>.
+
+** Added gnulib self-tests.
 
 The OATH Toolkit makes it easy to build one-time password authentication
 systems.  It contains a shared library, a command line tool and a PAM
@@ -40,8 +43,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.4.tar.gz (2.0MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.4.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.5.tar.gz (2.2MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.5.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -60,8 +63,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-57c58848e3ad8312ce2122a9e41f9d0ec0ba34b9  oath-toolkit-1.12.4.tar.gz
-fd4620e1745201f004a4ee79ff939f254021a8392e8826696b1845ff  oath-toolkit-1.12.4.tar.gz
+ce46cbf387febd2c7fc543477cf2e2b28841608b  oath-toolkit-1.12.5.tar.gz
+f25caa09bd058dbb7ee182880899bb48aae1a31fef99b9a9e256c7d6  oath-toolkit-1.12.5.tar.gz
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
@@ -71,3 +74,9 @@ Code coverage charts:
 
 Clang code analysis:
   http://www.nongnu.org/oath-toolkit/clang-analyzer/
+
+Daily snapshots:
+  http://daily.josefsson.org/oath-toolkit/
+
+Autobuild statistics:
+  http://autobuild.josefsson.org/oath-toolkit/
