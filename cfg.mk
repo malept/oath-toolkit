@@ -17,12 +17,13 @@ CFGFLAGS = --enable-gtk-doc --enable-gtk-doc-pdf --enable-gcc-warnings	\
 	--enable-root-tests
 
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
-.DEFAULT_GOAL := buildit
+.DEFAULT_GOAL := bootstrap
 endif
 
 INDENT_SOURCES = `find . -name '*.[ch]' | grep -v -e /gl/ -e build-aux`
 
-buildit:
+bootstrap:
+	printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > liboath/man/Makefile.gdoc
 	touch ChangeLog
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)

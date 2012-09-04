@@ -3,6 +3,8 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 1.12.7 (unreleased)
 
+** liboath: Add manpages for library API.
+
 ** API and ABI is backwards compatible with the previous version.
 
 * Version 1.12.6 (released 2012-09-04)
