@@ -1,0 +1,18 @@
+Release process
+
+1. Make sure NEWS is updated with release information (version and date).
+
+2. Make sure you have a clean checkout ('gitco').
+
+3. Run 'make tag VERSION=1.2.3' for the version number.
+   Use 'git tag -d ...' to remove tags if you made mistakes.
+
+4. Run 'make' and then 'make release'.
+
+5. Post release announcement based on doc/announce.txt, updating
+   announcement in git.
+
+6. Goto http://freecode.com/projects/oath-toolkit and submit new
+   version.
+
+7. On major releases, update webpages with information.
