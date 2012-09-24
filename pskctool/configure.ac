@@ -1,4 +1,4 @@
-# Copyright (C) 2009-2012 Simon Josefsson
+# Copyright (C) 2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,28 +13,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+AC_INIT([pskctool],
+  m4_esyscmd([../build-aux/oath-toolkit-version ../.tarball-version]),
+  [oath-toolkit-help@nongnu.org],,
+  [http://www.nongnu.org/oath-toolkit/])
 
-SUBDIRS = gl liboath oathtool
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([gl/m4])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AM_SILENT_RULES([yes])
 
-if ENABLE_PSKC
-SUBDIRS += libpskc
-SUBDIRS += pskctool
-endif
+AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 
-if ENABLE_PAM
-SUBDIRS += pam_oath
-endif
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_CC
+gl_EARLY
+AC_PROG_LIBTOOL
+gl_INIT
 
-ACLOCAL_AMFLAGS = -I m4 -I gl/m4
-
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
-EXTRA_DIST += build-aux/oath-toolkit-version m4/dummy.m4
-EXTRA_DIST += HACKING
-
-# git-version-gen
-BUILT_SOURCES = $(top_srcdir)/.version
-$(top_srcdir)/.version:
-	echo $(VERSION) > $@-t && mv $@-t $@
-dist-hook:
-	echo $(VERSION) > $(distdir)/.tarball-version
+AC_CONFIG_FILES([
+  Makefile
+  gl/Makefile
+  gl/tests/Makefile
+  tests/Makefile
+])
+AC_OUTPUT

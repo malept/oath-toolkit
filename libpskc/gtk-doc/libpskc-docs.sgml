@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+	  [
+	  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	  <!ENTITY version SYSTEM "version.xml">
+	  ]>
+<book id="index">
+  <bookinfo>
+    <title>Libpskc API Reference Manual</title>
+    <releaseinfo>
+      for Libpskc &version;
+      The latest version of this documentation can be found on-line at
+      <ulink role="online-location"
+	     url="http://www.nongnu.org/oath-toolkit/libpskc/">
+	http://www.nongnu.org/oath-toolkit/libpskc/</ulink>.
+    </releaseinfo>
+  </bookinfo>
+
+  <chapter>
+    <title>Libpskc API Reference Manual</title>
+
+    <para>
+      Libpskc is a shared and static C library for handling PSKC data.
+    </para>
+
+    <para>
+      Libpskc and this manual are licensed under the LGPLv2.1+.  This
+      manual is actually automatically generated from the source code.
+      See COPYING in the package for more licensing information.
+    </para>
+
+    <xi:include href="xml/pskc.xml"/>
+  </chapter>
+
+  <index id="api-index-full">
+    <title>Index of all symbols</title>
+  </index>
+  <index role="2.0.0" id="api-index-2-0-0">
+    <title>Index of new symbols in 2.0.0</title>
+  </index>
+</book>

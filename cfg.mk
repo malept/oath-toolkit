@@ -24,13 +24,14 @@ INDENT_SOURCES = `find . -name '*.[ch]' | grep -v -e /gl/ -e build-aux`
 
 bootstrap:
 	printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > liboath/man/Makefile.gdoc
+	printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > libpskc/man/Makefile.gdoc
 	touch ChangeLog
 	test -f configure || autoreconf --force --install
 	test -f Makefile || ./configure $(CFGFLAGS)
 	make
 
 # syntax-check
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|oathtool/doc/parse-datetime.texi|liboath/gtk-doc.make|(oathtool|liboath)/(build-aux|gl)/.*$$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|oathtool/doc/parse-datetime.texi|liboath/gtk-doc.make|libpskc/gtk-doc.make|(oathtool|liboath)/(build-aux|gl)/.*$$
 # syntax-check: Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
 	sc_prohibit_strcmp
@@ -49,6 +50,8 @@ glimport:
 	gnulib-tool --add-import
 	cd liboath && gnulib-tool --add-import
 	cd oathtool && gnulib-tool --add-import
+	cd libpskc && gnulib-tool --add-import
+	cd pskctool && gnulib-tool --add-import
 
 # Release
 

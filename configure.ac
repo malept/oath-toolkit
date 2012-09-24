@@ -26,10 +26,16 @@ AM_SILENT_RULES([yes])
 AC_CHECK_HEADERS_ONCE([security/pam_appl.h])
 
 AC_ARG_ENABLE([pam],
-  [AS_HELP_STRING([--without-pam], [disable PAM module])],
+  [AS_HELP_STRING([--disable-pam], [disable PAM module])],
    [],
    [enable_pam=$ac_cv_header_security_pam_appl_h])
 AM_CONDITIONAL([ENABLE_PAM], [test "x$enable_pam" = xyes])
+
+AC_ARG_ENABLE([pskc],
+  [AS_HELP_STRING([--disable-pskc], [disable PSKC support])],
+   [],
+   [enable_pskc=yes])
+AM_CONDITIONAL([ENABLE_PSKC], [test "x$enable_pskc" = xyes])
 
 gl_EARLY
 gl_INIT
@@ -38,6 +44,10 @@ AC_CONFIG_SUBDIRS([
   liboath
   oathtool
 ])
+if test "x$enable_pskc" = xyes; then
+  AC_CONFIG_SUBDIRS([libpskc])
+  AC_CONFIG_SUBDIRS([pskctool])
+fi
 if test "x$enable_pam" = xyes; then
   AC_CONFIG_SUBDIRS([pam_oath])
 fi
@@ -54,4 +64,5 @@ AC_MSG_NOTICE([summary of build options:
   Install prefix:   ${prefix}
   Compiler:         ${CC}
   Build PAM module: $enable_pam
+  PSKC:             $enable_pskc
 ])

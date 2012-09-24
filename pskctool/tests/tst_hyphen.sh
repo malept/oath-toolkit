@@ -1,4 +1,7 @@
-# Copyright (C) 2009-2012 Simon Josefsson
+#!/bin/sh
+
+# tst_hyphen.sh - test that man page part of pskctool.h2m is lintian compliant
+# Copyright (C) 2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,28 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+srcdir="${srcdir:-.}"
 
-SUBDIRS = gl liboath oathtool
-
-if ENABLE_PSKC
-SUBDIRS += libpskc
-SUBDIRS += pskctool
-endif
-
-if ENABLE_PAM
-SUBDIRS += pam_oath
-endif
-
-ACLOCAL_AMFLAGS = -I m4 -I gl/m4
-
-EXTRA_DIST = GNUmakefile .clcopying cfg.mk maint.mk
-EXTRA_DIST += build-aux/oath-toolkit-version m4/dummy.m4
-EXTRA_DIST += HACKING
-
-# git-version-gen
-BUILT_SOURCES = $(top_srcdir)/.version
-$(top_srcdir)/.version:
-	echo $(VERSION) > $@-t && mv $@-t $@
-dist-hook:
-	echo $(VERSION) > $(distdir)/.tarball-version
+! tail -n +2 $srcdir/../pskctool.h2m | egrep '[^a-z\\]-'

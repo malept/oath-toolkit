@@ -1,7 +1,17 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 1.12.7 (unreleased)
+* Version 2.0.0 (unreleased)
+
+** libpskc, pskctool: New components.
+The OATH Toolkit now supports the Portable Symmetric Key Container
+(PSKC) data format specified in RFC 6030 for dealing with key
+provisioning.  There is a new low-level library libpskc for managing
+PSKC data for application developers and a new command line tool
+pskctool for interacting with PSKC data for users.  The PSKC
+functionality depends on Libxml2 <http://xmlsoft.org/>.  It can be
+disabled unconditionally using the ./configure-parameter
+--disable-pskc.
 
 ** liboath: Add manpages for library API.
 
