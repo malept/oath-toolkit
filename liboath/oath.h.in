@@ -90,7 +90,7 @@
  *   when iterating over all error codes or similar.
  *
  * Return codes for OATH functions.  All return codes are negative
- * except for the successful code OATH_OK which are guaranteed to be
+ * except for the successful code %OATH_OK which are guaranteed to be
  * 0.  Positive values are reserved for non-error return codes.
  *
  * Note that the #oath_rc enumeration may be extended at a later date
