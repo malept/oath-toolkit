@@ -166,6 +166,11 @@ main (int argc, char *argv[])
       return EXIT_SUCCESS;
     }
 
+  rc = oath_init ();
+  if (rc != OATH_OK)
+    error (EXIT_FAILURE, 0, "liboath initialization failed: %s",
+	   oath_strerror (rc));
+
   if (args_info.base32_flag)
     {
       rc = oath_base32_decode (args_info.inputs[0],
@@ -342,6 +347,7 @@ main (int argc, char *argv[])
     }
 
   free (secret);
+  oath_done ();
 
   return EXIT_SUCCESS;
 }
