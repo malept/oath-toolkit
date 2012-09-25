@@ -23,7 +23,8 @@
 
 #include "pskc.h"
 
-#include <string.h>		/* For strverscmp. */
+#include <string.h>		/* strverscmp */
+#include <libxml/parser.h>	/* xmlInitParser */
 
 /**
  * pskc_init:
@@ -39,6 +40,7 @@
 int
 pskc_init (void)
 {
+  xmlInitParser ();
   return PSKC_OK;
 }
 

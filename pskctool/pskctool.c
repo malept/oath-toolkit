@@ -64,10 +64,17 @@ usage (int status)
   exit (status);
 }
 
+static void
+check (void)
+{
+  puts ("check");
+}
+
 int
 main (int argc, char *argv[])
 {
   struct gengetopt_args_info args_info;
+  int rc;
 
   set_program_name (argv[0]);
 
@@ -95,7 +102,21 @@ main (int argc, char *argv[])
   if (args_info.help_given)
     usage (EXIT_SUCCESS);
 
-  cmdline_parser_print_help ();
-  emit_bug_reporting_address ();
+  rc = pskc_init ();
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
+	   pskc_strerror (rc));
+
+  if (args_info.check_flag)
+    check ();
+  else
+    {
+      cmdline_parser_print_help ();
+      emit_bug_reporting_address ();
+      return EXIT_SUCCESS;
+    }
+
+  pskc_done ();
+
   return EXIT_SUCCESS;
 }
