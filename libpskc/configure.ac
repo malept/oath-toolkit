@@ -44,6 +44,8 @@ AC_PROG_LIBTOOL
 gl_INIT
 GTK_DOC_CHECK(1.1)
 
+AM_PATH_XML2([], [], [AC_MSG_ERROR(["cannot find libxml2"])])
+
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
                   [turn on lots of GCC warnings (for developers)])],

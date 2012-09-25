@@ -24,7 +24,6 @@ AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
 AM_SILENT_RULES([yes])
 
 AC_CHECK_HEADERS_ONCE([security/pam_appl.h])
-
 AC_ARG_ENABLE([pam],
   [AS_HELP_STRING([--disable-pam], [disable PAM module])],
    [],
@@ -35,6 +34,9 @@ AC_ARG_ENABLE([pskc],
   [AS_HELP_STRING([--disable-pskc], [disable PSKC support])],
    [],
    [enable_pskc=yes])
+if test "x$enable_pskc" = xyes; then
+  AM_PATH_XML2([], [], [enable_pskc=no])
+fi
 AM_CONDITIONAL([ENABLE_PSKC], [test "x$enable_pskc" = xyes])
 
 gl_EARLY
