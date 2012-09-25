@@ -38,11 +38,29 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module binary-io:
+  # Code from module binary-io-tests:
   # Code from module errno:
   # Code from module errno-tests:
   # Code from module error:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module extern-inline:
+  # Code from module fcntl-h:
+  # Code from module fcntl-h-tests:
+  # Code from module fdopen:
+  # Code from module fdopen-tests:
+  # Code from module fgetc-tests:
+  # Code from module fputc-tests:
+  # Code from module fread-tests:
+  # Code from module fstat:
+  # Code from module fstat-tests:
+  # Code from module ftell:
+  # Code from module ftell-tests:
+  # Code from module ftello:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module ftello-tests:
+  # Code from module fwrite-tests:
   # Code from module gettext-h:
   # Code from module include_next:
   # Code from module intprops:
@@ -50,10 +68,19 @@ AC_DEFUN([gl_EARLY],
   # Code from module inttypes:
   # Code from module inttypes-incomplete:
   # Code from module inttypes-tests:
+  # Code from module largefile:
+  AC_REQUIRE([AC_SYS_LARGEFILE])
+  # Code from module lseek:
+  # Code from module lseek-tests:
+  # Code from module malloc-posix:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
   # Code from module progname:
+  # Code from module read-file:
+  # Code from module read-file-tests:
+  # Code from module realloc-posix:
+  # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
@@ -70,15 +97,23 @@ AC_DEFUN([gl_EARLY],
   # Code from module stddef-tests:
   # Code from module stdint:
   # Code from module stdint-tests:
+  # Code from module stdio:
+  # Code from module stdio-tests:
+  # Code from module stdlib:
+  # Code from module stdlib-tests:
   # Code from module strerror:
   # Code from module strerror-override:
   # Code from module strerror-tests:
   # Code from module string:
   # Code from module string-tests:
+  # Code from module sys_stat:
+  # Code from module sys_stat-tests:
   # Code from module sys_types:
   # Code from module sys_types-tests:
   # Code from module test-framework-sh:
   # Code from module test-framework-sh-tests:
+  # Code from module time:
+  # Code from module time-tests:
   # Code from module unistd:
   # Code from module unistd-tests:
   # Code from module verify:
@@ -113,8 +148,36 @@ AC_DEFUN([gl_INIT],
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
      AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+  gl_FUNC_FSTAT
+  if test $REPLACE_FSTAT = 1; then
+    AC_LIBOBJ([fstat])
+    gl_PREREQ_FSTAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([fstat])
+  gl_FUNC_FTELL
+  if test $REPLACE_FTELL = 1; then
+    AC_LIBOBJ([ftell])
+  fi
+  gl_STDIO_MODULE_INDICATOR([ftell])
+  gl_FUNC_FTELLO
+  if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
+    AC_LIBOBJ([ftello])
+    gl_PREREQ_FTELLO
+  fi
+  gl_STDIO_MODULE_INDICATOR([ftello])
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  AC_REQUIRE([gl_LARGEFILE])
+  gl_FUNC_LSEEK
+  if test $REPLACE_LSEEK = 1; then
+    AC_LIBOBJ([lseek])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([lseek])
+  gl_FUNC_MALLOC_POSIX
+  if test $REPLACE_MALLOC = 1; then
+    AC_LIBOBJ([malloc])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
   gl_MSVC_INVAL
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
@@ -123,11 +186,21 @@ AC_DEFUN([gl_INIT],
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-nothrow])
   fi
+  gl_MULTIARCH
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+  gl_PREREQ_READ_FILE
+  gl_FUNC_REALLOC_POSIX
+  if test $REPLACE_REALLOC = 1; then
+    AC_LIBOBJ([realloc])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([realloc-posix])
   gt_TYPE_SSIZE_T
   gl_STDARG_H
   gl_STDDEF_H
+  gl_STDINT_H
+  gl_STDIO_H
+  gl_STDLIB_H
   gl_FUNC_STRERROR
   if test $REPLACE_STRERROR = 1; then
     AC_LIBOBJ([strerror])
@@ -141,8 +214,11 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_SYS_H_WINSOCK2
   fi
   gl_HEADER_STRING_H
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P
+  gl_HEADER_TIME_H
   gl_UNISTD_H
   gl_VERSION_ETC
   # End of code from modules
@@ -191,11 +267,19 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  AC_REQUIRE([gl_EXTERN_INLINE])
+  gl_FCNTL_H
+  gl_FUNC_FDOPEN
+  if test $REPLACE_FDOPEN = 1; then
+    AC_LIBOBJ([fdopen])
+    gl_PREREQ_FDOPEN
+  fi
+  gl_STDIO_MODULE_INDICATOR([fdopen])
+  gl_FUNC_UNGETC_WORKS
+  gl_FUNC_UNGETC_WORKS
   gl_INTTYPES_H
   gl_INTTYPES_INCOMPLETE
-  gl_MULTIARCH
   AM_STDBOOL_H
-  gl_STDINT_H
   gt_TYPE_WCHAR_T
   gt_TYPE_WINT_T
   gl_WCHAR_H
@@ -291,27 +375,42 @@ AC_DEFUN([gltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
+  build-aux/snippet/_Noreturn.h
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/errno.in.h
   lib/error.c
   lib/error.h
+  lib/fstat.c
+  lib/ftell.c
+  lib/ftello.c
   lib/gettext.h
   lib/intprops.h
+  lib/lseek.c
+  lib/malloc.c
   lib/msvc-inval.c
   lib/msvc-inval.h
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
   lib/progname.c
   lib/progname.h
+  lib/read-file.c
+  lib/read-file.h
+  lib/realloc.c
   lib/stdarg.in.h
   lib/stddef.in.h
+  lib/stdint.in.h
+  lib/stdio-impl.h
+  lib/stdio.in.h
+  lib/stdlib.in.h
   lib/strerror-override.c
   lib/strerror-override.h
   lib/strerror.c
   lib/string.in.h
+  lib/sys_stat.in.h
   lib/sys_types.in.h
+  lib/time.in.h
   lib/unistd.in.h
   lib/verify.h
   lib/version-etc.c
@@ -320,25 +419,43 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
+  m4/extern-inline.m4
+  m4/fcntl-o.m4
+  m4/fcntl_h.m4
+  m4/fdopen.m4
+  m4/fseeko.m4
+  m4/fstat.m4
+  m4/ftell.m4
+  m4/ftello.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/inttypes-pri.m4
   m4/inttypes.m4
+  m4/largefile.m4
   m4/longlong.m4
+  m4/lseek.m4
+  m4/malloc.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
   m4/off_t.m4
   m4/onceonly.m4
+  m4/read-file.m4
+  m4/realloc.m4
   m4/ssize_t.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4
   m4/stdint.m4
+  m4/stdio_h.m4
+  m4/stdlib_h.m4
   m4/strerror.m4
   m4/string_h.m4
   m4/sys_socket_h.m4
+  m4/sys_stat_h.m4
   m4/sys_types_h.m4
+  m4/time_h.m4
+  m4/ungetc.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4
@@ -348,25 +465,55 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/init.sh
   tests/macros.h
   tests/signature.h
+  tests/test-binary-io.c
+  tests/test-binary-io.sh
   tests/test-errno.c
+  tests/test-fcntl-h.c
+  tests/test-fdopen.c
+  tests/test-fgetc.c
+  tests/test-fputc.c
+  tests/test-fread.c
+  tests/test-fstat.c
+  tests/test-ftell.c
+  tests/test-ftell.sh
+  tests/test-ftell2.sh
+  tests/test-ftell3.c
+  tests/test-ftello.c
+  tests/test-ftello.sh
+  tests/test-ftello2.sh
+  tests/test-ftello3.c
+  tests/test-ftello4.c
+  tests/test-ftello4.sh
+  tests/test-fwrite.c
   tests/test-init.sh
   tests/test-intprops.c
   tests/test-inttypes.c
+  tests/test-lseek.c
+  tests/test-lseek.sh
+  tests/test-read-file.c
   tests/test-stdbool.c
   tests/test-stddef.c
   tests/test-stdint.c
+  tests/test-stdio.c
+  tests/test-stdlib.c
   tests/test-strerror.c
   tests/test-string.c
+  tests/test-sys_stat.c
   tests/test-sys_types.c
+  tests/test-sys_wait.h
+  tests/test-time.c
   tests/test-unistd.c
   tests/test-verify.c
   tests/test-verify.sh
   tests/test-version-etc.c
   tests/test-version-etc.sh
   tests/test-wchar.c
+  tests=lib/binary-io.c
+  tests=lib/binary-io.h
+  tests=lib/fcntl.in.h
+  tests=lib/fdopen.c
   tests=lib/inttypes.in.h
   tests=lib/stdbool.in.h
-  tests=lib/stdint.in.h
   tests=lib/version-etc-fsf.c
   tests=lib/wchar.in.h
 ])

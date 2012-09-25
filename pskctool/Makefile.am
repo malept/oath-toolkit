@@ -30,7 +30,8 @@ libpskctool_cmd_la_LIBADD = gl/libgnu.la
 libpskctool_cmd_la_CFLAGS =
 
 pskctool_cmd.h pskctool_cmd.c: pskctool.ggo Makefile.am
-	gengetopt --no-handle-version --no-handle-help \
+	gengetopt --unamed-opts="FILE" \
+		--no-handle-version --no-handle-help \
 		--input $< --file-name pskctool_cmd
 
 dist_man_MANS = pskctool.1

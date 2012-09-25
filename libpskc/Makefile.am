@@ -33,7 +33,7 @@ lib_LTLIBRARIES = libpskc.la
 pskc_includedir=$(includedir)/libpskc
 pskc_include_HEADERS = pskc.h
 
-libpskc_la_SOURCES = pskc.h global.c errors.c
+libpskc_la_SOURCES = pskc.h internal.h global.c errors.c data.c output.c
 libpskc_la_LIBADD = gl/libgnu.la
 libpskc_la_LDFLAGS = $(XML_LIBS) \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -no-undefined

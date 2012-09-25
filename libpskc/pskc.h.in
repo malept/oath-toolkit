@@ -34,6 +34,8 @@
 # endif
 #endif
 
+#include <stddef.h> /* size_t */
+
 /**
  * PSKC_VERSION
  *
@@ -55,8 +57,11 @@
 
 /**
  * pskc_rc:
- * @PSKC_OK: Successful return
- * @PSKC_MALLOC_ERROR: Memory allocation failed
+ * @PSKC_OK: Successful return.
+ * @PSKC_MALLOC_ERROR: Memory allocation failed.
+ * @PSKC_XML_PARSE_ERROR: XML parse error.
+ * @PSKC_XML_SYNTAX_ERROR: Syntax error in XML data.
+ * @PSKC_UNKNOWN_OUTPUT_FORMAT: Unknown output format.
  * @PSKC_LAST_ERROR: Meta-error indicating the last error code, for use
  *   when iterating over all error codes or similar.
  *
@@ -71,9 +76,12 @@ typedef enum
 {
   PSKC_OK = 0,
   PSKC_MALLOC_ERROR = -1,
-  /* When adding anything here, update PSKC_LAST_ERROR, errors.c
-     and tests/tst_errors.c. */
-  PSKC_LAST_ERROR = -1
+  PSKC_XML_PARSE_ERROR = -2,
+  PSKC_XML_SYNTAX_ERROR = -3,
+  PSKC_UNKNOWN_OUTPUT_FORMAT = -4,
+  /* When adding anything above, you need to update errors.c and
+     the following constant. */
+  PSKC_LAST_ERROR = -4
 } pskc_rc;
 
 /* Global */
@@ -82,6 +90,34 @@ extern PSKCAPI int pskc_init (void);
 extern PSKCAPI int pskc_done (void);
 
 extern PSKCAPI const char *pskc_check_version (const char *req_version);
+
+extern PSKCAPI void pskc_free (void *ptr);
+
+/* Data */
+
+typedef struct pskc_data pskc_data;
+
+extern PSKCAPI int pskc_data_init (pskc_data **data);
+extern PSKCAPI int pskc_data_init_from_memory (pskc_data **data,
+					       size_t len, const char *buffer);
+extern PSKCAPI void pskc_data_done (pskc_data *data);
+
+/* Output */
+
+/**
+ * pskc_data_output_formats_t:
+ * @PSKC_DATA_OUTPUT_HUMAN_COMPLETE: All information in human-readable format.
+ *
+ * Enumeration of different PSKC data output formats.
+ */
+typedef enum pskc_data_output_formats
+  {
+    PSKC_DATA_OUTPUT_HUMAN_COMPLETE = 0
+  } pskc_data_output_formats_t;
+
+extern PSKCAPI int pskc_data_output (pskc_data *data,
+				     pskc_data_output_formats_t format,
+				     char **out, size_t *len);
 
 /* Error handling */
 

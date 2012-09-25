@@ -58,6 +58,21 @@ AM_LIBTOOLFLAGS = --preserve-dup-deps
 
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 
+## begin gnulib module binary-io
+
+libtests_a_SOURCES += binary-io.h binary-io.c
+
+## end   gnulib module binary-io
+
+## begin gnulib module binary-io-tests
+
+TESTS += test-binary-io.sh
+check_PROGRAMS += test-binary-io
+
+EXTRA_DIST += test-binary-io.sh test-binary-io.c macros.h
+
+## end   gnulib module binary-io-tests
+
 ## begin gnulib module errno-tests
 
 TESTS += test-errno
@@ -66,6 +81,124 @@ check_PROGRAMS += test-errno
 EXTRA_DIST += test-errno.c
 
 ## end   gnulib module errno-tests
+
+## begin gnulib module fcntl-h
+
+BUILT_SOURCES += fcntl.h
+
+# We need the following in order to create <fcntl.h> when the system
+# doesn't have one that works with the given compiler.
+fcntl.h: fcntl.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_FCNTL_H''@|$(NEXT_FCNTL_H)|g' \
+	      -e 's/@''GNULIB_FCNTL''@/$(GNULIB_FCNTL)/g' \
+	      -e 's/@''GNULIB_NONBLOCKING''@/$(GNULIB_NONBLOCKING)/g' \
+	      -e 's/@''GNULIB_OPEN''@/$(GNULIB_OPEN)/g' \
+	      -e 's/@''GNULIB_OPENAT''@/$(GNULIB_OPENAT)/g' \
+	      -e 's|@''HAVE_FCNTL''@|$(HAVE_FCNTL)|g' \
+	      -e 's|@''HAVE_OPENAT''@|$(HAVE_OPENAT)|g' \
+	      -e 's|@''REPLACE_FCNTL''@|$(REPLACE_FCNTL)|g' \
+	      -e 's|@''REPLACE_OPEN''@|$(REPLACE_OPEN)|g' \
+	      -e 's|@''REPLACE_OPENAT''@|$(REPLACE_OPENAT)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/fcntl.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += fcntl.h fcntl.h-t
+
+EXTRA_DIST += fcntl.in.h
+
+## end   gnulib module fcntl-h
+
+## begin gnulib module fcntl-h-tests
+
+TESTS += test-fcntl-h
+check_PROGRAMS += test-fcntl-h
+EXTRA_DIST += test-fcntl-h.c
+
+## end   gnulib module fcntl-h-tests
+
+## begin gnulib module fdopen
+
+
+EXTRA_DIST += fdopen.c
+
+EXTRA_libtests_a_SOURCES += fdopen.c
+
+## end   gnulib module fdopen
+
+## begin gnulib module fdopen-tests
+
+TESTS += test-fdopen
+check_PROGRAMS += test-fdopen
+EXTRA_DIST += test-fdopen.c signature.h macros.h
+
+## end   gnulib module fdopen-tests
+
+## begin gnulib module fgetc-tests
+
+TESTS += test-fgetc
+check_PROGRAMS += test-fgetc
+EXTRA_DIST += test-fgetc.c signature.h macros.h
+
+## end   gnulib module fgetc-tests
+
+## begin gnulib module fputc-tests
+
+TESTS += test-fputc
+check_PROGRAMS += test-fputc
+EXTRA_DIST += test-fputc.c signature.h macros.h
+
+## end   gnulib module fputc-tests
+
+## begin gnulib module fread-tests
+
+TESTS += test-fread
+check_PROGRAMS += test-fread
+EXTRA_DIST += test-fread.c signature.h macros.h
+
+## end   gnulib module fread-tests
+
+## begin gnulib module fstat-tests
+
+TESTS += test-fstat
+check_PROGRAMS += test-fstat
+EXTRA_DIST += test-fstat.c signature.h macros.h
+
+## end   gnulib module fstat-tests
+
+## begin gnulib module ftell-tests
+
+TESTS += test-ftell.sh test-ftell2.sh test-ftell3
+check_PROGRAMS += test-ftell test-ftell3
+MOSTLYCLEANFILES += t-ftell3.tmp
+EXTRA_DIST += test-ftell.c test-ftell.sh test-ftell2.sh test-ftell3.c signature.h macros.h
+
+## end   gnulib module ftell-tests
+
+## begin gnulib module ftello-tests
+
+TESTS += test-ftello.sh test-ftello2.sh test-ftello3 test-ftello4.sh
+check_PROGRAMS += test-ftello test-ftello3 test-ftello4
+MOSTLYCLEANFILES += t-ftello3.tmp
+EXTRA_DIST += test-ftello.c test-ftello.sh test-ftello2.sh test-ftello3.c test-ftello4.c test-ftello4.sh signature.h macros.h
+
+## end   gnulib module ftello-tests
+
+## begin gnulib module fwrite-tests
+
+TESTS += test-fwrite
+check_PROGRAMS += test-fwrite
+EXTRA_DIST += test-fwrite.c signature.h macros.h
+
+## end   gnulib module fwrite-tests
 
 ## begin gnulib module intprops-tests
 
@@ -126,6 +259,34 @@ check_PROGRAMS += test-inttypes
 EXTRA_DIST += test-inttypes.c
 
 ## end   gnulib module inttypes-tests
+
+## begin gnulib module lseek-tests
+
+TESTS += test-lseek.sh
+check_PROGRAMS += test-lseek
+EXTRA_DIST += test-lseek.c test-lseek.sh signature.h macros.h
+
+## end   gnulib module lseek-tests
+
+## begin gnulib module read-file-tests
+
+TESTS += test-read-file
+check_PROGRAMS += test-read-file
+EXTRA_DIST += test-read-file.c
+
+## end   gnulib module read-file-tests
+
+## begin gnulib module snippet/_Noreturn
+
+# Because this Makefile snippet defines a variable used by other
+# gnulib Makefile snippets, it must be present in all Makefile.am that
+# need it. This is ensured by the applicability 'all' defined above.
+
+_NORETURN_H=$(top_srcdir)/build-aux/snippet/_Noreturn.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/snippet/_Noreturn.h
+
+## end   gnulib module snippet/_Noreturn
 
 ## begin gnulib module snippet/arg-nonnull
 
@@ -235,56 +396,6 @@ EXTRA_DIST += test-stddef.c
 
 ## end   gnulib module stddef-tests
 
-## begin gnulib module stdint
-
-BUILT_SOURCES += $(STDINT_H)
-
-# We need the following in order to create <stdint.h> when the system
-# doesn't have one that works with the given compiler.
-if GL_GENERATE_STDINT_H
-stdint.h: stdint.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's/@''HAVE_STDINT_H''@/$(HAVE_STDINT_H)/g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_STDINT_H''@|$(NEXT_STDINT_H)|g' \
-	      -e 's/@''HAVE_SYS_TYPES_H''@/$(HAVE_SYS_TYPES_H)/g' \
-	      -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
-	      -e 's/@''HAVE_SYS_INTTYPES_H''@/$(HAVE_SYS_INTTYPES_H)/g' \
-	      -e 's/@''HAVE_SYS_BITYPES_H''@/$(HAVE_SYS_BITYPES_H)/g' \
-	      -e 's/@''HAVE_WCHAR_H''@/$(HAVE_WCHAR_H)/g' \
-	      -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
-	      -e 's/@''HAVE_UNSIGNED_LONG_LONG_INT''@/$(HAVE_UNSIGNED_LONG_LONG_INT)/g' \
-	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
-	      -e 's/@''BITSIZEOF_PTRDIFF_T''@/$(BITSIZEOF_PTRDIFF_T)/g' \
-	      -e 's/@''PTRDIFF_T_SUFFIX''@/$(PTRDIFF_T_SUFFIX)/g' \
-	      -e 's/@''BITSIZEOF_SIG_ATOMIC_T''@/$(BITSIZEOF_SIG_ATOMIC_T)/g' \
-	      -e 's/@''HAVE_SIGNED_SIG_ATOMIC_T''@/$(HAVE_SIGNED_SIG_ATOMIC_T)/g' \
-	      -e 's/@''SIG_ATOMIC_T_SUFFIX''@/$(SIG_ATOMIC_T_SUFFIX)/g' \
-	      -e 's/@''BITSIZEOF_SIZE_T''@/$(BITSIZEOF_SIZE_T)/g' \
-	      -e 's/@''SIZE_T_SUFFIX''@/$(SIZE_T_SUFFIX)/g' \
-	      -e 's/@''BITSIZEOF_WCHAR_T''@/$(BITSIZEOF_WCHAR_T)/g' \
-	      -e 's/@''HAVE_SIGNED_WCHAR_T''@/$(HAVE_SIGNED_WCHAR_T)/g' \
-	      -e 's/@''WCHAR_T_SUFFIX''@/$(WCHAR_T_SUFFIX)/g' \
-	      -e 's/@''BITSIZEOF_WINT_T''@/$(BITSIZEOF_WINT_T)/g' \
-	      -e 's/@''HAVE_SIGNED_WINT_T''@/$(HAVE_SIGNED_WINT_T)/g' \
-	      -e 's/@''WINT_T_SUFFIX''@/$(WINT_T_SUFFIX)/g' \
-	      < $(srcdir)/stdint.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-else
-stdint.h: $(top_builddir)/config.status
-	rm -f $@
-endif
-MOSTLYCLEANFILES += stdint.h stdint.h-t
-
-EXTRA_DIST += stdint.in.h
-
-## end   gnulib module stdint
-
 ## begin gnulib module stdint-tests
 
 TESTS += test-stdint
@@ -292,6 +403,22 @@ check_PROGRAMS += test-stdint
 EXTRA_DIST += test-stdint.c
 
 ## end   gnulib module stdint-tests
+
+## begin gnulib module stdio-tests
+
+TESTS += test-stdio
+check_PROGRAMS += test-stdio
+EXTRA_DIST += test-stdio.c
+
+## end   gnulib module stdio-tests
+
+## begin gnulib module stdlib-tests
+
+TESTS += test-stdlib
+check_PROGRAMS += test-stdlib
+EXTRA_DIST += test-stdlib.c test-sys_wait.h
+
+## end   gnulib module stdlib-tests
 
 ## begin gnulib module strerror-tests
 
@@ -309,6 +436,14 @@ EXTRA_DIST += test-string.c
 
 ## end   gnulib module string-tests
 
+## begin gnulib module sys_stat-tests
+
+TESTS += test-sys_stat
+check_PROGRAMS += test-sys_stat
+EXTRA_DIST += test-sys_stat.c
+
+## end   gnulib module sys_stat-tests
+
 ## begin gnulib module sys_types-tests
 
 TESTS += test-sys_types
@@ -324,6 +459,14 @@ EXTRA_DIST += init.sh
 EXTRA_DIST += test-init.sh
 
 ## end   gnulib module test-framework-sh-tests
+
+## begin gnulib module time-tests
+
+TESTS += test-time
+check_PROGRAMS += test-time
+EXTRA_DIST += test-time.c
+
+## end   gnulib module time-tests
 
 ## begin gnulib module unistd-tests
 

@@ -58,6 +58,8 @@ pskc_init (void)
 int
 pskc_done (void)
 {
+  xmlCleanupParser ();
+  xmlMemoryDump();
   return PSKC_OK;
 }
 
@@ -85,4 +87,20 @@ pskc_check_version (const char *req_version)
     return PSKC_VERSION;
 
   return NULL;
+}
+
+/**
+ * pskc_free:
+ * @ptr: memory region to deallocate, or %NULL.
+ *
+ * Deallocates memory region by calling free().  If @ptr is %NULL no
+ * operation is performed.
+ *
+ * This function is necessary on Windows, where different parts of the
+ * same application may use different memory heaps.
+ **/
+void
+pskc_free (void *ptr)
+{
+  free (ptr);
 }

@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --with-tests --lgpl=2 --no-conditional-dependencies --libtool --macro-prefix=gl lib-symbol-versions lib-symbol-visibility manywarnings strverscmp valgrind-tests
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --with-tests --lgpl=2 --no-conditional-dependencies --libtool --macro-prefix=gl lib-symbol-versions lib-symbol-visibility manywarnings minmax strverscmp valgrind-tests
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
@@ -35,6 +35,7 @@ gl_MODULES([
   lib-symbol-versions
   lib-symbol-visibility
   manywarnings
+  minmax
   strverscmp
   valgrind-tests
 ])

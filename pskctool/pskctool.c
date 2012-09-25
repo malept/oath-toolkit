@@ -24,11 +24,13 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 /* Gnulib. */
 #include "progname.h"
 #include "error.h"
 #include "version-etc.h"
+#include "read-file.h"
 
 #include "pskctool_cmd.h"
 
@@ -65,9 +67,36 @@ usage (int status)
 }
 
 static void
-check (void)
+check (const char *filename)
 {
-  puts ("check");
+  char *buffer;
+  size_t len;
+  pskc_data *p;
+  int rc;
+  char *out;
+
+  if (filename)
+    buffer = read_binary_file (filename, &len);
+  else
+    buffer = fread_file (stdin, &len);
+  if (buffer == NULL)
+    error (EXIT_FAILURE, errno, "read");
+
+  rc = pskc_data_init_from_memory (&p, len, buffer);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
+
+  free (buffer);
+
+  rc = pskc_data_output (p, PSKC_DATA_OUTPUT_HUMAN_COMPLETE, &out, &len);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "printing PSKC data: %s", pskc_strerror (rc));
+
+  printf ("%.*s", (int) len, out);
+
+  pskc_free (out);
+
+  pskc_data_done (p);
 }
 
 int
@@ -108,7 +137,7 @@ main (int argc, char *argv[])
 	   pskc_strerror (rc));
 
   if (args_info.check_flag)
-    check ();
+    check (args_info.inputs ? args_info.inputs[0] : NULL);
   else
     {
       cmdline_parser_print_help ();

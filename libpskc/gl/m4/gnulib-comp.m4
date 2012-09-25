@@ -44,6 +44,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
   # Code from module manywarnings:
+  # Code from module minmax:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
@@ -77,6 +78,7 @@ AC_DEFUN([gl_INIT],
   gl_source_base='gl'
   gl_LD_VERSION_SCRIPT
   gl_VISIBILITY
+  gl_MINMAX
   gl_STDDEF_H
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
@@ -229,6 +231,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/dummy.c
+  lib/minmax.h
   lib/stddef.in.h
   lib/string.in.h
   lib/strverscmp.c
@@ -238,6 +241,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/include_next.m4
   m4/ld-version-script.m4
   m4/manywarnings.m4
+  m4/minmax.m4
   m4/onceonly.m4
   m4/stddef_h.m4
   m4/string_h.m4
