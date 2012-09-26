@@ -56,6 +56,30 @@ parse_deviceinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
+parse_cryptomoduleinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+{
+  xmlNode *cur_node = NULL;
+  (void)pd;
+
+  for (cur_node = x; cur_node; cur_node = cur_node->next)
+    {
+      if (cur_node->type == XML_ELEMENT_NODE)
+	{
+	  const char *name = (const char *) cur_node->name;
+
+	  if (strcmp ("Id", name) == 0)
+	    kp->crypto_id = (char *) cur_node->children->content;
+	  else
+	    return PSKC_XML_SYNTAX_ERROR;
+	}
+      else if (cur_node->type != XML_TEXT_NODE)
+	return PSKC_XML_SYNTAX_ERROR;
+    }
+
+  return PSKC_OK;
+}
+
+static int
 parse_intlongstrdatatype (xmlNode *x, const char **var)
 {
   xmlNode *cur_node = NULL;
@@ -186,6 +210,45 @@ parse_policy (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 	    kp->key_policy_startdate = (char *) cur_node->children->content;
 	  else if (strcmp ("ExpiryDate", name) == 0)
 	    kp->key_policy_expirydate = (char *) cur_node->children->content;
+	  else if (strcmp ("PINPolicy", name) == 0)
+	    {
+	      xmlAttr *cur_attr = NULL;
+
+	      for (cur_attr = cur_node->properties; cur_attr;
+		   cur_attr = cur_attr->next)
+		{
+		  if (strcmp ("MinLength",
+			      (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_minlength =
+		      (char *) cur_attr->children->content;
+		  else if (strcmp ("MaxLength",
+				   (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_maxlength =
+		      (char *) cur_attr->children->content;
+		  else if (strcmp ("PINKeyId",
+				   (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_pinkeyid =
+		      (char *) cur_attr->children->content;
+		  else if (strcmp ("PINEncoding",
+				   (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_pinencoding =
+		      (char *) cur_attr->children->content;
+		  else if (strcmp ("PINUsageMode",
+				   (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_pinusagemode =
+		      (char *) cur_attr->children->content;
+		  else if (strcmp ("MaxFailedAttempts",
+				   (const char *) cur_attr->name) == 0)
+		    kp->key_pinpolicy_maxfailedattempts =
+		      (char *) cur_attr->children->content;
+		  else
+		    return PSKC_XML_SYNTAX_ERROR;
+		}
+	    }
+	  else if (strcmp ("KeyUsage", name) == 0)
+	    {
+	      kp->key_usage = (char *) cur_node->children->content;
+	    }
 	  else
 	    return PSKC_XML_SYNTAX_ERROR;
 	}
@@ -228,6 +291,10 @@ parse_key (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 	    }
 	  else if (strcmp ("Issuer", name) == 0)
 	    kp->key_issuer = (char *) cur_node->children->content;
+	  else if (strcmp ("KeyProfileId", name) == 0)
+	    kp->key_profileid = (char *) cur_node->children->content;
+	  else if (strcmp ("KeyReference", name) == 0)
+	    kp->key_reference = (char *) cur_node->children->content;
 	  else if (strcmp ("UserId", name) == 0)
 	    kp->key_userid = (char *) cur_node->children->content;
 	  else
@@ -255,6 +322,12 @@ parse_keypackage (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 	  if (strcmp ("DeviceInfo", name) == 0)
 	    {
 	      rc = parse_deviceinfo (pd, cur_node->children, kp);
+	      if (rc != PSKC_OK)
+		return rc;
+	    }
+	  else if (strcmp ("CryptoModuleInfo", name) == 0)
+	    {
+	      rc = parse_cryptomoduleinfo (pd, cur_node->children, kp);
 	      if (rc != PSKC_OK)
 		return rc;
 	    }

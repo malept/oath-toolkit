@@ -40,8 +40,17 @@ struct pskc_keypackage
   const char *key_time_interval;
   const char *key_alg_resp_length;
   const char *key_alg_resp_encoding;
+  const char *key_profileid;
+  const char *key_reference;
+  const char *key_usage;
   const char *key_policy_startdate;
   const char *key_policy_expirydate;
+  const char *key_pinpolicy_minlength;
+  const char *key_pinpolicy_maxlength;
+  const char *key_pinpolicy_pinkeyid;
+  const char *key_pinpolicy_pinencoding;
+  const char *key_pinpolicy_pinusagemode;
+  const char *key_pinpolicy_maxfailedattempts;
 };
 
 struct pskc

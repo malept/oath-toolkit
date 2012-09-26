@@ -144,9 +144,20 @@ print_keypackage (struct buffer *buf, struct pskc_keypackage *kp)
   if (kp->device_userid)
     buffer_addf (buf, "\t\t\tUserId: %s\n", kp->device_userid);
 
+  if (kp->crypto_id)
+    buffer_addf (buf, "\t\tCryptoModuleInfo Id: %s\n", kp->crypto_id);
+
   buffer_addz (buf, "\t\tKey:\n");
   if (kp->key_id)
     buffer_addf (buf, "\t\t\tId: %s\n", kp->key_id);
+  if (kp->key_issuer)
+    buffer_addf (buf, "\t\t\tIssuer: %s\n", kp->key_issuer);
+  if (kp->key_profileid)
+    buffer_addf (buf, "\t\t\tKey Profile Id: %s\n", kp->key_profileid);
+  if (kp->key_reference)
+    buffer_addf (buf, "\t\t\tKey Reference: %s\n", kp->key_reference);
+  if (kp->key_userid)
+    buffer_addf (buf, "\t\t\tKey User Id: %s\n", kp->key_userid);
   if (kp->key_algorithm)
     buffer_addf (buf, "\t\t\tAlgorithm: %s\n", kp->key_algorithm);
   if (kp->key_alg_resp_length)
@@ -163,12 +174,32 @@ print_keypackage (struct buffer *buf, struct pskc_keypackage *kp)
     buffer_addf (buf, "\t\t\tKey Time: %s\n", kp->key_time);
   if (kp->key_time_interval)
     buffer_addf (buf, "\t\t\tKey Time Interval: %s\n", kp->key_time_interval);
+  if (kp->key_usage)
+    buffer_addf (buf, "\t\t\tKey Usage: %s\n", kp->key_usage);
   if (kp->key_policy_startdate)
     buffer_addf (buf, "\t\t\tPolicy StartDate: %s\n",
 		 kp->key_policy_startdate);
   if (kp->key_policy_expirydate)
     buffer_addf (buf, "\t\t\tPolicy ExpiryDate: %s\n",
 		 kp->key_policy_expirydate);
+  if (kp->key_pinpolicy_minlength)
+    buffer_addf (buf, "\t\t\tPIN Policy Minimum Length: %s\n",
+		 kp->key_pinpolicy_minlength);
+  if (kp->key_pinpolicy_maxlength)
+    buffer_addf (buf, "\t\t\tPIN Policy Maximum Length: %s\n",
+		 kp->key_pinpolicy_maxlength);
+  if (kp->key_pinpolicy_pinkeyid)
+    buffer_addf (buf, "\t\t\tPIN Policy PIN Key Id: %s\n",
+		 kp->key_pinpolicy_pinkeyid);
+  if (kp->key_pinpolicy_pinencoding)
+    buffer_addf (buf, "\t\t\tPIN Policy PIN Encoding: %s\n",
+		 kp->key_pinpolicy_pinencoding);
+  if (kp->key_pinpolicy_pinusagemode)
+    buffer_addf (buf, "\t\t\tPIN Policy PIN Usage Mode: %s\n",
+		 kp->key_pinpolicy_pinusagemode);
+  if (kp->key_pinpolicy_maxfailedattempts)
+    buffer_addf (buf, "\t\t\tPIN Policy PIN Max Failed Attempts: %s\n",
+		 kp->key_pinpolicy_maxfailedattempts);
 }
 
 static void
