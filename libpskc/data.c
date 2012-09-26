@@ -39,7 +39,7 @@
 int
 pskc_data_init (pskc_data **data)
 {
-  *data = calloc (1, sizeof (pskc_data));
+  *data = calloc (1, sizeof (**data));
   if (*data == NULL)
     return PSKC_MALLOC_ERROR;
   return PSKC_OK;
@@ -62,17 +62,31 @@ pskc_data_init (pskc_data **data)
 int
 pskc_data_init_from_memory (pskc_data **data, size_t len, const char *buffer)
 {
-  int rc = pskc_data_init (data);
-  xmlDocPtr d;
+  xmlDocPtr xmldoc;
+  pskc_data *pd;
+  int rc;
 
+  rc = pskc_data_init (&pd);
   if (rc != PSKC_OK)
     return rc;
 
-  d = xmlParseMemory (buffer, len);
-  if (d == NULL)
-    return PSKC_XML_PARSE_ERROR;
+  xmldoc = xmlParseMemory (buffer, len);
+  if (xmldoc == NULL)
+    {
+      pskc_data_done (pd);
+      return PSKC_XML_PARSE_ERROR;
+    }
 
-  (*data)->data = d;
+  pd->xmldoc = xmldoc;
+
+  rc = _pskc_parse (pd);
+  if (rc != PSKC_OK)
+    {
+      pskc_data_done (pd);
+      return rc;
+    }
+
+  *data = pd;
 
   return PSKC_OK;
 }
@@ -87,6 +101,7 @@ pskc_data_init_from_memory (pskc_data **data, size_t len, const char *buffer)
 void
 pskc_data_done (pskc_data *data)
 {
-  xmlFreeDoc(data->data);
+  xmlFreeDoc(data->xmldoc);
+  free (data->keypackages);
   free (data);
 }

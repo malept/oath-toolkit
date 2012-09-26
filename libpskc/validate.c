@@ -63,7 +63,7 @@ pskc_data_validate (pskc_data *data, int *isvalid)
       return PSKC_XML_PARSE_ERROR;
     }
 
-  *isvalid = xmlSchemaValidateDoc(valid_ctxt, data->data) == 0;
+  *isvalid = xmlSchemaValidateDoc(valid_ctxt, data->xmldoc) == 0;
 
   xmlSchemaFreeValidCtxt(valid_ctxt);
   xmlSchemaFree(schema);

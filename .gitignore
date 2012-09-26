@@ -486,6 +486,8 @@ libpskc/man/pskc_strerror.3
 libpskc/man/pskc_strerror_name.3
 libpskc/output.lo
 libpskc/output.o
+libpskc/parser.lo
+libpskc/parser.o
 libpskc/pskc.h
 libpskc/stamp-h1
 libpskc/tests/.deps/

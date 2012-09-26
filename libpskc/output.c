@@ -134,342 +134,59 @@ buffer_addf (struct buffer *buf, const char *fmt, ...)
 }
 
 static void
-print_deviceinfo (struct buffer *buf, xmlNode *x)
+print_keypackage (pskc_data *data, struct buffer *buf,
+		  struct pskc_keypackage *kp)
 {
-  xmlNode *cur_node = NULL;
+  buffer_addz (buf, "\t\tDeviceInfo:\n");
+  if (kp->manufacturer)
+    buffer_addf (buf, "\t\t\tManufacturer: %s\n", kp->manufacturer);
+  if (kp->serialno)
+    buffer_addf (buf, "\t\t\tSerialNo: %s\n", kp->serialno);
+  if (kp->device_userid)
+    buffer_addf (buf, "\t\t\tUserId: %s\n", kp->device_userid);
 
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("Manufacturer", name) == 0)
-	    buffer_addf (buf, "\t\t\tManufacturer: %s\n",
-			 cur_node->children->content);
-	  else if (strcmp ("SerialNo", name) == 0)
-	    buffer_addf (buf, "\t\t\tSerialNo: %s\n",
-			 cur_node->children->content);
-	  else if (strcmp ("UserId", name) == 0)
-	    buffer_addf (buf, "\t\t\tUserId: %s\n",
-			 cur_node->children->content);
-	  else
-	    buffer_addf (buf, "warning: unsupported DeviceInfo member '%s'\n",
-			 name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
+  buffer_addz (buf, "\t\tKey:\n");
+  if (kp->key_id)
+    buffer_addf (buf, "\t\t\tId: %s\n", kp->key_id);
+  if (kp->key_algorithm)
+    buffer_addf (buf, "\t\t\tAlgorithm: %s\n", kp->key_algorithm);
+  if (kp->key_alg_resp_length)
+    buffer_addf (buf, "\t\t\tResponseFormat Length: %s\n",
+		 kp->key_alg_resp_length);
+  if (kp->key_alg_resp_encoding)
+    buffer_addf (buf, "\t\t\tResponseFormat Encoding: %s\n",
+		 kp->key_alg_resp_encoding);
+  if (kp->key_secret)
+    buffer_addf (buf, "\t\t\tKey Secret: %s\n", kp->key_secret);
+  if (kp->key_counter)
+    buffer_addf (buf, "\t\t\tKey Counter: %s\n", kp->key_counter);
+  if (kp->key_time)
+    buffer_addf (buf, "\t\t\tKey Time: %s\n", kp->key_time);
+  if (kp->key_time_interval)
+    buffer_addf (buf, "\t\t\tKey Time Interval: %s\n", kp->key_time_interval);
+  if (kp->key_policy_startdate)
+    buffer_addf (buf, "\t\t\tPolicy StartDate: %s\n",
+		 kp->key_policy_startdate);
+  if (kp->key_policy_expirydate)
+    buffer_addf (buf, "\t\t\tPolicy ExpiryDate: %s\n",
+		 kp->key_policy_expirydate);
 }
 
 static void
-print_intlongstrdatatype (struct buffer *buf, xmlNode *x)
+print_keycontainer (pskc_data *data, struct buffer *buf, xmlNode *x)
 {
-  xmlNode *cur_node = NULL;
+  size_t i;
 
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
+  buffer_addf (buf, "\tVersion: %s\n", data->version);
+  if (data->id)
+    buffer_addf (buf, "\tId: %s\n", data->id);
+
+  for (i = 0; i < data->nkeypackages; i++)
     {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("PlainValue", name) == 0)
-	    buffer_addf (buf, "\t\t\t\t\tPlainValue: %s\n",
-			 cur_node->children->content);
-	  else
-	    buffer_addf (buf, "warning: unsupported intDataType member '%s'\n",
-			 name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
+      buffer_addf (buf, "\tKeyPackage %zu:\n", i);
+      print_keypackage (data, buf, &data->keypackages[i]);
     }
 }
-
-static void
-print_algorithmparameters (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("ResponseFormat", name) == 0)
-	    {
-	      xmlAttr *cur_attr = NULL;
-	      buffer_addz (buf, "\t\t\t\tResponseFormat:\n");
-
-	      for (cur_attr = cur_node->properties; cur_attr;
-		   cur_attr = cur_attr->next)
-		{
-		  if (strcmp ("Length", (const char *) cur_attr->name) == 0)
-		    buffer_addf (buf, "\t\t\t\t\tLength: %s\n",
-				 (const char *) cur_attr->children->content);
-		  else if (strcmp ("Encoding",
-				   (const char *) cur_attr->name) == 0)
-		    buffer_addf (buf, "\t\t\t\t\tEncoding: %s\n",
-				 (const char *) cur_attr->children->content);
-		  else
-		    buffer_addf (buf, "warning: unknown attribute: %s\n",
-				 (const char *) cur_attr->name);
-		}
-	    }
-	  else
-	    buffer_addf (buf, "warning: unsupported "
-			 "AlgorithmParameters member '%s'\n", name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
-}
-
-static void
-print_data (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("Secret", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\t\tSecret:\n");
-	      print_intlongstrdatatype (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Time", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\t\tTime:\n");
-	      print_intlongstrdatatype (buf, cur_node->children);
-	    }
-	  else if (strcmp ("TimeInterval", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\t\tTimeInterval:\n");
-	      print_intlongstrdatatype (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Counter", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\t\tCounter:\n");
-	      print_intlongstrdatatype (buf, cur_node->children);
-	    }
-	  else
-	    buffer_addf (buf, "warning: unsupported Data member '%s'\n",
-			 name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
-}
-
-static void
-print_policy (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("StartDate", name) == 0)
-	    buffer_addf (buf, "\t\t\t\tStartDate: %s\n",
-			 cur_node->children->content);
-	  else if (strcmp ("ExpiryDate", name) == 0)
-	    buffer_addf (buf, "\t\t\t\tExpiryDate: %s\n",
-			 cur_node->children->content);
-	  else
-	    buffer_addf (buf, "warning: unsupported Policy member '%s'\n",
-			 name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
-}
-
-static void
-print_key (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("AlgorithmParameters", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\tAlgorithmParameters:\n");
-	      print_algorithmparameters (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Data", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\tData:\n");
-	      print_data (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Policy", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\t\tPolicy:\n");
-	      print_policy (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Issuer", name) == 0)
-	    buffer_addf (buf, "\t\t\tIssuer: %s\n",
-			 cur_node->children->content);
-	  else if (strcmp ("UserId", name) == 0)
-	    buffer_addf (buf, "\t\t\tUserId: %s\n",
-			 cur_node->children->content);
-	  else
-	    buffer_addf (buf, "warning: unsupported Key member '%s'\n",
-			 name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
-}
-
-static void
-print_keypackage (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("DeviceInfo", name) == 0)
-	    {
-	      buffer_addz (buf, "\t\tDeviceInfo:\n");
-	      print_deviceinfo (buf, cur_node->children);
-	    }
-	  else if (strcmp ("Key", name) == 0)
-	    {
-	      xmlAttr *cur_attr = NULL;
-	      buffer_addz (buf, "\t\tKey:\n");
-
-	      for (cur_attr = cur_node->properties; cur_attr;
-		   cur_attr = cur_attr->next)
-		{
-		  if (strcmp ("Id", (const char *) cur_attr->name) == 0)
-		    buffer_addf (buf, "\t\t\tId: %s\n",
-				 (const char *) cur_attr->children->content);
-		  else if (strcmp ("Algorithm", (const char *) cur_attr->name) == 0)
-		    buffer_addf (buf, "\t\t\tAlgorithm: %s\n",
-				 (const char *) cur_attr->children->content);
-		  else
-		    buffer_addf (buf, "warning: unknown attribute: %s\n",
-				 (const char *) cur_attr->name);
-		}
-	      print_key (buf, cur_node->children);
-	    }
-	  else
-	    buffer_addf (buf, "warning: unsupported KeyPackage member '%s'\n",
-			 name);
-	}
-    }
-}
-
-static void
-print_keypackages (struct buffer *buf, xmlNode *x)
-{
-  xmlNode *cur_node = NULL;
-  int nth = 1;
-
-  for (cur_node = x; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  const char *name = (const char *) cur_node->name;
-
-	  if (strcmp ("KeyPackage", name) != 0)
-	    buffer_addf (buf, "warning: expecting 'KeyPackage' found '%s'\n",
-			 name);
-	  else if (cur_node->properties != NULL)
-	    buffer_addf (buf, "warning: KeyPackage with properties\n");
-	  else if (cur_node->children == NULL)
-	    buffer_addf (buf, "warning: empty KeyPackage\n");
-	  else
-	    {
-	      buffer_addf (buf, "\tKeyPackage %d:\n", nth++);
-	      print_keypackage (buf, cur_node->children);
-	    }
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	buffer_addf (buf, "warning: unknown node type %d\n", cur_node->type);
-    }
-}
-
-static void
-print_keycontainer (struct buffer *buf, xmlNode *x)
-{
-  xmlAttr *cur_attr = NULL;
-  const char *name = (const char *) x->name;
-
-  if (strcmp ("KeyContainer", name) != 0)
-    {
-      buffer_addf (buf, "warning: expecting 'KeyContainer' found '%s'\n",
-		   name);
-      return;
-    }
-
-  if (x->next != NULL)
-    buffer_addz (buf, "warning: KeyContainer has next element\n");
-
-  if (x->properties == NULL)
-    buffer_addz (buf, "warning: KeyContainer without properties\n");
-
-  for (cur_attr = x->properties; cur_attr; cur_attr = cur_attr->next)
-    {
-      if (strcmp ("Version", (const char *) cur_attr->name) == 0)
-	buffer_addf (buf, "\tVersion: %s\n",
-		     (const char *) cur_attr->children->content);
-      else if (strcmp ("Id", (const char *) cur_attr->name) == 0)
-	buffer_addf (buf, "\tId: %s\n",
-		     (const char *) cur_attr->children->content);
-      else
-	buffer_addf (buf, "warning: unknown attribute: %s\n",
-		     (const char *) cur_attr->name);
-    }
-
-  print_keypackages (buf, x->children);
-}
-
-#if 0
-static void
-print_element_names (xmlNode * a_node, int level)
-{
-  xmlNode *cur_node = NULL;
-
-  for (cur_node = a_node; cur_node; cur_node = cur_node->next)
-    {
-      int i;
-
-      if (cur_node->type == XML_ELEMENT_NODE)
-	{
-	  for (i = 0; i < level; i++)
-	    printf ("\t");
-	  printf("node type: Element, name: %s\n", cur_node->name);
-	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	printf ("unknown type %d\n", cur_node->type);
-
-      if (cur_node->properties)
-	{
-	  for (i = 0; i < level; i++)
-	    printf ("\t");
-	  printf ("attr: %s\n", cur_node->properties->name);
-	}
-
-      print_element_names(cur_node->children, level + 1);
-    }
-}
-#endif
 
 int
 pskc_data_output (pskc_data *data,
@@ -484,12 +201,11 @@ pskc_data_output (pskc_data *data,
 
   buffer_init (&buf);
 
-  root_element = xmlDocGetRootElement(data->data);
-  // print_element_names (root_element, 0);
+  root_element = xmlDocGetRootElement(data->xmldoc);
 
   buffer_addz (&buf, "Portable Symmetric Key Container (PSKC):\n");
 
-  print_keycontainer(&buf, root_element);
+  print_keycontainer(data, &buf, root_element);
 
   buffer_getstr (&buf, out, len);
   if (*out == NULL)

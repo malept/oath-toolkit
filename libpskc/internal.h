@@ -21,6 +21,38 @@
 
 #include <libxml/parser.h>
 
-struct pskc_data {
-  xmlDocPtr data;
+struct pskc_keypackage
+{
+  /* DeviceInfo */
+  char *serialno;
+  char *manufacturer;
+  char *device_userid;
+  /* CryptoModuleInfo */
+  char *crypto_id;
+  /* Key */
+  char *key_id;
+  char *key_algorithm;
+  char *key_userid;
+  char *key_issuer;
+  char *key_secret;
+  char *key_counter;
+  char *key_time;
+  char *key_time_interval;
+  char *key_alg_resp_length;
+  char *key_alg_resp_encoding;
+  char *key_policy_startdate;
+  char *key_policy_expirydate;
 };
+
+struct pskc_data
+{
+  /* raw XML */
+  xmlDocPtr xmldoc;
+  /* parsed version */
+  char *version;
+  char *id;
+  size_t nkeypackages;
+  struct pskc_keypackage *keypackages;
+};
+
+int _pskc_parse (pskc_data *data);
