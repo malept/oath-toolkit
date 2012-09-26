@@ -18,21 +18,17 @@
 
 LIBPSKC_2.0.0 {
   global:
-    pskc_init;
-    pskc_done;
-
     pskc_check_version;
-
-    pskc_free;
-
-    pskc_strerror;
-    pskc_strerror_name;
-
+    pskc_data_done;
     pskc_data_init;
     pskc_data_init_from_memory;
-    pskc_data_done;
-
     pskc_data_output;
+    pskc_data_validate;
+    pskc_done;
+    pskc_free;
+    pskc_init;
+    pskc_strerror;
+    pskc_strerror_name;
 
   local:
     *;

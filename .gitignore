@@ -477,6 +477,7 @@ libpskc/man/pskc_check_version.3
 libpskc/man/pskc_data_done.3
 libpskc/man/pskc_data_init.3
 libpskc/man/pskc_data_init_from_memory.3
+libpskc/man/pskc_data_validate.3
 libpskc/man/pskc_done.3
 libpskc/man/pskc_free.3
 libpskc/man/pskc_free.3
@@ -495,6 +496,8 @@ libpskc/tests/tst_basic.o
 libpskc/tests/tst_errors
 libpskc/tests/tst_errors.log
 libpskc/tests/tst_errors.o
+libpskc/validate.lo
+libpskc/validate.o
 oath-toolkit-*.tar.gz
 oath-toolkit-*.tar.gz.sig
 oathtool/.deps/

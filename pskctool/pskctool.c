@@ -67,13 +67,12 @@ usage (int status)
 }
 
 static void
-check (const char *filename)
+checkvalidate (const char *filename, int validate)
 {
   char *buffer;
   size_t len;
   pskc_data *p;
   int rc;
-  char *out;
 
   if (filename)
     buffer = read_binary_file (filename, &len);
@@ -88,13 +87,31 @@ check (const char *filename)
 
   free (buffer);
 
-  rc = pskc_data_output (p, PSKC_DATA_OUTPUT_HUMAN_COMPLETE, &out, &len);
-  if (rc != PSKC_OK)
-    error (EXIT_FAILURE, 0, "printing PSKC data: %s", pskc_strerror (rc));
+  if (validate)
+    {
+      int isvalid;
 
-  printf ("%.*s", (int) len, out);
+      rc = pskc_data_validate (p, &isvalid);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "validation of PSKC data failed: %s",
+	       pskc_strerror (rc));
+      if (isvalid)
+	puts("OK");
+      else
+	puts("FAIL");
+    }
+  else
+    {
+      char *out;
 
-  pskc_free (out);
+      rc = pskc_data_output (p, PSKC_DATA_OUTPUT_HUMAN_COMPLETE, &out, &len);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "printing PSKC data: %s", pskc_strerror (rc));
+
+      printf ("%.*s", (int) len, out);
+
+      pskc_free (out);
+    }
 
   pskc_data_done (p);
 }
@@ -136,8 +153,9 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
 	   pskc_strerror (rc));
 
-  if (args_info.check_flag)
-    check (args_info.inputs ? args_info.inputs[0] : NULL);
+  if (args_info.check_flag || args_info.validate_flag)
+    checkvalidate (args_info.inputs ? args_info.inputs[0] : NULL,
+		   args_info.validate_flag);
   else
     {
       cmdline_parser_print_help ();

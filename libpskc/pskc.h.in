@@ -102,6 +102,9 @@ extern PSKCAPI int pskc_data_init_from_memory (pskc_data **data,
 					       size_t len, const char *buffer);
 extern PSKCAPI void pskc_data_done (pskc_data *data);
 
+/* Validate */
+extern PSKCAPI int pskc_data_validate (pskc_data *data, int *isvalid);
+
 /* Output */
 
 /**
