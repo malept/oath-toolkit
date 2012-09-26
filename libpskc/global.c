@@ -27,36 +27,36 @@
 #include <libxml/parser.h>	/* xmlInitParser */
 
 /**
- * pskc_init:
+ * pskc_global_init:
  *
  * This function initializes the PSKC library.  Every user of this
  * library needs to call this function before using other functions.
- * You should call pskc_done() when use of the PSKC library is no
- * longer needed.
+ * You should call pskc_global_done() when use of the PSKC library is
+ * no longer needed.
  *
  * Returns: On success, %PSKC_OK (zero) is returned, otherwise an
  *   error code is returned.
  **/
 int
-pskc_init (void)
+pskc_global_init (void)
 {
   xmlInitParser ();
   return PSKC_OK;
 }
 
 /**
- * pskc_done:
+ * pskc_global_done:
  *
  * This function deinitializes the PSKC library, which were
- * initialized using pskc_init().  After calling this function, no
- * other PSKC library function may be called except for to
- * re-initialize the library using pskc_init().
+ * initialized using pskc_global_init().  After calling this function,
+ * no other PSKC library function may be called except for to
+ * re-initialize the library using pskc_global_init().
  *
  * Returns: On success, %PSKC_OK (zero) is returned, otherwise an
  *   error code is returned.
  **/
 int
-pskc_done (void)
+pskc_global_done (void)
 {
   xmlCleanupParser ();
   xmlMemoryDump();
@@ -72,7 +72,7 @@ pskc_done (void)
  * See %PSKC_VERSION for a suitable @req_version string.
  *
  * This function is one of few in the library that can be used without
- * a successful call to pskc_init().
+ * a successful call to pskc_global_init().
  *
  * Return value: Check that the version of the library is at
  *   minimum the one given as a string in @req_version and return the

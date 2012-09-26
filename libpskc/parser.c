@@ -28,7 +28,7 @@
 #include <string.h>
 
 static int
-parse_deviceinfo (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_deviceinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   (void)pd;
@@ -40,11 +40,11 @@ parse_deviceinfo (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("Manufacturer", name) == 0)
-	    kp->manufacturer = cur_node->children->content;
+	    kp->manufacturer = (char *) cur_node->children->content;
 	  else if (strcmp ("SerialNo", name) == 0)
-	    kp->serialno = cur_node->children->content;
+	    kp->serialno = (char *) cur_node->children->content;
 	  else if (strcmp ("UserId", name) == 0)
-	    kp->device_userid = cur_node->children->content;
+	    kp->device_userid = (char *) cur_node->children->content;
 	  else
 	    return PSKC_XML_SYNTAX_ERROR;
 	}
@@ -56,7 +56,7 @@ parse_deviceinfo (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_intlongstrdatatype (xmlNode *x, char **var)
+parse_intlongstrdatatype (xmlNode *x, const char **var)
 {
   xmlNode *cur_node = NULL;
 
@@ -67,7 +67,7 @@ parse_intlongstrdatatype (xmlNode *x, char **var)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("PlainValue", name) == 0)
-	    *var = cur_node->children->content;
+	    *var = (char *) cur_node->children->content;
 	  else
 	    return PSKC_XML_SYNTAX_ERROR;
 	}
@@ -79,10 +79,11 @@ parse_intlongstrdatatype (xmlNode *x, char **var)
 }
 
 static int
-parse_data (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_data (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
+  (void)pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -129,7 +130,7 @@ parse_data (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_algorithmparameters (pskc_data *pd, xmlNode *x,
+parse_algorithmparameters (pskc *pd, xmlNode *x,
 			   struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
@@ -149,10 +150,12 @@ parse_algorithmparameters (pskc_data *pd, xmlNode *x,
 		   cur_attr = cur_attr->next)
 		{
 		  if (strcmp ("Length", (const char *) cur_attr->name) == 0)
-		    kp->key_alg_resp_length = cur_attr->children->content;
+		    kp->key_alg_resp_length =
+		      (char *) cur_attr->children->content;
 		  else if (strcmp ("Encoding",
 				   (const char *) cur_attr->name) == 0)
-		    kp->key_alg_resp_encoding = cur_attr->children->content;
+		    kp->key_alg_resp_encoding =
+		      (char *) cur_attr->children->content;
 		  else
 		    return PSKC_XML_SYNTAX_ERROR;
 		}
@@ -168,7 +171,7 @@ parse_algorithmparameters (pskc_data *pd, xmlNode *x,
 }
 
 static int
-parse_policy (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_policy (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   (void)pd;
@@ -180,9 +183,9 @@ parse_policy (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("StartDate", name) == 0)
-	    kp->key_policy_startdate = cur_node->children->content;
+	    kp->key_policy_startdate = (char *) cur_node->children->content;
 	  else if (strcmp ("ExpiryDate", name) == 0)
-	    kp->key_policy_expirydate = cur_node->children->content;
+	    kp->key_policy_expirydate = (char *) cur_node->children->content;
 	  else
 	    return PSKC_XML_SYNTAX_ERROR;
 	}
@@ -194,7 +197,7 @@ parse_policy (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_key (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_key (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -224,9 +227,9 @@ parse_key (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 		return rc;
 	    }
 	  else if (strcmp ("Issuer", name) == 0)
-	    kp->key_issuer = cur_node->children->content;
+	    kp->key_issuer = (char *) cur_node->children->content;
 	  else if (strcmp ("UserId", name) == 0)
-	    kp->key_userid = cur_node->children->content;
+	    kp->key_userid = (char *) cur_node->children->content;
 	  else
 	    return PSKC_XML_SYNTAX_ERROR;
 	}
@@ -238,7 +241,7 @@ parse_key (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackage (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_keypackage (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -263,10 +266,10 @@ parse_keypackage (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 		   cur_attr = cur_attr->next)
 		{
 		  if (strcmp ("Id", (const char *) cur_attr->name) == 0)
-		    kp->key_id = cur_attr->children->content;
+		    kp->key_id = (char *) cur_attr->children->content;
 		  else if (strcmp ("Algorithm",
 				   (const char *) cur_attr->name) == 0)
-		    kp->key_algorithm = cur_attr->children->content;
+		    kp->key_algorithm = (char *) cur_attr->children->content;
 		  else
 		    return PSKC_XML_SYNTAX_ERROR;
 		}
@@ -284,7 +287,7 @@ parse_keypackage (pskc_data *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackages (pskc_data *pd, xmlNode *x)
+parse_keypackages (pskc *pd, xmlNode *x)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -330,7 +333,7 @@ parse_keypackages (pskc_data *pd, xmlNode *x)
 }
 
 static int
-parse_keycontainer (pskc_data *pd, xmlNode *x)
+parse_keycontainer (pskc *pd, xmlNode *x)
 {
   xmlAttr *cur_attr = NULL;
   const char *name = (const char *) x->name;
@@ -347,9 +350,9 @@ parse_keycontainer (pskc_data *pd, xmlNode *x)
   for (cur_attr = x->properties; cur_attr; cur_attr = cur_attr->next)
     {
       if (strcmp ("Version", (const char *) cur_attr->name) == 0)
-	pd->version = cur_attr->children->content;
+	pd->version = (char *) cur_attr->children->content;
       else if (strcmp ("Id", (const char *) cur_attr->name) == 0)
-	pd->id = cur_attr->children->content;
+	pd->id = (char *) cur_attr->children->content;
       else
 	return PSKC_XML_SYNTAX_ERROR;
     }
@@ -361,14 +364,14 @@ parse_keycontainer (pskc_data *pd, xmlNode *x)
 }
 
 int
-_pskc_parse (pskc_data *pd)
+_pskc_parse (pskc *container)
 {
-  xmlNode *root_element = NULL;
+  xmlNode *root = NULL;
   int rc;
 
-  root_element = xmlDocGetRootElement(pd->xmldoc);
+  root = xmlDocGetRootElement (container->xmldoc);
 
-  rc = parse_keycontainer(pd, root_element);
+  rc = parse_keycontainer (container, root);
   if (rc != PSKC_OK)
     return rc;
 

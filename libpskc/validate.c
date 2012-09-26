@@ -30,18 +30,18 @@
   "http://www.iana.org/assignments/xml-registry/schema/keyprov/pskc.xsd"
 
 /**
- * pskc_data_validate:
- * @data: #pskc_data holding PSKC data
+ * pskc_validate:
+ * @container: #pskc handle to validate
  * @isvalid: output variable holding validation result.
  *
- * This function validate the PSKC @data using the PSKC XML Schema.
- * Note that this function may need to download data from the
+ * This function validate the PSKC @container handle the PSKC XML
+ * Schema.  Note that this function may need to download data from the
  * Internet.
  *
  * Returns: On success, %PSKC_OK (zero) is returned, or an error code.
  **/
 int
-pskc_data_validate (pskc_data *data, int *isvalid)
+pskc_validate (pskc *container, int *isvalid)
 {
   xmlSchemaParserCtxtPtr parser_ctxt =
     xmlSchemaNewParserCtxt(PSKC_SCHEMA_URL);
@@ -63,7 +63,7 @@ pskc_data_validate (pskc_data *data, int *isvalid)
       return PSKC_XML_PARSE_ERROR;
     }
 
-  *isvalid = xmlSchemaValidateDoc(valid_ctxt, data->xmldoc) == 0;
+  *isvalid = xmlSchemaValidateDoc(valid_ctxt, container->xmldoc) == 0;
 
   xmlSchemaFreeValidCtxt(valid_ctxt);
   xmlSchemaFree(schema);

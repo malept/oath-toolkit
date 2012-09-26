@@ -1,5 +1,5 @@
 /*
- * data.c - implementation of PSKC data handling
+ * container.c - implementation of PSKC container handling
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -27,81 +27,78 @@
 #include <stdlib.h>		/* malloc */
 
 /**
- * pskc_data_init:
- * @data: pointer to #pskc_data handle to initialize
+ * pskc_init:
+ * @container: pointer to #pskc handle to initialize
  *
- * This function initializes the PSKC data handle @data.  The memory
- * allocate can be released by calling pskc_data_done().
+ * This function initializes the PSKC @container handle.  The memory
+ * allocate can be released by calling pskc_done().
  *
  * Returns: On success, %PSKC_OK (zero) is returned, on memory
  *   allocation errors %PSKC_MALLOC_ERROR is returned.
  **/
 int
-pskc_data_init (pskc_data **data)
+pskc_init (pskc **container)
 {
-  *data = calloc (1, sizeof (**data));
-  if (*data == NULL)
+  *container = calloc (1, sizeof (**container));
+  if (*container == NULL)
     return PSKC_MALLOC_ERROR;
   return PSKC_OK;
 }
 
 /**
- * pskc_data_init_from_memory:
- * @data: pointer to #pskc_data handle to initialize
+ * pskc_init_from_memory:
+ * @container: pointer to #pskc handle to initialize
  * @len: length of @buffer.
  * @buffer: XML data to parse.
  *
- * This function initializes the PSKC data handle @data.  The memory
- * allocate can be released by calling pskc_data_done().  The function
- * will also parse the XML data in @buffer of @len size.
+ * This function initializes the PSKC @container handle.  The memory
+ * allocate can be released by calling pskc_done().  The function will
+ * also parse the XML data in @buffer of @len size.
  *
  * Returns: On success, %PSKC_OK (zero) is returned, on memory
  *   allocation errors %PSKC_MALLOC_ERROR is returned, on XML parse
  *   errors %PSKC_XML_PARSE_ERROR is returned.
  **/
 int
-pskc_data_init_from_memory (pskc_data **data, size_t len, const char *buffer)
+pskc_init_from_memory (pskc **container, size_t len, const char *buffer)
 {
   xmlDocPtr xmldoc;
-  pskc_data *pd;
   int rc;
 
-  rc = pskc_data_init (&pd);
+  rc = pskc_init (container);
   if (rc != PSKC_OK)
     return rc;
 
   xmldoc = xmlParseMemory (buffer, len);
   if (xmldoc == NULL)
     {
-      pskc_data_done (pd);
+      pskc_done (*container);
       return PSKC_XML_PARSE_ERROR;
     }
 
-  pd->xmldoc = xmldoc;
+  (*container)->xmldoc = xmldoc;
 
-  rc = _pskc_parse (pd);
+  rc = _pskc_parse (*container);
   if (rc != PSKC_OK)
     {
-      pskc_data_done (pd);
+      pskc_done (*container);
       return rc;
     }
-
-  *data = pd;
 
   return PSKC_OK;
 }
 
 /**
- * pskc_data_done:
- * @data: #pskc_data handle to deinitialize
+ * pskc_done:
+ * @container: #pskc handle to deinitialize
  *
- * This function releases the resources associated with the @data
- * handle.
+ * This function releases the resources associated with the PSKC
+ * @container handle.
  **/
 void
-pskc_data_done (pskc_data *data)
+pskc_done (pskc *container)
 {
-  xmlFreeDoc(data->xmldoc);
-  free (data->keypackages);
-  free (data);
+  xmlFreeDoc(container->xmldoc);
+  free (container->keypackages);
+  free (container);
 }

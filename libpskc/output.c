@@ -134,8 +134,7 @@ buffer_addf (struct buffer *buf, const char *fmt, ...)
 }
 
 static void
-print_keypackage (pskc_data *data, struct buffer *buf,
-		  struct pskc_keypackage *kp)
+print_keypackage (struct buffer *buf, struct pskc_keypackage *kp)
 {
   buffer_addz (buf, "\t\tDeviceInfo:\n");
   if (kp->manufacturer)
@@ -173,7 +172,7 @@ print_keypackage (pskc_data *data, struct buffer *buf,
 }
 
 static void
-print_keycontainer (pskc_data *data, struct buffer *buf, xmlNode *x)
+print_keycontainer (pskc *data, struct buffer *buf)
 {
   size_t i;
 
@@ -184,28 +183,24 @@ print_keycontainer (pskc_data *data, struct buffer *buf, xmlNode *x)
   for (i = 0; i < data->nkeypackages; i++)
     {
       buffer_addf (buf, "\tKeyPackage %zu:\n", i);
-      print_keypackage (data, buf, &data->keypackages[i]);
+      print_keypackage (buf, &data->keypackages[i]);
     }
 }
 
 int
-pskc_data_output (pskc_data *data,
-		  pskc_data_output_formats_t format,
-		  char **out, size_t *len)
+pskc_output (pskc *container,
+	     pskc_output_formats_t format,
+	     char **out, size_t *len)
 {
   struct buffer buf;
-  xmlNode *root_element = NULL;
 
-  if (format != PSKC_DATA_OUTPUT_HUMAN_COMPLETE)
+  if (format != PSKC_OUTPUT_HUMAN_COMPLETE)
     return PSKC_UNKNOWN_OUTPUT_FORMAT;
 
   buffer_init (&buf);
-
-  root_element = xmlDocGetRootElement(data->xmldoc);
-
   buffer_addz (&buf, "Portable Symmetric Key Container (PSKC):\n");
 
-  print_keycontainer(data, &buf, root_element);
+  print_keycontainer (container, &buf);
 
   buffer_getstr (&buf, out, len);
   if (*out == NULL)

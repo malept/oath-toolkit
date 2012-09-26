@@ -71,7 +71,7 @@ checkvalidate (const char *filename, int validate)
 {
   char *buffer;
   size_t len;
-  pskc_data *p;
+  pskc *container;
   int rc;
 
   if (filename)
@@ -81,7 +81,7 @@ checkvalidate (const char *filename, int validate)
   if (buffer == NULL)
     error (EXIT_FAILURE, errno, "read");
 
-  rc = pskc_data_init_from_memory (&p, len, buffer);
+  rc = pskc_init_from_memory (&container, len, buffer);
   if (rc != PSKC_OK)
     error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
 
@@ -91,7 +91,7 @@ checkvalidate (const char *filename, int validate)
     {
       int isvalid;
 
-      rc = pskc_data_validate (p, &isvalid);
+      rc = pskc_validate (container, &isvalid);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "validation of PSKC data failed: %s",
 	       pskc_strerror (rc));
@@ -104,7 +104,7 @@ checkvalidate (const char *filename, int validate)
     {
       char *out;
 
-      rc = pskc_data_output (p, PSKC_DATA_OUTPUT_HUMAN_COMPLETE, &out, &len);
+      rc = pskc_output (container, PSKC_OUTPUT_HUMAN_COMPLETE, &out, &len);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "printing PSKC data: %s", pskc_strerror (rc));
 
@@ -113,7 +113,7 @@ checkvalidate (const char *filename, int validate)
       pskc_free (out);
     }
 
-  pskc_data_done (p);
+  pskc_done (container);
 }
 
 int
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
   if (args_info.help_given)
     usage (EXIT_SUCCESS);
 
-  rc = pskc_init ();
+  rc = pskc_global_init ();
   if (rc != PSKC_OK)
     error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
 	   pskc_strerror (rc));
@@ -163,7 +163,7 @@ main (int argc, char *argv[])
       return EXIT_SUCCESS;
     }
 
-  pskc_done ();
+  pskc_global_done ();
 
   return EXIT_SUCCESS;
 }
