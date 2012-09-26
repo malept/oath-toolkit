@@ -150,6 +150,9 @@ print_deviceinfo (struct buffer *buf, xmlNode *x)
 	  else if (strcmp ("SerialNo", name) == 0)
 	    buffer_addf (buf, "\t\t\tSerialNo: %s\n",
 			 cur_node->children->content);
+	  else if (strcmp ("UserId", name) == 0)
+	    buffer_addf (buf, "\t\t\tUserId: %s\n",
+			 cur_node->children->content);
 	  else
 	    buffer_addf (buf, "warning: unsupported DeviceInfo member '%s'\n",
 			 name);
@@ -314,6 +317,12 @@ print_key (struct buffer *buf, xmlNode *x)
 	      buffer_addz (buf, "\t\t\tPolicy:\n");
 	      print_policy (buf, cur_node->children);
 	    }
+	  else if (strcmp ("Issuer", name) == 0)
+	    buffer_addf (buf, "\t\t\tIssuer: %s\n",
+			 cur_node->children->content);
+	  else if (strcmp ("UserId", name) == 0)
+	    buffer_addf (buf, "\t\t\tUserId: %s\n",
+			 cur_node->children->content);
 	  else
 	    buffer_addf (buf, "warning: unsupported Key member '%s'\n",
 			 name);
