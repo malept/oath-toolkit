@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KeyContainer Version="1.0"
+	      xmlns="urn:ietf:params:xml:ns:keyprov:pskc">
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>654321</SerialNo>
+    </DeviceInfo>
+    <Key Id="1"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <Issuer>Issuer</Issuer>
+      <AlgorithmParameters>
+        <ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>
+            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+        <StartDate>2006-05-01T00:00:00Z</StartDate>
+        <ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>123456</SerialNo>
+    </DeviceInfo>
+    <Key Id="2"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <Issuer>Issuer</Issuer>
+      <AlgorithmParameters>
+        <ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>
+            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+        <StartDate>2006-05-01T00:00:00Z</StartDate>
+        <ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>9999999</SerialNo>
+    </DeviceInfo>
+    <Key Id="3"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <Issuer>Issuer</Issuer>
+      <AlgorithmParameters>
+        <ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>
+            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+        <StartDate>2006-03-01T00:00:00Z</StartDate>
+        <ExpiryDate>2006-03-31T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>9999999</SerialNo>
+    </DeviceInfo>
+    <Key Id="4"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <Issuer>Issuer</Issuer>
+      <AlgorithmParameters>
+        <ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>
+            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+        <StartDate>2006-04-01T00:00:00Z</StartDate>
+        <ExpiryDate>2006-04-30T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+</KeyContainer>

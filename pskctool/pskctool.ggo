@@ -18,4 +18,5 @@ purpose "Manage Portable Symmetric Key Container (PSKC) data."
 option "check" c "parse and pretty print XML input" flag off
 option "validate" e "validate XML input according to XML Schema" flag off
 
+option "quiet" q "quiet operation" flag off
 option "verbose" v "explain what is being done" flag off

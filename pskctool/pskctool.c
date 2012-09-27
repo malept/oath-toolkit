@@ -67,7 +67,7 @@ usage (int status)
 }
 
 static void
-checkvalidate (const char *filename, int validate)
+checkvalidate (const char *filename, int validate, int quiet)
 {
   char *buffer;
   size_t len;
@@ -95,12 +95,15 @@ checkvalidate (const char *filename, int validate)
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "validation of PSKC data failed: %s",
 	       pskc_strerror (rc));
-      if (isvalid)
+
+      if (quiet && !isvalid)
+	error (EXIT_FAILURE, 0, "");
+      if (!quiet && isvalid)
 	puts("OK");
-      else
+      else if (!quiet)
 	puts("FAIL");
     }
-  else
+  else if (!quiet)
     {
       char *out;
 
@@ -155,7 +158,7 @@ main (int argc, char *argv[])
 
   if (args_info.check_flag || args_info.validate_flag)
     checkvalidate (args_info.inputs ? args_info.inputs[0] : NULL,
-		   args_info.validate_flag);
+		   args_info.validate_flag, args_info.quiet_flag);
   else
     {
       cmdline_parser_print_help ();

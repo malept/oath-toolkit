@@ -53,19 +53,19 @@ main (void)
 
   /* Test initialization. */
 
-  rc = pskc_init ();
+  rc = pskc_global_init ();
   if (rc != PSKC_OK)
     {
-      printf ("pskc_init: %d\n", rc);
+      printf ("pskc_global_init: %d\n", rc);
       return 1;
     }
 
   /* Test deinitialization. */
 
-  rc = pskc_done ();
+  rc = pskc_global_done ();
   if (rc != PSKC_OK)
     {
-      printf ("pskc_done: %d\n", rc);
+      printf ("pskc_global_done: %d\n", rc);
       return 1;
     }
 
