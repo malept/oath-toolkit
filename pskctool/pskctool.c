@@ -99,9 +99,9 @@ checkvalidate (const char *filename, int validate, int quiet)
       if (quiet && !isvalid)
 	error (EXIT_FAILURE, 0, "");
       if (!quiet && isvalid)
-	puts("OK");
+	puts ("OK");
       else if (!quiet)
-	puts("FAIL");
+	puts ("FAIL");
     }
   else if (!quiet)
     {

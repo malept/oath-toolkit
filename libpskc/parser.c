@@ -28,10 +28,10 @@
 #include <string.h>
 
 static int
-parse_deviceinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_deviceinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
-  (void)pd;
+  (void) pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -56,10 +56,10 @@ parse_deviceinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_cryptomoduleinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_cryptomoduleinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
-  (void)pd;
+  (void) pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -80,7 +80,7 @@ parse_cryptomoduleinfo (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_intlongstrdatatype (xmlNode *x, const char **var)
+parse_intlongstrdatatype (xmlNode * x, const char **var)
 {
   xmlNode *cur_node = NULL;
 
@@ -103,11 +103,11 @@ parse_intlongstrdatatype (xmlNode *x, const char **var)
 }
 
 static int
-parse_data (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_data (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
-  (void)pd;
+  (void) pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -154,11 +154,10 @@ parse_data (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_algorithmparameters (pskc *pd, xmlNode *x,
-			   struct pskc_keypackage *kp)
+parse_algorithmparameters (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
-  (void)pd;
+  (void) pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -195,10 +194,10 @@ parse_algorithmparameters (pskc *pd, xmlNode *x,
 }
 
 static int
-parse_policy (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
-  (void)pd;
+  (void) pd;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -260,7 +259,7 @@ parse_policy (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_key (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_key (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -308,7 +307,7 @@ parse_key (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackage (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
+parse_keypackage (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -360,7 +359,7 @@ parse_keypackage (pskc *pd, xmlNode *x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackages (pskc *pd, xmlNode *x)
+parse_keypackages (pskc * pd, xmlNode * x)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -406,7 +405,7 @@ parse_keypackages (pskc *pd, xmlNode *x)
 }
 
 static int
-parse_keycontainer (pskc *pd, xmlNode *x)
+parse_keycontainer (pskc * pd, xmlNode * x)
 {
   xmlAttr *cur_attr = NULL;
   const char *name = (const char *) x->name;
@@ -437,7 +436,7 @@ parse_keycontainer (pskc *pd, xmlNode *x)
 }
 
 int
-_pskc_parse (pskc *container)
+_pskc_parse (pskc * container)
 {
   xmlNode *root = NULL;
   int rc;

@@ -41,33 +41,33 @@
  * Returns: On success, %PSKC_OK (zero) is returned, or an error code.
  **/
 int
-pskc_validate (pskc *container, int *isvalid)
+pskc_validate (pskc * container, int *isvalid)
 {
   xmlSchemaParserCtxtPtr parser_ctxt =
-    xmlSchemaNewParserCtxt(PSKC_SCHEMA_URL);
+    xmlSchemaNewParserCtxt (PSKC_SCHEMA_URL);
   if (parser_ctxt == NULL)
     return PSKC_XML_PARSE_ERROR;
 
-  xmlSchemaPtr schema = xmlSchemaParse(parser_ctxt);
+  xmlSchemaPtr schema = xmlSchemaParse (parser_ctxt);
   if (schema == NULL)
     {
-      xmlSchemaFreeParserCtxt(parser_ctxt);
+      xmlSchemaFreeParserCtxt (parser_ctxt);
       return PSKC_XML_PARSE_ERROR;
     }
 
-  xmlSchemaValidCtxtPtr valid_ctxt = xmlSchemaNewValidCtxt(schema);
+  xmlSchemaValidCtxtPtr valid_ctxt = xmlSchemaNewValidCtxt (schema);
   if (valid_ctxt == NULL)
     {
-      xmlSchemaFree(schema);
-      xmlSchemaFreeParserCtxt(parser_ctxt);
+      xmlSchemaFree (schema);
+      xmlSchemaFreeParserCtxt (parser_ctxt);
       return PSKC_XML_PARSE_ERROR;
     }
 
-  *isvalid = xmlSchemaValidateDoc(valid_ctxt, container->xmldoc) == 0;
+  *isvalid = xmlSchemaValidateDoc (valid_ctxt, container->xmldoc) == 0;
 
-  xmlSchemaFreeValidCtxt(valid_ctxt);
-  xmlSchemaFree(schema);
-  xmlSchemaFreeParserCtxt(parser_ctxt);
+  xmlSchemaFreeValidCtxt (valid_ctxt);
+  xmlSchemaFree (schema);
+  xmlSchemaFreeParserCtxt (parser_ctxt);
 
   return PSKC_OK;
 }

@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include <stddef.h> /* NULL */
+#include <stddef.h>		/* NULL */
 
 #include "pskc.h"
 

@@ -64,4 +64,4 @@ struct pskc
   struct pskc_keypackage *keypackages;
 };
 
-int _pskc_parse (pskc *container);
+int _pskc_parse (pskc * container);

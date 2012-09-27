@@ -32,9 +32,9 @@
 
 struct buffer
 {
-  char *mem; /* NULL if malloc has failed */
-  size_t memlen; /* length of allocated buffer */
-  size_t dlen; /* length of data in buffer */
+  char *mem;			/* NULL if malloc has failed */
+  size_t memlen;		/* length of allocated buffer */
+  size_t dlen;			/* length of data in buffer */
 };
 
 #define CHUNK 1024
@@ -47,6 +47,7 @@ buffer_init (struct buffer *buf)
   buf->mem[0] = '\0';
   buf->dlen = 0;
 }
+
 #if 0
 static void
 buffer_done (struct buffer *buf)
@@ -57,7 +58,7 @@ buffer_done (struct buffer *buf)
 }
 #endif
 static void
-buffer_getstr (struct buffer *buf, char **str, size_t *dlen)
+buffer_getstr (struct buffer *buf, char **str, size_t * dlen)
 {
   *str = buf->mem;
   *dlen = buf->dlen;
@@ -80,7 +81,7 @@ buffer_add (struct buffer *buf, size_t len, const void *data)
     }
   else
     {
-      size_t newlen = buf->memlen + MAX(len, CHUNK);
+      size_t newlen = buf->memlen + MAX (len, CHUNK);
       char *tmp;
 
       tmp = realloc (buf->mem, newlen);
@@ -108,7 +109,7 @@ buffer_addz (struct buffer *buf, const char *str)
 
 static void
 buffer_addf (struct buffer *buf, const char *fmt, ...)
-  __attribute__ ((format (printf, 2, 3)));
+__attribute__ ((format (printf, 2, 3)));
 
 static void
 buffer_addf (struct buffer *buf, const char *fmt, ...)
@@ -203,7 +204,7 @@ print_keypackage (struct buffer *buf, struct pskc_keypackage *kp)
 }
 
 static void
-print_keycontainer (pskc *data, struct buffer *buf)
+print_keycontainer (pskc * data, struct buffer *buf)
 {
   size_t i;
 
@@ -219,9 +220,8 @@ print_keycontainer (pskc *data, struct buffer *buf)
 }
 
 int
-pskc_output (pskc *container,
-	     pskc_output_formats_t format,
-	     char **out, size_t *len)
+pskc_output (pskc * container,
+	     pskc_output_formats_t format, char **out, size_t * len)
 {
   struct buffer buf;
 

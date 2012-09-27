@@ -59,7 +59,7 @@ int
 pskc_global_done (void)
 {
   xmlCleanupParser ();
-  xmlMemoryDump();
+  xmlMemoryDump ();
   return PSKC_OK;
 }
 

@@ -37,7 +37,7 @@
  *   allocation errors %PSKC_MALLOC_ERROR is returned.
  **/
 int
-pskc_init (pskc **container)
+pskc_init (pskc ** container)
 {
   *container = calloc (1, sizeof (**container));
   if (*container == NULL)
@@ -60,7 +60,7 @@ pskc_init (pskc **container)
  *   errors %PSKC_XML_PARSE_ERROR is returned.
  **/
 int
-pskc_init_from_memory (pskc **container, size_t len, const char *buffer)
+pskc_init_from_memory (pskc ** container, size_t len, const char *buffer)
 {
   xmlDocPtr xmldoc;
   int rc;
@@ -96,9 +96,9 @@ pskc_init_from_memory (pskc **container, size_t len, const char *buffer)
  * @container handle.
  **/
 void
-pskc_done (pskc *container)
+pskc_done (pskc * container)
 {
-  xmlFreeDoc(container->xmldoc);
+  xmlFreeDoc (container->xmldoc);
   free (container->keypackages);
   free (container);
 }
