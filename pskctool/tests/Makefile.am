@@ -16,5 +16,5 @@
 TESTS = tst_pskctool.sh tst_hyphen.sh
 dist_check_SCRIPTS = tst_pskctool.sh tst_hyphen.sh
 
-EXTRA_DIST = pskc-figure2.xml pskc-figure3.xml pskc-figure4.xml	\
-	pskc-figure5.xml pskc-figure10.xml
+EXTRA_DIST = pskc-figure2.xml pskc-figure2-ns.xml pskc-figure3.xml	\
+	pskc-figure4.xml pskc-figure5.xml pskc-figure10.xml

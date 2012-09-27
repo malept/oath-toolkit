@@ -60,6 +60,7 @@ dotest "-h" "fail" fail
 dotest "-c tst_pskctool.sh" "fail" fail
 dotest "-c -q tst_pskctool.sh" "fail" fail
 dotest "-c -q pskc-figure2.xml" ""
+dotest "-c -q pskc-figure2-ns.xml" ""
 dotest "-c -q pskc-figure3.xml" ""
 dotest "-c -q pskc-figure4.xml" ""
 dotest "-c -q pskc-figure5.xml" ""

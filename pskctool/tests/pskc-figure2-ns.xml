@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foo:KeyContainer Version="1.0"
+		  Id="exampleID1"
+		  xmlns:foo="urn:ietf:params:xml:ns:keyprov:pskc">
+  <foo:KeyPackage>
+    <foo:Key Id="12345678"
+             Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <foo:Issuer>Issuer-A</foo:Issuer>
+      <foo:Data>
+        <foo:Secret>
+          <foo:PlainValue>MTIzNA==
+          </foo:PlainValue>
+        </foo:Secret>
+      </foo:Data>
+    </foo:Key>
+  </foo:KeyPackage>
+</foo:KeyContainer>
