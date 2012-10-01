@@ -38,28 +38,75 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module alloca-opt:
+  # Code from module alloca-opt-tests:
+  # Code from module errno:
+  # Code from module errno-tests:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module extern-inline:
+  # Code from module fdopen:
+  # Code from module fdopen-tests:
+  # Code from module fgetc-tests:
+  # Code from module float:
+  # Code from module float-tests:
+  # Code from module fpieee:
+  AC_REQUIRE([gl_FP_IEEE])
+  # Code from module fpucw:
+  # Code from module fputc-tests:
+  # Code from module fread-tests:
+  # Code from module fwrite-tests:
+  # Code from module getpagesize:
   # Code from module include_next:
+  # Code from module intprops:
+  # Code from module intprops-tests:
+  # Code from module inttostr:
+  # Code from module inttostr-tests:
+  # Code from module inttypes:
+  # Code from module inttypes-incomplete:
+  # Code from module inttypes-tests:
   # Code from module lib-symbol-versions:
   # Code from module lib-symbol-visibility:
   # Code from module manywarnings:
+  # Code from module memchr:
+  # Code from module memchr-tests:
   # Code from module minmax:
+  # Code from module msvc-inval:
+  # Code from module multiarch:
+  # Code from module size_max:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
+  # Code from module snprintf:
+  # Code from module snprintf-tests:
+  # Code from module ssize_t:
+  # Code from module stdbool:
+  # Code from module stdbool-tests:
   # Code from module stddef:
   # Code from module stddef-tests:
+  # Code from module stdint:
+  # Code from module stdint-tests:
+  # Code from module stdio:
+  # Code from module stdio-tests:
   # Code from module string:
   # Code from module string-tests:
   # Code from module strverscmp:
   # Code from module strverscmp-tests:
+  # Code from module sys_types:
+  # Code from module sys_types-tests:
   # Code from module test-framework-sh:
   # Code from module test-framework-sh-tests:
+  # Code from module unistd:
+  # Code from module unistd-tests:
   # Code from module valgrind-tests:
+  # Code from module vasnprintf:
+  # Code from module vasnprintf-tests:
   # Code from module verify:
   # Code from module verify-tests:
   # Code from module warnings:
+  # Code from module wchar:
+  # Code from module wchar-tests:
+  # Code from module xsize:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -76,10 +123,13 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gl'
+  gl_INTTOSTR
   gl_LD_VERSION_SCRIPT
   gl_VISIBILITY
   gl_MINMAX
+  gl_MULTIARCH
   gl_STDDEF_H
+  gl_STDINT_H
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   if test $HAVE_STRVERSCMP = 0; then
@@ -134,7 +184,59 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  gl_FUNC_ALLOCA
+  gl_HEADER_ERRNO_H
+  AC_REQUIRE([gl_EXTERN_INLINE])
+  gl_FUNC_FDOPEN
+  if test $REPLACE_FDOPEN = 1; then
+    AC_LIBOBJ([fdopen])
+    gl_PREREQ_FDOPEN
+  fi
+  gl_STDIO_MODULE_INDICATOR([fdopen])
+  gl_FLOAT_H
+  if test $REPLACE_FLOAT_LDBL = 1; then
+    AC_LIBOBJ([float])
+  fi
+  if test $REPLACE_ITOLD = 1; then
+    AC_LIBOBJ([itold])
+  fi
+  gl_FUNC_GETPAGESIZE
+  if test $REPLACE_GETPAGESIZE = 1; then
+    AC_LIBOBJ([getpagesize])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([getpagesize])
+  gl_INTTYPES_H
+  gl_INTTYPES_INCOMPLETE
+  gl_FUNC_MEMCHR
+  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+    AC_LIBOBJ([memchr])
+    gl_PREREQ_MEMCHR
+  fi
+  gl_STRING_MODULE_INDICATOR([memchr])
+  dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  gl_MSVC_INVAL
+  if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
+    AC_LIBOBJ([msvc-inval])
+  fi
+  gl_SIZE_MAX
+  gl_FUNC_SNPRINTF
+  gl_STDIO_MODULE_INDICATOR([snprintf])
+  gl_MODULE_INDICATOR([snprintf])
+  gt_TYPE_SSIZE_T
+  AM_STDBOOL_H
+  gt_TYPE_WCHAR_T
+  gt_TYPE_WINT_T
+  gl_STDIO_H
+  gl_SYS_TYPES_H
+  AC_PROG_MKDIR_P
+  gl_UNISTD_H
   gl_VALGRIND_TESTS
+  gl_FUNC_VASNPRINTF
+  gl_WCHAR_H
+  gl_XSIZE
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -230,36 +332,128 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
-  lib/dummy.c
+  lib/anytostr.c
+  lib/imaxtostr.c
+  lib/intprops.h
+  lib/inttostr.c
+  lib/inttostr.h
   lib/minmax.h
+  lib/offtostr.c
   lib/stddef.in.h
+  lib/stdint.in.h
   lib/string.in.h
   lib/strverscmp.c
+  lib/uinttostr.c
+  lib/umaxtostr.c
   m4/00gnulib.m4
+  m4/alloca.m4
+  m4/errno_h.m4
+  m4/exponentd.m4
   m4/extensions.m4
+  m4/extern-inline.m4
+  m4/fdopen.m4
+  m4/float_h.m4
+  m4/fpieee.m4
+  m4/getpagesize.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/intmax_t.m4
+  m4/inttostr.m4
+  m4/inttypes-pri.m4
+  m4/inttypes.m4
+  m4/inttypes_h.m4
   m4/ld-version-script.m4
+  m4/longlong.m4
   m4/manywarnings.m4
+  m4/math_h.m4
+  m4/memchr.m4
   m4/minmax.m4
+  m4/mmap-anon.m4
+  m4/msvc-inval.m4
+  m4/multiarch.m4
+  m4/off_t.m4
   m4/onceonly.m4
+  m4/printf.m4
+  m4/size_max.m4
+  m4/snprintf.m4
+  m4/ssize_t.m4
+  m4/stdbool.m4
   m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdint_h.m4
+  m4/stdio_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
+  m4/sys_types_h.m4
+  m4/unistd_h.m4
   m4/valgrind-tests.m4
+  m4/vasnprintf.m4
   m4/visibility.m4
   m4/warn-on-use.m4
   m4/warnings.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
+  m4/wint_t.m4
+  m4/xsize.m4
   tests/init.sh
   tests/macros.h
   tests/signature.h
+  tests/test-alloca-opt.c
+  tests/test-errno.c
+  tests/test-fdopen.c
+  tests/test-fgetc.c
+  tests/test-float.c
+  tests/test-fputc.c
+  tests/test-fread.c
+  tests/test-fwrite.c
   tests/test-init.sh
+  tests/test-intprops.c
+  tests/test-inttostr.c
+  tests/test-inttypes.c
+  tests/test-memchr.c
+  tests/test-snprintf.c
+  tests/test-stdbool.c
   tests/test-stddef.c
+  tests/test-stdint.c
+  tests/test-stdio.c
   tests/test-string.c
   tests/test-strverscmp.c
+  tests/test-sys_types.c
+  tests/test-unistd.c
+  tests/test-vasnprintf.c
   tests/test-verify.c
   tests/test-verify.sh
-  tests=lib/dummy.c
+  tests/test-wchar.c
+  tests/zerosize-ptr.h
+  tests=lib/alloca.in.h
+  tests=lib/asnprintf.c
+  tests=lib/errno.in.h
+  tests=lib/fdopen.c
+  tests=lib/float+.h
+  tests=lib/float.c
+  tests=lib/float.in.h
+  tests=lib/fpucw.h
+  tests=lib/getpagesize.c
+  tests=lib/inttypes.in.h
+  tests=lib/itold.c
+  tests=lib/memchr.c
+  tests=lib/memchr.valgrind
+  tests=lib/msvc-inval.c
+  tests=lib/msvc-inval.h
+  tests=lib/printf-args.c
+  tests=lib/printf-args.h
+  tests=lib/printf-parse.c
+  tests=lib/printf-parse.h
+  tests=lib/size_max.h
+  tests=lib/snprintf.c
+  tests=lib/stdbool.in.h
+  tests=lib/stdio.in.h
+  tests=lib/sys_types.in.h
+  tests=lib/unistd.in.h
+  tests=lib/vasnprintf.c
+  tests=lib/vasnprintf.h
   tests=lib/verify.h
+  tests=lib/wchar.in.h
+  tests=lib/xsize.c
+  tests=lib/xsize.h
 ])

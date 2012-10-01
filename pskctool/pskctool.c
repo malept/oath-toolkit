@@ -67,11 +67,36 @@ usage (int status)
 }
 
 static void
-checkvalidate (const char *filename, int validate, int quiet)
+build (void)
+{
+  pskc_t *container;
+  int rc;
+  char *out;
+  size_t len;
+
+  rc = pskc_init (&container);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "initializing PSKC container: %s",
+	   pskc_strerror (rc));
+
+  rc = pskc_build_xml (container, &out, &len);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "cannot build PSKC data: %s", pskc_strerror (rc));
+
+  printf ("%.*s", (int) len, out);
+
+  pskc_free (out);
+
+  pskc_done (container);
+}
+
+static void
+checkvalidate (const char *filename, int validate, int verbose, int quiet)
 {
   char *buffer;
+  char *out;
   size_t len;
-  pskc *container;
+  pskc_t *container;
   int rc;
 
   if (filename)
@@ -103,17 +128,29 @@ checkvalidate (const char *filename, int validate, int quiet)
       else if (!quiet)
 	puts ("FAIL");
     }
-  else if (!quiet)
+  else
     {
-      char *out;
-
       rc = pskc_output (container, PSKC_OUTPUT_HUMAN_COMPLETE, &out, &len);
       if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "printing PSKC data: %s", pskc_strerror (rc));
+	error (EXIT_FAILURE, 0, "converting PSKC data: %s",
+	       pskc_strerror (rc));
 
-      printf ("%.*s", (int) len, out);
+      if (!quiet)
+	printf ("%.*s\n", (int) len, out);
 
       pskc_free (out);
+
+      if (verbose)
+	{
+	  rc = pskc_build_xml (container, &out, &len);
+	  if (rc != PSKC_OK)
+	    error (EXIT_FAILURE, 0, "cannot build PSKC data: %s",
+		   pskc_strerror (rc));
+
+	  printf ("%.*s", (int) len, out);
+
+	  pskc_free (out);
+	}
     }
 
   pskc_done (container);
@@ -156,9 +193,12 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
 	   pskc_strerror (rc));
 
-  if (args_info.check_flag || args_info.validate_flag)
+  if (args_info.build_flag)
+    build ();
+  else if (args_info.check_flag || args_info.validate_flag)
     checkvalidate (args_info.inputs ? args_info.inputs[0] : NULL,
-		   args_info.validate_flag, args_info.quiet_flag);
+		   args_info.validate_flag, args_info.verbose_flag,
+		   args_info.quiet_flag);
   else
     {
       cmdline_parser_print_help ();

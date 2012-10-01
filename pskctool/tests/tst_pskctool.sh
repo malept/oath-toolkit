@@ -65,5 +65,14 @@ dotest "-c -q pskc-figure3.xml" ""
 dotest "-c -q pskc-figure4.xml" ""
 dotest "-c -q pskc-figure5.xml" ""
 dotest "-c -q pskc-figure10.xml" ""
+dotest "-c -q pskc-ocra.xml" ""
+dotest "-e -q tst_pskctool.sh" "fail" fail
+dotest "-e pskc-figure2.xml" "OK"
+dotest "-e pskc-figure2-ns.xml" "OK"
+dotest "-e pskc-figure3.xml" "OK"
+dotest "-e pskc-figure4.xml" "OK"
+dotest "-e pskc-figure5.xml" "OK"
+dotest "-e pskc-figure10.xml" "OK"
+dotest "-e pskc-ocra.xml" "OK"
 
 exit 0

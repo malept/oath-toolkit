@@ -28,6 +28,7 @@
 #include "internal.h"
 #include <stdlib.h>		/* malloc */
 #include <string.h>		/* memmove */
+#include <inttypes.h>		/* PRId64 */
 #include <libxml/parser.h>	/* xmlInitParser */
 
 struct buffer
@@ -135,92 +136,179 @@ buffer_addf (struct buffer *buf, const char *fmt, ...)
 }
 
 static void
-print_keypackage (struct buffer *buf, struct pskc_keypackage *kp)
+print_keypackage (struct buffer *buf, pskc_key_t *kp)
 {
-  buffer_addz (buf, "\t\tDeviceInfo:\n");
-  if (kp->manufacturer)
-    buffer_addf (buf, "\t\t\tManufacturer: %s\n", kp->manufacturer);
-  if (kp->serialno)
-    buffer_addf (buf, "\t\t\tSerialNo: %s\n", kp->serialno);
-  if (kp->device_userid)
-    buffer_addf (buf, "\t\t\tUserId: %s\n", kp->device_userid);
+  const char *device_manufacturer = pskc_get_device_manufacturer (kp);
+  const char *device_serialno = pskc_get_device_serialno (kp);
+  const char *device_userid = pskc_get_device_userid (kp);
+  const char *cryptomodule_id = pskc_get_cryptomodule_id (kp);
+  const char *key_id = pskc_get_key_id (kp);
+  const char *key_friendlyname = pskc_get_key_friendlyname (kp);
+  const char *key_issuer = pskc_get_key_issuer (kp);
+  const char *key_profileid = pskc_get_key_profileid (kp);
+  const char *key_reference = pskc_get_key_reference (kp);
+  const char *key_userid = pskc_get_key_userid (kp);
+  const char *key_algorithm = pskc_get_key_algorithm (kp);
+  int key_counter_present;
+  uint64_t key_counter = pskc_get_key_data_counter (kp, &key_counter_present);
+  int key_time_present;
+  uint32_t key_time = pskc_get_key_data_time (kp, &key_time_present);
+  int key_timedrift_present;
+  uint32_t key_timedrift = pskc_get_key_data_timedrift
+    (kp, &key_timedrift_present);
+  int key_timeinterval_present;
+  uint32_t key_timeinterval = pskc_get_key_data_timeinterval
+    (kp, &key_timeinterval_present);
+  const char *key_policy_pinkeyid = pskc_get_key_policy_pinkeyid (kp);
+  int key_policy_pinminlength_present;
+  uint32_t key_policy_pinminlength = pskc_get_key_policy_pinminlength
+    (kp, &key_policy_pinminlength_present);
+  int key_policy_pinmaxlength_present;
+  uint32_t key_policy_pinmaxlength = pskc_get_key_policy_pinmaxlength
+    (kp, &key_policy_pinmaxlength_present);
+  int key_policy_pinmaxfailedattempts_present;
+  uint32_t key_policy_pinmaxfailedattempts = pskc_get_key_policy_pinmaxfailedattempts
+    (kp, &key_policy_pinmaxfailedattempts_present);
+  int key_policy_pinusagemode_present;
+  pskc_pinusagemode key_policy_pinusagemode =
+    pskc_get_key_policy_pinusagemode (kp, &key_policy_pinusagemode_present);
+  int key_policy_pinencoding_present;
+  pskc_valueformat key_policy_pinencoding =
+    pskc_get_key_policy_pinencoding (kp, &key_policy_pinencoding_present);
+  int key_policy_keyusage_present;
+  pskc_keyusage key_policy_keyusage =
+    pskc_get_key_policy_keyusage (kp, &key_policy_keyusage_present);
+  const char *key_algparm_suite = pskc_get_key_algparm_suite (kp);
+  int key_algparm_resp_encoding_present;
+  pskc_valueformat key_algparm_resp_encoding =
+    pskc_get_key_algparm_resp_encoding (kp, &key_algparm_resp_encoding_present);
+  int key_algparm_resp_length_present;
+  uint32_t key_algparm_resp_length =
+    pskc_get_key_algparm_resp_length (kp, &key_algparm_resp_length_present);
+  const struct tm *key_policy_startdate =
+    pskc_get_key_policy_startdate (kp);
+  const struct tm *key_policy_expirydate =
+    pskc_get_key_policy_expirydate (kp);
 
-  if (kp->crypto_id)
-    buffer_addf (buf, "\t\tCryptoModuleInfo Id: %s\n", kp->crypto_id);
+  buffer_addz (buf, "\t\tDeviceInfo:\n");
+  if (device_manufacturer)
+    buffer_addf (buf, "\t\t\tManufacturer: %s\n", device_manufacturer);
+  if (device_serialno)
+    buffer_addf (buf, "\t\t\tSerialNo: %s\n", device_serialno);
+  if (device_userid)
+    buffer_addf (buf, "\t\t\tUserId: %s\n", device_userid);
+
+  if (cryptomodule_id)
+    buffer_addf (buf, "\t\tCryptoModuleInfo Id: %s\n", cryptomodule_id);
 
   buffer_addz (buf, "\t\tKey:\n");
-  if (kp->key_id)
-    buffer_addf (buf, "\t\t\tId: %s\n", kp->key_id);
-  if (kp->key_issuer)
-    buffer_addf (buf, "\t\t\tIssuer: %s\n", kp->key_issuer);
-  if (kp->key_profileid)
-    buffer_addf (buf, "\t\t\tKey Profile Id: %s\n", kp->key_profileid);
-  if (kp->key_reference)
-    buffer_addf (buf, "\t\t\tKey Reference: %s\n", kp->key_reference);
-  if (kp->key_userid)
-    buffer_addf (buf, "\t\t\tKey User Id: %s\n", kp->key_userid);
-  if (kp->key_algorithm)
-    buffer_addf (buf, "\t\t\tAlgorithm: %s\n", kp->key_algorithm);
-  if (kp->key_alg_resp_length)
-    buffer_addf (buf, "\t\t\tResponseFormat Length: %s\n",
-		 kp->key_alg_resp_length);
-  if (kp->key_alg_resp_encoding)
-    buffer_addf (buf, "\t\t\tResponseFormat Encoding: %s\n",
-		 kp->key_alg_resp_encoding);
+  if (key_id)
+    buffer_addf (buf, "\t\t\tId: %s\n", key_id);
+  if (key_friendlyname)
+    buffer_addf (buf, "\t\t\tFriendlyName: %s\n", key_friendlyname);
+  if (key_issuer)
+    buffer_addf (buf, "\t\t\tIssuer: %s\n", key_issuer);
+  if (key_profileid)
+    buffer_addf (buf, "\t\t\tKey Profile Id: %s\n", key_profileid);
+  if (key_reference)
+    buffer_addf (buf, "\t\t\tKey Reference: %s\n", key_reference);
+  if (key_userid)
+    buffer_addf (buf, "\t\t\tKey User Id: %s\n", key_userid);
+  if (key_algorithm)
+    buffer_addf (buf, "\t\t\tAlgorithm: %s\n", key_algorithm);
+#if 0
   if (kp->key_secret)
     buffer_addf (buf, "\t\t\tKey Secret: %s\n", kp->key_secret);
-  if (kp->key_counter)
-    buffer_addf (buf, "\t\t\tKey Counter: %s\n", kp->key_counter);
-  if (kp->key_time)
-    buffer_addf (buf, "\t\t\tKey Time: %s\n", kp->key_time);
-  if (kp->key_time_interval)
-    buffer_addf (buf, "\t\t\tKey Time Interval: %s\n", kp->key_time_interval);
-  if (kp->key_usage)
-    buffer_addf (buf, "\t\t\tKey Usage: %s\n", kp->key_usage);
-  if (kp->key_policy_startdate)
-    buffer_addf (buf, "\t\t\tPolicy StartDate: %s\n",
-		 kp->key_policy_startdate);
-  if (kp->key_policy_expirydate)
-    buffer_addf (buf, "\t\t\tPolicy ExpiryDate: %s\n",
-		 kp->key_policy_expirydate);
-  if (kp->key_pinpolicy_minlength)
-    buffer_addf (buf, "\t\t\tPIN Policy Minimum Length: %s\n",
-		 kp->key_pinpolicy_minlength);
-  if (kp->key_pinpolicy_maxlength)
-    buffer_addf (buf, "\t\t\tPIN Policy Maximum Length: %s\n",
-		 kp->key_pinpolicy_maxlength);
-  if (kp->key_pinpolicy_pinkeyid)
+#endif
+  if (key_counter_present)
+    buffer_addf (buf, "\t\t\tKey Counter: %" PRId64 "\n", key_counter);
+  if (key_time_present)
+    buffer_addf (buf, "\t\t\tKey Time: %" PRId32 "\n", key_time);
+  if (key_timeinterval_present)
+    buffer_addf (buf, "\t\t\tKey TimeInterval: %" PRId32 "\n",
+		 key_timeinterval);
+  if (key_timedrift_present)
+    buffer_addf (buf, "\t\t\tKey TimeDrift: %" PRId32 "\n",
+		 key_timedrift);
+  if (key_policy_keyusage_present)
+    buffer_addf (buf, "\t\t\tKey Usage: %s\n",
+		 pskc_keyusage2str (key_policy_keyusage));
+  if (key_policy_startdate)
+    {
+      char t[100];
+      strftime (t, sizeof (t), "%Y-%m-%d %H:%M:%S", key_policy_startdate);
+      buffer_addf (buf, "\t\t\tPolicy StartDate: %s\n", t);
+    }
+  if (key_policy_expirydate)
+    {
+      char t[100];
+      strftime (t, sizeof (t), "%Y-%m-%d %H:%M:%S", key_policy_expirydate);
+      buffer_addf (buf, "\t\t\tPolicy ExpiryDate: %s\n", t);
+    }
+  if (key_policy_pinminlength_present)
+    buffer_addf (buf, "\t\t\tPIN Policy Minimum Length: %" PRId32 "\n",
+		 key_policy_pinminlength);
+  if (key_policy_pinmaxlength_present)
+    buffer_addf (buf, "\t\t\tPIN Policy Maximum Length: %" PRId32 "\n",
+		 key_policy_pinmaxlength);
+  if (key_policy_pinkeyid)
     buffer_addf (buf, "\t\t\tPIN Policy PIN Key Id: %s\n",
-		 kp->key_pinpolicy_pinkeyid);
-  if (kp->key_pinpolicy_pinencoding)
+		 key_policy_pinkeyid);
+  if (key_policy_pinencoding_present)
     buffer_addf (buf, "\t\t\tPIN Policy PIN Encoding: %s\n",
-		 kp->key_pinpolicy_pinencoding);
-  if (kp->key_pinpolicy_pinusagemode)
+		 pskc_valueformat2str (key_policy_pinencoding));
+  if (key_policy_pinusagemode_present)
     buffer_addf (buf, "\t\t\tPIN Policy PIN Usage Mode: %s\n",
-		 kp->key_pinpolicy_pinusagemode);
-  if (kp->key_pinpolicy_maxfailedattempts)
-    buffer_addf (buf, "\t\t\tPIN Policy PIN Max Failed Attempts: %s\n",
-		 kp->key_pinpolicy_maxfailedattempts);
+		 pskc_pinusagemode2str (key_policy_pinusagemode));
+  if (key_policy_pinmaxfailedattempts_present)
+    buffer_addf (buf, "\t\t\tPIN Policy PIN Max Failed Attempts: %" PRId32 "\n",
+		 key_policy_pinmaxfailedattempts);
+  if (key_algparm_suite)
+    buffer_addf (buf, "\t\t\tAlgorithmParameters Suite: %s\n",
+		 key_algparm_suite);
+  if (key_algparm_resp_length_present)
+    buffer_addf (buf, "\t\t\tResponseFormat Length: %" PRId32 "\n",
+		 key_algparm_resp_length);
+  if (key_algparm_resp_encoding_present)
+    buffer_addf (buf, "\t\t\tResponseFormat Encoding: %s\n",
+		 pskc_valueformat2str (key_algparm_resp_encoding));
 }
 
 static void
-print_keycontainer (pskc * data, struct buffer *buf)
+print_keycontainer (pskc_t * data, struct buffer *buf)
 {
+  const char *version = pskc_get_version (data);
+  const char *id = pskc_get_id (data);
+  pskc_key_t *key;
   size_t i;
 
-  buffer_addf (buf, "\tVersion: %s\n", data->version);
-  if (data->id)
-    buffer_addf (buf, "\tId: %s\n", data->id);
+  if (version)
+    buffer_addf (buf, "\tVersion: %s\n", version);
+  if (id)
+    buffer_addf (buf, "\tId: %s\n", id);
 
-  for (i = 0; i < data->nkeypackages; i++)
+  for (i = 0; (key = pskc_get_keypackage (data, i)); i++)
     {
       buffer_addf (buf, "\tKeyPackage %zu:\n", i);
-      print_keypackage (buf, &data->keypackages[i]);
+      print_keypackage (buf, key);
     }
 }
 
+/**
+ * pskc_output:
+ * @container: #pskc_t handle
+ * @format: an #pskc_output_formats_t enumeration type indicating format.
+ * @out: pointer to output variable holding newly allocated string.
+ * @len: pointer to output variable hold length of *@out.
+ *
+ * Convert PSKC data to a serialized string of the indicated type.
+ * This is usually used to convert the PSKC data to some human
+ * readable form.
+ *
+ * Returns: %PSKC_OK on success, or an error code.
+ */
 int
-pskc_output (pskc * container,
+pskc_output (pskc_t * container,
 	     pskc_output_formats_t format, char **out, size_t * len)
 {
   struct buffer buf;

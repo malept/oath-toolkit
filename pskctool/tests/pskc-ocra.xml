@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- draft-hoyer-keyprov-pskc-algorithm-profiles-01 section 3 -->
+<!-- modified to conform to PSKC schema by Simon Josefsson -->
+<KeyContainer Version="1.0" xmlns="urn:ietf:params:xml:ns:keyprov:pskc">
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>987654322</SerialNo>
+    </DeviceInfo>
+    <Key Id="12345678"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc#OCRA-1:HOTP-SHA512-8:C-QN08">
+      <Issuer>Issuer</Issuer>
+      <AlgorithmParameters>
+	<ChallengeFormat Min="8" Max="8" Encoding="DECIMAL"/>
+	<ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=</PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+	<KeyUsage>CR</KeyUsage>
+      </Policy>
+    </Key>
+  </KeyPackage>
+</KeyContainer>

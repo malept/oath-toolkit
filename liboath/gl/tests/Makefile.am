@@ -77,7 +77,7 @@ EXTRA_DIST += test-base32.c macros.h
 
 ## begin gnulib module binary-io
 
-libtests_a_SOURCES += binary-io.h
+libtests_a_SOURCES += binary-io.h binary-io.c
 
 ## end   gnulib module binary-io
 

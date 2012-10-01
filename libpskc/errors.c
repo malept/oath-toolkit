@@ -37,6 +37,7 @@ static const err_t errors[] = {
   ERR (PSKC_MALLOC_ERROR, "Memory allocation failed"),
   ERR (PSKC_XML_PARSE_ERROR, "XML parse error"),
   ERR (PSKC_XML_SYNTAX_ERROR, "Syntax error in XML data"),
+  ERR (PSKC_XML_ERROR, "Error returned from XML library"),
   ERR (PSKC_UNKNOWN_OUTPUT_FORMAT, "Unknown output format")
 };
 

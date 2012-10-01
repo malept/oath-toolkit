@@ -23,12 +23,14 @@
 
 #include "pskc.h"
 
+#define INTERNAL_NEED_PSKC_STRUCT
+#define INTERNAL_NEED_PSKC_KEY_STRUCT
 #include "internal.h"
 
 #include <string.h>
 
 static int
-parse_deviceinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_deviceinfo (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   (void) pd;
@@ -40,9 +42,33 @@ parse_deviceinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("Manufacturer", name) == 0)
-	    kp->manufacturer = (char *) cur_node->children->content;
+	    kp->device_manufacturer = (char *) cur_node->children->content;
 	  else if (strcmp ("SerialNo", name) == 0)
-	    kp->serialno = (char *) cur_node->children->content;
+	    kp->device_serialno = (char *) cur_node->children->content;
+	  else if (strcmp ("Model", name) == 0)
+	    kp->device_model = (char *) cur_node->children->content;
+	  else if (strcmp ("Model", name) == 0)
+	    kp->device_model = (char *) cur_node->children->content;
+	  else if (strcmp ("IssueNo", name) == 0)
+	    kp->device_issueno = (char *) cur_node->children->content;
+	  else if (strcmp ("DeviceBinding", name) == 0)
+	    kp->device_devicebinding = (char *) cur_node->children->content;
+	  else if (strcmp ("StartDate", name) == 0)
+	    {
+	      kp->device_startdate_str =
+		(char *) cur_node->children->content;
+	      memset (&kp->device_startdate, 0, sizeof(struct tm));
+	      strptime (kp->device_startdate_str,
+			"%Y-%m-%dT%H:%M:%SZ", &kp->device_startdate);
+	    }
+	  else if (strcmp ("ExpiryDate", name) == 0)
+	    {
+	      kp->device_expirydate_str =
+		(char *) cur_node->children->content;
+	      memset (&kp->device_expirydate, 0, sizeof(struct tm));
+	      strptime (kp->device_expirydate_str,
+			"%Y-%m-%dT%H:%M:%SZ", &kp->device_expirydate);
+	    }
 	  else if (strcmp ("UserId", name) == 0)
 	    kp->device_userid = (char *) cur_node->children->content;
 	}
@@ -52,7 +78,7 @@ parse_deviceinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_cryptomoduleinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_cryptomoduleinfo (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   (void) pd;
@@ -64,7 +90,7 @@ parse_cryptomoduleinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("Id", name) == 0)
-	    kp->crypto_id = (char *) cur_node->children->content;
+	    kp->cryptomodule_id = (char *) cur_node->children->content;
 	}
     }
 
@@ -75,6 +101,8 @@ static int
 parse_intlongstrdatatype (xmlNode * x, const char **var)
 {
   xmlNode *cur_node = NULL;
+
+  *var = NULL;
 
   for (cur_node = x; cur_node; cur_node = cur_node->next)
     {
@@ -91,7 +119,7 @@ parse_intlongstrdatatype (xmlNode * x, const char **var)
 }
 
 static int
-parse_data (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_data (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -109,27 +137,46 @@ parse_data (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 					     &kp->key_secret);
 	      if (rc != PSKC_OK)
 		return rc;
+	      /* b64 decode */
+	      if (kp->key_secret)
+		kp->key_secret_len = strlen (kp->key_secret);
 	    }
 	  else if (strcmp ("Counter", name) == 0)
 	    {
 	      rc = parse_intlongstrdatatype (cur_node->children,
-					     &kp->key_counter);
+					     &kp->key_counter_str);
 	      if (rc != PSKC_OK)
 		return rc;
+	      if (kp->key_counter_str)
+		kp->key_counter = strtoull (kp->key_counter_str, NULL, 10);
 	    }
 	  else if (strcmp ("Time", name) == 0)
 	    {
 	      rc = parse_intlongstrdatatype (cur_node->children,
-					     &kp->key_time);
+					     &kp->key_time_str);
 	      if (rc != PSKC_OK)
 		return rc;
+	      if (kp->key_time_str)
+		kp->key_time = strtoul (kp->key_time_str, NULL, 10);
 	    }
 	  else if (strcmp ("TimeInterval", name) == 0)
 	    {
 	      rc = parse_intlongstrdatatype (cur_node->children,
-					     &kp->key_time_interval);
+					     &kp->key_timeinterval_str);
 	      if (rc != PSKC_OK)
 		return rc;
+	      if (kp->key_timeinterval_str)
+		kp->key_timeinterval = strtoul (kp->key_timeinterval_str,
+						NULL, 10);
+	    }
+	  else if (strcmp ("TimeDrift", name) == 0)
+	    {
+	      rc = parse_intlongstrdatatype (cur_node->children,
+					     &kp->key_timedrift_str);
+	      if (rc != PSKC_OK)
+		return rc;
+	      if (kp->key_timedrift_str)
+		kp->key_timedrift = strtoul (kp->key_timedrift_str, NULL, 10);
 	    }
 	}
     }
@@ -138,7 +185,7 @@ parse_data (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_algorithmparameters (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_algorithmparameters (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   (void) pd;
@@ -149,22 +196,47 @@ parse_algorithmparameters (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	{
 	  const char *name = (const char *) cur_node->name;
 
-	  if (strcmp ("ResponseFormat", name) == 0)
+	  if (strcmp ("Suite", name) == 0)
+	    kp->key_algparm_suite = (char *) cur_node->children->content;
+	  else if (strcmp ("ResponseFormat", name) == 0)
 	    {
 	      xmlAttr *cur_attr = NULL;
 
 	      for (cur_attr = cur_node->properties; cur_attr;
 		   cur_attr = cur_attr->next)
 		{
-		  if (strcmp ("Length", (const char *) cur_attr->name) == 0)
-		    kp->key_alg_resp_length =
-		      (char *) cur_attr->children->content;
-		  else if (strcmp ("Encoding",
-				   (const char *) cur_attr->name) == 0)
-		    kp->key_alg_resp_encoding =
-		      (char *) cur_attr->children->content;
+		  if (strcmp ("Encoding",
+			      (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_algparm_resp_encoding_str =
+			(char *) cur_attr->children->content;
+		      kp->key_algparm_resp_encoding =
+			pskc_str2valueformat
+			(kp->key_algparm_resp_encoding_str);
+		    }
+		  else if (strcmp ("Length", (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_algparm_resp_length_str =
+			(char *) cur_attr->children->content;
+		      kp->key_algparm_resp_length =
+			strtoul (kp->key_algparm_resp_length_str, NULL, 10);
+		    }
+		  else if (strcmp ("CheckDigits", (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_algparm_resp_checkdigits_str =
+			(char *) cur_attr->children->content;
+		      if (strcmp ("1", kp->
+				  key_algparm_resp_checkdigits_str) == 0)
+			kp->key_algparm_resp_checkdigits = 1;
+		      else if (strcmp ("true", kp->
+				       key_algparm_resp_checkdigits_str) == 0)
+			kp->key_algparm_resp_checkdigits = 1;
+		      else
+			kp->key_algparm_resp_checkdigits = 0;
+		    }
 		}
 	    }
+	  /* XXX incomplete */
 	}
     }
 
@@ -172,7 +244,7 @@ parse_algorithmparameters (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_policy (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   (void) pd;
@@ -184,9 +256,21 @@ parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	  const char *name = (const char *) cur_node->name;
 
 	  if (strcmp ("StartDate", name) == 0)
-	    kp->key_policy_startdate = (char *) cur_node->children->content;
+	    {
+	      kp->key_policy_startdate_str =
+		(char *) cur_node->children->content;
+	      memset (&kp->key_policy_startdate, 0, sizeof(struct tm));
+	      strptime (kp->key_policy_startdate_str,
+			"%Y-%m-%dT%H:%M:%SZ", &kp->key_policy_startdate);
+	    }
 	  else if (strcmp ("ExpiryDate", name) == 0)
-	    kp->key_policy_expirydate = (char *) cur_node->children->content;
+	    {
+	      kp->key_policy_expirydate_str =
+		(char *) cur_node->children->content;
+	      memset (&kp->key_policy_expirydate, 0, sizeof(struct tm));
+	      strptime (kp->key_policy_expirydate_str,
+			"%Y-%m-%dT%H:%M:%SZ", &kp->key_policy_expirydate);
+	    }
 	  else if (strcmp ("PINPolicy", name) == 0)
 	    {
 	      xmlAttr *cur_attr = NULL;
@@ -194,35 +278,69 @@ parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	      for (cur_attr = cur_node->properties; cur_attr;
 		   cur_attr = cur_attr->next)
 		{
-		  if (strcmp ("MinLength",
+		  if (strcmp ("PINKeyId",
 			      (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_minlength =
-		      (char *) cur_attr->children->content;
-		  else if (strcmp ("MaxLength",
-				   (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_maxlength =
-		      (char *) cur_attr->children->content;
-		  else if (strcmp ("PINKeyId",
-				   (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_pinkeyid =
-		      (char *) cur_attr->children->content;
-		  else if (strcmp ("PINEncoding",
-				   (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_pinencoding =
+		    kp->key_policy_pinkeyid =
 		      (char *) cur_attr->children->content;
 		  else if (strcmp ("PINUsageMode",
 				   (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_pinusagemode =
-		      (char *) cur_attr->children->content;
+		    {
+		      kp->key_policy_pinusagemode_str =
+			(char *) cur_attr->children->content;
+		      kp->key_policy_pinusagemode =
+			pskc_str2pinusagemode (kp->
+					       key_policy_pinusagemode_str);
+		    }
 		  else if (strcmp ("MaxFailedAttempts",
 				   (const char *) cur_attr->name) == 0)
-		    kp->key_pinpolicy_maxfailedattempts =
-		      (char *) cur_attr->children->content;
-		}
+		    {
+		      kp->key_policy_pinmaxfailedattempts_str =
+			(char *) cur_attr->children->content;
+		      kp->key_policy_pinmaxfailedattempts =
+			strtoull (kp->key_policy_pinmaxfailedattempts_str,
+				  NULL, 10);
+		    }
+		  else if (strcmp ("MinLength",
+			      (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_policy_pinminlength_str =
+			(char *) cur_attr->children->content;
+		      kp->key_policy_pinminlength =
+			strtoull (kp->key_policy_pinminlength_str, NULL, 10);
+		    }
+		  else if (strcmp ("MaxLength",
+				   (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_policy_pinmaxlength_str =
+			(char *) cur_attr->children->content;
+		      kp->key_policy_pinmaxlength =
+			strtoull (kp->key_policy_pinmaxlength_str, NULL, 10);
+		    }
+		  else if (strcmp ("PINEncoding",
+				   (const char *) cur_attr->name) == 0)
+		    {
+		      kp->key_policy_pinencoding_str =
+			(char *) cur_attr->children->content;
+		      kp->key_policy_pinencoding =
+			pskc_str2valueformat (kp->key_policy_pinencoding_str);
+		    }
+	    }
 	    }
 	  else if (strcmp ("KeyUsage", name) == 0)
 	    {
-	      kp->key_usage = (char *) cur_node->children->content;
+	      kp->key_policy_keyusage_str =
+		(char *) cur_node->children->content;
+	      kp->key_policy_keyusage |=
+		pskc_str2keyusage (kp->key_policy_keyusage_str);
+	    }
+	  else if (strcmp ("NumberOfTransactions", name) == 0)
+	    {
+	      int rc = parse_intlongstrdatatype
+		(cur_node->children, &kp->key_policy_numberoftransactions_str);
+	      if (rc != PSKC_OK)
+		return rc;
+	      kp->key_policy_numberoftransactions =
+		strtoull (kp->key_policy_numberoftransactions_str, NULL, 10);
 	    }
 	}
     }
@@ -231,7 +349,7 @@ parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_key (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_key (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -242,32 +360,34 @@ parse_key (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	{
 	  const char *name = (const char *) cur_node->name;
 
-	  if (strcmp ("AlgorithmParameters", name) == 0)
+	  if (strcmp ("Issuer", name) == 0)
+	    kp->key_issuer = (char *) cur_node->children->content;
+	  else if (strcmp ("AlgorithmParameters", name) == 0)
 	    {
 	      rc = parse_algorithmparameters (pd, cur_node->children, kp);
 	      if (rc != PSKC_OK)
 		return rc;
 	    }
+	  else if (strcmp ("KeyProfileId", name) == 0)
+	    kp->key_profileid = (char *) cur_node->children->content;
+	  else if (strcmp ("KeyReference", name) == 0)
+	    kp->key_reference = (char *) cur_node->children->content;
+	  else if (strcmp ("FriendlyName", name) == 0)
+	    kp->key_friendlyname = (char *) cur_node->children->content;
 	  else if (strcmp ("Data", name) == 0)
 	    {
 	      rc = parse_data (pd, cur_node->children, kp);
 	      if (rc != PSKC_OK)
 		return rc;
 	    }
+	  else if (strcmp ("UserId", name) == 0)
+	    kp->key_userid = (char *) cur_node->children->content;
 	  else if (strcmp ("Policy", name) == 0)
 	    {
 	      rc = parse_policy (pd, cur_node->children, kp);
 	      if (rc != PSKC_OK)
 		return rc;
 	    }
-	  else if (strcmp ("Issuer", name) == 0)
-	    kp->key_issuer = (char *) cur_node->children->content;
-	  else if (strcmp ("KeyProfileId", name) == 0)
-	    kp->key_profileid = (char *) cur_node->children->content;
-	  else if (strcmp ("KeyReference", name) == 0)
-	    kp->key_reference = (char *) cur_node->children->content;
-	  else if (strcmp ("UserId", name) == 0)
-	    kp->key_userid = (char *) cur_node->children->content;
 	}
     }
 
@@ -275,7 +395,7 @@ parse_key (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackage (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
+parse_keypackage (pskc_t * pd, xmlNode * x, struct pskc_key *kp)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -323,7 +443,7 @@ parse_keypackage (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 }
 
 static int
-parse_keypackages (pskc * pd, xmlNode * x)
+parse_keypackages (pskc_t * pd, xmlNode * x)
 {
   xmlNode *cur_node = NULL;
   int rc;
@@ -336,7 +456,7 @@ parse_keypackages (pskc * pd, xmlNode * x)
 
 	  if (strcmp ("KeyPackage", name) == 0)
 	    {
-	      struct pskc_keypackage *tmp;
+	      struct pskc_key *tmp;
 
 	      tmp = realloc (pd->keypackages,
 			     sizeof (*pd->keypackages) *
@@ -361,7 +481,7 @@ parse_keypackages (pskc * pd, xmlNode * x)
 }
 
 static int
-parse_keycontainer (pskc * pd, xmlNode * x)
+parse_keycontainer (pskc_t * pd, xmlNode * x)
 {
   xmlAttr *cur_attr = NULL;
   const char *name = (const char *) x->name;
@@ -379,7 +499,7 @@ parse_keycontainer (pskc * pd, xmlNode * x)
 }
 
 int
-_pskc_parse (pskc * container)
+_pskc_parse (pskc_t * container)
 {
   xmlNode *root = NULL;
   int rc;

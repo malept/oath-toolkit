@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KeyContainer
+    xmlns="urn:ietf:params:xml:ns:keyprov:pskc"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+    Version="1.0">
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>TokenVendorAcme</Manufacturer>
+      <SerialNo>0755225266</SerialNo>
+    </DeviceInfo>
+    <Key Id="123"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <Issuer>Example-Issuer</Issuer>
+      <AlgorithmParameters>
+        <ResponseFormat Length="6" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>
+            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+    </Key>
+  </KeyPackage>
+  <Signature>
+    <ds:SignedInfo>
+      <ds:CanonicalizationMethod
+          Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+      <ds:SignatureMethod
+          Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <ds:Reference URI="#Device">
+        <ds:DigestMethod
+            Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <ds:DigestValue>
+          j6lwx3rvEPO0vKtMup4NbeVu8nk=
+        </ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+      j6lwx3rvEPO0vKtMup4NbeVu8nk=
+    </ds:SignatureValue>
+    <ds:KeyInfo>
+      <ds:X509Data>
+        <ds:X509IssuerSerial>
+          <ds:X509IssuerName>
+            CN=Example.com,C=US
+          </ds:X509IssuerName>
+          <ds:X509SerialNumber>
+            12345678
+          </ds:X509SerialNumber>
+        </ds:X509IssuerSerial>
+      </ds:X509Data>
+    </ds:KeyInfo>
+  </Signature>
+</KeyContainer>

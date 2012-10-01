@@ -1,11 +1,13 @@
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 The OATH Toolkit makes it easy to build one-time password
-authentication systems.  It contains a shared library, a command line
-tool and a PAM module.  Supported technologies include the event-based
-HOTP algorithm (RFC4226) and the time-based TOTP algorithm (RFC6238).
-OATH stands for Open AuTHentication, which is the organization that
-specify the algorithms.
+authentication systems.  It contains shared libraries, command line
+tools and a PAM module.  Supported technologies include the
+event-based HOTP algorithm (RFC4226) and the time-based TOTP algorithm
+(RFC6238).  OATH stands for Open AuTHentication, which is the
+organization that specify the algorithms.  For managing secret key
+files, the Portable Symmetric Key Container (PSKC) format described in
+RFC6030 is supported.
 
 The components included in the package is:
 
@@ -14,6 +16,10 @@ The components included in the package is:
   * oathtool: A command line tool for generating and validating OTPs.
 
   * pam_oath: A PAM module for pluggable login authentication for OATH.
+
+  * libpskc: A shared and static C library for PSKC handling.
+
+  * pskctool: A command line tool for manipulating PSKC data.
 
 See each sub-directory for more information.
 

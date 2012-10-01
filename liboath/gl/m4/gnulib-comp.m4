@@ -72,6 +72,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module errno-tests:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module extern-inline:
   # Code from module fclose:
   # Code from module fclose-tests:
   # Code from module fcntl-h:
@@ -265,6 +266,7 @@ AC_DEFUN([gl_INIT],
   gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
   gl_HEADER_ERRNO_H
+  AC_REQUIRE([gl_EXTERN_INLINE])
   gl_FUNC_FCLOSE
   if test $REPLACE_FCLOSE = 1; then
     AC_LIBOBJ([fclose])
@@ -491,7 +493,6 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
-  AC_REQUIRE([AC_C_INLINE])
   gl_FUNC_CLOSEDIR
   if test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1; then
     AC_LIBOBJ([closedir])
@@ -748,6 +749,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/vasnprintf.h
   lib/verify.h
   lib/wchar.in.h
+  lib/xsize.c
   lib/xsize.h
   m4/00gnulib.m4
   m4/alloca.m4
@@ -763,6 +765,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/errno_h.m4
   m4/exponentd.m4
   m4/extensions.m4
+  m4/extern-inline.m4
   m4/fclose.m4
   m4/fcntl-o.m4
   m4/fcntl_h.m4
@@ -959,6 +962,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-verify.sh
   tests/test-wchar.c
   tests/zerosize-ptr.h
+  tests=lib/binary-io.c
   tests=lib/binary-io.h
   tests=lib/closedir.c
   tests=lib/dirent-private.h

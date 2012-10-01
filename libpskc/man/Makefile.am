@@ -19,9 +19,9 @@ dist_man_MANS = $(gdoc_MANS)
 MAINTAINERCLEANFILES = $(dist_man_MANS)
 
 GDOC_BIN = $(srcdir)/gdoc
-GDOC_SRC = $(top_srcdir)/global.c $(top_srcdir)/errors.c	\
-	$(top_srcdir)/container.c $(top_srcdir)/validate.c		\
-	$(top_srcdir)/output.c
+GDOC_SRC = $(top_srcdir)/global.c $(top_srcdir)/errors.c
+GDOC_SRC += $(top_srcdir)/container.c $(top_srcdir)/validate.c	\
+	 $(top_srcdir)/build.c $(top_srcdir)/output.c
 
 GDOC_MAN_EXTRA_ARGS = -module $(PACKAGE) -sourceversion $(VERSION) \
         -bugsto $(PACKAGE_BUGREPORT) -pkg-name "$(PACKAGE_NAME)" \

@@ -21,38 +21,72 @@
 
 #include <libxml/parser.h>
 
-struct pskc_keypackage
+#ifdef INTERNAL_NEED_PSKC_KEY_STRUCT
+struct pskc_key
 {
   /* DeviceInfo */
-  const char *serialno;
-  const char *manufacturer;
+  const char *device_manufacturer;
+  const char *device_serialno;
+  const char *device_model;
+  const char *device_issueno;
+  const char *device_devicebinding;
+  const char *device_startdate_str;
+  struct tm device_startdate;
+  const char *device_expirydate_str;
+  struct tm device_expirydate;
   const char *device_userid;
+
   /* CryptoModuleInfo */
-  const char *crypto_id;
+  const char *cryptomodule_id;
+
   /* Key */
   const char *key_id;
   const char *key_algorithm;
   const char *key_userid;
   const char *key_issuer;
   const char *key_secret;
-  const char *key_counter;
-  const char *key_time;
-  const char *key_time_interval;
-  const char *key_alg_resp_length;
-  const char *key_alg_resp_encoding;
+  size_t key_secret_len;
+  const char *key_counter_str;
+  uint64_t key_counter;
+  const char *key_time_str;
+  uint32_t key_time;
+  const char *key_timeinterval_str;
+  uint32_t key_timeinterval;
+  const char *key_timedrift_str;
+  uint32_t key_timedrift;
+  const char *key_friendlyname;
   const char *key_profileid;
   const char *key_reference;
-  const char *key_usage;
-  const char *key_policy_startdate;
-  const char *key_policy_expirydate;
-  const char *key_pinpolicy_minlength;
-  const char *key_pinpolicy_maxlength;
-  const char *key_pinpolicy_pinkeyid;
-  const char *key_pinpolicy_pinencoding;
-  const char *key_pinpolicy_pinusagemode;
-  const char *key_pinpolicy_maxfailedattempts;
+  const char *key_policy_keyusage_str;
+  pskc_keyusage key_policy_keyusage;
+  const char *key_policy_numberoftransactions_str;
+  uint64_t key_policy_numberoftransactions;
+  const char *key_algparm_suite;
+  const char *key_algparm_resp_encoding_str;
+  pskc_valueformat key_algparm_resp_encoding;
+  const char *key_algparm_resp_length_str;
+  uint32_t key_algparm_resp_length;
+  const char *key_algparm_resp_checkdigits_str;
+  int key_algparm_resp_checkdigits;
+  const char *key_policy_startdate_str;
+  struct tm key_policy_startdate;
+  const char *key_policy_expirydate_str;
+  struct tm key_policy_expirydate;
+  const char *key_policy_pinmaxfailedattempts_str;
+  uint32_t key_policy_pinmaxfailedattempts;
+  const char *key_policy_pinminlength_str;
+  uint32_t key_policy_pinminlength;
+  const char *key_policy_pinmaxlength_str;
+  uint32_t key_policy_pinmaxlength;
+  const char *key_policy_pinkeyid;
+  const char *key_policy_pinusagemode_str;
+  pskc_pinusagemode key_policy_pinusagemode;
+  const char *key_policy_pinencoding_str;
+  pskc_valueformat key_policy_pinencoding;
 };
+#endif
 
+#ifdef INTERNAL_NEED_PSKC_STRUCT
 struct pskc
 {
   /* raw XML */
@@ -61,7 +95,8 @@ struct pskc
   const char *version;
   const char *id;
   size_t nkeypackages;
-  struct pskc_keypackage *keypackages;
+  struct pskc_key *keypackages;
 };
+#endif
 
-int _pskc_parse (pskc * container);
+int _pskc_parse (pskc_t * container);
