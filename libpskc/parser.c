@@ -45,11 +45,7 @@ parse_deviceinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	    kp->serialno = (char *) cur_node->children->content;
 	  else if (strcmp ("UserId", name) == 0)
 	    kp->device_userid = (char *) cur_node->children->content;
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -69,11 +65,7 @@ parse_cryptomoduleinfo (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 
 	  if (strcmp ("Id", name) == 0)
 	    kp->crypto_id = (char *) cur_node->children->content;
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -92,11 +84,7 @@ parse_intlongstrdatatype (xmlNode * x, const char **var)
 
 	  if (strcmp ("PlainValue", name) == 0)
 	    *var = (char *) cur_node->children->content;
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -143,11 +131,7 @@ parse_data (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	      if (rc != PSKC_OK)
 		return rc;
 	    }
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -179,15 +163,9 @@ parse_algorithmparameters (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 				   (const char *) cur_attr->name) == 0)
 		    kp->key_alg_resp_encoding =
 		      (char *) cur_attr->children->content;
-		  else
-		    return PSKC_XML_SYNTAX_ERROR;
 		}
 	    }
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -240,19 +218,13 @@ parse_policy (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 				   (const char *) cur_attr->name) == 0)
 		    kp->key_pinpolicy_maxfailedattempts =
 		      (char *) cur_attr->children->content;
-		  else
-		    return PSKC_XML_SYNTAX_ERROR;
 		}
 	    }
 	  else if (strcmp ("KeyUsage", name) == 0)
 	    {
 	      kp->key_usage = (char *) cur_node->children->content;
 	    }
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -296,11 +268,7 @@ parse_key (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 	    kp->key_reference = (char *) cur_node->children->content;
 	  else if (strcmp ("UserId", name) == 0)
 	    kp->key_userid = (char *) cur_node->children->content;
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -342,16 +310,12 @@ parse_keypackage (pskc * pd, xmlNode * x, struct pskc_keypackage *kp)
 		  else if (strcmp ("Algorithm",
 				   (const char *) cur_attr->name) == 0)
 		    kp->key_algorithm = (char *) cur_attr->children->content;
-		  else
-		    return PSKC_XML_SYNTAX_ERROR;
 		}
 
 	      rc = parse_key (pd, cur_node->children, kp);
 	      if (rc != PSKC_OK)
 		return rc;
 	    }
-	  else
-	    return PSKC_XML_SYNTAX_ERROR;
 	}
     }
 
@@ -370,13 +334,7 @@ parse_keypackages (pskc * pd, xmlNode * x)
 	{
 	  const char *name = (const char *) cur_node->name;
 
-	  if (strcmp ("KeyPackage", name) != 0)
-	    return PSKC_XML_SYNTAX_ERROR;
-	  else if (cur_node->properties != NULL)
-	    return PSKC_XML_SYNTAX_ERROR;
-	  else if (cur_node->children == NULL)
-	    return PSKC_XML_SYNTAX_ERROR;
-	  else
+	  if (strcmp ("KeyPackage", name) == 0)
 	    {
 	      struct pskc_keypackage *tmp;
 
@@ -397,8 +355,6 @@ parse_keypackages (pskc * pd, xmlNode * x)
 		return rc;
 	    }
 	}
-      else if (cur_node->type != XML_TEXT_NODE)
-	return PSKC_XML_SYNTAX_ERROR;
     }
 
   return PSKC_OK;
@@ -410,27 +366,14 @@ parse_keycontainer (pskc * pd, xmlNode * x)
   xmlAttr *cur_attr = NULL;
   const char *name = (const char *) x->name;
 
-  if (strcmp ("KeyContainer", name) != 0)
-    return PSKC_XML_SYNTAX_ERROR;
-
-  if (x->next != NULL)
-    return PSKC_XML_SYNTAX_ERROR;
-
-  if (x->properties == NULL)
-    return PSKC_XML_SYNTAX_ERROR;
-
-  for (cur_attr = x->properties; cur_attr; cur_attr = cur_attr->next)
-    {
-      if (strcmp ("Version", (const char *) cur_attr->name) == 0)
-	pd->version = (char *) cur_attr->children->content;
-      else if (strcmp ("Id", (const char *) cur_attr->name) == 0)
-	pd->id = (char *) cur_attr->children->content;
-      else
-	return PSKC_XML_SYNTAX_ERROR;
-    }
-
-  if (pd->version == NULL)
-    return PSKC_XML_SYNTAX_ERROR;
+  if (strcmp ("KeyContainer", name) == 0)
+    for (cur_attr = x->properties; cur_attr; cur_attr = cur_attr->next)
+      {
+	if (strcmp ("Version", (const char *) cur_attr->name) == 0)
+	  pd->version = (char *) cur_attr->children->content;
+	else if (strcmp ("Id", (const char *) cur_attr->name) == 0)
+	  pd->id = (char *) cur_attr->children->content;
+      }
 
   return parse_keypackages (pd, x->children);
 }
