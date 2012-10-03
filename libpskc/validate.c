@@ -1,5 +1,5 @@
 /*
- * validate.c - validate PSKC data according to XML Schema
+ * validate.c - Validate PSKC data according to XML Schema.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or

@@ -1,5 +1,5 @@
 /*
- * output.c - pretty printing of PSKC data
+ * output.c - Pretty print PSKC data.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or

@@ -1,5 +1,5 @@
 /*
- * global.c - implementation of library global functions
+ * global.c - Implementation of PSKC library global functions.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@
 
 extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
 
-/* RFC 6030 with errata fix and no references to xenc/ds. */
+/* From RFC 6030 with errata fix and no references to xenc/ds. */
 const char *pskc_schema_str =
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
   "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n"

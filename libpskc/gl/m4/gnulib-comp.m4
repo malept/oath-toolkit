@@ -227,8 +227,8 @@ changequote([, ])dnl
   gl_MODULE_INDICATOR([snprintf])
   gt_TYPE_SSIZE_T
   AM_STDBOOL_H
-  gt_TYPE_WCHAR_T
-  gt_TYPE_WINT_T
+  AC_REQUIRE([gt_TYPE_WCHAR_T])
+  AC_REQUIRE([gt_TYPE_WINT_T])
   gl_STDIO_H
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P

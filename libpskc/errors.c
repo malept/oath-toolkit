@@ -1,4 +1,5 @@
-/* error.c - libpskc error handling helpers.
+/*
+ * error.c - libpskc error handling helpers.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or

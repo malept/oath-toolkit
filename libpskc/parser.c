@@ -1,5 +1,5 @@
 /*
- * parser.c - parse PSKC data structure in XML and convert to internal format.
+ * parser.c - Parse PSKC data structure in XML and convert to internal format.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -545,14 +545,71 @@ parse_keycontainer (pskc_t * pd, xmlNode * x, int *rc)
   parse_keypackages (pd, x->children, rc);
 }
 
+/**
+ * pskc_init:
+ * @container: pointer to #pskc_t handle to initialize
+ *
+ * This function initializes the PSKC @container handle.  The memory
+ * allocate can be released by calling pskc_done().
+ *
+ * Returns: On success, %PSKC_OK (zero) is returned, on memory
+ *   allocation errors %PSKC_MALLOC_ERROR is returned.
+ **/
 int
-_pskc_parse (pskc_t * container)
+pskc_init (pskc_t ** container)
 {
-  xmlNode *root = NULL;
+  *container = calloc (1, sizeof (**container));
+  if (*container == NULL)
+    return PSKC_MALLOC_ERROR;
+  return PSKC_OK;
+}
+
+/**
+ * pskc_done:
+ * @container: #pskc_t handle to deinitialize
+ *
+ * This function releases the resources associated with the PSKC
+ * @container handle.
+ **/
+void
+pskc_done (pskc_t * container)
+{
+  xmlFreeDoc (container->xmldoc);
+  free (container->keypackages);
+  free (container);
+}
+
+/**
+ * pskc_parse_from_memory:
+ * @container: pointer to #pskc_t handle
+ * @len: length of @buffer.
+ * @buffer: XML data to parse.
+ *
+ * This function will parse the XML data in @buffer of @len size into
+ * @container.  If %PSKC_PARSE_ERROR is returned, parsing of some
+ * elements have failed but the @container is still valid and contain
+ * partially parsed information.  In this situation, you may continue
+ * but raise a warning.
+ *
+ * Returns: On success, %PSKC_OK (zero) is returned, on memory
+ *   allocation errors %PSKC_MALLOC_ERROR is returned, on XML library
+ *   errors %PSKC_XML_ERROR is returned, on PSKC parse errors
+ *   %PSKC_PARSE_ERROR is returned.
+ **/
+int
+pskc_parse_from_memory (pskc_t *container, size_t len, const char *buffer)
+{
+  xmlDocPtr xmldoc;
+  xmlNode *root;
   int rc = PSKC_OK;
 
-  root = xmlDocGetRootElement (container->xmldoc);
+  xmldoc = xmlReadMemory (buffer, len, NULL, NULL, XML_PARSE_NONET);
+  if (xmldoc == NULL)
+    return PSKC_XML_ERROR;
 
+  container->xmldoc = xmldoc;
+
+  root = xmlDocGetRootElement (xmldoc);
   parse_keycontainer (container, root, &rc);
 
   return rc;

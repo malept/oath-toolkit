@@ -1,5 +1,5 @@
 /*
- * internal.h - internal prototypes
+ * internal.h - Internal prototypes.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -18,8 +18,6 @@
  * 02110-1301 USA
  *
  */
-
-#include <libxml/parser.h>
 
 #ifdef INTERNAL_NEED_PSKC_KEY_STRUCT
 struct pskc_key
@@ -87,6 +85,7 @@ struct pskc_key
 #endif
 
 #ifdef INTERNAL_NEED_PSKC_STRUCT
+#include <libxml/parser.h>
 struct pskc
 {
   /* raw XML */
@@ -99,5 +98,18 @@ struct pskc
 };
 #endif
 
-extern int _pskc_parse (pskc_t * container);
-extern void _pskc_debug (const char *format, ...);
+/* The __attribute__ feature is available in gcc versions 2.5 and later.
+   The __-protected variants of the attributes 'format' and 'printf' are
+   accepted by gcc versions 2.6.4 (effectively 2.7) and later.
+   We enable _GL_ATTRIBUTE_FORMAT only if these are supported too, because
+   gnulib and libintl do '#define printf __printf__' when they override
+   the 'printf' function.  */
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
+# define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
+#else
+# define _GL_ATTRIBUTE_FORMAT(spec) /* empty */
+#endif
+
+extern void
+_pskc_debug (const char *format, ...)
+  _GL_ATTRIBUTE_FORMAT ((printf, 1, 2));

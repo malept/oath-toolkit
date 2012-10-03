@@ -1,5 +1,5 @@
 /*
- * container.c - implementation of PSKC container handling
+ * build.c - create PSKC data.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -26,6 +26,7 @@
 #include "internal.h"
 #include <stdlib.h>		/* malloc */
 #include <string.h>		/* memcpy */
+#include <libxml/tree.h>	/* xmlNewChild */
 #include "inttostr.h"		/* umaxtostr */
 
 static int
@@ -211,29 +212,34 @@ build_key (pskc_key_t *kp, xmlNodePtr keyp)
   const char *issuer = pskc_get_key_issuer (kp);
   const char *userid = pskc_get_key_userid (kp);
   xmlNodePtr key;
+  int rc;
 
   if (!id && !alg && !issuer && !userid)
     return PSKC_OK;
 
   key = xmlNewChild (keyp, NULL, BAD_CAST "Key", NULL);
 
-  if (id)
-    xmlNewProp (key, BAD_CAST "Id", BAD_CAST id);
+  if (id && xmlNewProp (key, BAD_CAST "Id", BAD_CAST id) == NULL)
+    return PSKC_XML_ERROR;
 
-  if (alg)
-    xmlNewProp (key, BAD_CAST "Algorithm", BAD_CAST alg);
+  if (alg && xmlNewProp (key, BAD_CAST "Algorithm", BAD_CAST alg) == NULL)
+    return PSKC_XML_ERROR;
 
-  if (issuer)
-    xmlNewTextChild (key, NULL, BAD_CAST "Issuer",
-		     BAD_CAST issuer);
+  if (issuer &&
+      xmlNewTextChild (key, NULL, BAD_CAST "Issuer", BAD_CAST issuer) == NULL)
+    return PSKC_XML_ERROR;
 
-  build_algparm (kp, key);
+  rc = build_algparm (kp, key);
+  if (rc != PSKC_OK)
+    return rc;
 
-  if (userid)
-    xmlNewTextChild (key, NULL, BAD_CAST "UserId",
-		     BAD_CAST userid);
+  if (userid && xmlNewTextChild (key, NULL, BAD_CAST "UserId",
+				 BAD_CAST userid) == NULL)
+    return PSKC_XML_ERROR;
 
-  build_policy (kp, key);
+  rc = build_policy (kp, key);
+  if (rc != PSKC_OK)
+    return rc;
 
   return PSKC_OK;
 }
@@ -251,7 +257,6 @@ build_keypackage (pskc_key_t *kp, xmlNodePtr keyp)
 static int
 build_keycont (pskc_t *container, xmlNodePtr keycont)
 {
-  xmlNodePtr keypackage;
   const char *ver = pskc_get_version (container);;
   const char *id = pskc_get_id (container);
   xmlChar *pskcver = BAD_CAST (ver ? ver : "1.0");
@@ -270,10 +275,21 @@ build_keycont (pskc_t *container, xmlNodePtr keycont)
 
   for (i = 0; (kp = pskc_get_keypackage (container, i)); i++)
     {
-      //xmlNewChild (keycont, NULL, BAD_CAST "KeyPackage", NULL);
+      xmlNodePtr keypackage;
+      int rc;
+
       keypackage = xmlNewChild (keycont, NULL, BAD_CAST "KeyPackage", NULL);
-      build_keypackage (kp, keypackage);
+      if (keypackage == NULL)
+	return PSKC_XML_ERROR;
+      rc = build_keypackage (kp, keypackage);
+      if (rc != PSKC_OK)
+	return rc;
     }
+
+  /* KeyPackage is a required element, but can be empty. */
+  if (i == 0)
+    if (xmlNewChild (keycont, NULL, BAD_CAST "KeyPackage", NULL) == NULL)
+      return PSKC_XML_ERROR;
 
   return PSKC_OK;
 }

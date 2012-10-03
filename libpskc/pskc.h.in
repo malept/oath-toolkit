@@ -89,7 +89,7 @@ typedef enum
 typedef struct pskc pskc_t;
 typedef struct pskc_key pskc_key_t;
 
-/* Global */
+/* global.c */
 
 extern PSKCAPI int pskc_global_init (void);
 extern PSKCAPI int pskc_global_done (void);
@@ -101,7 +101,7 @@ extern PSKCAPI const char *pskc_check_version (const char *req_version);
 
 extern PSKCAPI void pskc_free (void *ptr);
 
-/* Container */
+/* parser.c */
 
 extern PSKCAPI int pskc_init (pskc_t **container);
 extern PSKCAPI void pskc_done (pskc_t *container);
@@ -109,7 +109,7 @@ extern PSKCAPI void pskc_done (pskc_t *container);
 extern PSKCAPI int pskc_parse_from_memory (pskc_t *container,
 					   size_t len, const char *buffer);
 
-/* Types */
+/* enums.c */
 
 /**
  * pskc_pinusagemode:
@@ -215,12 +215,11 @@ typedef enum
 extern PSKCAPI const char *pskc_keyusage2str (pskc_keyusage keyusage);
 extern PSKCAPI pskc_keyusage pskc_str2keyusage (const char *keyusage);
 
-/* Accessors */
+/* container.c */
 extern PSKCAPI const char *pskc_get_version (pskc_t *container);
 extern PSKCAPI const char *pskc_get_id (pskc_t *container);
 extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
 						size_t i);
-
 extern PSKCAPI const char *pskc_get_device_manufacturer (pskc_key_t *key);
 extern PSKCAPI const char *pskc_get_device_serialno (pskc_key_t *key);
 extern PSKCAPI const char *pskc_get_device_model (pskc_key_t *key);
@@ -257,7 +256,6 @@ extern PSKCAPI uint32_t pskc_get_key_data_timeinterval (pskc_key_t *key,
 							int *present);
 extern PSKCAPI uint32_t pskc_get_key_data_timedrift (pskc_key_t *key,
 						     int *present);
-
 extern PSKCAPI const struct tm *
 pskc_get_key_policy_startdate (pskc_key_t *key);
 extern PSKCAPI const struct tm *
@@ -278,13 +276,15 @@ pskc_get_key_policy_keyusage (pskc_key_t *key, int *present);
 extern PSKCAPI uint64_t
 pskc_get_key_policy_numberoftransactions (pskc_key_t *key, int *present);
 
-/* Validate */
+/* validate.c */
+
 extern PSKCAPI int pskc_validate (pskc_t *container, int *isvalid);
 
-/* Create */
+/* build.c */
+
 extern PSKCAPI int pskc_build_xml (pskc_t *container, char **out, size_t *len);
 
-/* Output */
+/* output.c */
 
 /**
  * pskc_output_formats_t:
@@ -301,7 +301,7 @@ extern PSKCAPI int pskc_output (pskc_t *container,
 				pskc_output_formats_t format,
 				char **out, size_t *len);
 
-/* Error handling */
+/* errors.c */
 
 extern PSKCAPI const char *pskc_strerror (int err);
 extern PSKCAPI const char *pskc_strerror_name (int err);

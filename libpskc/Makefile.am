@@ -34,7 +34,7 @@ pskc_includedir=$(includedir)/libpskc
 pskc_include_HEADERS = pskc.h
 
 libpskc_la_SOURCES = pskc.h internal.h
-libpskc_la_SOURCES += global.c errors.c
+libpskc_la_SOURCES += global.c errors.c enums.c
 libpskc_la_SOURCES += container.c parser.c validate.c build.c output.c
 libpskc_la_LIBADD = gl/libgnu.la
 libpskc_la_LDFLAGS = $(XML_LIBS) \
