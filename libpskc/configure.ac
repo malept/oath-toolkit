@@ -84,7 +84,7 @@ if test "$gl_gcc_warnings" = yes; then
     gl_WARN_ADD([$w])
   done
   gl_WARN_ADD([-fdiagnostics-show-option])
-  gl_WARN_ADD([-Wno-error=long-long])
+  gl_WARN_ADD([-Wno-error=overlength-strings])
   AC_SUBST([WARN_CFLAGS])
 
   AC_DEFINE([_FORTIFY_SOURCE], [2],

@@ -99,4 +99,5 @@ struct pskc
 };
 #endif
 
-int _pskc_parse (pskc_t * container);
+extern int _pskc_parse (pskc_t * container);
+extern void _pskc_debug (const char *format, ...);

@@ -33,12 +33,11 @@ typedef struct
 } err_t;
 
 static const err_t errors[] = {
-  ERR (PSKC_OK, "Successful return"),
-  ERR (PSKC_MALLOC_ERROR, "Memory allocation failed"),
-  ERR (PSKC_XML_PARSE_ERROR, "XML parse error"),
-  ERR (PSKC_XML_SYNTAX_ERROR, "Syntax error in XML data"),
-  ERR (PSKC_XML_ERROR, "Error returned from XML library"),
-  ERR (PSKC_UNKNOWN_OUTPUT_FORMAT, "Unknown output format")
+  ERR (PSKC_OK, "success"),
+  ERR (PSKC_MALLOC_ERROR, "memory allocation failed"),
+  ERR (PSKC_XML_ERROR, "error returned from XML library"),
+  ERR (PSKC_PARSE_ERROR, "error parsing PSKC data"),
+  ERR (PSKC_UNKNOWN_OUTPUT_FORMAT, "unknown output format")
 };
 
 /**

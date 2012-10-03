@@ -61,9 +61,8 @@
  * pskc_rc:
  * @PSKC_OK: Successful return.
  * @PSKC_MALLOC_ERROR: Memory allocation failed.
- * @PSKC_XML_PARSE_ERROR: XML parse error.
- * @PSKC_XML_SYNTAX_ERROR: Syntax error in XML data.
  * @PSKC_XML_ERROR: Error returned from XML library.
+ * @PSKC_PARSE_ERROR: Error parsing PSKC data.
  * @PSKC_UNKNOWN_OUTPUT_FORMAT: Unknown output format.
  * @PSKC_LAST_ERROR: Meta-error indicating the last error code, for use
  *   when iterating over all error codes or similar.
@@ -79,13 +78,12 @@ typedef enum
 {
   PSKC_OK = 0,
   PSKC_MALLOC_ERROR = -1,
-  PSKC_XML_PARSE_ERROR = -2,
-  PSKC_XML_SYNTAX_ERROR = -3,
-  PSKC_XML_ERROR = -4,
-  PSKC_UNKNOWN_OUTPUT_FORMAT = -5,
+  PSKC_XML_ERROR = -2,
+  PSKC_PARSE_ERROR = -3,
+  PSKC_UNKNOWN_OUTPUT_FORMAT = -4,
   /* When adding anything above, you need to update errors.c and
      the following constant. */
-  PSKC_LAST_ERROR = -5
+  PSKC_LAST_ERROR = -4
 } pskc_rc;
 
 typedef struct pskc pskc_t;
@@ -96,8 +94,7 @@ typedef struct pskc_key pskc_key_t;
 extern PSKCAPI int pskc_global_init (void);
 extern PSKCAPI int pskc_global_done (void);
 
-typedef void (*pskc_log_func) (pskc_t *container, pskc_key_t *keypackage,
-			       const char *format, ...);
+typedef void (*pskc_log_func) (const char *msg);
 extern PSKCAPI void pskc_global_log (pskc_log_func log_func);
 
 extern PSKCAPI const char *pskc_check_version (const char *req_version);
@@ -107,9 +104,10 @@ extern PSKCAPI void pskc_free (void *ptr);
 /* Container */
 
 extern PSKCAPI int pskc_init (pskc_t **container);
-extern PSKCAPI int pskc_init_from_memory (pskc_t **container,
-					  size_t len, const char *buffer);
 extern PSKCAPI void pskc_done (pskc_t *container);
+
+extern PSKCAPI int pskc_parse_from_memory (pskc_t *container,
+					   size_t len, const char *buffer);
 
 /* Types */
 

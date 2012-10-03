@@ -49,49 +49,6 @@ pskc_init (pskc_t ** container)
 }
 
 /**
- * pskc_init_from_memory:
- * @container: pointer to #pskc_t handle to initialize
- * @len: length of @buffer.
- * @buffer: XML data to parse.
- *
- * This function initializes the PSKC @container handle.  The memory
- * allocate can be released by calling pskc_done().  The function will
- * also parse the XML data in @buffer of @len size.
- *
- * Returns: On success, %PSKC_OK (zero) is returned, on memory
- *   allocation errors %PSKC_MALLOC_ERROR is returned, on XML parse
- *   errors %PSKC_XML_PARSE_ERROR is returned.
- **/
-int
-pskc_init_from_memory (pskc_t ** container, size_t len, const char *buffer)
-{
-  xmlDocPtr xmldoc;
-  int rc;
-
-  rc = pskc_init (container);
-  if (rc != PSKC_OK)
-    return rc;
-
-  xmldoc = xmlReadMemory (buffer, len, NULL, NULL, XML_PARSE_NONET);
-  if (xmldoc == NULL)
-    {
-      pskc_done (*container);
-      return PSKC_XML_PARSE_ERROR;
-    }
-
-  (*container)->xmldoc = xmldoc;
-
-  rc = _pskc_parse (*container);
-  if (rc != PSKC_OK)
-    {
-      pskc_done (*container);
-      return rc;
-    }
-
-  return PSKC_OK;
-}
-
-/**
  * pskc_done:
  * @container: #pskc_t handle to deinitialize
  *
@@ -104,6 +61,43 @@ pskc_done (pskc_t * container)
   xmlFreeDoc (container->xmldoc);
   free (container->keypackages);
   free (container);
+}
+
+/**
+ * pskc_parse_from_memory:
+ * @container: pointer to #pskc_t handle
+ * @len: length of @buffer.
+ * @buffer: XML data to parse.
+ *
+ * This function will parse the XML data in @buffer of @len size into
+ * @container.  If %PSKC_PARSE_ERROR or %PSKC_UNSUPPORTED is returned,
+ * parsing of some elements have failed but the @container is still
+ * valid and contain partially parsed information.  In this situation,
+ * you may continue but raise a warning.
+ *
+ * Returns: On success, %PSKC_OK (zero) is returned, on memory
+ *   allocation errors %PSKC_MALLOC_ERROR is returned, on XML library
+ *   errors %PSKC_XML_ERROR is returned, on PSKC parse errors
+ *   %PSKC_PARSE_ERROR is returned, and when unsupported PSKC elements
+ *   is discovered %PSKC_UNSUPPORTED is returned.
+ **/
+int
+pskc_parse_from_memory (pskc_t *container, size_t len, const char *buffer)
+{
+  xmlDocPtr xmldoc;
+  int rc;
+
+  xmldoc = xmlReadMemory (buffer, len, NULL, NULL, XML_PARSE_NONET);
+  if (xmldoc == NULL)
+    return PSKC_XML_ERROR;
+
+  container->xmldoc = xmldoc;
+
+  rc = _pskc_parse (container);
+  if (rc != PSKC_OK)
+    return rc;
+
+  return PSKC_OK;
 }
 
 /**
@@ -1100,7 +1094,7 @@ pskc_keyusage2str (pskc_keyusage keyusage)
 
 /**
  * pskc_str2pinusagemode:
- * @valueformat: an string describing a key usage.
+ * @pinusagemode: an string describing a key usage.
  *
  * Convert a string to a #pskc_pinusagemode type.  For example,
  * pskc_str2pinusagemode("Local") will return

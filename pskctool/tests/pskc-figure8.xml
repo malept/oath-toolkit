@@ -3,7 +3,7 @@
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     xmlns="urn:ietf:params:xml:ns:keyprov:pskc"
     xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
-    id="KC0001"
+    Id="KC0001"
     Version="1.0">
   <EncryptionKey>
     <ds:X509Data>

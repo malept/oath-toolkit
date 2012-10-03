@@ -51,7 +51,6 @@ LIBPSKC_2.0.0 {
     pskc_global_done;
     pskc_global_init;
     pskc_init;
-    pskc_init_from_memory;
     pskc_keyusage2str;
     pskc_output;
     pskc_pinusagemode2str;
@@ -67,6 +66,7 @@ LIBPSKC_2.0.0 {
     pskc_get_key_algparm_suite;
     pskc_get_key_algparm_resp_checkdigits;
     pskc_global_log;
+    pskc_parse_from_memory;
 
   local:
     *;

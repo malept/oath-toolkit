@@ -23,9 +23,10 @@
 
 #include "pskc.h"
 
+#include "internal.h"
 #include <string.h>		/* strverscmp */
 #include <libxml/parser.h>	/* xmlInitParser */
-#include <libxml/xmlschemas.h>
+#include <libxml/xmlschemas.h>	/* xmlSchemaParse */
 
 extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
 
@@ -330,17 +331,17 @@ pskc_global_init (void)
   schema_doc = xmlReadMemory (pskc_schema_str, strlen (pskc_schema_str),
 			      NULL, NULL, XML_PARSE_NONET);
   if (schema_doc == NULL)
-    return PSKC_XML_PARSE_ERROR;
+    return PSKC_XML_ERROR;
 
   parser_ctxt = xmlSchemaNewDocParserCtxt (schema_doc);
   if (parser_ctxt == NULL)
-    return PSKC_XML_PARSE_ERROR;
+    return PSKC_XML_ERROR;
 
   schema = xmlSchemaParse (parser_ctxt);
   if (schema == NULL)
     {
       xmlSchemaFreeParserCtxt (parser_ctxt);
-      return PSKC_XML_PARSE_ERROR;
+      return PSKC_XML_ERROR;
     }
 
   _pskc_schema_validctxt = xmlSchemaNewValidCtxt (schema);
@@ -348,7 +349,7 @@ pskc_global_init (void)
     {
       xmlSchemaFree (schema);
       xmlSchemaFreeParserCtxt (parser_ctxt);
-      return PSKC_XML_PARSE_ERROR;
+      return PSKC_XML_ERROR;
     }
 
   return PSKC_OK;
@@ -374,28 +375,6 @@ pskc_global_done (void)
   xmlCleanupParser ();
   xmlMemoryDump ();
   return PSKC_OK;
-}
-
-pskc_log_func _pskc_log_func;
-
-/**
- * pskc_global_log:
- * @log_func: new global #pskc_log_func log function to use.
- *
- * Enable global debug logging function.  The function will be invoked
- * to print various debugging information.
- *
- * @pskc_log_func is of the form,
- * void (*pskc_log_func) (pskc_t *container, pskc_key_t *keypackage,
- * const char *format, ...);
- *
- * The container and keypackage variables may be NULL if they are not
- * relevant for the debug information printed.
- **/
-void
-pskc_global_log (pskc_log_func log_func)
-{
-  _pskc_log_func = log_func;
 }
 
 /**
@@ -438,4 +417,46 @@ void
 pskc_free (void *ptr)
 {
   free (ptr);
+}
+
+pskc_log_func _pskc_log_func;
+
+/**
+ * pskc_global_log:
+ * @log_func: new global #pskc_log_func log function to use.
+ *
+ * Enable global debug logging function.  The function will be invoked
+ * to print various debugging information.
+ *
+ * @pskc_log_func is of the form,
+ * void (*pskc_log_func) (const char *msg);
+ *
+ * The container and keypackage variables may be NULL if they are not
+ * relevant for the debug information printed.
+ **/
+void
+pskc_global_log (pskc_log_func log_func)
+{
+  _pskc_log_func = log_func;
+}
+
+void
+_pskc_debug (const char *format, ...)
+{
+  va_list ap;
+  char *str;
+  int rc;
+
+  if (!_pskc_log_func)
+    return;
+
+  va_start (ap, format);
+  rc = vasprintf (&str, format, ap);
+  va_end(ap);
+
+  if (rc != -1)
+    {
+      _pskc_log_func (str);
+      free (str);
+    }
 }

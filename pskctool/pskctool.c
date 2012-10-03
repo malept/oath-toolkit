@@ -66,6 +66,12 @@ usage (int status)
   exit (status);
 }
 
+void
+debuglog (const char *msg)
+{
+  fprintf (stderr, "debug: %s\n", msg);
+}
+
 static void
 build (void)
 {
@@ -91,7 +97,8 @@ build (void)
 }
 
 static void
-checkvalidate (const char *filename, int validate, int verbose, int quiet)
+checkvalidate (const char *filename, int validate,
+	       int strict, int verbose, int quiet)
 {
   char *buffer;
   char *out;
@@ -106,8 +113,16 @@ checkvalidate (const char *filename, int validate, int verbose, int quiet)
   if (buffer == NULL)
     error (EXIT_FAILURE, errno, "read");
 
-  rc = pskc_init_from_memory (&container, len, buffer);
+  rc = pskc_init (&container);
   if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "initializing PSKC structure: %s",
+	   pskc_strerror (rc));
+
+  rc = pskc_parse_from_memory (container, len, buffer);
+  if (!strict && rc == PSKC_PARSE_ERROR)
+    fprintf (stderr, "warning: parse error (use -d to diagnose), output "
+	     "may be incomplete\n");
+  else if (rc != PSKC_OK)
     error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
 
   free (buffer);
@@ -193,11 +208,15 @@ main (int argc, char *argv[])
     error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
 	   pskc_strerror (rc));
 
+  if (args_info.debug_flag)
+    pskc_global_log (debuglog);
+
   if (args_info.build_flag)
     build ();
   else if (args_info.check_flag || args_info.validate_flag)
     checkvalidate (args_info.inputs ? args_info.inputs[0] : NULL,
-		   args_info.validate_flag, args_info.verbose_flag,
+		   args_info.validate_flag, args_info.strict_flag,
+		   args_info.verbose_flag,
 		   args_info.quiet_flag);
   else
     {

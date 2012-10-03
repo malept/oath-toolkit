@@ -540,9 +540,9 @@ libpskc/man/pskc_global_done.3
 libpskc/man/pskc_global_init.3
 libpskc/man/pskc_global_log.3
 libpskc/man/pskc_init.3
-libpskc/man/pskc_init_from_memory.3
 libpskc/man/pskc_keyusage2str.3
 libpskc/man/pskc_output.3
+libpskc/man/pskc_parse_from_memory.3
 libpskc/man/pskc_pinusagemode2str.3
 libpskc/man/pskc_str2keyusage.3
 libpskc/man/pskc_str2pinusagemode.3
