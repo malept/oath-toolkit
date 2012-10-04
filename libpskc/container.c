@@ -605,6 +605,23 @@ pskc_get_key_data_secret (pskc_key_t *key,
 }
 
 /**
+ * pskc_get_key_data_b64secret:
+ * @key: #pskc_t handle.
+ * @len: pointer to output variable with length of returned data.
+ *
+ * Get the PSKC KeyPackage Key Data Secret value in base64 as a
+ * zero-terminated string.
+ *
+ * Returns: a constant string (must not be deallocated) holding the
+ *   content of length *@len, or NULL if not set.
+ */
+const char *
+pskc_get_key_data_b64secret (pskc_key_t *key)
+{
+  return key->key_b64secret;
+}
+
+/**
  * pskc_get_key_data_counter:
  * @key: #pskc_t handle
  * @present: output variable indicating whether data was provided or not.

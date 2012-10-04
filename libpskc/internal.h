@@ -22,6 +22,13 @@
 #ifdef INTERNAL_NEED_PSKC_KEY_STRUCT
 struct pskc_key
 {
+  /* Allocated by us */
+  char *key_b64secret;
+  char *key_secret;
+  size_t key_secret_len;
+
+  /* The rest are pointers into libxml structures. */
+
   /* DeviceInfo */
   const char *device_manufacturer;
   const char *device_serialno;
@@ -42,8 +49,7 @@ struct pskc_key
   const char *key_algorithm;
   const char *key_userid;
   const char *key_issuer;
-  const char *key_secret;
-  size_t key_secret_len;
+  const char *key_secret_str;
   const char *key_counter_str;
   uint64_t key_counter;
   const char *key_time_str;
@@ -106,12 +112,6 @@ struct pskc
 };
 #endif
 
-/* The __attribute__ feature is available in gcc versions 2.5 and later.
-   The __-protected variants of the attributes 'format' and 'printf' are
-   accepted by gcc versions 2.6.4 (effectively 2.7) and later.
-   We enable _GL_ATTRIBUTE_FORMAT only if these are supported too, because
-   gnulib and libintl do '#define printf __printf__' when they override
-   the 'printf' function.  */
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
 # define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
 #else

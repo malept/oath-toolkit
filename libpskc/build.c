@@ -191,8 +191,7 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
 static int
 build_data (pskc_key_t *kp, xmlNodePtr keyp)
 {
-  size_t secret_len;
-  const char *secret = pskc_get_key_data_secret (kp, &secret_len);
+  const char *b64secret = pskc_get_key_data_b64secret (kp);
   int counter_p;
   uint64_t counter = pskc_get_key_data_counter (kp, &counter_p);
   int t_p;
@@ -203,15 +202,15 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
   uint32_t tdrift = pskc_get_key_data_timedrift (kp, &tdrift_p);
   xmlNodePtr data, sub;
 
-  if (!secret && !counter_p && !t_p && !tinterval_p && !tdrift_p)
+  if (!b64secret && !counter_p && !t_p && !tinterval_p && !tdrift_p)
     return PSKC_OK;
 
   data = xmlNewChild (keyp, NULL, BAD_CAST "Data", NULL);
 
-  if (secret)
+  if (b64secret)
     {
       sub = xmlNewChild (data, NULL, BAD_CAST "Secret", NULL);
-      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST secret);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST b64secret);
     }
 
   if (counter_p)

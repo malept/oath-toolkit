@@ -419,6 +419,8 @@ libpskc/errors.o
 libpskc/gl/.deps/
 libpskc/gl/.libs/
 libpskc/gl/arg-nonnull.h
+libpskc/gl/base64.lo
+libpskc/gl/base64.o
 libpskc/gl/c++defs.h
 libpskc/gl/dummy.lo
 libpskc/gl/dummy.o
@@ -563,6 +565,7 @@ libpskc/man/pskc_get_key_algparm_resp_checkdigits.3
 libpskc/man/pskc_get_key_algparm_resp_encoding.3
 libpskc/man/pskc_get_key_algparm_resp_length.3
 libpskc/man/pskc_get_key_algparm_suite.3
+libpskc/man/pskc_get_key_data_b64secret.3
 libpskc/man/pskc_get_key_data_counter.3
 libpskc/man/pskc_get_key_data_secret.3
 libpskc/man/pskc_get_key_data_time.3

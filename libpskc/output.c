@@ -154,6 +154,7 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
   const char *key_reference = pskc_get_key_reference (kp);
   const char *key_userid = pskc_get_key_userid (kp);
   const char *key_algorithm = pskc_get_key_algorithm (kp);
+  const char *key_b64secret = pskc_get_key_data_b64secret (kp);
   int key_counter_present;
   uint64_t key_counter = pskc_get_key_data_counter (kp, &key_counter_present);
   int key_time_present;
@@ -249,10 +250,8 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tKey User Id: %s\n", key_userid);
   if (key_algorithm)
     buffer_addf (buf, "\t\t\tAlgorithm: %s\n", key_algorithm);
-#if 0
-  if (kp->key_secret)
-    buffer_addf (buf, "\t\t\tKey Secret: %s\n", kp->key_secret);
-#endif
+  if (key_b64secret)
+    buffer_addf (buf, "\t\t\tKey Secret (base64): %s\n", key_b64secret);
   if (key_counter_present)
     buffer_addf (buf, "\t\t\tKey Counter: %" PRId64 "\n", key_counter);
   if (key_time_present)

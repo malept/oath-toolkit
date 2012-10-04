@@ -40,6 +40,8 @@ AC_DEFUN([gl_EARLY],
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module alloca-opt:
   # Code from module alloca-opt-tests:
+  # Code from module base64:
+  # Code from module base64-tests:
   # Code from module errno:
   # Code from module errno-tests:
   # Code from module extensions:
@@ -123,11 +125,19 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gl'
+  gl_FUNC_BASE64
   gl_INTTOSTR
   gl_LD_VERSION_SCRIPT
   gl_VISIBILITY
+  gl_FUNC_MEMCHR
+  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+    AC_LIBOBJ([memchr])
+    gl_PREREQ_MEMCHR
+  fi
+  gl_STRING_MODULE_INDICATOR([memchr])
   gl_MINMAX
   gl_MULTIARCH
+  AM_STDBOOL_H
   gl_STDDEF_H
   gl_STDINT_H
   gl_HEADER_STRING_H
@@ -207,12 +217,6 @@ changequote([, ])dnl
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
   gl_INTTYPES_H
   gl_INTTYPES_INCOMPLETE
-  gl_FUNC_MEMCHR
-  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
-    AC_LIBOBJ([memchr])
-    gl_PREREQ_MEMCHR
-  fi
-  gl_STRING_MODULE_INDICATOR([memchr])
   dnl Check for prerequisites for memory fence checks.
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
@@ -226,7 +230,6 @@ changequote([, ])dnl
   gl_STDIO_MODULE_INDICATOR([snprintf])
   gl_MODULE_INDICATOR([snprintf])
   gt_TYPE_SSIZE_T
-  AM_STDBOOL_H
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   gl_STDIO_H
@@ -333,12 +336,17 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/anytostr.c
+  lib/base64.c
+  lib/base64.h
   lib/imaxtostr.c
   lib/intprops.h
   lib/inttostr.c
   lib/inttostr.h
+  lib/memchr.c
+  lib/memchr.valgrind
   lib/minmax.h
   lib/offtostr.c
+  lib/stdbool.in.h
   lib/stddef.in.h
   lib/stdint.in.h
   lib/string.in.h
@@ -347,6 +355,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/umaxtostr.c
   m4/00gnulib.m4
   m4/alloca.m4
+  m4/base64.m4
   m4/errno_h.m4
   m4/exponentd.m4
   m4/extensions.m4
@@ -399,6 +408,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/macros.h
   tests/signature.h
   tests/test-alloca-opt.c
+  tests/test-base64.c
   tests/test-errno.c
   tests/test-fdopen.c
   tests/test-fgetc.c
@@ -436,8 +446,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/getpagesize.c
   tests=lib/inttypes.in.h
   tests=lib/itold.c
-  tests=lib/memchr.c
-  tests=lib/memchr.valgrind
   tests=lib/msvc-inval.c
   tests=lib/msvc-inval.h
   tests=lib/printf-args.c
@@ -446,7 +454,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/printf-parse.h
   tests=lib/size_max.h
   tests=lib/snprintf.c
-  tests=lib/stdbool.in.h
   tests=lib/stdio.in.h
   tests=lib/sys_types.in.h
   tests=lib/unistd.in.h

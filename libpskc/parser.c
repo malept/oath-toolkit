@@ -28,6 +28,7 @@
 #include "internal.h"
 
 #include <string.h>
+#include "base64.h"
 
 static void
 parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
@@ -141,6 +142,25 @@ parse_intlongstrdatatype (xmlNode * x, const char **var, int *rc)
     }
 }
 
+static char *
+remove_whitespace (const char *str)
+{
+  size_t len = strlen (str);
+  char *out = malloc (len + 1);
+  size_t i, j;
+
+  if (out == NULL)
+    return NULL;
+
+  for (i = 0, j = 0; i < len; i++)
+    if (isbase64 (str[i]) || str[i] == '=')
+      out[j++] = str[i];
+
+  out[j] = '\0';
+
+  return out;
+}
+
 static void
 parse_data (xmlNode * x, struct pskc_key *kp, int *rc)
 {
@@ -156,10 +176,35 @@ parse_data (xmlNode * x, struct pskc_key *kp, int *rc)
       if (strcmp ("Secret", name) == 0)
 	{
 	  parse_intlongstrdatatype (cur_node->children,
-				    &kp->key_secret, rc);
-	  /* b64 decode */
-	  if (kp->key_secret)
-	    kp->key_secret_len = strlen (kp->key_secret);
+				    &kp->key_secret_str, rc);
+	  if (kp->key_secret_str)
+	    {
+	      bool ok;
+
+	      kp->key_b64secret = remove_whitespace (kp->key_secret_str);
+	      if (kp->key_b64secret == NULL)
+		{
+		  _pskc_debug ("base64 whitespace malloc failed");
+		  *rc = PSKC_MALLOC_ERROR;
+		}
+	      else
+		{
+		  ok = base64_decode_alloc (kp->key_b64secret,
+					    strlen (kp->key_b64secret),
+					    &kp->key_secret,
+					    &kp->key_secret_len);
+		  if (!ok)
+		    {
+		      _pskc_debug ("base64 decoding failed");
+		      *rc = PSKC_BASE64_ERROR;
+		    }
+		  if (kp->key_secret == NULL)
+		    {
+		      _pskc_debug ("base64 malloc failed");
+		      *rc = PSKC_MALLOC_ERROR;
+		    }
+		}
+	    }
 	}
       else if (strcmp ("Counter", name) == 0)
 	{
@@ -618,7 +663,17 @@ pskc_init (pskc_t ** container)
 void
 pskc_done (pskc_t * container)
 {
+  size_t i;
+
   xmlFreeDoc (container->xmldoc);
+
+  for (i = 0; i < container->nkeypackages; i++)
+    {
+      pskc_key_t *kp = &container->keypackages[i];
+      free (kp->key_secret);
+      free (kp->key_b64secret);
+    }
+
   free (container->keypackages);
   free (container);
 }

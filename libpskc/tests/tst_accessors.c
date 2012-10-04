@@ -49,12 +49,10 @@ const char *pskc_all =
   "      <Issuer>Issuer</Issuer>"
   "      <AlgorithmParameters>"
   "    <Suite>Suite</Suite>"
-#if 0
-  "        <ChallengeFormat Encoding=\"DECIMAL\""
+  "        <ChallengeFormat Encoding=\"HEXADECIMAL\""
   "                         Min=\"42\""
   "                         Max=\"4711\""
   "                         CheckDigits=\"true\"/>"
-#endif
   "        <ResponseFormat Encoding=\"DECIMAL\""
   "                        Length=\"8\""
   "                        CheckDigits=\"true\"/>"
@@ -275,6 +273,46 @@ main (void)
 
   {
     int p;
+    pskc_valueformat v = pskc_get_key_algparm_chall_encoding (pskc_key, &p);
+    if (p != 1 || v != PSKC_VALUEFORMAT_HEXADECIMAL)
+      {
+	printf ("pskc_get_key_algparm_chall_encoding\n");
+	return 1;
+      }
+  }
+
+  {
+    int p;
+    uint32_t l = pskc_get_key_algparm_chall_min (pskc_key, &p);
+    if (p != 1 || l != 42)
+      {
+	printf ("pskc_get_key_algparm_chall_min\n");
+	return 1;
+      }
+  }
+
+  {
+    int p;
+    uint32_t l = pskc_get_key_algparm_chall_max (pskc_key, &p);
+    if (p != 1 || l != 4711)
+      {
+	printf ("pskc_get_key_algparm_chall_max\n");
+	return 1;
+      }
+  }
+
+  {
+    int p;
+    int b = pskc_get_key_algparm_chall_checkdigits (pskc_key, &p);
+    if (p != 1 || b != 1)
+      {
+	printf ("pskc_get_key_algparm_chall_checkdigits\n");
+	return 1;
+      }
+  }
+
+  {
+    int p;
     pskc_valueformat v = pskc_get_key_algparm_resp_encoding (pskc_key, &p);
     if (p != 1 || v != PSKC_VALUEFORMAT_DECIMAL)
       {
@@ -339,10 +377,24 @@ main (void)
       }
   }
 
-  /* XXX
-  extern PSKCAPI const char *pskc_get_key_data_secret (pskc_key_t *key,
-						       size_t *len);
-  */
+  {
+    const char *s = pskc_get_key_data_b64secret (pskc_key);
+    if (s == NULL || strcmp (s, "MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=") != 0)
+      {
+	printf ("pskc_get_key_data_b64secret\n");
+	return 1;
+      }
+  }
+
+  {
+    size_t l;
+    const char *s = pskc_get_key_data_secret (pskc_key, &l);
+    if (s == NULL || memcmp (s, "12345678901234567890", l) != 0)
+      {
+	printf ("pskc_get_key_data_secret\n");
+	return 1;
+      }
+  }
 
   {
     int p;
