@@ -60,6 +60,14 @@ struct pskc_key
   const char *key_policy_numberoftransactions_str;
   uint64_t key_policy_numberoftransactions;
   const char *key_algparm_suite;
+  const char *key_algparm_chall_encoding_str;
+  pskc_valueformat key_algparm_chall_encoding;
+  const char *key_algparm_chall_min_str;
+  uint32_t key_algparm_chall_min;
+  const char *key_algparm_chall_max_str;
+  uint32_t key_algparm_chall_max;
+  const char *key_algparm_chall_checkdigits_str;
+  int key_algparm_chall_checkdigits;
   const char *key_algparm_resp_encoding_str;
   pskc_valueformat key_algparm_resp_encoding;
   const char *key_algparm_resp_length_str;

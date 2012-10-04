@@ -32,29 +32,54 @@
 static int
 build_deviceinfo (pskc_key_t *kp, xmlNodePtr keyp)
 {
-  const char *device_manufacturer = pskc_get_device_manufacturer (kp);
-  const char *device_serialno = pskc_get_device_serialno (kp);
-  const char *device_userid = pskc_get_device_userid (kp);
+  const char *manufacturer = pskc_get_device_manufacturer (kp);
+  const char *serialno = pskc_get_device_serialno (kp);
+  const char *model = pskc_get_device_model (kp);
+  const char *issueno = pskc_get_device_issueno (kp);
+  const char *devicebinding = pskc_get_device_devicebinding (kp);
+  const struct tm *startdate = pskc_get_device_startdate (kp);
+  const struct tm *expirydate = pskc_get_device_expirydate (kp);
+  const char *userid = pskc_get_device_userid (kp);
   xmlNodePtr devinfo;
+  char t[100];
 
-  if (!device_manufacturer && !device_serialno && !device_userid)
+  if (!manufacturer && !serialno && !model && !issueno && !devicebinding
+      && !startdate && !expirydate && !userid)
     return PSKC_OK;
 
   devinfo = xmlNewChild (keyp, NULL, BAD_CAST "DeviceInfo", NULL);
 
-  if (device_manufacturer)
+  if (manufacturer)
     xmlNewTextChild (devinfo, NULL, BAD_CAST "Manufacturer",
-		     BAD_CAST device_manufacturer);
+		     BAD_CAST manufacturer);
 
-  if (device_serialno)
-    xmlNewTextChild (devinfo, NULL, BAD_CAST "SerialNo",
-		     BAD_CAST device_serialno);
+  if (serialno)
+    xmlNewTextChild (devinfo, NULL, BAD_CAST "SerialNo", BAD_CAST serialno);
 
-  /* XXX */
+  if (model)
+    xmlNewTextChild (devinfo, NULL, BAD_CAST "Model", BAD_CAST model);
 
-  if (device_userid)
-    xmlNewTextChild (devinfo, NULL, BAD_CAST "UserId",
-		     BAD_CAST device_userid);
+  if (issueno)
+    xmlNewTextChild (devinfo, NULL, BAD_CAST "IssueNo", BAD_CAST issueno);
+
+  if (devicebinding)
+    xmlNewTextChild (devinfo, NULL, BAD_CAST "DeviceBinding",
+		     BAD_CAST devicebinding);
+
+  if (startdate)
+    {
+      strftime (t, sizeof (t), "%Y-%m-%dT%H:%M:%SZ", startdate);
+      xmlNewTextChild (devinfo, NULL, BAD_CAST "StartDate", BAD_CAST t);
+    }
+
+  if (expirydate)
+    {
+      strftime (t, sizeof (t), "%Y-%m-%dT%H:%M:%SZ", expirydate);
+      xmlNewTextChild (devinfo, NULL, BAD_CAST "ExpiryDate", BAD_CAST t);
+    }
+
+  if (userid)
+    xmlNewTextChild (devinfo, NULL, BAD_CAST "UserId", BAD_CAST userid);
 
   return PSKC_OK;
 }
@@ -80,38 +105,150 @@ build_cryptomoduleinfo (pskc_key_t *kp, xmlNodePtr keyp)
 static int
 build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
 {
-  const char *algparm_suite = pskc_get_key_algparm_suite (kp);
-  int algparm_resp_encoding_p;
-  pskc_valueformat algparm_resp_encoding =
-    pskc_get_key_algparm_resp_encoding (kp, &algparm_resp_encoding_p);
-  const char *algparm_resp_encoding_str =
-    pskc_valueformat2str (algparm_resp_encoding);
-  int algparm_resp_length_p;
-  uint32_t algparm_resp_length =
-    pskc_get_key_algparm_resp_length (kp, &algparm_resp_length_p);
-  xmlNodePtr algparm, rspfmt;
+  const char *suite = pskc_get_key_algparm_suite (kp);
+  int chall_encoding_p;
+  pskc_valueformat chall_encoding = pskc_get_key_algparm_chall_encoding
+    (kp, &chall_encoding_p);
+  const char *chall_encoding_str = pskc_valueformat2str (chall_encoding);
+  int chall_min_p;
+  uint32_t chall_min = pskc_get_key_algparm_chall_min (kp, &chall_min_p);
+  int chall_max_p;
+  uint32_t chall_max = pskc_get_key_algparm_chall_max (kp, &chall_max_p);
+  int chall_checkdigits_p;
+  int chall_checkdigits = pskc_get_key_algparm_chall_checkdigits
+    (kp, &chall_checkdigits_p);
+  int resp_encoding_p;
+  pskc_valueformat resp_encoding = pskc_get_key_algparm_resp_encoding
+    (kp, &resp_encoding_p);
+  const char *resp_encoding_str = pskc_valueformat2str (resp_encoding);
+  int resp_length_p;
+  uint32_t resp_length = pskc_get_key_algparm_resp_length (kp, &resp_length_p);
+  int resp_checkdigits_p;
+  int resp_checkdigits = pskc_get_key_algparm_resp_checkdigits
+    (kp, &resp_checkdigits_p);
+  xmlNodePtr algparm;
 
-  if (!algparm_suite && !algparm_resp_encoding_p && !algparm_resp_length_p)
+  if (!suite && !chall_encoding_p && !chall_min_p && !chall_max_p
+      && !chall_checkdigits_p && !resp_encoding_p && !resp_length_p
+      && !resp_checkdigits_p)
     return PSKC_OK;
 
   algparm = xmlNewChild (keyp, NULL, BAD_CAST "AlgorithmParameters", NULL);
 
-  if (algparm_suite)
-    xmlNewTextChild (algparm, NULL, BAD_CAST "Suite",
-		     BAD_CAST algparm_suite);
+  if (suite)
+    xmlNewTextChild (algparm, NULL, BAD_CAST "Suite", BAD_CAST suite);
 
-  rspfmt = xmlNewChild (algparm, NULL, BAD_CAST "ResponseFormat", NULL);
-
-  if (algparm_resp_length_p)
+  if (chall_encoding_p || chall_min_p || chall_max_p || resp_checkdigits_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
-      char *p = umaxtostr (algparm_resp_length, buf);
-      xmlNewProp (rspfmt, BAD_CAST "Length", BAD_CAST p);
+      xmlNodePtr chall;
+
+      chall = xmlNewChild (algparm, NULL, BAD_CAST "ChallengeFormat", NULL);
+
+      if (chall_encoding_p)
+	xmlNewProp (chall, BAD_CAST "Encoding", BAD_CAST chall_encoding_str);
+
+      if (chall_min_p)
+	{
+	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char *p = umaxtostr (chall_min, buf);
+	  xmlNewProp (chall, BAD_CAST "Min", BAD_CAST p);
+	}
+
+      if (chall_max_p)
+	{
+	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char *p = umaxtostr (chall_max, buf);
+	  xmlNewProp (chall, BAD_CAST "Max", BAD_CAST p);
+	}
+
+      if (chall_checkdigits_p && chall_checkdigits)
+	xmlNewProp (chall, BAD_CAST "CheckDigits", BAD_CAST "true");
     }
 
-  if (algparm_resp_encoding_p)
-    xmlNewProp (rspfmt, BAD_CAST "Encoding",
-		BAD_CAST algparm_resp_encoding_str);
+  if (resp_encoding_p || resp_length_p || resp_checkdigits_p)
+    {
+      xmlNodePtr resp;
+
+      resp = xmlNewChild (algparm, NULL, BAD_CAST "ResponseFormat", NULL);
+
+      if (resp_encoding_p)
+	xmlNewProp (resp, BAD_CAST "Encoding", BAD_CAST resp_encoding_str);
+
+      if (resp_length_p)
+	{
+	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char *p = umaxtostr (resp_length, buf);
+	  xmlNewProp (resp, BAD_CAST "Length", BAD_CAST p);
+	}
+
+      if (resp_checkdigits_p && resp_checkdigits)
+	xmlNewProp (resp, BAD_CAST "CheckDigits", BAD_CAST "true");
+    }
+
+  return PSKC_OK;
+}
+
+static int
+build_data (pskc_key_t *kp, xmlNodePtr keyp)
+{
+  size_t secret_len;
+  const char *secret = pskc_get_key_data_secret (kp, &secret_len);
+  int counter_p;
+  uint64_t counter = pskc_get_key_data_counter (kp, &counter_p);
+  int t_p;
+  uint32_t t = pskc_get_key_data_time (kp, &t_p);
+  int tinterval_p;
+  uint32_t tinterval = pskc_get_key_data_timeinterval (kp, &tinterval_p);
+  int tdrift_p;
+  uint32_t tdrift = pskc_get_key_data_timedrift (kp, &tdrift_p);
+  xmlNodePtr data, sub;
+
+  if (!secret && !counter_p && !t_p && !tinterval_p && !tdrift_p)
+    return PSKC_OK;
+
+  data = xmlNewChild (keyp, NULL, BAD_CAST "Data", NULL);
+
+  if (secret)
+    {
+      sub = xmlNewChild (data, NULL, BAD_CAST "Secret", NULL);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST secret);
+    }
+
+  if (counter_p)
+    {
+      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char *p = umaxtostr (counter, buf);
+
+      sub = xmlNewChild (data, NULL, BAD_CAST "Counter", NULL);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST p);
+    }
+
+  if (t_p)
+    {
+      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char *p = umaxtostr (t, buf);
+
+      sub = xmlNewChild (data, NULL, BAD_CAST "Time", NULL);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST p);
+    }
+
+  if (tinterval_p)
+    {
+      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char *p = umaxtostr (tinterval, buf);
+
+      sub = xmlNewChild (data, NULL, BAD_CAST "TimeInterval", NULL);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST p);
+    }
+
+  if (tdrift_p)
+    {
+      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char *p = umaxtostr (tdrift, buf);
+
+      sub = xmlNewChild (data, NULL, BAD_CAST "TimeDrift", NULL);
+      xmlNewTextChild (sub, NULL, BAD_CAST "PlainValue", BAD_CAST p);
+    }
 
   return PSKC_OK;
 }
@@ -137,6 +274,9 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
   int pinencoding_p;
   pskc_valueformat pinencoding =
     pskc_get_key_policy_pinencoding (kp, &pinencoding_p);
+  int numberoftransactions_p;
+  uint64_t numberoftransactions = pskc_get_key_policy_numberoftransactions
+    (kp, &numberoftransactions_p);
   xmlNodePtr policy, pinpolicy;
 
   if (!keyusage_p && !startdate && !expirydate && !pinkeyid && !pinusagemode_p
@@ -210,6 +350,14 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
 	}
     }
 
+  if (numberoftransactions_p)
+    {
+      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char *p = umaxtostr (numberoftransactions, buf);
+      xmlNewTextChild (policy, NULL, BAD_CAST "NumberOfTransactions",
+		       BAD_CAST p);
+    }
+
   return PSKC_OK;
 }
 
@@ -220,6 +368,9 @@ build_key (pskc_key_t *kp, xmlNodePtr keyp)
   const char *alg = pskc_get_key_algorithm (kp);
   const char *issuer = pskc_get_key_issuer (kp);
   const char *userid = pskc_get_key_userid (kp);
+  const char *keyprofileid = pskc_get_key_profileid (kp);
+  const char *keyreference = pskc_get_key_reference (kp);
+  const char *friendlyname = pskc_get_key_friendlyname (kp);
   xmlNodePtr key;
   int rc;
 
@@ -239,6 +390,22 @@ build_key (pskc_key_t *kp, xmlNodePtr keyp)
     return PSKC_XML_ERROR;
 
   rc = build_algparm (kp, key);
+  if (rc != PSKC_OK)
+    return rc;
+
+  if (keyprofileid && xmlNewTextChild (key, NULL, BAD_CAST "KeyProfileId",
+				       BAD_CAST keyprofileid) == NULL)
+    return PSKC_XML_ERROR;
+
+  if (keyreference && xmlNewTextChild (key, NULL, BAD_CAST "KeyReference",
+				       BAD_CAST keyreference) == NULL)
+    return PSKC_XML_ERROR;
+
+  if (friendlyname && xmlNewTextChild (key, NULL, BAD_CAST "FriendlyName",
+				       BAD_CAST friendlyname) == NULL)
+    return PSKC_XML_ERROR;
+
+  rc = build_data (kp, key);
   if (rc != PSKC_OK)
     return rc;
 

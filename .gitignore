@@ -555,6 +555,10 @@ libpskc/man/pskc_get_device_startdate.3
 libpskc/man/pskc_get_device_userid.3
 libpskc/man/pskc_get_id.3
 libpskc/man/pskc_get_key_algorithm.3
+libpskc/man/pskc_get_key_algparm_chall_checkdigits.3
+libpskc/man/pskc_get_key_algparm_chall_encoding.3
+libpskc/man/pskc_get_key_algparm_chall_max.3
+libpskc/man/pskc_get_key_algparm_chall_min.3
 libpskc/man/pskc_get_key_algparm_resp_checkdigits.3
 libpskc/man/pskc_get_key_algparm_resp_encoding.3
 libpskc/man/pskc_get_key_algparm_resp_length.3

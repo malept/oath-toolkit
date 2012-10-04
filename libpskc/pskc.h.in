@@ -237,6 +237,14 @@ extern PSKCAPI const char *pskc_get_key_issuer (pskc_key_t *key);
 extern PSKCAPI const char *
 pskc_get_key_algparm_suite (pskc_key_t *key);
 extern PSKCAPI pskc_valueformat
+pskc_get_key_algparm_chall_encoding (pskc_key_t *key, int *present);
+extern PSKCAPI uint32_t
+pskc_get_key_algparm_chall_min (pskc_key_t *key, int *present);
+extern PSKCAPI uint32_t
+pskc_get_key_algparm_chall_max (pskc_key_t *key, int *present);
+extern PSKCAPI int pskc_get_key_algparm_chall_checkdigits (pskc_key_t *key,
+							   int *present);
+extern PSKCAPI pskc_valueformat
 pskc_get_key_algparm_resp_encoding (pskc_key_t *key, int *present);
 extern PSKCAPI uint32_t
 pskc_get_key_algparm_resp_length (pskc_key_t *key, int *present);

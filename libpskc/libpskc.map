@@ -33,6 +33,10 @@ LIBPSKC_2.0.0 {
     pskc_get_device_userid;
     pskc_get_id;
     pskc_get_key_algorithm;
+    pskc_get_key_algparm_chall_checkdigits;
+    pskc_get_key_algparm_chall_encoding;
+    pskc_get_key_algparm_chall_max;
+    pskc_get_key_algparm_chall_min;
     pskc_get_key_algparm_resp_checkdigits;
     pskc_get_key_algparm_resp_encoding;
     pskc_get_key_algparm_resp_length;

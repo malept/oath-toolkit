@@ -49,8 +49,6 @@ parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
 	kp->device_serialno = content;
       else if (strcmp ("Model", name) == 0)
 	kp->device_model = content;
-      else if (strcmp ("Model", name) == 0)
-	kp->device_model = content;
       else if (strcmp ("IssueNo", name) == 0)
 	kp->device_issueno = content;
       else if (strcmp ("DeviceBinding", name) == 0)
@@ -216,6 +214,55 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 
       if (strcmp ("Suite", name) == 0)
 	kp->key_algparm_suite = content;
+      else if (strcmp ("ChallengeFormat", name) == 0)
+	{
+	  xmlAttr *cur_attr = NULL;
+
+	  for (cur_attr = cur_node->properties; cur_attr;
+	       cur_attr = cur_attr->next)
+	    {
+	      const char *attr_name = (const char *) cur_attr->name;
+	      const char *attr_content =
+		(const char *) cur_attr->children->content;
+
+	      if (strcmp ("Encoding", attr_name) == 0)
+		{
+		  kp->key_algparm_chall_encoding_str = attr_content;
+		  kp->key_algparm_chall_encoding =
+		    pskc_str2valueformat
+		    (kp->key_algparm_chall_encoding_str);
+		}
+	      else if (strcmp ("Min", attr_name) == 0)
+		{
+		  kp->key_algparm_chall_min_str = attr_content;
+		  kp->key_algparm_chall_min =
+		    strtoul (kp->key_algparm_chall_min_str, NULL, 10);
+		}
+	      else if (strcmp ("Max", attr_name) == 0)
+		{
+		  kp->key_algparm_chall_max_str = attr_content;
+		  kp->key_algparm_chall_max =
+		    strtoul (kp->key_algparm_chall_max_str, NULL, 10);
+		}
+	      else if (strcmp ("CheckDigits", attr_name) == 0)
+		{
+		  kp->key_algparm_chall_checkdigits_str = attr_content;
+		  if (strcmp ("1", kp->key_algparm_chall_checkdigits_str) == 0)
+		    kp->key_algparm_chall_checkdigits = 1;
+		  else if (strcmp ("true",
+				   kp->key_algparm_chall_checkdigits_str) == 0)
+		    kp->key_algparm_chall_checkdigits = 1;
+		  else
+		    kp->key_algparm_chall_checkdigits = 0;
+		}
+	      else
+		{
+		  _pskc_debug ("unknown <%s> attribute <%s>",
+			       name, attr_name);
+		  *rc = PSKC_PARSE_ERROR;
+		}
+	    }
+	}
       else if (strcmp ("ResponseFormat", name) == 0)
 	{
 	  xmlAttr *cur_attr = NULL;
@@ -243,11 +290,10 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 	      else if (strcmp ("CheckDigits", attr_name) == 0)
 		{
 		  kp->key_algparm_resp_checkdigits_str = attr_content;
-		  if (strcmp ("1", kp->
-			      key_algparm_resp_checkdigits_str) == 0)
+		  if (strcmp ("1", kp->key_algparm_resp_checkdigits_str) == 0)
 		    kp->key_algparm_resp_checkdigits = 1;
-		  else if (strcmp ("true", kp->
-				   key_algparm_resp_checkdigits_str) == 0)
+		  else if (strcmp ("true",
+				   kp->key_algparm_resp_checkdigits_str) == 0)
 		    kp->key_algparm_resp_checkdigits = 1;
 		  else
 		    kp->key_algparm_resp_checkdigits = 0;

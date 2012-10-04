@@ -140,6 +140,11 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
 {
   const char *device_manufacturer = pskc_get_device_manufacturer (kp);
   const char *device_serialno = pskc_get_device_serialno (kp);
+  const char *device_model = pskc_get_device_model (kp);
+  const char *device_issueno = pskc_get_device_issueno (kp);
+  const char *device_devicebinding = pskc_get_device_devicebinding (kp);
+  const struct tm *device_startdate = pskc_get_device_startdate (kp);
+  const struct tm *device_expirydate = pskc_get_device_expirydate (kp);
   const char *device_userid = pskc_get_device_userid (kp);
   const char *cryptomodule_id = pskc_get_cryptomodule_id (kp);
   const char *key_id = pskc_get_key_id (kp);
@@ -179,6 +184,16 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
   int key_policy_keyusages =
     pskc_get_key_policy_keyusages (kp, &key_policy_keyusages_present);
   const char *key_algparm_suite = pskc_get_key_algparm_suite (kp);
+  int key_algparm_chall_encoding_present;
+  pskc_valueformat key_algparm_chall_encoding =
+    pskc_get_key_algparm_chall_encoding (kp,
+					 &key_algparm_chall_encoding_present);
+  int key_algparm_chall_min_present;
+  uint32_t key_algparm_chall_min =
+    pskc_get_key_algparm_chall_min (kp, &key_algparm_chall_min_present);
+  int key_algparm_chall_max_present;
+  uint32_t key_algparm_chall_max =
+    pskc_get_key_algparm_chall_max (kp, &key_algparm_chall_max_present);
   int key_algparm_resp_encoding_present;
   pskc_valueformat key_algparm_resp_encoding =
     pskc_get_key_algparm_resp_encoding (kp, &key_algparm_resp_encoding_present);
@@ -195,6 +210,24 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tManufacturer: %s\n", device_manufacturer);
   if (device_serialno)
     buffer_addf (buf, "\t\t\tSerialNo: %s\n", device_serialno);
+  if (device_model)
+    buffer_addf (buf, "\t\t\tModel: %s\n", device_model);
+  if (device_issueno)
+    buffer_addf (buf, "\t\t\tIssueNo: %s\n", device_issueno);
+  if (device_devicebinding)
+    buffer_addf (buf, "\t\t\tDeviceBinding: %s\n", device_devicebinding);
+  if (device_startdate)
+    {
+      char t[100];
+      strftime (t, sizeof (t), "%Y-%m-%d %H:%M:%S", device_startdate);
+      buffer_addf (buf, "\t\t\tDevice StartDate: %s\n", t);
+    }
+  if (device_expirydate)
+    {
+      char t[100];
+      strftime (t, sizeof (t), "%Y-%m-%d %H:%M:%S", device_expirydate);
+      buffer_addf (buf, "\t\t\tDevice ExpiryDate: %s\n", t);
+    }
   if (device_userid)
     buffer_addf (buf, "\t\t\tUserId: %s\n", device_userid);
 
@@ -274,13 +307,22 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tPIN Policy PIN Max Failed Attempts: %" PRId32 "\n",
 		 key_policy_pinmaxfailedattempts);
   if (key_algparm_suite)
-    buffer_addf (buf, "\t\t\tAlgorithmParameters Suite: %s\n",
+    buffer_addf (buf, "\t\t\tAlgorithm Parameters Suite: %s\n",
 		 key_algparm_suite);
+  if (key_algparm_chall_encoding_present)
+    buffer_addf (buf, "\t\t\tChallenge Format Encoding: %s\n",
+		 pskc_valueformat2str (key_algparm_chall_encoding));
+  if (key_algparm_chall_min_present)
+    buffer_addf (buf, "\t\t\tChallenge Format Min: %" PRId32 "\n",
+		 key_algparm_chall_min);
+  if (key_algparm_chall_max_present)
+    buffer_addf (buf, "\t\t\tChallenge Format Max: %" PRId32 "\n",
+		 key_algparm_chall_max);
   if (key_algparm_resp_length_present)
-    buffer_addf (buf, "\t\t\tResponseFormat Length: %" PRId32 "\n",
+    buffer_addf (buf, "\t\t\tResponse Format Length: %" PRId32 "\n",
 		 key_algparm_resp_length);
   if (key_algparm_resp_encoding_present)
-    buffer_addf (buf, "\t\t\tResponseFormat Encoding: %s\n",
+    buffer_addf (buf, "\t\t\tResponse Format Encoding: %s\n",
 		 pskc_valueformat2str (key_algparm_resp_encoding));
 }
 

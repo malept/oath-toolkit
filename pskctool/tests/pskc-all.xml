@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<KeyContainer Version="1.0" Id="KCID"
-	      xmlns="urn:ietf:params:xml:ns:keyprov:pskc">
+<KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0" Id="KCID">
   <KeyPackage>
     <DeviceInfo>
       <Manufacturer>Manufacturer</Manufacturer>
@@ -19,13 +18,8 @@
       <Issuer>Issuer</Issuer>
       <AlgorithmParameters>
 	<Suite>Suite</Suite>
-        <ChallengeFormat Encoding="DECIMAL"
-			 Min="42"
-			 Max="4711"
-			 CheckDigits="true"/>
-        <ResponseFormat Encoding="DECIMAL"
-			Length="8"
-			CheckDigits="true"/>
+        <ChallengeFormat Encoding="DECIMAL" Min="42" Max="4711" CheckDigits="true"/>
+        <ResponseFormat Encoding="DECIMAL" Length="8" CheckDigits="true"/>
       </AlgorithmParameters>
       <KeyProfileId>KeyProfileId</KeyProfileId>
       <KeyReference>KeyReference</KeyReference>
@@ -53,12 +47,7 @@
       <Policy>
         <StartDate>2006-05-01T00:00:00Z</StartDate>
         <ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate>
-        <PINPolicy PINKeyId="123456781"
-		   PINUsageMode="Local"
-		   MaxFailedAttempts="8"
-		   MinLength="99"
-		   MaxLength="999"
-		   PINEncoding="DECIMAL" />
+        <PINPolicy PINKeyId="123456781" PINUsageMode="Local" MaxFailedAttempts="8" MinLength="99" MaxLength="999" PINEncoding="DECIMAL" />
         <KeyUsage>OTP</KeyUsage>
         <KeyUsage>CR</KeyUsage>
         <NumberOfTransactions>1234</NumberOfTransactions>
