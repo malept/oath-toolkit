@@ -22,7 +22,8 @@ LDADD = ../libpskc.la
 
 ctests = \
 	tst_basic \
-	tst_errors
+	tst_errors \
+	tst_accessors
 
 check_PROGRAMS = $(ctests)
 

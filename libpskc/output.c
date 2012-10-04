@@ -175,9 +175,9 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
   int key_policy_pinencoding_present;
   pskc_valueformat key_policy_pinencoding =
     pskc_get_key_policy_pinencoding (kp, &key_policy_pinencoding_present);
-  int key_policy_keyusage_present;
-  pskc_keyusage key_policy_keyusage =
-    pskc_get_key_policy_keyusage (kp, &key_policy_keyusage_present);
+  int key_policy_keyusages_present;
+  int key_policy_keyusages =
+    pskc_get_key_policy_keyusages (kp, &key_policy_keyusages_present);
   const char *key_algparm_suite = pskc_get_key_algparm_suite (kp);
   int key_algparm_resp_encoding_present;
   pskc_valueformat key_algparm_resp_encoding =
@@ -230,9 +230,19 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
   if (key_timedrift_present)
     buffer_addf (buf, "\t\t\tKey TimeDrift: %" PRId32 "\n",
 		 key_timedrift);
-  if (key_policy_keyusage_present)
-    buffer_addf (buf, "\t\t\tKey Usage: %s\n",
-		 pskc_keyusage2str (key_policy_keyusage));
+  if (key_policy_keyusages_present)
+    {
+      int i;
+      buffer_addf (buf, "\t\t\tKey Usage:");
+      for (i = 1; i <= PSKC_KEYUSAGE_GENERATE; i = i << 1)
+	{
+	  const char *keyusage_str = pskc_keyusage2str (i);
+
+	  if (key_policy_keyusages & i)
+	    buffer_addf (buf, " %s", keyusage_str);
+	}
+      buffer_addf (buf, "\n");
+    }
   if (key_policy_startdate)
     {
       char t[100];

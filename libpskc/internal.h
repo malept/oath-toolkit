@@ -56,7 +56,7 @@ struct pskc_key
   const char *key_profileid;
   const char *key_reference;
   const char *key_policy_keyusage_str;
-  pskc_keyusage key_policy_keyusage;
+  int key_policy_keyusages;
   const char *key_policy_numberoftransactions_str;
   uint64_t key_policy_numberoftransactions;
   const char *key_algparm_suite;

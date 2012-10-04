@@ -568,7 +568,7 @@ libpskc/man/pskc_get_key_friendlyname.3
 libpskc/man/pskc_get_key_id.3
 libpskc/man/pskc_get_key_issuer.3
 libpskc/man/pskc_get_key_policy_expirydate.3
-libpskc/man/pskc_get_key_policy_keyusage.3
+libpskc/man/pskc_get_key_policy_keyusages.3
 libpskc/man/pskc_get_key_policy_numberoftransactions.3
 libpskc/man/pskc_get_key_policy_pinencoding.3
 libpskc/man/pskc_get_key_policy_pinkeyid.3
@@ -606,6 +606,9 @@ libpskc/pskc.h
 libpskc/stamp-h1
 libpskc/tests/.deps/
 libpskc/tests/test-suite.log
+libpskc/tests/tst_accessors
+libpskc/tests/tst_accessors.log
+libpskc/tests/tst_accessors.o
 libpskc/tests/tst_basic
 libpskc/tests/tst_basic.log
 libpskc/tests/tst_basic.o

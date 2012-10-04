@@ -120,8 +120,7 @@ static int
 build_policy (pskc_key_t *kp, xmlNodePtr keyp)
 {
   int keyusage_p;
-  pskc_keyusage keyusage = pskc_get_key_policy_keyusage (kp, &keyusage_p);
-  const char *keyusage_str = pskc_keyusage2str (keyusage);
+  int keyusages = pskc_get_key_policy_keyusages (kp, &keyusage_p);
   const struct tm *startdate = pskc_get_key_policy_startdate (kp);
   const struct tm *expirydate = pskc_get_key_policy_expirydate (kp);
   const char *pinkeyid = pskc_get_key_policy_pinkeyid (kp);
@@ -199,7 +198,17 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
     }
 
   if (keyusage_p)
-    xmlNewTextChild (policy, NULL, BAD_CAST "KeyUsage", BAD_CAST keyusage_str);
+    {
+      int i;
+      for (i = 1; i <= PSKC_KEYUSAGE_GENERATE; i = i << 1)
+	{
+	  const char *keyusage_str = pskc_keyusage2str (i);
+
+	  if (keyusages & i)
+	    xmlNewTextChild (policy, NULL, BAD_CAST "KeyUsage",
+			     BAD_CAST keyusage_str);
+	}
+    }
 
   return PSKC_OK;
 }

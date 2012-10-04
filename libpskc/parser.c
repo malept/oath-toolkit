@@ -366,14 +366,12 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
       else if (strcmp ("KeyUsage", name) == 0)
 	{
 	  kp->key_policy_keyusage_str = content;
-	  kp->key_policy_keyusage |=
+	  kp->key_policy_keyusages |=
 	    pskc_str2keyusage (kp->key_policy_keyusage_str);
 	}
       else if (strcmp ("NumberOfTransactions", name) == 0)
 	{
-	  parse_intlongstrdatatype (cur_node->children,
-				    &kp->key_policy_numberoftransactions_str,
-				    rc);
+	  kp->key_policy_numberoftransactions_str = content;
 	  if (kp->key_policy_numberoftransactions_str)
 	    kp->key_policy_numberoftransactions =
 	      strtoull (kp->key_policy_numberoftransactions_str, NULL, 10);

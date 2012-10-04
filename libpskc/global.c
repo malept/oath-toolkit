@@ -311,6 +311,7 @@ xmlDocPtr schema_doc = NULL;
 xmlSchemaParserCtxtPtr parser_ctxt;
 xmlSchemaPtr schema;
 xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
+int _pskc_init = 0;
 
 /**
  * pskc_global_init:
@@ -326,6 +327,9 @@ xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
 int
 pskc_global_init (void)
 {
+  if (_pskc_init++)
+    return PSKC_OK;
+
   xmlInitParser ();
 
   schema_doc = xmlReadMemory (pskc_schema_str, strlen (pskc_schema_str),
@@ -369,11 +373,15 @@ pskc_global_init (void)
 int
 pskc_global_done (void)
 {
-  xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
-  xmlSchemaFree (schema);
-  xmlSchemaFreeParserCtxt (parser_ctxt);
-  xmlCleanupParser ();
-  xmlMemoryDump ();
+  if (_pskc_init == 1)
+    {
+      xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
+      xmlSchemaFree (schema);
+      xmlSchemaFreeParserCtxt (parser_ctxt);
+      xmlCleanupParser ();
+      xmlMemoryDump ();
+    }
+  _pskc_init--;
   return PSKC_OK;
 }
 

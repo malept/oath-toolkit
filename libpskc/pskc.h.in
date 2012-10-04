@@ -271,8 +271,8 @@ extern PSKCAPI uint32_t pskc_get_key_policy_pinmaxlength (pskc_key_t *key,
 							  int *present);
 extern PSKCAPI pskc_valueformat
 pskc_get_key_policy_pinencoding (pskc_key_t *key, int *present);
-extern PSKCAPI pskc_keyusage
-pskc_get_key_policy_keyusage (pskc_key_t *key, int *present);
+extern PSKCAPI int
+pskc_get_key_policy_keyusages (pskc_key_t *key, int *present);
 extern PSKCAPI uint64_t
 pskc_get_key_policy_numberoftransactions (pskc_key_t *key, int *present);
 

@@ -837,21 +837,22 @@ pskc_get_key_policy_numberoftransactions (pskc_key_t *key, int *present)
 }
 
 /**
- * pskc_get_key_policy_keyusage:
+ * pskc_get_key_policy_keyusages:
  * @key: #pskc_t handle
  * @present: output variable indicating whether data was provided or not.
  *
- * Get the PSKC KeyPackage Key Policy KeyUsage value.  The element
+ * Get the PSKC KeyPackage Key Policy KeyUsage values.  The element
  * puts constraints on the intended usage of the key.  The recipient
  * of the PSKC document MUST enforce the key usage.
  *
  * If @present is non-NULL, it will be 0 if the field is not present
  * or 1 if it was present.
  *
- * Returns: an #pskc_keyusage value
+ * Returns: an integer holding a set of #pskc_keyusage values ORed
+ * together.
  */
-pskc_keyusage
-pskc_get_key_policy_keyusage (pskc_key_t *key, int *present)
+int
+pskc_get_key_policy_keyusages (pskc_key_t *key, int *present)
 {
   if (present)
     {
@@ -861,5 +862,5 @@ pskc_get_key_policy_keyusage (pskc_key_t *key, int *present)
 	*present = 0;
     }
 
-  return key->key_policy_keyusage;
+  return key->key_policy_keyusages;
 }
