@@ -1,5 +1,5 @@
 /*
- * tst_errors.c - self-tests for libpskc strerror functions
+ * pskc/global.h - PSKC header file with library global function prototypes.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -19,35 +19,17 @@
  *
  */
 
-#include <config.h>
+#ifndef PSKC_GLOBAL_H
+#define PSKC_GLOBAL_H
 
-#include <pskc/pskc.h>
+extern PSKCAPI int pskc_global_init (void);
+extern PSKCAPI int pskc_global_done (void);
 
-#include <stdio.h>
+typedef void (*pskc_log_func) (const char *msg);
+extern PSKCAPI void pskc_global_log (pskc_log_func log_func);
 
-int
-main (void)
-{
-  signed i;
+extern PSKCAPI const char *pskc_check_version (const char *req_version);
 
-  for (i = 3; i >= PSKC_LAST_ERROR - 3; i--)
-    {
-      const char *name = pskc_strerror_name (i);
-      const char *err = pskc_strerror (i);
+extern PSKCAPI void pskc_free (void *ptr);
 
-      if ((i <= 0 && i >= PSKC_LAST_ERROR) && name == NULL)
-	{
-	  printf ("No error string for return code %d\n", i);
-	  return 1;
-	}
-      if ((i > 0 || i < PSKC_LAST_ERROR) && name != NULL)
-	{
-	  printf ("Error string for unknown return code %d\n", i);
-	  return 1;
-	}
-
-      printf ("%d: %s: %s\n", i, name, err);
-    }
-
-  return 0;
-}
+#endif /* PSKC_GLOBAL_H */

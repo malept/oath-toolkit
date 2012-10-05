@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #define INTERNAL_NEED_PSKC_STRUCT
 #define INTERNAL_NEED_PSKC_KEY_STRUCT
@@ -607,7 +607,6 @@ pskc_get_key_data_secret (pskc_key_t *key,
 /**
  * pskc_get_key_data_b64secret:
  * @key: #pskc_t handle.
- * @len: pointer to output variable with length of returned data.
  *
  * Get the PSKC KeyPackage Key Data Secret value in base64 as a
  * zero-terminated string.

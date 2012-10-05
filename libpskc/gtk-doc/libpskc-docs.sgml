@@ -121,6 +121,12 @@
   <part id="pskc-reference">
     <title>API Reference</title>
     <xi:include href="xml/pskc.xml"/>
+    <xi:include href="xml/version.xml"/>
+    <xi:include href="xml/global.xml"/>
+    <xi:include href="xml/errors.xml"/>
+    <xi:include href="xml/enums.xml"/>
+    <xi:include href="xml/container.xml"/>
+    <xi:include href="xml/keypackage.xml"/>
 
     <index id="api-index-full">
       <title>Index of all symbols</title>

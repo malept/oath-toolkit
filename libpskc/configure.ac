@@ -95,7 +95,9 @@ fi
 AC_CONFIG_FILES([
   Makefile
   libpskc.pc
-  pskc.h
+  include/Makefile
+  include/pskc/Makefile
+  include/pskc/version.h
   gl/Makefile
   gl/tests/Makefile
   examples/Makefile

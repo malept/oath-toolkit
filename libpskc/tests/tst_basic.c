@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #include <stdio.h>
 

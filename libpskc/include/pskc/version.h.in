@@ -1,5 +1,5 @@
 /*
- * tst_errors.c - self-tests for libpskc strerror functions
+ * pskc/version.h - PSKC header file with version macros.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -19,35 +19,26 @@
  *
  */
 
-#include <config.h>
+#ifndef PSKC_VERSION_H
+#define PSKC_VERSION_H
 
-#include <pskc/pskc.h>
+/**
+ * PSKC_VERSION
+ *
+ * Pre-processor symbol with a string that describe the header file
+ * version number.  Used together with pskc_check_version() to verify
+ * header file and run-time library consistency.
+ */
+#define PSKC_VERSION "@VERSION@"
 
-#include <stdio.h>
+/**
+ * PSKC_VERSION_NUMBER
+ *
+ * Pre-processor symbol with a hexadecimal value describing the header
+ * file version number.  For example, when the header version is 1.2.3
+ * this symbol will have the value 0x01020300.  The last two digits
+ * are only used between public releases, and will otherwise be 00.
+ */
+#define PSKC_VERSION_NUMBER @VERSION_NUMBER@
 
-int
-main (void)
-{
-  signed i;
-
-  for (i = 3; i >= PSKC_LAST_ERROR - 3; i--)
-    {
-      const char *name = pskc_strerror_name (i);
-      const char *err = pskc_strerror (i);
-
-      if ((i <= 0 && i >= PSKC_LAST_ERROR) && name == NULL)
-	{
-	  printf ("No error string for return code %d\n", i);
-	  return 1;
-	}
-      if ((i > 0 || i < PSKC_LAST_ERROR) && name != NULL)
-	{
-	  printf ("Error string for unknown return code %d\n", i);
-	  return 1;
-	}
-
-      printf ("%d: %s: %s\n", i, name, err);
-    }
-
-  return 0;
-}
+#endif /* PSKC_VERSION_H */

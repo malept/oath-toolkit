@@ -21,7 +21,8 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
+#include "internal.h"
 
 #include <string.h>		/* strcmp */
 
@@ -33,7 +34,7 @@
  * pskc_pinusagemode2str(%PSKC_PINUSAGEMODE_LOCAL) will return
  * "Local".  The returned string must not be deallocated.
  *
- * Returns: string corresponding to #pskc_pinusagemode.
+ * Returns: String corresponding to #pskc_pinusagemode.
  */
 const char *
 pskc_pinusagemode2str (pskc_pinusagemode pinusagemode)
@@ -59,6 +60,7 @@ pskc_pinusagemode2str (pskc_pinusagemode pinusagemode)
       break;
 
     default:
+      _pskc_debug ("unknown pinusagemode value %d\n", pinusagemode);
       p = "Unknown";
       break;
     }
@@ -74,7 +76,7 @@ pskc_pinusagemode2str (pskc_pinusagemode pinusagemode)
  * pskc_valueformat2str(%PSKC_VALUEFORMAT_DECIMAL) will return
  * "DECIMAL".  The returned string must not be deallocated.
  *
- * Returns: string corresponding to #pskc_valueformat.
+ * Returns: String corresponding to #pskc_valueformat.
  */
 const char *
 pskc_valueformat2str (pskc_valueformat valueformat)
@@ -104,6 +106,7 @@ pskc_valueformat2str (pskc_valueformat valueformat)
       break;
 
     default:
+      _pskc_debug ("unknown valueformat value %d\n", valueformat);
       p = "Unknown";
       break;
     }
@@ -119,7 +122,7 @@ pskc_valueformat2str (pskc_valueformat valueformat)
  * pskc_keyusage2str(%PSKC_KEYUSAGE_OTP) will return "OTP".  The
  * returned string must not be deallocated.
  *
- * Returns: string corresponding to #pskc_keyusage.
+ * Returns: String corresponding to #pskc_keyusage.
  */
 const char *
 pskc_keyusage2str (pskc_keyusage keyusage)
@@ -173,6 +176,7 @@ pskc_keyusage2str (pskc_keyusage keyusage)
       break;
 
     default:
+      _pskc_debug ("unknown keyusage value %d\n", keyusage);
       p = "Unknown";
       break;
     }
@@ -188,7 +192,7 @@ pskc_keyusage2str (pskc_keyusage keyusage)
  * pskc_str2pinusagemode("Local") will return
  * %PSKC_PINUSAGEMODE_LOCAL.
  *
- * Returns: the corresponding #pskc_pinusagemode value.
+ * Returns: The corresponding #pskc_pinusagemode value.
  */
 pskc_pinusagemode
 pskc_str2pinusagemode (const char *pinusagemode)
@@ -201,6 +205,7 @@ pskc_str2pinusagemode (const char *pinusagemode)
     return PSKC_PINUSAGEMODE_APPEND;
   else if (strcmp ("Algorithmic", pinusagemode) == 0)
     return PSKC_PINUSAGEMODE_ALGORITHMIC;
+  _pskc_debug ("unknown pinusagemode value '%s'\n", pinusagemode);
   return PSKC_PINUSAGEMODE_UNKNOWN;
 }
 
@@ -212,7 +217,7 @@ pskc_str2pinusagemode (const char *pinusagemode)
  * pskc_str2valueformat("DECIMAL") will return
  * %PSKC_VALUEFORMAT_DECIMAL.
  *
- * Returns: the corresponding #pskc_valueformat value.
+ * Returns: The corresponding #pskc_valueformat value.
  */
 pskc_valueformat
 pskc_str2valueformat (const char *valueformat)
@@ -227,6 +232,7 @@ pskc_str2valueformat (const char *valueformat)
     return PSKC_VALUEFORMAT_BASE64;
   else if (strcmp ("BINARY", valueformat) == 0)
     return PSKC_VALUEFORMAT_BINARY;
+  _pskc_debug ("unknown valueformat value '%s'\n", valueformat);
   return PSKC_VALUEFORMAT_UNKNOWN;
 }
 
@@ -237,7 +243,7 @@ pskc_str2valueformat (const char *valueformat)
  * Convert a string to a #pskc_keyusage type.  For example,
  * pskc_str2keyusage("KeyWrap") will return %PSKC_KEYUSAGE_KEYWRAP.
  *
- * Returns: the corresponding #pskc_keyusage value.
+ * Returns: The corresponding #pskc_keyusage value.
  */
 pskc_keyusage
 pskc_str2keyusage (const char *keyusage)
@@ -264,5 +270,6 @@ pskc_str2keyusage (const char *keyusage)
     return PSKC_KEYUSAGE_DERIVE;
   else if (strcmp ("Generate", keyusage) == 0)
     return PSKC_KEYUSAGE_GENERATE;
+  _pskc_debug ("unknown keyusage value '%s'\n", keyusage);
   return PSKC_KEYUSAGE_UNKNOWN;
 }

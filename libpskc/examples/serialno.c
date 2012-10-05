@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <pskc.h>
+#include <pskc/pskc.h>
 
 int
 main (int argc, const char *argv[])

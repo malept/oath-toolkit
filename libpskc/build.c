@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #include "internal.h"
 #include <stdlib.h>		/* malloc */
@@ -498,6 +498,7 @@ pskc_build_xml (pskc_t *container, char **out, size_t *len)
   keycont = xmlNewNode (NULL, BAD_CAST "KeyContainer");
   if (keycont == NULL)
     {
+      _pskc_debug ("xmlNewNode failed\n");
       rc = PSKC_XML_ERROR;
       goto done;
     }
@@ -512,6 +513,7 @@ pskc_build_xml (pskc_t *container, char **out, size_t *len)
   *len = buffersize;
   if (mem == NULL || buffersize <= 0)
     {
+      _pskc_debug ("xmlDocDumpFormatMemory failed\n");
       rc = PSKC_XML_ERROR;
       goto done;
     }

@@ -97,6 +97,7 @@ liboath/gl/stripslash.o
 liboath/gl/sys/
 liboath/gl/tests/.deps/
 liboath/gl/tests/arg-nonnull.h
+liboath/gl/tests/binary-io.o
 liboath/gl/tests/c++defs.h
 liboath/gl/tests/dirent.h
 liboath/gl/tests/fcntl.h
@@ -449,6 +450,8 @@ libpskc/gl/tests/stdio.h
 libpskc/gl/tests/sys/
 libpskc/gl/tests/test-alloca-opt
 libpskc/gl/tests/test-alloca-opt.o
+libpskc/gl/tests/test-base64
+libpskc/gl/tests/test-base64.o
 libpskc/gl/tests/test-errno
 libpskc/gl/tests/test-errno.o
 libpskc/gl/tests/test-fdopen
@@ -537,6 +540,7 @@ libpskc/gtk-doc/tmpl.stamp
 libpskc/gtk-doc/tmpl/
 libpskc/gtk-doc/version.xml
 libpskc/gtk-doc/xml/
+libpskc/include/pskc/version.h
 libpskc/libpskc.la
 libpskc/libpskc.pc
 libpskc/libtool
@@ -613,7 +617,6 @@ libpskc/output.lo
 libpskc/output.o
 libpskc/parser.lo
 libpskc/parser.o
-libpskc/pskc.h
 libpskc/stamp-h1
 libpskc/tests/.deps/
 libpskc/tests/test-suite.log

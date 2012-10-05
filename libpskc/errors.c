@@ -20,9 +20,8 @@
 
 #include <config.h>
 
-#include <stddef.h>		/* NULL */
-
-#include "pskc.h"
+#include <pskc/pskc.h>
+#include "internal.h"
 
 #define ERR(name, desc) { name, #name, desc }
 
@@ -64,11 +63,17 @@ pskc_strerror (int err)
   const char *p;
 
   if (-err < 0 || -err >= (int) (sizeof (errors) / sizeof (errors[0])))
-    return unknown;
+    {
+      _pskc_debug ("out of range error code %d\n", err);
+      return unknown;
+    }
 
   p = errors[-err].description;
   if (!p)
-    p = unknown;
+    {
+      _pskc_debug ("missing description field for error code %d\n", err);
+      p = unknown;
+    }
 
   return p;
 }
@@ -88,14 +93,17 @@ pskc_strerror (int err)
  * a successful call to pskc_init().
  *
  * Return value: Returns a pointer to a statically allocated string
- *   containing a string version of the error code @err, or %NULL if
+ *   containing a string version of the error code @err, or NULL if
  *   the error code is not known.
  **/
 const char *
 pskc_strerror_name (int err)
 {
   if (-err < 0 || -err >= (int) (sizeof (errors) / sizeof (errors[0])))
-    return NULL;
+    {
+      _pskc_debug ("attempted naming out of range error code %d\n", err);
+      return NULL;
+    }
 
   return errors[-err].name;
 }

@@ -17,12 +17,13 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = gl . examples tests gtk-doc man
+SUBDIRS = gl include . examples tests gtk-doc man
 
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
-AM_CPPFLAGS = -DLIBPSKC_BUILDING
+AM_CPPFLAGS = -DPSKC_BUILDING
 AM_CPPFLAGS += -I$(srcdir)/gl -I$(builddir)/gl
+AM_CPPFLAGS += -Iinclude
 AM_CPPFLAGS += $(XML_CPPFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
@@ -30,10 +31,7 @@ AM_CFLAGS += $(CFLAG_VISIBILITY)
 
 lib_LTLIBRARIES = libpskc.la
 
-pskc_includedir=$(includedir)/libpskc
-pskc_include_HEADERS = pskc.h
-
-libpskc_la_SOURCES = pskc.h internal.h
+libpskc_la_SOURCES = internal.h
 libpskc_la_SOURCES += global.c errors.c enums.c
 libpskc_la_SOURCES += container.c parser.c validate.c build.c output.c
 libpskc_la_LIBADD = gl/libgnu.la

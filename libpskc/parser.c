@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #define INTERNAL_NEED_PSKC_STRUCT
 #define INTERNAL_NEED_PSKC_KEY_STRUCT

@@ -15,22 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AM_CPPFLAGS = -I$(top_srcdir)/include
-AM_LDFLAGS = -no-install
+pskcincludedir = $(includedir)/pskc
 
-LDADD = ../libpskc.la
-
-ctests = \
-	tst_basic \
-	tst_errors \
-	tst_accessors
-
-check_PROGRAMS = $(ctests)
-
-TESTS = $(ctests)
-
-TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
-
-AUTOMAKE_OPTIONS = parallel-tests
-TEST_EXTENSIONS = .sh
-LOG_COMPILER = $(VALGRIND)
+pskcinclude_HEADERS = container.h enums.h errors.h global.h	\
+	keypackage.h version.h pskc.h

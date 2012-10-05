@@ -20,7 +20,7 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #include <stdlib.h>
 #include <string.h>

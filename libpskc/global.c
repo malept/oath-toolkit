@@ -21,17 +21,21 @@
 
 #include <config.h>
 
-#include "pskc.h"
+#include <pskc/pskc.h>
 
 #include "internal.h"
 #include <string.h>		/* strverscmp */
 #include <libxml/parser.h>	/* xmlInitParser */
 #include <libxml/xmlschemas.h>	/* xmlSchemaParse */
 
-extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
+xmlDocPtr _pskc_schema_doc = NULL;
+xmlSchemaParserCtxtPtr _pskc_parser_ctxt = NULL;
+xmlSchemaPtr _pskc_schema = NULL;
+xmlSchemaValidCtxtPtr _pskc_schema_validctxt = NULL;
+int _pskc_init = 0;
 
 /* From RFC 6030 with errata fix and no references to xenc/ds. */
-const char *pskc_schema_str =
+static const char *pskc_schema_str =
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
   "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n"
   "     xmlns:pskc=\"urn:ietf:params:xml:ns:keyprov:pskc\"\n"
@@ -307,12 +311,6 @@ const char *pskc_schema_str =
   "          type=\"pskc:KeyContainerType\"/>\n"
   "</xs:schema>\n";
 
-xmlDocPtr schema_doc = NULL;
-xmlSchemaParserCtxtPtr parser_ctxt;
-xmlSchemaPtr schema;
-xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
-int _pskc_init = 0;
-
 /**
  * pskc_global_init:
  *
@@ -332,27 +330,35 @@ pskc_global_init (void)
 
   xmlInitParser ();
 
-  schema_doc = xmlReadMemory (pskc_schema_str, strlen (pskc_schema_str),
-			      NULL, NULL, XML_PARSE_NONET);
-  if (schema_doc == NULL)
-    return PSKC_XML_ERROR;
-
-  parser_ctxt = xmlSchemaNewDocParserCtxt (schema_doc);
-  if (parser_ctxt == NULL)
-    return PSKC_XML_ERROR;
-
-  schema = xmlSchemaParse (parser_ctxt);
-  if (schema == NULL)
+  _pskc_schema_doc = xmlReadMemory (pskc_schema_str, strlen (pskc_schema_str),
+				    NULL, NULL, XML_PARSE_NONET);
+  if (_pskc_schema_doc == NULL)
     {
-      xmlSchemaFreeParserCtxt (parser_ctxt);
+      _pskc_debug ("xmlReadMemory failed\n");
       return PSKC_XML_ERROR;
     }
 
-  _pskc_schema_validctxt = xmlSchemaNewValidCtxt (schema);
+  _pskc_parser_ctxt = xmlSchemaNewDocParserCtxt (_pskc_schema_doc);
+  if (_pskc_parser_ctxt == NULL)
+    {
+      _pskc_debug ("xmlSchemaNewDocParserCtxt failed\n");
+      return PSKC_XML_ERROR;
+    }
+
+  _pskc_schema = xmlSchemaParse (_pskc_parser_ctxt);
+  if (_pskc_schema == NULL)
+    {
+      _pskc_debug ("xmlSchemaParse failed\n");
+      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
+      return PSKC_XML_ERROR;
+    }
+
+  _pskc_schema_validctxt = xmlSchemaNewValidCtxt (_pskc_schema);
   if (_pskc_schema_validctxt == NULL)
     {
-      xmlSchemaFree (schema);
-      xmlSchemaFreeParserCtxt (parser_ctxt);
+      _pskc_debug ("xmlSchemaNewValidCtxt failed\n");
+      xmlSchemaFree (_pskc_schema);
+      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
       return PSKC_XML_ERROR;
     }
 
@@ -376,11 +382,12 @@ pskc_global_done (void)
   if (_pskc_init == 1)
     {
       xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
-      xmlSchemaFree (schema);
-      xmlSchemaFreeParserCtxt (parser_ctxt);
+      xmlSchemaFree (_pskc_schema);
+      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
       xmlCleanupParser ();
       xmlMemoryDump ();
     }
+
   _pskc_init--;
   return PSKC_OK;
 }
@@ -413,9 +420,9 @@ pskc_check_version (const char *req_version)
 
 /**
  * pskc_free:
- * @ptr: memory region to deallocate, or %NULL.
+ * @ptr: memory region to deallocate, or NULL.
  *
- * Deallocates memory region by calling free().  If @ptr is %NULL no
+ * Deallocates memory region by calling free().  If @ptr is NULL no
  * operation is performed.
  *
  * This function is necessary on Windows, where different parts of the

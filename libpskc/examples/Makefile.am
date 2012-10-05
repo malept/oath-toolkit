@@ -15,11 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-AM_CPPFLAGS = -I$(srcdir)/..
+AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_LDFLAGS = -no-install
 
 LDADD = ../libpskc.la
 
-EXTRA_PROGRAMS = serialno
+noinst_PROGRAMS = serialno
 
 EXTRA_DIST = pskc-mini.xml pskc-hotp.xml
