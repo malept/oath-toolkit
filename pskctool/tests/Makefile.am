@@ -21,3 +21,6 @@ EXTRA_DIST = pskc-figure2.xml pskc-figure3.xml pskc-figure4.xml	\
 	pskc-figure8.xml pskc-figure9.xml pskc-figure10.xml
 
 EXTRA_DIST += pskc-all.xml pskc-ns.xml pskc-ocra.xml
+
+# http://download.gooze.eu/otp/seeds/
+EXTRA_DIST += 20120919-test001-4282.xml

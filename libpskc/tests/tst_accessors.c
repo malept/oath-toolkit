@@ -28,8 +28,9 @@
 
 const char *pskc_all =
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-  "<KeyContainer Version=\"42.17\" Id=\"KCID\""
+  "<KeyContainerX Version=\"42.17\" Id=\"KCID\" foo=\"bar\""
   "              xmlns=\"urn:ietf:params:xml:ns:keyprov:pskc\">"
+  "  <Foo/>"
   "  <KeyPackage>"
   "    <DeviceInfo>"
   "      <Manufacturer>Manufacturer</Manufacturer>"
@@ -44,11 +45,13 @@ const char *pskc_all =
   "    <CryptoModuleInfo>"
   "      <Id>CMID</Id>"
   "    </CryptoModuleInfo>"
-  "    <Key Id=\"KID1\""
+  "    <Bar/>"
+  "    <Key Id=\"KID1\" foo=\"bar\""
   "         Algorithm=\"urn:ietf:params:xml:ns:keyprov:pskc:hotp\">"
   "      <Issuer>Issuer</Issuer>"
+  "      <Baz/>"
   "      <AlgorithmParameters>"
-  "    <Suite>Suite</Suite>"
+  "        <Suite>Suite</Suite>"
   "        <ChallengeFormat Encoding=\"HEXADECIMAL\""
   "                         Min=\"42\""
   "                         Max=\"4711\""
@@ -65,6 +68,7 @@ const char *pskc_all =
   "          <PlainValue>"
   "            MTIzNDU2Nzg5MDEyMzQ1Njc4OTA="
   "          </PlainValue>"
+  "          <Bar/>"
   "        </Secret>"
   "        <Counter>"
   "          <PlainValue>12345678</PlainValue>"
@@ -78,12 +82,13 @@ const char *pskc_all =
   "        <TimeDrift>"
   "          <PlainValue>300</PlainValue>"
   "        </TimeDrift>"
+  "        <Foo/>"
   "      </Data>"
   "      <UserId>KeyUserId</UserId>"
   "      <Policy>"
   "        <StartDate>1950-01-01T00:00:00Z</StartDate>"
   "        <ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate>"
-  "        <PINPolicy PINKeyId=\"PKID\""
+  "        <PINPolicy PINKeyId=\"PKID\" apa=\"apa\""
   "                   PINUsageMode=\"Local\""
   "                   MaxFailedAttempts=\"8\""
   "                   MinLength=\"99\""
@@ -92,10 +97,162 @@ const char *pskc_all =
   "        <KeyUsage>OTP</KeyUsage>"
   "        <KeyUsage>CR</KeyUsage>"
   "        <NumberOfTransactions>1234</NumberOfTransactions>"
+  "        <Test/>"
   "      </Policy>"
   "    </Key>"
   "  </KeyPackage>"
-  "</KeyContainer>";
+  "  <KeyPackage>"
+  "    <DeviceInfo>"
+  "      <Manufacturer>Manufacturer</Manufacturer>"
+  "      <SerialNo>SerialNo</SerialNo>"
+  "      <Model>Model</Model>"
+  "      <IssueNo>IssueNo</IssueNo>"
+  "      <Yes/>"
+  "      <DeviceBinding>DeviceBinding</DeviceBinding>"
+  "      <StartDate>2006-05-bad</StartDate>"
+  "      <ExpiryDate>2012-01-09T23:foo</ExpiryDate>"
+  "      <UserId>DeviceUserId</UserId>"
+  "    </DeviceInfo>"
+  "    <CryptoModuleInfo>"
+  "      <Id>CMID</Id>"
+  "      <Bar>bar</Bar>"
+  "    </CryptoModuleInfo>"
+  "    <Bar/>"
+  "    <Key Id=\"KID1\" foo=\"bar\""
+  "         Algorithm=\"urn:ietf:params:xml:ns:keyprov:pskc:hotp\">"
+  "      <Issuer>Issuer</Issuer>"
+  "      <Baz/>"
+  "      <AlgorithmParameters>"
+  "        <Suite>Suite</Suite>"
+  "        <ChallengeFormat Encoding=\"HEXADECIMAL\""
+  "                         Min=\"42\" hepp=\"hopp\""
+  "                         Max=\"4711\""
+  "                         CheckDigits=\"false\"/>"
+  "        <ResponseFormat Encoding=\"DECIMAL\" foo=\"bar\""
+  "                        Length=\"8\""
+  "                        CheckDigits=\"false\"/>"
+  "      </AlgorithmParameters>"
+  "      <KeyProfileId>KeyProfileId</KeyProfileId>"
+  "      <KeyReference>KeyReference</KeyReference>"
+  "      <FriendlyName>FriendlyName</FriendlyName>"
+  "      <Data>"
+  "        <Secret>"
+  "          <PlainValue>"
+  "            MTI"
+  "          </PlainValue>"
+  "        </Secret>"
+  "      </Data>"
+  "      <UserId>KeyUserId</UserId>"
+  "      <Policy>"
+  "        <StartDate>1950-01-01T00:bad</StartDate>"
+  "        <ExpiryDate>2006-05-bad:00:00Z</ExpiryDate>"
+  "        <PINPolicy apa=\"apa\" />"
+  "        <Test/>"
+  "      </Policy>"
+  "    </Key>"
+  "  </KeyPackage>"
+  "  <KeyPackage>"
+  "    <DeviceInfo>"
+  "      <Manufacturer>Manufacturer</Manufacturer>"
+  "      <SerialNo>SerialNo</SerialNo>"
+  "      <Model>Model</Model>"
+  "      <IssueNo>IssueNo</IssueNo>"
+  "      <Yes/>"
+  "      <DeviceBinding>DeviceBinding</DeviceBinding>"
+  "      <StartDate>2006-05-bad</StartDate>"
+  "      <ExpiryDate>2012-01-09T23:foo</ExpiryDate>"
+  "      <UserId>DeviceUserId</UserId>"
+  "    </DeviceInfo>"
+  "    <CryptoModuleInfo>"
+  "      <Id>CMID</Id>"
+  "      <Bar>bar</Bar>"
+  "    </CryptoModuleInfo>"
+  "    <Bar/>"
+  "    <Key Id=\"KID1\" foo=\"bar\""
+  "         Algorithm=\"urn:ietf:params:xml:ns:keyprov:pskc:hotp\">"
+  "      <Issuer>Issuer</Issuer>"
+  "      <Baz/>"
+  "      <AlgorithmParameters>"
+  "        <Suite>Suite</Suite>"
+  "        <ChallengeFormat hepp=\"hopp\""
+  "                         CheckDigits=\"1\"/>"
+  "        <ResponseFormat foo=\"bar\""
+  "                        CheckDigits=\"1\"/>"
+  "      </AlgorithmParameters>"
+  "      <KeyProfileId>KeyProfileId</KeyProfileId>"
+  "      <KeyReference>KeyReference</KeyReference>"
+  "      <FriendlyName>FriendlyName</FriendlyName>"
+  "      <Data>"
+  "        <Secret>"
+  "          <PlainValue>"
+  "            MTI"
+  "          </PlainValue>"
+  "        </Secret>"
+  "      </Data>"
+  "      <UserId>KeyUserId</UserId>"
+  "      <Policy>"
+  "        <StartDate>1950-01-01T00:bad</StartDate>"
+  "        <ExpiryDate>2006-05-bad:00:00Z</ExpiryDate>"
+  "        <PINPolicy apa=\"apa\" />"
+  "        <Test/>"
+  "      </Policy>"
+  "    </Key>"
+  "  </KeyPackage>"
+  "  <KeyPackage>"
+  "    <DeviceInfo>"
+  "      <Manufacturer>Manufacturer</Manufacturer>"
+  "      <SerialNo>SerialNo</SerialNo>"
+  "      <Model>Model</Model>"
+  "      <IssueNo>IssueNo</IssueNo>"
+  "      <Yes/>"
+  "      <DeviceBinding>DeviceBinding</DeviceBinding>"
+  "      <StartDate>2006-05-bad</StartDate>"
+  "      <ExpiryDate>2012-01-09T23:foo</ExpiryDate>"
+  "      <UserId>DeviceUserId</UserId>"
+  "    </DeviceInfo>"
+  "    <CryptoModuleInfo>"
+  "      <Id>CMID</Id>"
+  "      <Bar>bar</Bar>"
+  "    </CryptoModuleInfo>"
+  "    <Bar/>"
+  "    <Key Id=\"KID1\" foo=\"bar\""
+  "         Algorithm=\"urn:ietf:params:xml:ns:keyprov:pskc:hotp\">"
+  "      <Issuer>Issuer</Issuer>"
+  "      <Baz/>"
+  "      <AlgorithmParameters>"
+  "        <Suite>Suite</Suite>"
+  "        <ChallengeFormat Encoding=\"HEXADECIMAL\""
+  "                         Min=\"42\" hepp=\"hopp\""
+  "                         Max=\"4711\"/>"
+  "        <ResponseFormat Encoding=\"DECIMAL\""
+  "                        Length=\"8\" foo=\"bar\"/>"
+  "      </AlgorithmParameters>"
+  "      <KeyProfileId>KeyProfileId</KeyProfileId>"
+  "      <KeyReference>KeyReference</KeyReference>"
+  "      <FriendlyName>FriendlyName</FriendlyName>"
+  "      <Data>"
+  "        <Secret>"
+  "          <PlainValue>"
+  "            MTI"
+  "          </PlainValue>"
+  "        </Secret>"
+  "      </Data>"
+  "      <UserId>KeyUserId</UserId>"
+  "      <Policy>"
+  "        <StartDate>1950-01-01T00:bad</StartDate>"
+  "        <ExpiryDate>2006-05-bad:00:00Z</ExpiryDate>"
+  "        <PINPolicy apa=\"apa\" />"
+  "        <Test/>"
+  "      </Policy>"
+  "    </Key>"
+  "  </KeyPackage>"
+  "</KeyContainerX>";
+
+void
+my_log (const char *msg)
+{
+  puts(msg);
+}
 
 int
 main (void)
@@ -113,6 +270,8 @@ main (void)
       return 1;
     }
 
+  pskc_global_log (my_log);
+
   rc = pskc_init (&pskc);
   if (rc != PSKC_OK)
     {
@@ -121,7 +280,7 @@ main (void)
     }
 
   rc = pskc_parse_from_memory (pskc, strlen (pskc_all), pskc_all);
-  if (rc != PSKC_OK)
+  if (rc != PSKC_PARSE_ERROR)
     {
       printf ("pskc_parse_from_memory: %d\n", rc);
       return 1;
@@ -274,7 +433,8 @@ main (void)
   {
     int p;
     pskc_valueformat v = pskc_get_key_algparm_chall_encoding (pskc_key, &p);
-    if (p != 1 || v != PSKC_VALUEFORMAT_HEXADECIMAL)
+    pskc_valueformat v2 = pskc_get_key_algparm_chall_encoding (pskc_key, NULL);
+    if (p != 1 || v != v2 || v != PSKC_VALUEFORMAT_HEXADECIMAL)
       {
 	printf ("pskc_get_key_algparm_chall_encoding\n");
 	return 1;
@@ -284,7 +444,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_algparm_chall_min (pskc_key, &p);
-    if (p != 1 || l != 42)
+    uint32_t m = pskc_get_key_algparm_chall_min (pskc_key, NULL);
+    if (p != 1 || l != m || l != 42)
       {
 	printf ("pskc_get_key_algparm_chall_min\n");
 	return 1;
@@ -294,7 +455,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_algparm_chall_max (pskc_key, &p);
-    if (p != 1 || l != 4711)
+    uint32_t m = pskc_get_key_algparm_chall_max (pskc_key, NULL);
+    if (p != 1 || l != m || l != 4711)
       {
 	printf ("pskc_get_key_algparm_chall_max\n");
 	return 1;
@@ -304,7 +466,8 @@ main (void)
   {
     int p;
     int b = pskc_get_key_algparm_chall_checkdigits (pskc_key, &p);
-    if (p != 1 || b != 1)
+    int c = pskc_get_key_algparm_chall_checkdigits (pskc_key, NULL);
+    if (p != 1 || b != c || b != 1)
       {
 	printf ("pskc_get_key_algparm_chall_checkdigits\n");
 	return 1;
@@ -314,7 +477,8 @@ main (void)
   {
     int p;
     pskc_valueformat v = pskc_get_key_algparm_resp_encoding (pskc_key, &p);
-    if (p != 1 || v != PSKC_VALUEFORMAT_DECIMAL)
+    pskc_valueformat v2 = pskc_get_key_algparm_resp_encoding (pskc_key, NULL);
+    if (p != 1 || v != v2 || v != PSKC_VALUEFORMAT_DECIMAL)
       {
 	printf ("pskc_get_key_algparm_resp_encoding\n");
 	return 1;
@@ -324,7 +488,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_algparm_resp_length (pskc_key, &p);
-    if (p != 1 || l != 8)
+    uint32_t m = pskc_get_key_algparm_resp_length (pskc_key, NULL);
+    if (p != 1 || l != m || l != 8)
       {
 	printf ("pskc_get_key_algparm_resp_length\n");
 	return 1;
@@ -334,7 +499,8 @@ main (void)
   {
     int p;
     int b = pskc_get_key_algparm_resp_checkdigits (pskc_key, &p);
-    if (p != 1 || b != 1)
+    int c = pskc_get_key_algparm_resp_checkdigits (pskc_key, NULL);
+    if (p != 1 || b != c || b != 1)
       {
 	printf ("pskc_get_key_algparm_resp_checkdigits\n");
 	return 1;
@@ -387,6 +553,15 @@ main (void)
   }
 
   {
+    const char *s = pskc_get_key_data_secret (pskc_key, NULL);
+    if (s == NULL)
+      {
+	printf ("pskc_get_key_data_secret NULL\n");
+	return 1;
+      }
+  }
+
+  {
     size_t l;
     const char *s = pskc_get_key_data_secret (pskc_key, &l);
     if (s == NULL || memcmp (s, "12345678901234567890", l) != 0)
@@ -399,7 +574,8 @@ main (void)
   {
     int p;
     uint64_t l = pskc_get_key_data_counter (pskc_key, &p);
-    if (p != 1 || l != 12345678)
+    uint64_t m = pskc_get_key_data_counter (pskc_key, NULL);
+    if (p != 1 || l != m || l != 12345678)
       {
 	printf ("pskc_get_key_data_counter\n");
 	return 1;
@@ -409,7 +585,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_data_time (pskc_key, &p);
-    if (p != 1 || l != 100)
+    uint32_t m = pskc_get_key_data_time (pskc_key, NULL);
+    if (p != 1 || l != m || l != 100)
       {
 	printf ("pskc_get_key_data_time\n");
 	return 1;
@@ -419,7 +596,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_data_timeinterval (pskc_key, &p);
-    if (p != 1 || l != 200)
+    uint32_t m = pskc_get_key_data_timeinterval (pskc_key, NULL);
+    if (p != 1 || l != m || l != 200)
       {
 	printf ("pskc_get_key_data_timeinterval\n");
 	return 1;
@@ -429,7 +607,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_data_timedrift (pskc_key, &p);
-    if (p != 1 || l != 300)
+    uint32_t m = pskc_get_key_data_timedrift (pskc_key, NULL);
+    if (p != 1 || l != m || l != 300)
       {
 	printf ("pskc_get_key_data_timedrift\n");
 	return 1;
@@ -468,7 +647,8 @@ main (void)
   {
     int p;
     pskc_pinusagemode u = pskc_get_key_policy_pinusagemode (pskc_key, &p);
-    if (p != 1 || u != PSKC_PINUSAGEMODE_LOCAL)
+    pskc_pinusagemode v = pskc_get_key_policy_pinusagemode (pskc_key, NULL);
+    if (p != 1 || u != v || u != PSKC_PINUSAGEMODE_LOCAL)
       {
 	printf ("pskc_get_key_policy_pinusagemode\n");
 	return 1;
@@ -478,7 +658,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_policy_pinmaxfailedattempts (pskc_key, &p);
-    if (p != 1 || l != 8)
+    uint32_t m = pskc_get_key_policy_pinmaxfailedattempts (pskc_key, NULL);
+    if (p != 1 || l != m || l != 8)
       {
 	printf ("pskc_get_key_policy_pinmaxfailedattempts\n");
 	return 1;
@@ -488,7 +669,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_policy_pinminlength (pskc_key, &p);
-    if (p != 1 || l != 99)
+    uint32_t m = pskc_get_key_policy_pinminlength (pskc_key, NULL);
+    if (p != 1 || l != m || l != 99)
       {
 	printf ("pskc_get_key_policy_pinminlength\n");
 	return 1;
@@ -498,7 +680,8 @@ main (void)
   {
     int p;
     uint32_t l = pskc_get_key_policy_pinmaxlength (pskc_key, &p);
-    if (p != 1 || l != 999)
+    uint32_t m = pskc_get_key_policy_pinmaxlength (pskc_key, NULL);
+    if (p != 1 || l != m || l != 999)
       {
 	printf ("pskc_get_key_policy_pinmaxlength\n");
 	return 1;
@@ -508,7 +691,8 @@ main (void)
   {
     int p;
     pskc_valueformat v = pskc_get_key_policy_pinencoding (pskc_key, &p);
-    if (p != 1 || v != PSKC_VALUEFORMAT_HEXADECIMAL)
+    pskc_valueformat w = pskc_get_key_policy_pinencoding (pskc_key, NULL);
+    if (p != 1 || v != w || v != PSKC_VALUEFORMAT_HEXADECIMAL)
       {
 	printf ("pskc_get_key_policy_pinencoding\n");
 	return 1;
@@ -518,7 +702,8 @@ main (void)
   {
     int p;
     int v = pskc_get_key_policy_keyusages (pskc_key, &p);
-    if (p != 1 || v != (PSKC_KEYUSAGE_OTP | PSKC_KEYUSAGE_CR))
+    int w = pskc_get_key_policy_keyusages (pskc_key, NULL);
+    if (p != 1 || v != w || v != (PSKC_KEYUSAGE_OTP | PSKC_KEYUSAGE_CR))
       {
 	printf ("pskc_get_key_policy_pinencoding\n");
 	return 1;
@@ -529,7 +714,8 @@ main (void)
   {
     int p;
     uint64_t l = pskc_get_key_policy_numberoftransactions (pskc_key, &p);
-    if (p != 1 || l != 1234)
+    uint64_t m = pskc_get_key_policy_numberoftransactions (pskc_key, NULL);
+    if (p != 1 || l != m || l != 1234)
       {
 	printf ("pskc_get_key_policy_numberoftransactions\n");
 	return 1;

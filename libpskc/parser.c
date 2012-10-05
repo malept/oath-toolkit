@@ -351,7 +351,6 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 		}
 	    }
 	}
-      /* XXX incomplete */
       else
 	{
 	  _pskc_debug ("unknown <%s> element <%s>", x->parent->name, name);

@@ -67,6 +67,7 @@ dotest "-c -q pskc-figure10.xml" ""
 dotest "-c -q pskc-all.xml" ""
 dotest "-c -q pskc-ns.xml" ""
 dotest "-c -q pskc-ocra.xml" ""
+dotest "-c -q 20120919-test001-4282.xml" ""
 dotest "-e -q tst_pskctool.sh" "fail" fail
 dotest "-e pskc-figure2.xml" "OK"
 dotest "-e pskc-figure3.xml" "OK"
@@ -76,5 +77,6 @@ dotest "-e pskc-figure10.xml" "OK"
 dotest "-e pskc-all.xml" "OK"
 dotest "-e pskc-ns.xml" "OK"
 dotest "-e pskc-ocra.xml" "OK"
+dotest "-e 20120919-test001-4282.xml" "OK"
 
 exit 0

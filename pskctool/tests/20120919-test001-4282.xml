@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<KeyContainer Version="1.0" xmlns ="urn:ietf:params:xml:ns:keyprov:pskc">
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>FeiTian Technology Co.,Ltd</Manufacturer>
+      <SerialNo>2600215704919</SerialNo>
+    </DeviceInfo>
+    <Key Id="2600215704919" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:totp">
+      <AlgorithmParameters>
+        <ResponseFormat Length="6" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>zSK3gP/9LVNpaAfs039ATa45MnA=</PlainValue>
+        </Secret>
+        <Time>
+          <PlainValue>0</PlainValue>
+        </Time>
+        <TimeInterval>
+          <PlainValue>60</PlainValue>
+        </TimeInterval>
+      </Data>
+      <Policy>
+        <StartDate>2012-09-19T00:00:00Z</StartDate>
+        <ExpiryDate>2022-09-01T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>FeiTian Technology Co.,Ltd</Manufacturer>
+      <SerialNo>1000117803294</SerialNo>
+    </DeviceInfo>
+    <Key Id="1000117803294" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <AlgorithmParameters>
+        <ResponseFormat Length="6" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>TfpfT+8Jn9s6FYNIySi+uzXkIi0=</PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+      <Policy>
+        <StartDate>2012-09-19T00:00:00Z</StartDate>
+        <ExpiryDate>2022-09-01T00:00:00Z</ExpiryDate>
+      </Policy>
+    </Key>
+  </KeyPackage>
+</KeyContainer>

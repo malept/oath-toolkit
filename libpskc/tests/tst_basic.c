@@ -24,6 +24,17 @@
 #include <pskc/pskc.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+
+void
+my_log (const char *msg)
+{
+  if (msg == NULL)
+    {
+      printf ("log got NULL msg?\n");
+      exit (1);
+    }
+}
 
 int
 main (void)
@@ -98,9 +109,18 @@ main (void)
       return 1;
     }
 
+  rc = pskc_output (NULL, 42, NULL, NULL);
+  if (rc != PSKC_UNKNOWN_OUTPUT_FORMAT)
+    {
+      printf ("pskc_output: %d\n", rc);
+      return 1;
+    }
+
+  pskc_global_log (my_log);
+
   /* Test enums. */
 
-  for (i = 0; i < PSKC_PINUSAGEMODE_LAST; i++)
+  for (i = 0; i <= PSKC_PINUSAGEMODE_LAST; i++)
     {
       pskc_pinusagemode m;
       const char *str;
@@ -120,7 +140,7 @@ main (void)
 	}
     }
 
-  for (i = 0; i < PSKC_VALUEFORMAT_LAST; i++)
+  for (i = 0; i <= PSKC_VALUEFORMAT_LAST; i++)
     {
       pskc_valueformat m;
       const char *str;
@@ -140,25 +160,41 @@ main (void)
 	}
     }
 
-  for (i = 0; i < PSKC_KEYUSAGE_LAST; i = i << 1)
+  for (i = 1; i <= PSKC_KEYUSAGE_LAST; i = i << 1)
     {
-      pskc_valueformat m;
+      pskc_keyusage m;
       const char *str;
 
-      str = pskc_valueformat2str (i);
+      str = pskc_keyusage2str (i);
       if (str == NULL)
 	{
-	  printf ("pskc_valueformat2str(%d) == NULL\n", i);
+	  printf ("pskc_keyusage2str(%d) == NULL\n", i);
 	  return 1;
 	}
 
-      m = pskc_str2valueformat (str);
+      m = pskc_str2keyusage (str);
       if (m != i)
 	{
-	  printf ("pskc_str2valueformat(%s/%d) = %d\n", str, i, m);
+	  printf ("pskc_str2keyusage(%d/%s) = %d\n", i, str, m);
 	  return 1;
 	}
     }
+
+  {
+    const char *str = pskc_keyusage2str (42);
+    if (strcmp (str, "Unknown") != 0)
+      {
+	printf ("pskc_keyusage2str(42) == %s\n", str);
+	return 1;
+      }
+
+    if (pskc_str2keyusage ("foobar") != PSKC_KEYUSAGE_UNKNOWN)
+      {
+	printf ("pskc_str2keyusage (\"foobar\") == %d\n",
+		pskc_str2keyusage ("foobar"));
+	return 1;
+      }
+  }
 
   return 0;
 }
