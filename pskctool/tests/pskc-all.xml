@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0" Id="KCID">
   <KeyPackage>
     <DeviceInfo>
@@ -17,7 +17,7 @@
     <Key Id="KID1" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
       <Issuer>Issuer</Issuer>
       <AlgorithmParameters>
-	<Suite>Suite</Suite>
+        <Suite>Suite</Suite>
         <ChallengeFormat Encoding="DECIMAL" Min="42" Max="4711" CheckDigits="true"/>
         <ResponseFormat Encoding="DECIMAL" Length="8" CheckDigits="true"/>
       </AlgorithmParameters>
@@ -45,7 +45,7 @@
       <Policy>
         <StartDate>2006-05-01T00:00:00Z</StartDate>
         <ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate>
-        <PINPolicy PINKeyId="123456781" PINUsageMode="Local" MaxFailedAttempts="8" MinLength="99" MaxLength="999" PINEncoding="DECIMAL" />
+        <PINPolicy PINKeyId="123456781" PINUsageMode="Local" MaxFailedAttempts="8" MinLength="99" MaxLength="999" PINEncoding="DECIMAL"/>
         <KeyUsage>OTP</KeyUsage>
         <KeyUsage>CR</KeyUsage>
         <NumberOfTransactions>1234</NumberOfTransactions>

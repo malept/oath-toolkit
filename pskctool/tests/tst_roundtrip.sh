@@ -1,3 +1,6 @@
+#!/bin/sh
+
+# tst_roundtrip.sh - test that pskctool generates what it parses
 # Copyright (C) 2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
@@ -13,11 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-TESTS = tst_pskctool.sh tst_hyphen.sh tst_roundtrip.sh
-dist_check_SCRIPTS = tst_pskctool.sh tst_hyphen.sh tst_roundtrip.sh
+set -e
 
-EXTRA_DIST = pskc-figure2.xml pskc-figure3.xml pskc-figure4.xml	\
-	pskc-figure5.xml pskc-figure6.xml pskc-figure7.xml	\
-	pskc-figure8.xml pskc-figure9.xml pskc-figure10.xml
+PSKCTOOL=../pskctool
 
-EXTRA_DIST += pskc-all.xml pskc-ns.xml pskc-ocra.xml
+srcdir="${srcdir:-.}"
+pskc_all="$srcdir/pskc-all.xml"
+
+$PSKCTOOL -v -q -d -c $pskc_all > tmp
+
+diff -ur $pskc_all tmp
+
+rm -f tmp
+
+exit 0
