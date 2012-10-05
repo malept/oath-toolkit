@@ -17,7 +17,7 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = gl . tests gtk-doc man
+SUBDIRS = gl . examples tests gtk-doc man
 
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 

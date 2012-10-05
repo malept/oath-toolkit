@@ -17,7 +17,7 @@
     </releaseinfo>
   </bookinfo>
 
-  <chapter>
+  <chapter id="intro">
     <title>Liboath API Reference Manual</title>
 
     <para>

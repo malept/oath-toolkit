@@ -56,8 +56,6 @@ static const err_t errors[] = {
  *
  * Return value: Returns a pointer to a statically allocated string
  *   containing an explanation of the error code @err.
- *
- * Since: 2.0.0
  **/
 const char *
 pskc_strerror (int err)
@@ -92,8 +90,6 @@ pskc_strerror (int err)
  * Return value: Returns a pointer to a statically allocated string
  *   containing a string version of the error code @err, or %NULL if
  *   the error code is not known.
- *
- * Since: 2.0.0
  **/
 const char *
 pskc_strerror_name (int err)

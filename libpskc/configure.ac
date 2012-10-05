@@ -98,6 +98,7 @@ AC_CONFIG_FILES([
   pskc.h
   gl/Makefile
   gl/tests/Makefile
+  examples/Makefile
   tests/Makefile
   gtk-doc/Makefile
   gtk-doc/version.xml

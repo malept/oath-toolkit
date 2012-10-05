@@ -4,39 +4,127 @@
 	  [
 	  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
 	  <!ENTITY version SYSTEM "version.xml">
+	  <!ENTITY pskc-example-serialno SYSTEM "examples/serialno.sgml">
+	  <!ENTITY pskc-example-mini SYSTEM "examples/pskc-mini.sgml">
+	  <!ENTITY pskc-example-hotp SYSTEM "examples/pskc-hotp.sgml">
 	  ]>
 <book id="index">
   <bookinfo>
-    <title>Libpskc API Reference Manual</title>
+    <title>PSKC Library Manual</title>
+    <authorgroup>
+      <author>
+        <firstname>Simon</firstname>
+        <surname>Josefsson</surname>
+        <affiliation>
+	  <address>
+	    <email>simon@josefsson.org</email>
+	  </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+    <copyright>
+      <year>2012</year>
+      <holder>Simon Josefsson</holder>
+    </copyright>
+    <legalnotice>
+      <para>
+	Copying and distribution of this file, with or without modification,
+	are permitted in any medium without royalty provided the copyright
+	notice and this notice are preserved.
+      </para>
+    </legalnotice>
+
+    <abstract>
+      <para>
+	The Portable Symmetric Key Container (PSKC) format is used to
+	transport and provision symmetric keys to cryptographic
+	devices or software.  The PSKC Library allows you to parse,
+	validate and generate PSKC data.  This manual documents the
+	interfaces of PSKC library and contains a tutorial to get you
+	started working with the library.
+      </para>
+    </abstract>
     <releaseinfo>
-      for Libpskc &version;
-      The latest version of this documentation can be found on-line at
+      Version &version;.  The latest version of this documentation can
+      be found on-line at
       <ulink role="online-location"
 	     url="http://www.nongnu.org/oath-toolkit/libpskc/">
 	http://www.nongnu.org/oath-toolkit/libpskc/</ulink>.
     </releaseinfo>
   </bookinfo>
 
-  <chapter>
-    <title>Libpskc API Reference Manual</title>
+  <part id="pskc-tutorial">
+    <title>Tutorial</title>
+    <chapter id="pskc-tutorial-intro">
+      <title>Overview</title>
+      <para>
+	The Portable Symmetric Key Container (PSKC) format is used to
+	transport and provision symmetric keys to cryptographic
+	devices or software.  The PSKC Library allows you to parse,
+	validate and generate PSKC data.  The PSKC Library is written
+	in C, uses LibXML, and is licensed under LGPLv2+.  A companion
+	to the library is a command line tool to interactively
+	manipulate PSKC data.
+      </para>
 
-    <para>
-      Libpskc is a shared and static C library for handling PSKC data.
-    </para>
+      <para>
+	To get a feeling of the PSKC data format we show the shortest
+	possible valid PSKC content.
+      </para>
 
-    <para>
-      Libpskc and this manual are licensed under the LGPLv2.1+.  This
-      manual is actually automatically generated from the source code.
-      See COPYING in the package for more licensing information.
-    </para>
+      &pskc-example-mini;
 
+      <para>
+	Of course, since the intent with PSKC is to transport
+	cryptographic keys, the example above is of little use.  The
+	next example is more realistic, and show PSKC data used to
+	transport a key used for a OATH HOTP implementation.  The
+	interesting values are the DeviceInfo values to identify the
+	intended hardware, the Key Id "12345678", and the
+	base64-encoded shared secret "MTIzNA==".
+      </para>
+
+      &pskc-example-hotp;
+
+      <para>
+	To illustrate how the library works, let's give an example on
+	how to parse the data above and print the device serial number
+	(SerialNo field).  The code below is complete but performs no
+	error checking whatsoever and is thus unsafe to use as-is.
+      </para>
+
+	&pskc-example-serialno;
+
+      <para>
+	Compiling and linking code with the PSKC Library requires that
+	you specify correct compilation flags so that the header
+	include file and the shared library is found.  There is only
+	one include file and it is pskc.h and the library is called
+	libpskc.so on GNU/Linux machines and libpskc.dll on Windows
+	systems.  To build the previous file, assuming the code is
+	stored in a file called "serialno.c", invoke the following
+	command.
+      </para>
+
+      <para><informalexample><programlisting>cc -o serialno serialno.c -I/path/to/pskc/include/path -lpskc</programlisting></informalexample></para>
+
+      <para>
+	A pkg-config file is provided, so that you may use pkg-config
+	to select proper compilation flags if you want.
+      </para>
+
+      <para><informalexample><programlisting>cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)</programlisting></informalexample></para>
+
+    </chapter>
+  </part>
+
+  <part id="pskc-reference">
+    <title>API Reference</title>
     <xi:include href="xml/pskc.xml"/>
-  </chapter>
 
-  <index id="api-index-full">
-    <title>Index of all symbols</title>
-  </index>
-  <index role="2.0.0" id="api-index-2-0-0">
-    <title>Index of new symbols in 2.0.0</title>
-  </index>
+    <index id="api-index-full">
+      <title>Index of all symbols</title>
+    </index>
+  </part>
+
 </book>

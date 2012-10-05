@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KeyContainer Version="1.0"
+	      xmlns="urn:ietf:params:xml:ns:keyprov:pskc">
+  <KeyPackage>
+    <DeviceInfo>
+      <Manufacturer>Manufacturer</Manufacturer>
+      <SerialNo>987654321</SerialNo>
+    </DeviceInfo>
+    <Key Id="12345678"
+         Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+      <AlgorithmParameters>
+        <ResponseFormat Length="8" Encoding="DECIMAL"/>
+      </AlgorithmParameters>
+      <Data>
+        <Secret>
+          <PlainValue>MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+          </PlainValue>
+        </Secret>
+        <Counter>
+          <PlainValue>0</PlainValue>
+        </Counter>
+      </Data>
+    </Key>
+  </KeyPackage>
+</KeyContainer>

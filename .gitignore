@@ -416,6 +416,9 @@ libpskc/enums.lo
 libpskc/enums.o
 libpskc/errors.lo
 libpskc/errors.o
+libpskc/examples/.deps/
+libpskc/examples/serialno
+libpskc/examples/serialno.o
 libpskc/gl/.deps/
 libpskc/gl/.libs/
 libpskc/gl/arg-nonnull.h
@@ -503,6 +506,7 @@ libpskc/gl/umaxtostr.o
 libpskc/gl/warn-on-use.h
 libpskc/global.lo
 libpskc/global.o
+libpskc/gtk-doc/examples/
 libpskc/gtk-doc/html-build.stamp
 libpskc/gtk-doc/html.stamp
 libpskc/gtk-doc/html/

@@ -66,7 +66,7 @@ HTML_IMAGES=
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
 # e.g. content_files=running.sgml building.sgml changes-2.0.sgml
-content_files=
+content_files=examples/serialno.sgml examples/pskc-mini.sgml examples/pskc-hotp.sgml
 
 # SGML files where gtk-doc abbrevations (#GtkWidget) are expanded
 # These files must be listed here *and* in content_files
@@ -101,3 +101,25 @@ TESTS_ENVIRONMENT = cd $(srcdir) && \
   SRCDIR=$(abs_srcdir) BUILDDIR=$(abs_builddir)
 #TESTS = $(GTKDOC_CHECK)
 endif
+
+EXAMPLES_SOURCE_DIR=../examples
+EXAMPLES_SOURCE_FILES=\
+	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.c' -print) \
+	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.xml' -print)
+
+$(content_files):
+	@mkdir -p examples
+	@(for i in $(EXAMPLES_SOURCE_FILES) ; do \
+	    file_name=`echo $$i | sed 's#.*/##' | sed 's#\..*$$##'`; \
+	    file_ext=`echo $$i | sed 's#.*/##' | sed 's#.*\.##'`; \
+	    echo "  GEN   $$file_name.sgml"; \
+	    echo "<para><informalexample><programlisting>" >> \
+		examples/$$file_name.sgml; \
+	    cat $$i | \
+		sed "s#&#\&amp;#g" | \
+		sed "s#<#\&lt;#g" | \
+		sed "s#>#\&gt;#g" >> \
+		examples/$$file_name.sgml; \
+	    echo "</programlisting></informalexample></para>" >> \
+		examples/$$file_name.sgml; \
+	done);
