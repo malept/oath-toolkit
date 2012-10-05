@@ -242,14 +242,14 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tFriendlyName: %s\n", key_friendlyname);
   if (key_issuer)
     buffer_addf (buf, "\t\t\tIssuer: %s\n", key_issuer);
+  if (key_algorithm)
+    buffer_addf (buf, "\t\t\tAlgorithm: %s\n", key_algorithm);
+  if (key_userid)
+    buffer_addf (buf, "\t\t\tKey User Id: %s\n", key_userid);
   if (key_profileid)
     buffer_addf (buf, "\t\t\tKey Profile Id: %s\n", key_profileid);
   if (key_reference)
     buffer_addf (buf, "\t\t\tKey Reference: %s\n", key_reference);
-  if (key_userid)
-    buffer_addf (buf, "\t\t\tKey User Id: %s\n", key_userid);
-  if (key_algorithm)
-    buffer_addf (buf, "\t\t\tAlgorithm: %s\n", key_algorithm);
   if (key_b64secret)
     buffer_addf (buf, "\t\t\tKey Secret (base64): %s\n", key_b64secret);
   if (key_counter_present)
@@ -266,7 +266,7 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     {
       int i;
       buffer_addf (buf, "\t\t\tKey Usage:");
-      for (i = 1; i <= PSKC_KEYUSAGE_GENERATE; i = i << 1)
+      for (i = 1; i <= PSKC_KEYUSAGE_LAST; i = i << 1)
 	{
 	  const char *keyusage_str = pskc_keyusage2str (i);
 

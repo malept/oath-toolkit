@@ -191,6 +191,8 @@ pskc_str2valueformat (const char *valueformat);
  * derivation function to derive a new key.
  * @PSKC_KEYUSAGE_GENERATE: The key MUST only be used to generate a
  * new key based on a random number and the previous value of the key.
+ * @PSKC_KEYUSAGE_LAST: Meta-value corresponding to the highest value,
+ * for use in iterating over all key usage values.
  *
  * Enumeration of PSKC key usage values.  These values puts
  * constraints on the intended usage of the key.  The recipient of the
@@ -211,7 +213,9 @@ typedef enum
     PSKC_KEYUSAGE_KEYWRAP = 128,
     PSKC_KEYUSAGE_UNWRAP = 256,
     PSKC_KEYUSAGE_DERIVE = 512,
-    PSKC_KEYUSAGE_GENERATE = 1024
+    PSKC_KEYUSAGE_GENERATE = 1024,
+    /* Make sure the following value is the highest. */
+    PSKC_KEYUSAGE_LAST = PSKC_KEYUSAGE_GENERATE
   } pskc_keyusage;
 
 extern PSKCAPI const char *pskc_keyusage2str (pskc_keyusage keyusage);

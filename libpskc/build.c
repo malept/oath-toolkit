@@ -339,7 +339,7 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
   if (keyusage_p)
     {
       int i;
-      for (i = 1; i <= PSKC_KEYUSAGE_GENERATE; i = i << 1)
+      for (i = 1; i <= PSKC_KEYUSAGE_LAST; i = i << 1)
 	{
 	  const char *keyusage_str = pskc_keyusage2str (i);
 
