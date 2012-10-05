@@ -16,8 +16,8 @@
 purpose "Manage Portable Symmetric Key Container (PSKC) data."
 
 option "build" b "build PSKC data" flag off
-option "check" c "parse and pretty print XML input" flag off
-option "validate" e "validate XML input according to XML Schema" flag off
+option "check" c "parse and pretty print PSKC input" flag off
+option "validate" e "validate PSKC input according to schema" flag off
 
 option "strict" - "fail hard on PSKC parse error" flag off
 option "debug" d "enable debug logging" flag off

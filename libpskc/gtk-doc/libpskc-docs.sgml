@@ -55,8 +55,8 @@
 
   <part id="pskc-tutorial">
     <title>Tutorial</title>
-    <chapter id="pskc-tutorial-intro">
-      <title>Overview</title>
+    <chapter id="pskc-tutorial-quickstart">
+      <title>Quickstart</title>
       <para>
 	The Portable Symmetric Key Container (PSKC) format is used to
 	transport and provision symmetric keys to cryptographic
@@ -114,6 +114,124 @@
       </para>
 
       <para><informalexample><programlisting>cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)</programlisting></informalexample></para>
+
+    </chapter>
+
+    <chapter id="pskc-tutorial-pskctool">
+      <title>Command line pskctool</title>
+      <para>
+	To simplify working with PSKC data a command line tool is also
+	provided, called "pskctool".  This tool can be used to parse,
+	validate, and build PSKC data.  When invoked without
+	parameters, it will print some instructions describing the
+	parameters it accepts.
+      </para>
+
+      <para><informalexample><programlisting>
+pskctool 1.12.6.32-dirty
+
+Manage Portable Symmetric Key Container (PSKC) data.
+
+Usage: pskctool [OPTIONS]... [FILE]...
+
+  -h, --help      Print help and exit
+  -V, --version   Print version and exit
+  -b, --build     build PSKC data  (default=off)
+  -c, --check     parse and pretty print PSKC input  (default=off)
+  -e, --validate  validate PSKC input according to schema  (default=off)
+      --strict    fail hard on PSKC parse error  (default=off)
+  -d, --debug     enable debug logging  (default=off)
+  -q, --quiet     quiet operation  (default=off)
+  -v, --verbose   produce more output  (default=off)
+
+Report bugs to: oath-toolkit-help@nongnu.org
+pskctool home page: &lt;http://www.nongnu.org/oath-toolkit/&gt;
+General help using GNU software: &lt;http://www.gnu.org/gethelp/&gt;
+      </programlisting></informalexample></para>
+
+      <para>
+	The most common parameter to use is --check (-c) to parse and
+	pretty print PSKC data.  A filename can be supplied to have
+	the tool read PSKC data from that file, or if no filename is
+	supplied, the tool will read from standard input.  To
+	illustrate how the tool works, we will assume the following
+	PSKC data is available in a file "pskc.xml".
+      </para>
+
+      &pskc-example-hotp;
+
+      <para>
+	Running the tool with the --check parameter on the content
+	above will produce a human readable variant of the PSKC data.
+      </para>
+
+      <para><informalexample><programlisting>
+Portable Symmetric Key Container (PSKC):
+	Version: 1.0
+	KeyPackage 0:
+		DeviceInfo:
+			Manufacturer: Manufacturer
+			SerialNo: 987654321
+		Key:
+			Id: 12345678
+			Algorithm: urn:ietf:params:xml:ns:keyprov:pskc:hotp
+			Key Secret (base64): MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+			Key Counter: 0
+			Response Format Length: 8
+			Response Format Encoding: DECIMAL
+      </programlisting></informalexample></para>
+
+      <para>
+	If the --verbose (-v) parameter is given, the tool will also
+	build a new XML structure using the parsed values and then
+	print the generated XML structure.  This can be useful to
+	cleanup a non-indented or manually crafted PSKC file.  The
+	output will still contain the human readable summary, but you
+	may use --quiet (-q) to suppress that part.  Together, the
+	combination --verbose --quiet can be used in batch jobs to
+	clean up PSKC data.
+      </para>
+
+      <para>
+	In some situations when using pskctool --check the tool may
+	print a warning about unsupported elements.  The --debug
+	parameter can be used in these situations to get more
+	information about the source of the problem.  For example,
+	running "pskctool --check --debug" on the data in figure 9 of
+	RFC 6030 will currently yield the following output.
+      </para>
+
+      <para><informalexample><programlisting>
+debug: unknown &lt;KeyContainer&gt; element &lt;Signature&gt;
+warning: parse error (use -d to diagnose), output may be incomplete
+      </programlisting></informalexample></para>
+
+      <para>
+	Even when noticing a problem, the tool continue with the
+	parsing and will eventually print the information it managed
+	to parse.  In some situations (e.g., batch jobs) you would
+	prefer the tool to signal this error.  The --strict parameter
+	can be used to make the tool fail when there is a parse error.
+      </para>
+
+      <para>
+	The --validate (-e) parameter can be used to validate PSKC
+	data according to the XML Schema specified in RFC 6030.  This
+	performs a deep analysis and syntax check of the data and will
+	print either "OK" or "FAIL" depending on validation outcome.
+      </para>
+
+      <para><informalexample><programlisting>
+$ pskctool -e pskc-ocra.xml
+OK
+$
+      </programlisting></informalexample></para>
+
+      <para>
+	Note that the exit code from pskctool --validate is 0 even
+	when FAIL is printed, use --quiet to suppress output and let
+	the exit code correspond to validation result.
+      </para>
 
     </chapter>
   </part>
