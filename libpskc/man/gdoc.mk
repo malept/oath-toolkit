@@ -31,21 +31,21 @@ Makefile.gdoc: $(top_builddir)/configure Makefile.am gdoc.mk $(GDOC_SRC)
 	  echo "#" >> Makefile.gdoc; \
 	  echo "gdoc_TEXINFOS += $(GDOC_TEXI_PREFIX)$$shortfile.texi" >> Makefile.gdoc; \
 	  echo "$(GDOC_TEXI_PREFIX)$$shortfile.texi: $$file" >> Makefile.gdoc; \
-	  echo 'TABmkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
-	  echo 'TAB$$(PERL) $(GDOC_BIN) -texinfo $$(GDOC_TEXI_EXTRA_ARGS) $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	  echo 'TAB@mkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	  echo 'TAB@$$(PERL) $(GDOC_BIN) -texinfo $$(GDOC_TEXI_EXTRA_ARGS) $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
 	  echo >> Makefile.gdoc; \
 	  functions=`$(PERL) $(srcdir)/gdoc -listfunc $$file`; \
 	  for function in $$functions; do \
 	    echo "# $$shortfile: $$function" >> Makefile.gdoc; \
 	    echo "gdoc_TEXINFOS += $(GDOC_TEXI_PREFIX)$$function.texi" >> Makefile.gdoc; \
 	    echo "$(GDOC_TEXI_PREFIX)$$function.texi: $$file" >> Makefile.gdoc; \
-	    echo 'TABmkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
-	    echo 'TAB$$(PERL) $(GDOC_BIN) -texinfo $$(GDOC_TEXI_EXTRA_ARGS) -function'" $$function"' $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	    echo 'TAB@mkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	    echo 'TAB@$$(PERL) $(GDOC_BIN) -texinfo $$(GDOC_TEXI_EXTRA_ARGS) -function'" $$function"' $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
 	    echo >> Makefile.gdoc; \
 	    echo "gdoc_MANS += $(GDOC_MAN_PREFIX)$$function.3" >> Makefile.gdoc; \
 	    echo "$(GDOC_MAN_PREFIX)$$function.3: $$file" >> Makefile.gdoc; \
-	    echo 'TABmkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
-	    echo 'TAB$$(PERL) $(GDOC_BIN) -man $$(GDOC_MAN_EXTRA_ARGS) -function'" $$function"' $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	    echo 'TAB@mkdir -p `dirname $$@`' | sed "s/TAB/	/" >> Makefile.gdoc; \
+	    echo 'TAB@$$(PERL) $(GDOC_BIN) -man $$(GDOC_MAN_EXTRA_ARGS) -function'" $$function"' $$< > $$@' | sed "s/TAB/	/" >> Makefile.gdoc; \
 	    echo >> Makefile.gdoc; \
 	  done; \
 	  echo >> Makefile.gdoc; \

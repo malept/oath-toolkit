@@ -27,6 +27,7 @@
 #include "internal.h"
 #include <libxml/xmlschemas.h>
 
+/* global.c */
 extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
 
 /**

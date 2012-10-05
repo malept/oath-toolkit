@@ -1,13 +1,15 @@
-Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 Current limitations of Libpskc:
 
-* The EncryptionKey, MACMethod, Signature types are not supported.
+* No functions to set fields, only to read them.
 
-* No extensions are implemented.
+* The EncryptionKey, MACMethod, Signature types are not supported.
 
 * Only PlainValue data fields are supported (i.e., EncryptedValue and
   ValueMAC fields are not supported).
+
+* No extensions are implemented.
 
 Otherwise Libpskc is believed to be a complete PSKC implementation
 conforming to the PSKC standard RFC 6030.

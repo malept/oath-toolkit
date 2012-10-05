@@ -32,6 +32,8 @@
  *   by OTP validating party.
  * @PSKC_PINUSAGEMODE_ALGORITHMIC: The PIN is used as part of the
  * algorithm computation.
+ * @PSKC_PINUSAGEMODE_LAST: Meta-value corresponding to the highest value,
+ * for use in iterating over all usage mode values.
  *
  * Enumeration of PIN Policy Usage Modes.  This indicate the way the
  * PIN is used.
@@ -42,7 +44,9 @@ typedef enum
     PSKC_PINUSAGEMODE_LOCAL = 1,
     PSKC_PINUSAGEMODE_PREPEND = 2,
     PSKC_PINUSAGEMODE_APPEND = 3,
-    PSKC_PINUSAGEMODE_ALGORITHMIC = 4
+    PSKC_PINUSAGEMODE_ALGORITHMIC = 4,
+    /* Make sure the following value is the highest. */
+    PSKC_PINUSAGEMODE_LAST = PSKC_PINUSAGEMODE_ALGORITHMIC
   } pskc_pinusagemode;
 
 extern PSKCAPI const char *
@@ -58,6 +62,8 @@ pskc_str2pinusagemode (const char *pinusagemode);
  * @PSKC_VALUEFORMAT_ALPHANUMERIC: All letters and numbers (case sensitive).
  * @PSKC_VALUEFORMAT_BASE64: Base-64 encoded.
  * @PSKC_VALUEFORMAT_BINARY: Binary data.
+ * @PSKC_VALUEFORMAT_LAST: Meta-value corresponding to the highest value,
+ * for use in iterating over all encoding format values.
  *
  * Enumeration of PSKC value encoding formats.
  */
@@ -68,7 +74,9 @@ typedef enum
     PSKC_VALUEFORMAT_HEXADECIMAL = 2,
     PSKC_VALUEFORMAT_ALPHANUMERIC = 3,
     PSKC_VALUEFORMAT_BASE64 = 4,
-    PSKC_VALUEFORMAT_BINARY = 5
+    PSKC_VALUEFORMAT_BINARY = 5,
+    /* Make sure the following value is the highest. */
+    PSKC_VALUEFORMAT_LAST = PSKC_VALUEFORMAT_BINARY
   } pskc_valueformat;
 
 extern PSKCAPI const char *
