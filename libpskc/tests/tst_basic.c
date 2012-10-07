@@ -32,7 +32,7 @@ my_log (const char *msg)
   if (msg == NULL)
     {
       printf ("log got NULL msg?\n");
-      exit (1);
+      exit (EXIT_FAILURE);
     }
 }
 
@@ -88,26 +88,11 @@ main (void)
 
   /* Test deinitialization. */
 
-  rc = pskc_global_done ();
-  if (rc != PSKC_OK)
-    {
-      printf ("pskc_global_done: %d\n", rc);
-      return 1;
-    }
-
-  rc = pskc_global_done ();
-  if (rc != PSKC_OK)
-    {
-      printf ("pskc_global_done: %d\n", rc);
-      return 1;
-    }
-
-  rc = pskc_global_done ();
-  if (rc != PSKC_OK)
-    {
-      printf ("pskc_global_done: %d\n", rc);
-      return 1;
-    }
+  pskc_global_done ();
+  pskc_global_done ();
+  pskc_global_done ();
+  pskc_global_done ();
+  pskc_global_done ();
 
   rc = pskc_output (NULL, 42, NULL, NULL);
   if (rc != PSKC_UNKNOWN_OUTPUT_FORMAT)

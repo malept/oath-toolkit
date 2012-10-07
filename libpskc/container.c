@@ -29,7 +29,7 @@
 
 /**
  * pskc_get_version:
- * @container: #pskc_t handle
+ * @container: a #pskc_t handle, from pskc_init().
  *
  * Get the PSKC KeyContainer Version attribute.  Normally this string
  * is always "1.0" and a missing field is a syntax error according to
@@ -46,7 +46,7 @@ pskc_get_version (pskc_t *container)
 
 /**
  * pskc_get_id:
- * @container: #pskc_t handle
+ * @container: a #pskc_t handle, from pskc_init().
  *
  * Get the PSKC KeyContainer Id attribute.
  *
@@ -61,8 +61,8 @@ pskc_get_id (pskc_t *container)
 
 /**
  * pskc_get_keypackage:
- * @container: #pskc_t handle
- * @i: number of keypackage to get
+ * @container: a #pskc_t handle, from pskc_init().
+ * @i: number of keypackage to get.
  *
  * Get a PSKC keypackage #pskc_key_t handle for the @i'th key package
  * in @container.  @i is zero-based, i.e., 0 refer to the first key
@@ -82,7 +82,7 @@ pskc_get_keypackage (pskc_t *container,
 
 /**
  * pskc_get_device_manufacturer:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo Manufacturer value.  This
  * element indicates the manufacturer of the device.
@@ -98,7 +98,7 @@ pskc_get_device_manufacturer (pskc_key_t *key)
 
 /**
  * pskc_get_device_serialno:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo SerialNo value.  This element
  * contains the serial number of the device.
@@ -114,7 +114,7 @@ pskc_get_device_serialno (pskc_key_t *key)
 
 /**
  * pskc_get_device_model:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo Model value.  This element
  * describes the model of the device (e.g.,
@@ -131,7 +131,7 @@ pskc_get_device_model (pskc_key_t *key)
 
 /**
  * pskc_get_device_issueno:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo Issueno value.  This element
  * contains the issue number in case there are devices with the same
@@ -149,7 +149,7 @@ pskc_get_device_issueno (pskc_key_t *key)
 
 /**
  * pskc_get_device_devicebinding:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo Devicebinding value.  This
  * element allows a provisioning server to ensure that the key is
@@ -171,7 +171,7 @@ pskc_get_device_devicebinding (pskc_key_t *key)
 
 /**
  * pskc_get_device_startdate:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo StartDate.  This element denote
  * the start date of a device (such as the one on a payment card, used
@@ -190,7 +190,7 @@ pskc_get_device_startdate (pskc_key_t *key)
 
 /**
  * pskc_get_device_expirydate:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo ExpiryDate.  This element denote
  * the end date of a device (such as the one on a payment card, used
@@ -209,7 +209,7 @@ pskc_get_device_expirydate (pskc_key_t *key)
 
 /**
  * pskc_get_device_userid:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage DeviceInfo Userid value.  This indicates
  * the user with whom the device is associated.
@@ -225,7 +225,7 @@ pskc_get_device_userid (pskc_key_t *key)
 
 /**
  * pskc_get_cryptomodule_id:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage CryptoModule Id value.  This element
  * carries a unique identifier for the CryptoModule and is
@@ -243,7 +243,7 @@ pskc_get_cryptomodule_id (pskc_key_t *key)
 
 /**
  * pskc_get_key_id:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Id attribute value.  It is a syntax
  * error for this attribute to not be available.
@@ -259,7 +259,7 @@ pskc_get_key_id (pskc_key_t *key)
 
 /**
  * pskc_get_key_algorithm:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Algorithm attribute value.
  *
@@ -274,7 +274,7 @@ pskc_get_key_algorithm (pskc_key_t *key)
 
 /**
  * pskc_get_key_issuer:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Issuer value.
  *
@@ -289,7 +289,7 @@ pskc_get_key_issuer (pskc_key_t *key)
 
 /**
  * pskc_get_key_algparm_suite:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters Suite value.
  *
@@ -304,7 +304,7 @@ pskc_get_key_algparm_suite (pskc_key_t *key)
 
 /**
  * pskc_get_key_algparm_chall_encoding:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ChallengeFormat
@@ -332,7 +332,7 @@ pskc_get_key_algparm_chall_encoding (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_chall_min:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ChallengeFormat Min
@@ -365,7 +365,7 @@ pskc_get_key_algparm_chall_min (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_chall_max:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ChallengeFormat Max
@@ -398,7 +398,7 @@ pskc_get_key_algparm_chall_max (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_chall_checkdigits:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ChallengeFormat
@@ -432,7 +432,7 @@ pskc_get_key_algparm_chall_checkdigits (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_resp_encoding:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ResponseFormat
@@ -460,7 +460,7 @@ pskc_get_key_algparm_resp_encoding (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_resp_length:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ResponseFormat
@@ -492,7 +492,7 @@ pskc_get_key_algparm_resp_length (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_algparm_resp_checkdigits:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key AlgorithmParameters ResponseFormat
@@ -525,7 +525,7 @@ pskc_get_key_algparm_resp_checkdigits (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_profileid:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key KeyProfileId value.
  *
@@ -540,7 +540,7 @@ pskc_get_key_profileid (pskc_key_t *key)
 
 /**
  * pskc_get_key_reference:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key KeyReference value.
  *
@@ -555,7 +555,7 @@ pskc_get_key_reference (pskc_key_t *key)
 
 /**
  * pskc_get_key_friendlyname:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Friendlyname value.
  *
@@ -570,7 +570,7 @@ pskc_get_key_friendlyname (pskc_key_t *key)
 
 /**
  * pskc_get_key_userid:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Userid value.
  *
@@ -585,7 +585,7 @@ pskc_get_key_userid (pskc_key_t *key)
 
 /**
  * pskc_get_key_data_secret:
- * @key: #pskc_t handle.
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @len: pointer to output variable with length of returned data.
  *
  * Get the PSKC KeyPackage Key Data Secret value.  If @len is not set,
@@ -606,7 +606,7 @@ pskc_get_key_data_secret (pskc_key_t *key,
 
 /**
  * pskc_get_key_data_b64secret:
- * @key: #pskc_t handle.
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Data Secret value in base64 as a
  * zero-terminated string.
@@ -622,7 +622,7 @@ pskc_get_key_data_b64secret (pskc_key_t *key)
 
 /**
  * pskc_get_key_data_counter:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Data Counter value.  This element
@@ -649,7 +649,7 @@ pskc_get_key_data_counter (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_data_time:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Data Time value.  This element contains
@@ -678,7 +678,7 @@ pskc_get_key_data_time (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_data_timeinterval:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Data TimeInterval value.  This element
@@ -707,7 +707,7 @@ pskc_get_key_data_timeinterval (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_data_timedrift:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Data TimeDrift value.  This element
@@ -741,7 +741,7 @@ pskc_get_key_data_timedrift (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_startdate:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Policy StartDate.  This element denote
  * the start of the validity period of a key.
@@ -759,7 +759,7 @@ pskc_get_key_policy_startdate (pskc_key_t *key)
 
 /**
  * pskc_get_key_policy_expirydate:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Policy ExpiryDate.  This element denote
  * the expiry of the validity period of a key.
@@ -777,7 +777,7 @@ pskc_get_key_policy_expirydate (pskc_key_t *key)
 
 /**
  * pskc_get_key_policy_pinkeyid:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy PINKeyId value.  This
  * attribute carries the unique 'Id' attribute vale of the "Key"
@@ -795,7 +795,7 @@ pskc_get_key_policy_pinkeyid (pskc_key_t *key)
 
 /**
  * pskc_get_key_policy_pinusagemode:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy PINUsageMode value.
@@ -823,7 +823,7 @@ pskc_get_key_policy_pinusagemode (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_pinmaxfailedattempts:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy MaxFailedAttempts
@@ -853,7 +853,7 @@ pskc_get_key_policy_pinmaxfailedattempts (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_pinminlength:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy MinLength value.  This
@@ -886,7 +886,7 @@ pskc_get_key_policy_pinminlength (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_pinmaxlength:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy MaxLength value.  This
@@ -919,7 +919,7 @@ pskc_get_key_policy_pinmaxlength (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_pinencoding:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy PINPolicy PINEncoding value.
@@ -947,7 +947,7 @@ pskc_get_key_policy_pinencoding (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_numberoftransactions:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy NumberOfTransactions value.  The
@@ -981,7 +981,7 @@ pskc_get_key_policy_numberoftransactions (pskc_key_t *key, int *present)
 
 /**
  * pskc_get_key_policy_keyusages:
- * @key: #pskc_t handle
+ * @key: a #pskc_key_t handle, from pskc_get_keypackage().
  * @present: output variable indicating whether data was provided or not.
  *
  * Get the PSKC KeyPackage Key Policy KeyUsage values.  The element

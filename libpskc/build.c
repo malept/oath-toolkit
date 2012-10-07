@@ -471,8 +471,8 @@ build_keycont (pskc_t *container, xmlNodePtr keycont)
 
 /**
  * pskc_build_xml:
- * @container: pointer to #pskc_t handle
- * @out: pointer to output variable to hold newly allocated string
+ * @container: a #pskc_t handle, from pskc_init().
+ * @out: pointer to output variable to hold newly allocated string.
  * @len: output variable holding length of *@out.
  *
  * This function builds a XML file from the data in @container and

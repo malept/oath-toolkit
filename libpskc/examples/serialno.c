@@ -20,7 +20,7 @@ main (int argc, const char *argv[])
 
   keypackage = pskc_get_keypackage (container, 0);
 
-  printf ("SerialNo: %s\n", pskc_get_key_id (keypackage));
+  printf ("SerialNo: %s\n", pskc_get_device_serialno (keypackage));
 
   pskc_done (container);
   pskc_global_done ();

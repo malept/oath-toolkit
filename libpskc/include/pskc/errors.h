@@ -23,6 +23,17 @@
 #define PSKC_ERRORS_H
 
 /**
+ * SECTION:errors
+ * @short_description: Error handling.
+ *
+ * Most library functions uses an int return value to indicate success
+ * or failure, using #pskc_rc values.  The values can be converted
+ * into human readable explanations using pskc_strerror().  The
+ * symbolic error codes can be converted into strings using
+ * pskc_strerror_name().
+ */
+
+/**
  * pskc_rc:
  * @PSKC_OK: Successful return.
  * @PSKC_MALLOC_ERROR: Memory allocation failed.

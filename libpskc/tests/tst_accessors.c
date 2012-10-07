@@ -733,12 +733,7 @@ main (void)
 
   pskc_done (pskc);
 
-  rc = pskc_global_done ();
-  if (rc != PSKC_OK)
-    {
-      printf ("pskc_global_done: %d\n", rc);
-      return 1;
-    }
+  pskc_global_done ();
 
   return 0;
 }

@@ -23,7 +23,7 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
 AM_CPPFLAGS = -DPSKC_BUILDING
 AM_CPPFLAGS += -I$(srcdir)/gl -I$(builddir)/gl
-AM_CPPFLAGS += -Iinclude
+AM_CPPFLAGS += -I$(srcdir)/include -I$(builddir)/include
 AM_CPPFLAGS += $(XML_CPPFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
@@ -31,7 +31,7 @@ AM_CFLAGS += $(CFLAG_VISIBILITY)
 
 lib_LTLIBRARIES = libpskc.la
 
-libpskc_la_SOURCES = internal.h
+libpskc_la_SOURCES = internal.h libpskc.map
 libpskc_la_SOURCES += global.c errors.c enums.c
 libpskc_la_SOURCES += container.c parser.c validate.c build.c output.c
 libpskc_la_LIBADD = gl/libgnu.la

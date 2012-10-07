@@ -16,6 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+set -e
+
+srcdir=${srcdir:-.}
 PSKCTOOL=../pskctool
 
 ME_=`expr "./$0" : '.*/\(.*\)$'`
@@ -40,8 +43,8 @@ dotest()
 	cmp="!="
     fi
 
-    got="`$PSKCTOOL $params 2> /dev/null`"
-    err="`$PSKCTOOL $params 2>&1 > /dev/null`"
+    got="`$PSKCTOOL $params 2> /dev/null || true`"
+    err="`$PSKCTOOL $params 2>&1 > /dev/null || true`"
 
     if test "`echo $got`" $cmp "$expect"; then
 	echo FAIL: pskctool $params
@@ -57,26 +60,29 @@ dotest()
 dotest "--version" "fail" fail
 dotest "" "fail" fail
 dotest "-h" "fail" fail
-dotest "-c tst_pskctool.sh" "fail" fail
-dotest "-c -q tst_pskctool.sh" "fail" fail
-dotest "-c -q pskc-figure2.xml" ""
-dotest "-c -q pskc-figure3.xml" ""
-dotest "-c -q pskc-figure4.xml" ""
-dotest "-c -q pskc-figure5.xml" ""
-dotest "-c -q pskc-figure10.xml" ""
-dotest "-c -q pskc-all.xml" ""
-dotest "-c -q pskc-ns.xml" ""
-dotest "-c -q pskc-ocra.xml" ""
-dotest "-c -q 20120919-test001-4282.xml" ""
-dotest "-e -q tst_pskctool.sh" "fail" fail
-dotest "-e pskc-figure2.xml" "OK"
-dotest "-e pskc-figure3.xml" "OK"
-dotest "-e pskc-figure4.xml" "OK"
-dotest "-e pskc-figure5.xml" "OK"
-dotest "-e pskc-figure10.xml" "OK"
-dotest "-e pskc-all.xml" "OK"
-dotest "-e pskc-ns.xml" "OK"
-dotest "-e pskc-ocra.xml" "OK"
-dotest "-e 20120919-test001-4282.xml" "OK"
+dotest "-c $srcdir/tst_pskctool.sh" "fail" fail
+dotest "-c -q $srcdir/tst_pskctool.sh" "fail" fail
+dotest "-c -q $srcdir/pskc-figure2.xml" ""
+dotest "-c -q $srcdir/pskc-figure3.xml" ""
+dotest "-c -q $srcdir/pskc-figure4.xml" ""
+dotest "-c -q $srcdir/pskc-figure5.xml" ""
+dotest "-c -q $srcdir/pskc-figure10.xml" ""
+dotest "-c -q $srcdir/pskc-all.xml" ""
+dotest "-c -q $srcdir/pskc-ns.xml" ""
+dotest "-c -q $srcdir/pskc-ocra.xml" ""
+dotest "-c -q $srcdir/20120919-test001-4282.xml" ""
+dotest "-e -q $srcdir/tst_pskctool.sh" "fail" fail
+dotest "-e $srcdir/tst_pskctool.sh" "fail" fail
+dotest "-e $srcdir/pskc-invalid.xml" "FAIL"
+dotest "-e -q $srcdir/pskc-invalid.xml" "FAIL" fail
+dotest "-e $srcdir/pskc-figure2.xml" "OK"
+dotest "-e $srcdir/pskc-figure3.xml" "OK"
+dotest "-e $srcdir/pskc-figure4.xml" "OK"
+dotest "-e $srcdir/pskc-figure5.xml" "OK"
+dotest "-e $srcdir/pskc-figure10.xml" "OK"
+dotest "-e $srcdir/pskc-all.xml" "OK"
+dotest "-e $srcdir/pskc-ns.xml" "OK"
+dotest "-e $srcdir/pskc-ocra.xml" "OK"
+dotest "-e $srcdir/20120919-test001-4282.xml" "OK"
 
 exit 0

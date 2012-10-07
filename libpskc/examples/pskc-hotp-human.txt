@@ -1,0 +1,13 @@
+Portable Symmetric Key Container (PSKC):
+	Version: 1.0
+	KeyPackage 0:
+		DeviceInfo:
+			Manufacturer: Manufacturer
+			SerialNo: 987654321
+		Key:
+			Id: 12345678
+			Algorithm: urn:ietf:params:xml:ns:keyprov:pskc:hotp
+			Key Secret (base64): MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+			Key Counter: 0
+			Response Format Length: 8
+			Response Format Encoding: DECIMAL

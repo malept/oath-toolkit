@@ -2,7 +2,7 @@
 <KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0" Id="KCID">
   <KeyPackage>
     <DeviceInfo>
-      <Manufacturer>Manufacturer</Manufacturer>
+      <Manufacturer>iana.dummy</Manufacturer>
       <SerialNo>SerialNo</SerialNo>
       <Model>Model</Model>
       <IssueNo>IssueNo</IssueNo>

@@ -22,6 +22,26 @@
 #ifndef PSKC_CONTAINER_H
 #define PSKC_CONTAINER_H
 
+/**
+ * SECTION:container
+ * @short_description: High-level PSKC container handling.
+ *
+ * PSKC data is represented through the #pskc_t type which is created
+ * by calling pskc_init() and destroyed by calling pskc_done().  You
+ * may parse PSKC data in XML form from a buffer by calling
+ * pskc_parse_from_memory().  To convert PSKC data to human readable
+ * form you may use pskc_output().  To validate PSKC data against the
+ * XML Schema, you may use pskc_validate().  To generate PSKC based on
+ * the internal parsed representation you may use pskc_build_xml()
+ * which takes a #pskc_output_format enumeration to indicate output
+ * form.
+ *
+ * The PSKC data structure is a high-level structure that only carries
+ * a version indicator (see pskc_get_version()), an optional identity
+ * field (see pskc_get_id()) and any number of #pskc_key_t types, each
+ * containing one key (see pskc_get_keypackage()).
+ */
+
 extern PSKCAPI int pskc_init (pskc_t **container);
 extern PSKCAPI void pskc_done (pskc_t *container);
 

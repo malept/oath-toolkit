@@ -23,6 +23,15 @@
 #define PSKC_VERSION_H
 
 /**
+ * SECTION:version
+ * @short_description: Library version handling.
+ *
+ * The pskc_check_version() function can be used to discover the
+ * library version and to test that the shared library during run-time
+ * is recent enough.
+ */
+
+/**
  * PSKC_VERSION
  *
  * Pre-processor symbol with a string that describe the header file
@@ -40,5 +49,7 @@
  * are only used between public releases, and will otherwise be 00.
  */
 #define PSKC_VERSION_NUMBER @VERSION_NUMBER@
+
+extern PSKCAPI const char *pskc_check_version (const char *req_version);
 
 #endif /* PSKC_VERSION_H */

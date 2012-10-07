@@ -45,7 +45,12 @@ parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
 	continue;
 
       if (strcmp ("Manufacturer", name) == 0)
-	kp->device_manufacturer = content;
+	{
+	  kp->device_manufacturer = content;
+	  if (strncmp ("oath.", content, 5) != 0
+	      && strncmp ("iana.", content, 5) != 0)
+	    _pskc_debug ("non-compliant Manufacturer value: %s", content);
+	}
       else if (strcmp ("SerialNo", name) == 0)
 	kp->device_serialno = content;
       else if (strcmp ("Model", name) == 0)
@@ -143,7 +148,7 @@ parse_intlongstrdatatype (xmlNode * x, const char **var, int *rc)
 }
 
 static char *
-remove_whitespace (const char *str)
+remove_whitespace (const char *str, size_t *outlen)
 {
   size_t len = strlen (str);
   char *out = malloc (len + 1);
@@ -157,6 +162,8 @@ remove_whitespace (const char *str)
       out[j++] = str[i];
 
   out[j] = '\0';
+
+  *outlen = j;
 
   return out;
 }
@@ -180,8 +187,9 @@ parse_data (xmlNode * x, struct pskc_key *kp, int *rc)
 	  if (kp->key_secret_str)
 	    {
 	      bool ok;
+	      size_t l;
 
-	      kp->key_b64secret = remove_whitespace (kp->key_secret_str);
+	      kp->key_b64secret = remove_whitespace (kp->key_secret_str, &l);
 	      if (kp->key_b64secret == NULL)
 		{
 		  _pskc_debug ("base64 whitespace malloc failed");
@@ -189,8 +197,7 @@ parse_data (xmlNode * x, struct pskc_key *kp, int *rc)
 		}
 	      else
 		{
-		  ok = base64_decode_alloc (kp->key_b64secret,
-					    strlen (kp->key_b64secret),
+		  ok = base64_decode_alloc (kp->key_b64secret, l,
 					    &kp->key_secret,
 					    &kp->key_secret_len);
 		  if (!ok)
@@ -635,7 +642,7 @@ parse_keycontainer (pskc_t * pd, xmlNode * x, int *rc)
 
 /**
  * pskc_init:
- * @container: pointer to #pskc_t handle to initialize
+ * @container: pointer to a #pskc_t handle to initialize.
  *
  * This function initializes the PSKC @container handle.  The memory
  * allocate can be released by calling pskc_done().
@@ -654,7 +661,7 @@ pskc_init (pskc_t ** container)
 
 /**
  * pskc_done:
- * @container: #pskc_t handle to deinitialize
+ * @container: a #pskc_t handle, from pskc_init().
  *
  * This function releases the resources associated with the PSKC
  * @container handle.
@@ -679,7 +686,7 @@ pskc_done (pskc_t * container)
 
 /**
  * pskc_parse_from_memory:
- * @container: pointer to #pskc_t handle
+ * @container: a #pskc_t handle, from pskc_init().
  * @len: length of @buffer.
  * @buffer: XML data to parse.
  *

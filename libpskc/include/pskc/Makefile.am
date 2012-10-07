@@ -17,5 +17,5 @@
 
 pskcincludedir = $(includedir)/pskc
 
-pskcinclude_HEADERS = container.h enums.h errors.h global.h	\
-	keypackage.h version.h pskc.h
+pskcinclude_HEADERS = pskc.h exports.h version.h global.h errors.h
+pskcinclude_HEADERS += enums.h container.h keypackage.h

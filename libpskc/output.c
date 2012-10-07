@@ -347,7 +347,7 @@ print_keycontainer (pskc_t * data, struct buffer *buf)
 
 /**
  * pskc_output:
- * @container: #pskc_t handle
+ * @container: a #pskc_t handle, from pskc_init().
  * @format: an #pskc_output_formats_t enumeration type indicating format.
  * @out: pointer to output variable holding newly allocated string.
  * @len: pointer to output variable hold length of *@out.

@@ -22,29 +22,47 @@
 #ifndef PSKC_H
 #define PSKC_H
 
+/**
+ * SECTION:pskc
+ * @short_description: Top-level include file.
+ *
+ * The top-level &lt;pskc/pskc.h&gt; include file is responsible for
+ * declaring top-level types and including all other header files.
+ * The #pskc_t type is used for the high-level PSKC container type and
+ * the #pskc_key_t type represent each key package within the
+ * container.
+ */
+
 #ifdef __cplusplus
 extern "C" {
-#endif
-
-#ifndef PSKCAPI
-# if defined PSKC_BUILDING && defined HAVE_VISIBILITY && HAVE_VISIBILITY
-#  define PSKCAPI __attribute__((__visibility__("default")))
-# elif defined PSKC_BUILDING && defined _MSC_VER && ! defined PSKC_STATIC
-#  define PSKCAPI __declspec(dllexport)
-# elif defined _MSC_VER && ! defined PSKC_STATIC
-#  define PSKCAPI __declspec(dllimport)
-# else
-#  define PSKCAPI
-# endif
 #endif
 
 #include <stddef.h> /* size_t */
 #include <stdint.h> /* uint32_t, uint64_t */
 #include <time.h> /* struct tm */
 
+/**
+ * pskc_t:
+ *
+ * All PSKC data is represented through the #pskc_t container type,
+ * which is a high-level structure that only carries a version
+ * indicator (see pskc_get_version()), an optional identity field (see
+ * pskc_get_id()) and any number of #pskc_key_t types, each containing
+ * one key (see pskc_get_keypackage()).
+ */
 typedef struct pskc pskc_t;
+
+/**
+ * pskc_key_t:
+ *
+ * PSKC keys are represented through the #pskc_key_t type.  Each key
+ * is part of a higher level #pskc_t container type.  The
+ * pskc_get_keypackage() function is used to retrieve the #pskc_key_t
+ * values from the #pskc_t structure.
+ */
 typedef struct pskc_key pskc_key_t;
 
+#include <pskc/exports.h>
 #include <pskc/version.h>
 #include <pskc/errors.h>
 #include <pskc/global.h>

@@ -22,13 +22,29 @@
 #ifndef PSKC_GLOBAL_H
 #define PSKC_GLOBAL_H
 
+/**
+ * SECTION:global
+ * @short_description: Global functions.
+ *
+ * The library is initialized using pskc_global_init() which is a
+ * thread-unsafe function that should be called when the code that
+ * needs the PSKC library functionality is initialized.  When the
+ * application no longer needs to use the PSKC Library, it can call
+ * pskc_global_done() to release resources.
+ *
+ * The pskc_free() function is used to de-allocate memory that was
+ * allocated by the library earlier and returned to the caller.
+ *
+ * For debugging, you can implement a function of the #pskc_log_func
+ * signature and call pskc_global_log() to make the library output
+ * some messages that may provide additional information.
+ */
+
 extern PSKCAPI int pskc_global_init (void);
-extern PSKCAPI int pskc_global_done (void);
+extern PSKCAPI void pskc_global_done (void);
 
 typedef void (*pskc_log_func) (const char *msg);
 extern PSKCAPI void pskc_global_log (pskc_log_func log_func);
-
-extern PSKCAPI const char *pskc_check_version (const char *req_version);
 
 extern PSKCAPI void pskc_free (void *ptr);
 

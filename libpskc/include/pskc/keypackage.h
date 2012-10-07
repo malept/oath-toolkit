@@ -22,6 +22,17 @@
 #ifndef PSKC_KEYPACKAGE_H
 #define PSKC_KEYPACKAGE_H
 
+/**
+ * SECTION:keypackage
+ * @short_description: PSKC keypackage handling.
+ *
+ * While high-level PSKC structure is represented through the #pskc_t
+ * type, the data for each key package is represented through
+ * #pskc_key_t.  The pskc_get_keypackage() function is used to access
+ * the #pskc_key_t values.  This section describes all the functions
+ * that are used to access information stored in PSKC key packages.
+ */
+
 extern PSKCAPI const char *pskc_get_device_manufacturer (pskc_key_t *key);
 extern PSKCAPI const char *pskc_get_device_serialno (pskc_key_t *key);
 extern PSKCAPI const char *pskc_get_device_model (pskc_key_t *key);

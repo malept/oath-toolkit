@@ -22,7 +22,7 @@ DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
 # gtk-doc will search all .c and .h files beneath these paths
 # for inline comments documenting functions and macros.
 # e.g. DOC_SOURCE_DIR=$(top_srcdir)/gtk $(top_srcdir)/gdk
-DOC_SOURCE_DIR=../
+DOC_SOURCE_DIR=$(top_srcdir) $(top_builddir)
 
 # Extra options to pass to gtkdoc-scangobj. Not normally needed.
 SCANGOBJ_OPTIONS=
@@ -58,7 +58,7 @@ EXTRA_HFILES=
 
 # Header files or dirs to ignore when scanning. Use base file/dir names
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h private_code
-IGNORE_HFILES=gl
+IGNORE_HFILES=exports.h gl
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png
@@ -66,7 +66,7 @@ HTML_IMAGES=
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
 # e.g. content_files=running.sgml building.sgml changes-2.0.sgml
-content_files=examples/serialno.sgml examples/pskc-mini.sgml examples/pskc-hotp.sgml
+content_files=serialno.sgml pskc-mini.sgml pskc-hotp.sgml pskc-hotp-human.sgml pskc2csv.sgml pskctool-h.sgml
 
 # SGML files where gtk-doc abbrevations (#GtkWidget) are expanded
 # These files must be listed here *and* in content_files
@@ -102,24 +102,19 @@ TESTS_ENVIRONMENT = cd $(srcdir) && \
 #TESTS = $(GTKDOC_CHECK)
 endif
 
-EXAMPLES_SOURCE_DIR=../examples
+EXAMPLES_SOURCE_DIR=$(top_srcdir)/examples
 EXAMPLES_SOURCE_FILES=\
 	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.c' -print) \
-	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.xml' -print)
+	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.xml' -print) \
+	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.txt' -print)
 
 $(content_files):
-	@mkdir -p examples
-	@(for i in $(EXAMPLES_SOURCE_FILES) ; do \
+	$(AM_V_GEN)for i in $(EXAMPLES_SOURCE_FILES) ; do \
 	    file_name=`echo $$i | sed 's#.*/##' | sed 's#\..*$$##'`; \
 	    file_ext=`echo $$i | sed 's#.*/##' | sed 's#.*\.##'`; \
-	    echo "  GEN   $$file_name.sgml"; \
-	    echo "<para><informalexample><programlisting>" >> \
-		examples/$$file_name.sgml; \
-	    cat $$i | \
-		sed "s#&#\&amp;#g" | \
-		sed "s#<#\&lt;#g" | \
-		sed "s#>#\&gt;#g" >> \
-		examples/$$file_name.sgml; \
-	    echo "</programlisting></informalexample></para>" >> \
-		examples/$$file_name.sgml; \
-	done);
+	    (echo "<para><informalexample><programlisting>"; \
+	     cat $$i | sed -e "s#&#\&amp;#g" -e "s#<#\&lt;#g" \
+		-e "s#>#\&gt;#g"; \
+	     echo "</programlisting></informalexample></para>") \
+		> $$file_name.sgml; \
+	done

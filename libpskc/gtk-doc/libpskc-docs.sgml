@@ -4,9 +4,12 @@
 	  [
 	  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
 	  <!ENTITY version SYSTEM "version.xml">
-	  <!ENTITY pskc-example-serialno SYSTEM "examples/serialno.sgml">
-	  <!ENTITY pskc-example-mini SYSTEM "examples/pskc-mini.sgml">
-	  <!ENTITY pskc-example-hotp SYSTEM "examples/pskc-hotp.sgml">
+	  <!ENTITY pskc-example-serialno SYSTEM "serialno.sgml">
+	  <!ENTITY pskc-example-mini SYSTEM "pskc-mini.sgml">
+	  <!ENTITY pskc-example-hotp SYSTEM "pskc-hotp.sgml">
+	  <!ENTITY pskc-example-hotp-human SYSTEM "pskc-hotp-human.sgml">
+	  <!ENTITY pskc-example-pskc2csv SYSTEM "pskc2csv.sgml">
+	  <!ENTITY pskc-example-pskctool-h SYSTEM "pskctool-h.sgml">
 	  ]>
 <book id="index">
   <bookinfo>
@@ -15,11 +18,7 @@
       <author>
         <firstname>Simon</firstname>
         <surname>Josefsson</surname>
-        <affiliation>
-	  <address>
-	    <email>simon@josefsson.org</email>
-	  </address>
-        </affiliation>
+	<email>simon@josefsson.org</email>
       </author>
     </authorgroup>
     <copyright>
@@ -63,8 +62,8 @@
 	devices or software.  The PSKC Library allows you to parse,
 	validate and generate PSKC data.  The PSKC Library is written
 	in C, uses LibXML, and is licensed under LGPLv2+.  A companion
-	to the library is a command line tool to interactively
-	manipulate PSKC data.
+	to the library is a command line tool (pskctool) to
+	interactively manipulate PSKC data.
       </para>
 
       <para>
@@ -76,12 +75,13 @@
 
       <para>
 	Of course, since the intent with PSKC is to transport
-	cryptographic keys, the example above is of little use.  The
-	next example is more realistic, and show PSKC data used to
-	transport a key used for a OATH HOTP implementation.  The
-	interesting values are the DeviceInfo values to identify the
-	intended hardware, the Key Id "12345678", and the
-	base64-encoded shared secret "MTIzNA==".
+	cryptographic keys, the example above is of little use since
+	it does not carry any keys.  The next example is more
+	realistic, and show PSKC data used to transport a key used for
+	a OATH HOTP implementation.  The interesting values are the
+	DeviceInfo values to identify the intended hardware, the Key
+	Id "12345678", and the base64-encoded shared secret
+	"MTIzNA==".
       </para>
 
       &pskc-example-hotp;
@@ -99,11 +99,12 @@
 	Compiling and linking code with the PSKC Library requires that
 	you specify correct compilation flags so that the header
 	include file and the shared library is found.  There is only
-	one include file and it is pskc.h and the library is called
-	libpskc.so on GNU/Linux machines and libpskc.dll on Windows
-	systems.  To build the previous file, assuming the code is
-	stored in a file called "serialno.c", invoke the following
-	command.
+	one include file and it should be used
+	like <link linkend="libpskc-pskc">#include
+	&lt;pskc/pskc.h&gt;</link>.  The library is called libpskc.so
+	on GNU systems and libpskc.dll on Windows systems.  To build
+	the previous file, assuming the code is stored in a file
+	called "serialno.c", invoke the following command.
       </para>
 
       <para><informalexample><programlisting>cc -o serialno serialno.c -I/path/to/pskc/include/path -lpskc</programlisting></informalexample></para>
@@ -114,6 +115,19 @@
       </para>
 
       <para><informalexample><programlisting>cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)</programlisting></informalexample></para>
+
+      <para>
+	We conclude with a larger example illustrating how to read a
+	PSKC file, parse it, validate it against the PSKC XML Schema
+	(this step is usually not necessary), print a human readable
+	summary of the PSKC data to stderr, and iterate through all
+	keys in the file and print a comma-separated list with three
+	fields: the key id, the device serialno, and the hex encoded
+	cryptographic key.  This time there is error checking and
+	resource de-allocation.
+      </para>
+
+	&pskc-example-pskc2csv;
 
     </chapter>
 
@@ -127,27 +141,7 @@
 	parameters it accepts.
       </para>
 
-      <para><informalexample><programlisting>
-pskctool 1.12.6.32-dirty
-
-Manage Portable Symmetric Key Container (PSKC) data.
-
-Usage: pskctool [OPTIONS]... [FILE]...
-
-  -h, --help      Print help and exit
-  -V, --version   Print version and exit
-  -b, --build     build PSKC data  (default=off)
-  -c, --check     parse and pretty print PSKC input  (default=off)
-  -e, --validate  validate PSKC input according to schema  (default=off)
-      --strict    fail hard on PSKC parse error  (default=off)
-  -d, --debug     enable debug logging  (default=off)
-  -q, --quiet     quiet operation  (default=off)
-  -v, --verbose   produce more output  (default=off)
-
-Report bugs to: oath-toolkit-help@nongnu.org
-pskctool home page: &lt;http://www.nongnu.org/oath-toolkit/&gt;
-General help using GNU software: &lt;http://www.gnu.org/gethelp/&gt;
-      </programlisting></informalexample></para>
+      &pskc-example-pskctool-h;
 
       <para>
 	The most common parameter to use is --check (-c) to parse and
@@ -161,25 +155,12 @@ General help using GNU software: &lt;http://www.gnu.org/gethelp/&gt;
       &pskc-example-hotp;
 
       <para>
-	Running the tool with the --check parameter on the content
-	above will produce a human readable variant of the PSKC data.
+	Running the tool with the --check parameter, i.e., "pskctool
+	--check pskc.xml" will produce a human readable variant of the
+	PSKC data.
       </para>
 
-      <para><informalexample><programlisting>
-Portable Symmetric Key Container (PSKC):
-	Version: 1.0
-	KeyPackage 0:
-		DeviceInfo:
-			Manufacturer: Manufacturer
-			SerialNo: 987654321
-		Key:
-			Id: 12345678
-			Algorithm: urn:ietf:params:xml:ns:keyprov:pskc:hotp
-			Key Secret (base64): MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
-			Key Counter: 0
-			Response Format Length: 8
-			Response Format Encoding: DECIMAL
-      </programlisting></informalexample></para>
+      &pskc-example-hotp-human;
 
       <para>
 	If the --verbose (-v) parameter is given, the tool will also
@@ -238,6 +219,12 @@ $
 
   <part id="pskc-reference">
     <title>API Reference</title>
+
+    <para>This part contains the complete API reference for the PSKC
+    Library.  There is a separate section for each include file, which
+    contains related functions grouped together, but applications
+    should include the top-level &lt;pskc/pskc.h&gt; file.</para>
+
     <xi:include href="xml/pskc.xml"/>
     <xi:include href="xml/version.xml"/>
     <xi:include href="xml/global.xml"/>

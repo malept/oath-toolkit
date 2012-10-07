@@ -43,7 +43,7 @@ static const err_t errors[] = {
 
 /**
  * pskc_strerror:
- * @err: libpskc error code
+ * @err: error code, a #pskc_rc value.
  *
  * Convert return code to human readable string explanation of the
  * reason for the particular error code.
@@ -81,7 +81,7 @@ pskc_strerror (int err)
 
 /**
  * pskc_strerror_name:
- * @err: libpskc error code
+ * @err: error code, a #pskc_rc value.
  *
  * Convert return code to human readable string representing the error
  * code symbol itself.  For example, pskc_strerror_name(%PSKC_OK)

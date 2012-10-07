@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# tst_hyphen.sh - test that man page part of pskctool.h2m is lintian compliant
+# tst_libexamples.sh - keep pskctool output in GTK-DOC manual up to date
 # Copyright (C) 2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,23 @@
 
 set -e
 
-srcdir="${srcdir:-.}"
+srcdir=${srcdir:-.}
+PSKCTOOL=../pskctool
 
-! tail -n +2 $srcdir/../pskctool.h2m | egrep '[^a-z\\]-'
+$PSKCTOOL -h | sed '1,2d' > foo
+if ! diff -ur $srcdir/../../libpskc/examples/pskctool-h.txt foo; then
+    cp foo $srcdir/../../libpskc/examples/pskctool-h.txt
+    echo "FAIL: pskctool --help output change, commit updated file."
+    exit 1
+fi
+
+$PSKCTOOL -c $srcdir/../../libpskc/examples/pskc-hotp.xml | sed '$d' > foo
+if ! diff -ur $srcdir/../../libpskc/examples/pskc-hotp-human.txt foo; then
+    cp foo $srcdir/../../libpskc/examples/pskc-hotp-human.txt
+    echo "FAIL: pskctool --check output change, commit updated file."
+    exit 1
+fi
+
+rm -f foo
+
+exit 0

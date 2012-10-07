@@ -107,7 +107,7 @@ oath_strerror (int err)
  * a successful call to oath_init().
  *
  * Return value: Returns a pointer to a statically allocated string
- *   containing a string version of the error code @err, or %NULL if
+ *   containing a string version of the error code @err, or NULL if
  *   the error code is not known.
  *
  * Since: 1.8.0

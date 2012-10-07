@@ -23,6 +23,25 @@
 #define PSKC_ENUMS_H
 
 /**
+ * SECTION:enums
+ * @short_description: PSKC value enumerations and related functions.
+ *
+ * The #pskc_pinusagemode type describes PIN Policy Usage Modes.  You
+ * can convert between string representation and integer values using
+ * pskc_pinusagemode2str() and pskc_str2pinusagemode().
+ *
+ * The #pskc_valueformat type describes PSKC data value encodings.
+ * You can convert between string representation and integer values
+ * using pskc_valueformat2str() and pskc_str2valueformat().
+ *
+ * The #pskc_keyusage type describes what PSKC keys may be used for.
+ * You can convert between string representation and integer values
+ * using pskc_keyusage2str() and pskc_str2keyusage().  Note that often
+ * multiple #pskc_keyusage values are ORed together to form set of
+ * values.
+ */
+
+/**
  * pskc_pinusagemode:
  * @PSKC_PINUSAGEMODE_UNKNOWN: Unknown mode.
  * @PSKC_PINUSAGEMODE_LOCAL: PIN is checked locally on the device.

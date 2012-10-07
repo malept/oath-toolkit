@@ -418,6 +418,8 @@ libpskc/enums.o
 libpskc/errors.lo
 libpskc/errors.o
 libpskc/examples/.deps/
+libpskc/examples/pskc2csv
+libpskc/examples/pskc2csv.o
 libpskc/examples/serialno
 libpskc/examples/serialno.o
 libpskc/gl/.deps/
@@ -509,7 +511,6 @@ libpskc/gl/umaxtostr.o
 libpskc/gl/warn-on-use.h
 libpskc/global.lo
 libpskc/global.o
-libpskc/gtk-doc/examples/
 libpskc/gtk-doc/html-build.stamp
 libpskc/gtk-doc/html.stamp
 libpskc/gtk-doc/html/
@@ -531,7 +532,13 @@ libpskc/gtk-doc/libpskc.signals
 libpskc/gtk-doc/libpskc.types
 libpskc/gtk-doc/pdf-build.stamp
 libpskc/gtk-doc/pdf.stamp
+libpskc/gtk-doc/pskc-hotp-human.sgml
+libpskc/gtk-doc/pskc-hotp.sgml
+libpskc/gtk-doc/pskc-mini.sgml
+libpskc/gtk-doc/pskc2csv.sgml
+libpskc/gtk-doc/pskctool-h.sgml
 libpskc/gtk-doc/scan-build.stamp
+libpskc/gtk-doc/serialno.sgml
 libpskc/gtk-doc/setup-build.stamp
 libpskc/gtk-doc/sgml-build.stamp
 libpskc/gtk-doc/sgml.stamp

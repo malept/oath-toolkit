@@ -17,7 +17,8 @@ SUBDIRS = gl . tests
 
 ACLOCAL_AMFLAGS = -I gl/m4
 
-AM_CPPFLAGS = -I$(builddir)/../libpskc/include -I$(srcdir)/gl -I$(builddir)/gl
+AM_CPPFLAGS = -I$(builddir)/../libpskc/include -I$(srcdir)/../libpskc/include
+AM_CPPFLAGS += -I$(srcdir)/gl -I$(builddir)/gl
 
 bin_PROGRAMS = pskctool
 pskctool_SOURCES = pskctool.c
@@ -30,7 +31,7 @@ libpskctool_cmd_la_LIBADD = gl/libgnu.la
 libpskctool_cmd_la_CFLAGS =
 
 pskctool_cmd.h pskctool_cmd.c: pskctool.ggo Makefile.am
-	gengetopt --unamed-opts="FILE" \
+	$(AM_V_GEN)gengetopt --unamed-opts="FILE" \
 		--no-handle-version --no-handle-help \
 		--input $< --file-name pskctool_cmd
 
@@ -39,7 +40,7 @@ MAINTAINERCLEANFILES = $(dist_man_MANS)
 EXTRA_DIST = pskctool.h2m
 
 pskctool.1: $(srcdir)/pskctool.c $(srcdir)/pskctool.ggo $(srcdir)/pskctool.h2m $(srcdir)/configure.ac
-	$(HELP2MAN) \
+	$(AM_V_GEN)$(HELP2MAN) \
 		--include $(srcdir)/pskctool.h2m \
 		--no-info \
 		--output=$@ $(top_builddir)/pskctool$(EXEEXT)

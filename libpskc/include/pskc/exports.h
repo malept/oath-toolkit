@@ -1,5 +1,5 @@
 /*
- * validate.c - Validate PSKC data according to XML Schema.
+ * pskc/export.h - library visibility macro.
  * Copyright (C) 2012 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
@@ -19,32 +19,19 @@
  *
  */
 
-#include <config.h>
+#ifndef PSKC_EXPORTS_H
+#define PSKC_EXPORTS_H
 
-#include <pskc/pskc.h>
+#ifndef PSKCAPI
+# if defined PSKC_BUILDING && defined HAVE_VISIBILITY && HAVE_VISIBILITY
+#  define PSKCAPI __attribute__((__visibility__("default")))
+# elif defined PSKC_BUILDING && defined _MSC_VER && ! defined PSKC_STATIC
+#  define PSKCAPI __declspec(dllexport)
+# elif defined _MSC_VER && ! defined PSKC_STATIC
+#  define PSKCAPI __declspec(dllimport)
+# else
+#  define PSKCAPI
+# endif
+#endif
 
-#define INTERNAL_NEED_PSKC_STRUCT
-#include "internal.h"
-#include <libxml/xmlschemas.h>
-
-/* global.c */
-extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
-
-/**
- * pskc_validate:
- * @container: a #pskc_t handle, from pskc_init().
- * @isvalid: output variable holding validation result, non-0 for valid.
- *
- * This function validate the PSKC @container handle the PSKC XML
- * Schema.
- *
- * Returns: On success, %PSKC_OK (zero) is returned, or an error code.
- **/
-int
-pskc_validate (pskc_t * container, int *isvalid)
-{
-  *isvalid = xmlSchemaValidateDoc (_pskc_schema_validctxt,
-				   container->xmldoc) == 0;
-
-  return PSKC_OK;
-}
+#endif /* PSKC_EXPORTS_H */

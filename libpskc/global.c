@@ -372,11 +372,8 @@ pskc_global_init (void)
  * initialized using pskc_global_init().  After calling this function,
  * no other PSKC library function may be called except for to
  * re-initialize the library using pskc_global_init().
- *
- * Returns: On success, %PSKC_OK (zero) is returned, otherwise an
- *   error code is returned.
  **/
-int
+void
 pskc_global_done (void)
 {
   if (_pskc_init == 1)
@@ -389,7 +386,6 @@ pskc_global_done (void)
     }
 
   _pskc_init--;
-  return PSKC_OK;
 }
 
 /**
