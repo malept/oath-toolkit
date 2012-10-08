@@ -1,0 +1,18 @@
+Download OATH Toolkit
+=====================
+
+You can download the source code from the download area:
+
+http://download.savannah.nongnu.org/releases/oath-toolkit/
+
+Binary packages for some systems are available:
+
+* http://packages.debian.org/source/testing/oath-toolkit[Debian package].
+* https://launchpad.net/ubuntu/+source/oath-toolkit[Ubuntu].
+* http://pkgsrc.se/security/oath-toolkit[NetBSD package], thanks to Fredrik Pettai.
+* Packages are available for Mandriva Cooker and Mageia Cauldron, thanks to Mitya.
+
+If you package it for any other system, please let us know!
+
+To download the version controlled sources, please see the
+link:contrib.html[Contribute page] instead.

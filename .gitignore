@@ -998,3 +998,16 @@ pskctool/stamp-h1
 scan.tmp/
 tests/test-pam_oath-root
 tests/test-pam_oath-root.o
+website/NEWS.html
+website/NEWS.txt
+website/contrib.html
+website/contrib.txt
+website/docs.html
+website/download.html
+website/index.html
+website/liboath-api/
+website/libpskc-api/
+website/oathtool.1.html
+website/pam_oath.html
+website/pam_oath.txt
+website/pskctool.1.html

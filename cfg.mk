@@ -130,9 +130,32 @@ man-upload:
 	cd $(htmldir) && \
 		cvs commit -m "Update." man-oathtool.html
 
-release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy
+.PHONY: website
+website:
+	cd website && ./build-website.sh
 
-release-upload-www: man-upload gtkdoc-upload coverage-upload clang-upload
+website-copy:
+	mkdir -p $(htmldir)/liboath-api/ $(htmldir)/libpskc-api/
+	cp website/*.html website/*.css $(htmldir)/
+	cp website/liboath-api/*.html website/liboath-api/*.png \
+		$(htmldir)/liboath-api/
+	cp website/libpskc-api/*.html website/libpskc-api/*.png \
+		$(htmldir)/libpskc-api/
+
+website-upload:
+	cd $(htmldir) && \
+		cvs add *.html *.css || true && \
+		cvs add liboath-api || true && \
+		cvs add libpskc-api || true && \
+		cvs add -kb liboath-api/*.png liboath-api/*.png || true && \
+		cvs add -kb libpskc-api/*.png libpskc-api/*.png || true && \
+		cvs add liboath-api/*.html || true && \
+		cvs add libpskc-api/*.html || true && \
+		cvs commit -m "Update."
+
+release-check: syntax-check tarball man-copy gtkdoc-copy coverage-my coverage-copy clang clang-copy website website-copy
+
+release-upload-www: man-upload gtkdoc-upload coverage-upload clang-upload website-upload
 
 release-upload-ftp:
 	gpg -b $(distdir).tar.gz

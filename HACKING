@@ -1,9 +1,33 @@
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
-This file contains instructions for developers and advanced users that
-wants to build from version controlled sources.
+.Download, build and self-check version controlled sources:
+----
+$ git clone git://git.savannah.nongnu.org/oath-toolkit.git
+$ cd oath-toolkit
+$ make
+$ make check
+----
 
-We require several tools to build the software, including:
+Links to resources that may be useful if you want to get involved the
+project:
+
+* Mailing list: http://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
+
+* Savannah OATH Toolkit Project page: https://savannah.nongnu.org/projects/oath-toolkit/
+
+* Bug tracker: https://savannah.nongnu.org/support/?group=oath-toolkit
+
+* Code browser: http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree
+
+* Code coverage report: http://www.nongnu.org/oath-toolkit/coverage/
+
+* Clang code analysis: http://www.nongnu.org/oath-toolkit/clang-analyzer/
+
+* Daily snapshot: http://daily.josefsson.org/oath-toolkit/
+
+* Build bot status: http://autobuild.josefsson.org/oath-toolkit/
+
+Several tools are required to build the software, including:
 
 - Make <http://www.gnu.org/software/make/>
 - Automake <http://www.gnu.org/software/automake/>
@@ -19,29 +43,16 @@ We require several tools to build the software, including:
 - Valgrind <http://valgrind.org/> (optional)
 - PAM library/headers (optional, required for PAM module)
 
-The required software is typically distributed with your operating
-system, and the instructions for installing them differ.  Here are
-some hints:
+The software is typically distributed with your operating system, and
+the instructions for installing them differ.  Here are some hints:
 
-gNewSense/Debian/Ubuntu:
+.gNewSense/Debian/Ubuntu dependencies:
+-----
 apt-get install make git autoconf automake libtool bison
 apt-get install help2man gtk-doc-tools valgrind gengetopt
+-----
 
-If you have hints regarding installating the dependencies on other
-operating systems, please suggest changes to this file.
-
-To download the version controlled sources:
-
-$ git clone git://git.savannah.nongnu.org/oath-toolkit.git
-$ cd oath-toolkit
-
-The next step is to run autoreconf, ./configure, etc:
-
-$ make bootstrap
-
-Then build the project normally:
-
-$ make
-$ make check
+If you have hints on how to install the required dependencies on other
+operating systems, please let us know.
 
 Happy hacking!

@@ -4,41 +4,39 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 This directory holds an PAM module for authenticating users using OATH
 one-time password technology.
 
-Building and installation
--------------------------
-
-The project uses normal autoconf, automake, etc tools.  You should be
-able to build it like this:
-
-$ ./configure && make check && sudo make install
-
 Configuration
 -------------
 
 To use the module, first make sure that it is accessible as
 /lib/security/pam_oath.so:
 
+---------
 # ln -s /usr/local/lib/security/pam_oath.so /lib/security/pam_oath.so
 # ls -la /lib/security/pam_oath.so
 lrwxrwxrwx 1 root root 35 Dec  4 10:49 /lib/security/pam_oath.so -> /usr/local/lib/security/pam_oath.so
 #
+---------
 
 The next step is to configure PAM to use the module.  One simple way
 for testing is to configure it for "su".  Make sure you have a root
 window open before making any changes!
 
+---------
 # head -1 /etc/pam.d/su
 auth requisite pam_oath.so debug usersfile=/etc/users.oath window=20
 #
+---------
 
 The next step is to create a user credentials file.  As you can see,
 the PAM configuration uses /etc/users.oath for this.  So we create the
 file:
 
+---------
 # cat>/etc/users.oath
 HOTP root - 00
 # chmod go-rw /etc/users.oath
 #
+---------
 
 The file format handles any whitespace as field separator.  You may
 also add lines starting with '#' for comments.
@@ -46,6 +44,7 @@ also add lines starting with '#' for comments.
 The above added an OATH secret of all-zeros.  To test this, we need to
 generate some one-time passwords.  The "oathtool" is handy for this purpose:
 
+---------
 # oathtool/oathtool -w 5 00
 328482
 812658
@@ -54,11 +53,13 @@ generate some one-time passwords.  The "oathtool" is handy for this purpose:
 320986
 435986
 #
+---------
 
 So let's test this by running 'su'.  At the prompt, you type the
 password (in this example, "pw") concatenated with the OTP (in this
 example, "328482").
 
+---------
 jas@mocca:~$ su
 [pam_oath.c:parse_cfg(122)] called.
 [pam_oath.c:parse_cfg(123)] flags 0 argc 4
@@ -84,6 +85,7 @@ One-time password (OATH) for `root':
 [pam_oath.c:pam_sm_setcred(347)] retval: 0
 [pam_oath.c:pam_sm_setcred(367)] done. [Success]
 mocca:/home/jas#
+---------
 
 Success!
 
@@ -91,9 +93,11 @@ The code should have updated the /etc/users.oath file to record the
 incremented counter, last OTP and timestamp.  Inspect the new value as
 follows:
 
+---------
 # cat /etc/users.oath
 HOTP	root	-	00	0	328482	2009-12-07T23:23:49L
 #
+---------
 
 In production use you will want to remove the 'debug' parameter in the
 PAM configuration.
@@ -104,19 +108,24 @@ Two-factor authentication
 To also verify passwords, you need to configure the one-time password
 length for the PAM module:
 
+---------
 # head -1 /etc/pam.d/su
 auth requisite pam_oath.so usersfile=/etc/users.oath window=20 digits=6
 #
+---------
 
 Next specify a password in the users.oath file:
 
+---------
 # cat>/etc/users.oath
 HOTP root pw 00
 # chmod go-rw /etc/users.oath
 #
+---------
 
 Then test it:
 
+---------
 jas@mocca:~$ su
 [pam_oath.c:parse_cfg(122)] called.
 [pam_oath.c:parse_cfg(123)] flags 0 argc 5
@@ -144,9 +153,11 @@ One-time password (OATH) for `root':
 [pam_oath.c:pam_sm_setcred(348)] retval: 0
 [pam_oath.c:pam_sm_setcred(368)] done. [Success]
 mocca:/home/jas#
+---------
 
 If you supply an incorrect password, you'll get:
 
+---------
 jas@mocca:~$ su
 [pam_oath.c:parse_cfg(122)] called.
 [pam_oath.c:parse_cfg(123)] flags 0 argc 5
@@ -176,6 +187,7 @@ One-time password (OATH) for `root':
 [pam_oath.c:pam_sm_setcred(348)] retval: 0
 [pam_oath.c:pam_sm_setcred(368)] done. [Success]
 mocca:/home/jas#
+---------
 
 List of all parameters
 ----------------------
@@ -212,8 +224,10 @@ SSH Configuration
 Configuring pam_oath for use with SSH is straight forward, however you
 should make sure the /etc/ssh/sshd_config file contains the following:
 
+---------
 UsePAM yes
 ChallengeResponseAuthentication yes
+---------
 
 Another reported cause of problems has been SELinux, and you could
 experiment with disabling SELinux by doing "/usr/sbin/setenforce 0".
@@ -227,9 +241,11 @@ Debug hint
 By using a /lib/security symlink, you may point the module to a file
 in your build directory (for testing purposes):
 
+---------
 # ln -s /home/jas/src/oath-toolkit/pam_oath/.libs/pam_oath.so /lib/security/pam_oath.so
 # ls -la /lib/security/pam_oath.so
 lrwxrwxrwx 1 root root 53 Dec  4 10:49 /lib/security/pam_oath.so -> /home/jas/src/oath-toolkit/pam_oath/.libs/pam_oath.so
 #
+---------
 
 This makes it easy to test newly built code.

@@ -1,0 +1,75 @@
+OATH Toolkit
+============
+
+
+.2012-10-08: OATH Toolkit 1.12.6 Released
+************************************************************************
+Read the link:NEWS.html[NEWS file] for release highlights and a full
+list of changes.  See the link:download.html[Download page] for
+download links.
+
+'Simon Josefsson'
+************************************************************************
+
+Introduction
+------------
+
+The OATH Toolkit provide components for building one-time password
+authentication systems.  It contains shared libraries, command line
+tools and a PAM module.  Supported technologies include the
+event-based HOTP algorithm (RFC4226) and the time-based TOTP algorithm
+(RFC6238).  OATH stands for Open AuTHentication, which is the
+organization that specify the algorithms.  For managing secret key
+files, the Portable Symmetric Key Container (PSKC) format described in
+RFC6030 is supported.
+
+The components included in the package is:
+
+  * liboath: A shared and static C library for OATH handling.
+
+  * oathtool: A command line tool for generating and validating OTPs.
+
+  * pam_oath: A PAM module for pluggable login authentication for OATH.
+
+  * libpskc: A shared and static C library for PSKC handling.
+
+  * pskctool: A command line tool for manipulating PSKC data.
+
+For further information, see the link:docs.html[Documentation page].
+
+OATH Toolkit is free software and is licenced under the terms of the
+'LGPLv2+' (libraries) and 'GPLv3+' (tools).
+
+
+External Resources and Applications
+-----------------------------------
+Here are resources that I know of, if you know of more drop me a line
+and I'll add them to the list.
+
+- http://www.openauthentication.org/[Initiative for Open
+  Authentication (OATH)] is the umbrella organization that published
+  the HOTP/TOTP/PSKC technology.
+- The http://www.openauthentication.org/specifications[OATH
+  Specifications] page for list of published documents.
+- http://code.google.com/p/google-authenticator/[Google Authenticator]
+  is an implementation for several mobile platforms.
+- Daniel Pocock maintains http://www.dynalogin.org/[Dynalogin] which
+  is an Open Source two factor authentication suite.
+- http://tools.ietf.org/html/rfc4226[RFC 4226 on HOTP: An HMAC-Based One-Time
+  Password Algorithm].
+- http://tools.ietf.org/html/rfc6238[RFC 6238 on TOTP: Time-Based
+  One-Time Password Algorithm].
+- http://tools.ietf.org/html/rfc6030[RFC 6030 on Portable Symmetric
+  Key Container (PSKC)].
+
+Please let me know if any of these links need updating.
+
+
+Mailing list
+------------
+
+Discussion around the OATH Toolkit happens on the
+https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help[OATH
+Toolkit discussion list], this keeps things transparent and gives
+everyone a chance to comment.
+
