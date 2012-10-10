@@ -671,6 +671,9 @@ pskc_done (pskc_t * container)
 {
   size_t i;
 
+  if (container == NULL)
+    return;
+
   xmlFreeDoc (container->xmldoc);
 
   for (i = 0; i < container->nkeypackages; i++)

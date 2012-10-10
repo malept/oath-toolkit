@@ -107,7 +107,7 @@
 	called "serialno.c", invoke the following command.
       </para>
 
-      <para><informalexample><programlisting>cc -o serialno serialno.c -I/path/to/pskc/include/path -lpskc</programlisting></informalexample></para>
+      <para><informalexample><programlisting>cc -o serialno serialno.c -I/path/to/pskc/include/path -L/path/to/pskc/lib/path -Wl,-rpath/path/to/pskc/lib/path -lpskc</programlisting></informalexample></para>
 
       <para>
 	A pkg-config file is provided, so that you may use pkg-config
@@ -117,17 +117,56 @@
       <para><informalexample><programlisting>cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)</programlisting></informalexample></para>
 
       <para>
+	After building the tool you would invoke it passing the name
+	of the file with the PSKC input above, and it will print the
+	serial number.
+      </para>
+
+      <para><informalexample><programlisting>jas@latte:~$ ./serialno pskc.xml 
+SerialNo: 987654321
+jas@latte:~$</programlisting></informalexample></para>
+
+      <para>
 	We conclude with a larger example illustrating how to read a
-	PSKC file, parse it, validate it against the PSKC XML Schema
-	(this step is usually not necessary), print a human readable
-	summary of the PSKC data to stderr, and iterate through all
-	keys in the file and print a comma-separated list with three
-	fields: the key id, the device serialno, and the hex encoded
-	cryptographic key.  This time there is error checking and
-	resource de-allocation.
+	PSKC file, parse it and print a human readable summary of the
+	PSKC data to stderr, validate it against the PSKC XML Schema
+	(this is normally not needed) and print the validation outcome
+	to stderr, and iterate through all keys in the file and print
+	to stdout a comma-separated list with three fields: the key
+	id, the device serialno, and the hex encoded cryptographic
+	key.  This code example check error codes and releases
+	resources.
       </para>
 
 	&pskc-example-pskc2csv;
+
+      <para>
+	Below we'll illustrate how to build the tool and run it on the
+	same PSKC data as above.  The tool prints different things to
+	stdout and stderr, which you can see below.
+      </para>
+
+      <para><informalexample><programlisting>
+jas@latte:~$ cc -o pskc2csv pskc2csv.c $(pkg-config --cflags --libs libpskc)
+jas@latte:~$ ./pskc2csv pskc.xml 2&gt; /dev/null
+12345678,12345678,MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+jas@latte:~$ ./pskc2csv pskc.xml &gt; /dev/null
+Portable Symmetric Key Container (PSKC):
+	Version: 1.0
+	KeyPackage 0:
+		DeviceInfo:
+			Manufacturer: Manufacturer
+			SerialNo: 987654321
+		Key:
+			Id: 12345678
+			Algorithm: urn:ietf:params:xml:ns:keyprov:pskc:hotp
+			Key Secret (base64): MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+			Key Counter: 0
+			Response Format Length: 8
+			Response Format Encoding: DECIMAL
+
+PSKC data is Schema valid: YES
+jas@latte:~$</programlisting></informalexample></para>
 
     </chapter>
 

@@ -13,9 +13,16 @@ main (int argc, const char *argv[])
   FILE *fh = NULL;
   char *buffer = NULL, *out;
   size_t i;
-  pskc_t *container;
+  pskc_t *container = NULL;
   pskc_key_t *keypackage;
   int exit_code = EXIT_FAILURE, rc, isvalid;
+
+  rc = pskc_global_init ();
+  if (rc != PSKC_OK)
+    {
+      fprintf (stderr, "pskc_global_init: %s\n", pskc_strerror (rc));
+      goto done;
+    }
 
   if (argc != 2)
     {
@@ -54,13 +61,6 @@ main (int argc, const char *argv[])
 
   /* Part 2: Parse PSKC data. */
 
-  rc = pskc_global_init ();
-  if (rc != PSKC_OK)
-    {
-      fprintf (stderr, "pskc_global_init: %s\n", pskc_strerror (rc));
-      goto done;
-    }
-
   rc = pskc_init (&container);
   if (rc != PSKC_OK)
     {
@@ -75,16 +75,7 @@ main (int argc, const char *argv[])
       goto done;
     }
 
-  /* Part 3: Validate PSKC data. */
-
-  rc = pskc_validate (container, &isvalid);
-  if (rc != PSKC_OK)
-    {
-      fprintf (stderr, "pskc_validate: %s\n", pskc_strerror (rc));
-      goto done;
-    }
-
-  /* Part 4: Output human readable variant of PSKC data to stderr. */
+  /* Part 3: Output human readable variant of PSKC data to stderr. */
 
   rc = pskc_output (container, PSKC_OUTPUT_HUMAN_COMPLETE, &out, &i);
   if (rc != PSKC_OK)
@@ -96,6 +87,17 @@ main (int argc, const char *argv[])
   fprintf (stderr, "%.*s\n", (int) i, out);
 
   pskc_free (out);
+
+  /* Part 4: Validate PSKC data. */
+
+  rc = pskc_validate (container, &isvalid);
+  if (rc != PSKC_OK)
+    {
+      fprintf (stderr, "pskc_validate: %s\n", pskc_strerror (rc));
+      goto done;
+    }
+
+  fprintf (stderr, "PSKC data is Schema valid: %s\n", isvalid ? "YES" : "NO");
 
   /* Part 5: Iterate through keypackages and print key id, device
      serial number and base64 encoded secret. */
@@ -115,7 +117,7 @@ main (int argc, const char *argv[])
 
  done:
   pskc_done (container);
-  if (fclose (fh) != 0)
+  if (fh && fclose (fh) != 0)
     perror ("fclose");
   free (buffer);
   pskc_global_done ();
