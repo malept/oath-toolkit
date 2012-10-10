@@ -1,6 +1,6 @@
 <xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
-  <xsl:output method="xml" encoding="UTF-8" indent="no" 
-	      doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" 
+  <xsl:output method="xml" encoding="UTF-8" indent="yes"
+	      doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
 	      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
   <xsl:template match="/">
 
@@ -53,7 +53,7 @@
 	  <xsl:copy-of select="//div[@id='header']/*" />
 	</div>
 	<div id="content">
-	    <xsl:choose> 
+	    <xsl:choose>
 		<xsl:when test="//div[@id='content']">
 		    <xsl:copy-of select="//div[@id='content']/*" />
 		</xsl:when>

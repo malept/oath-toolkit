@@ -72,4 +72,3 @@ Discussion around the OATH Toolkit happens on the
 https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help[OATH
 Toolkit discussion list], this keeps things transparent and gives
 everyone a chance to comment.
-

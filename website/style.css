@@ -27,7 +27,6 @@
   {
     position: relative;
     top: 0em ! important;
-    
   }
   /* this is needed so that the local anchors are displayed below the naviagtion */
   div.footnote a[name], div.refnamediv a[name], div.refsect1 a[name], div.refsect2 a[name], div.index a[name], div.glossary a[name], div.sect1 a[name]
@@ -254,4 +253,3 @@ h2 .extralinks, h3 .extralinks
 .listing_lines pre, .listing_code pre {
   margin: 0px;
 }
-

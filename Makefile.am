@@ -33,9 +33,9 @@ EXTRA_DIST += build-aux/oath-toolkit-version m4/dummy.m4
 EXTRA_DIST += HACKING
 
 # Website
-EXTRA_DIST += website/asciidoc.css website/build-website.sh		\
-	website/docs.html website/docs.txt website/download.txt		\
-	website/index.txt website/config.cfg website/layout.css	\
+EXTRA_DIST += website/asciidoc.css website/build-website.sh	\
+	website/docs.txt website/download.txt website/index.txt	\
+	website/config.cfg website/layout.css			\
 	website/oath-toolkit.xsl website/style.css
 
 # git-version-gen

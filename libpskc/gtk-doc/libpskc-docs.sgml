@@ -122,7 +122,7 @@
 	serial number.
       </para>
 
-      <para><informalexample><programlisting>jas@latte:~$ ./serialno pskc.xml 
+      <para><informalexample><programlisting>jas@latte:~$ ./serialno pskc.xml
 SerialNo: 987654321
 jas@latte:~$</programlisting></informalexample></para>
 
