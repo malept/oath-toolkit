@@ -107,13 +107,19 @@ tarball:
 	$(MAKE) ChangeLog distcheck
 
 gtkdoc-copy:
-	mkdir -p $(htmldir)/reference/
+	mkdir -p $(htmldir)/reference/ $(htmldir)/libpskc/
 	cp -v liboath/gtk-doc/liboath.pdf \
 		liboath/gtk-doc/html/*.html \
 		liboath/gtk-doc/html/*.png \
 		liboath/gtk-doc/html/*.devhelp2 \
 		liboath/gtk-doc/html/*.css \
 		$(htmldir)/reference/
+	cp -v libpskc/gtk-doc/libpskc.pdf \
+		libpskc/gtk-doc/html/*.html \
+		libpskc/gtk-doc/html/*.png \
+		libpskc/gtk-doc/html/*.devhelp2 \
+		libpskc/gtk-doc/html/*.css \
+		$(htmldir)/libpskc/
 
 gtkdoc-upload:
 	cd $(htmldir) && \
@@ -122,6 +128,12 @@ gtkdoc-upload:
 		cvs add reference/*.html reference/*.css \
 			reference/*.devhelp2 || true && \
 		cvs commit -m "Update." reference/
+	cd $(htmldir) && \
+		cvs add libpskc || true && \
+		cvs add -kb libpskc/*.png libpskc/*.pdf || true && \
+		cvs add libpskc/*.html libpskc/*.css \
+			libpskc/*.devhelp2 || true && \
+		cvs commit -m "Update." libpskc/
 
 man-copy:
 	groff -man -T html oathtool/oathtool.1  > $(htmldir)/man-oathtool.html

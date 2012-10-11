@@ -2,7 +2,7 @@ OATH Toolkit
 ============
 
 
-.2012-10-08: OATH Toolkit 1.12.6 Released
+.2012-10-10: OATH Toolkit 2.0.0 Released
 ************************************************************************
 Read the link:NEWS.html[NEWS file] for release highlights and a full
 list of changes.  See the link:download.html[Download page] for
