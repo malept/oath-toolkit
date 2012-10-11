@@ -1,6 +1,10 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 2.0.1 (unreleased)
+
+** API and ABI is backwards compatible with the previous version.
+
 * Version 2.0.0 (released 2012-10-10)
 
 ** libpskc, pskctool: New components.
