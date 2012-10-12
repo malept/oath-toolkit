@@ -73,59 +73,44 @@ debuglog (const char *msg)
 }
 
 static void
-build (void)
+doit (const struct gengetopt_args_info *args_info)
 {
-  pskc_t *container;
-  int rc;
-  char *out;
-  size_t len;
-
-  rc = pskc_init (&container);
-  if (rc != PSKC_OK)
-    error (EXIT_FAILURE, 0, "initializing PSKC container: %s",
-	   pskc_strerror (rc));
-
-  rc = pskc_build_xml (container, &out, &len);
-  if (rc != PSKC_OK)
-    error (EXIT_FAILURE, 0, "cannot build PSKC data: %s", pskc_strerror (rc));
-
-  printf ("%.*s", (int) len, out);
-
-  pskc_free (out);
-
-  pskc_done (container);
-}
-
-static void
-checkvalidate (const char *filename, int validate,
-	       int strict, int verbose, int quiet)
-{
+  const char *filename = args_info->inputs ? args_info->inputs[0] : NULL;
+  int build = args_info->build_flag;
+  int check = args_info->check_flag;
+  int validate = args_info->validate_flag;
+  int strict = args_info->strict_flag;
+  int verbose = args_info->verbose_flag;
+  int quiet = args_info->quiet_flag;
   char *buffer;
   char *out;
   size_t len;
   pskc_t *container;
   int rc;
 
-  if (filename)
-    buffer = read_binary_file (filename, &len);
-  else
-    buffer = fread_file (stdin, &len);
-  if (buffer == NULL)
-    error (EXIT_FAILURE, errno, "read");
-
   rc = pskc_init (&container);
   if (rc != PSKC_OK)
     error (EXIT_FAILURE, 0, "initializing PSKC structure: %s",
 	   pskc_strerror (rc));
 
-  rc = pskc_parse_from_memory (container, len, buffer);
-  if (!strict && rc == PSKC_PARSE_ERROR)
-    fprintf (stderr, "warning: parse error (use -d to diagnose), output "
-	     "may be incomplete\n");
-  else if (rc != PSKC_OK)
-    error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
+  if (!build)
+    {
+      if (filename)
+	buffer = read_binary_file (filename, &len);
+      else
+	buffer = fread_file (stdin, &len);
+      if (buffer == NULL)
+	error (EXIT_FAILURE, errno, "read");
 
-  free (buffer);
+      rc = pskc_parse_from_memory (container, len, buffer);
+      if (!strict && rc == PSKC_PARSE_ERROR)
+	fprintf (stderr, "warning: parse error (use -d to diagnose), output "
+		 "may be incomplete\n");
+      else if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
+
+      free (buffer);
+    }
 
   if (validate)
     {
@@ -143,7 +128,7 @@ checkvalidate (const char *filename, int validate,
       else if (!quiet)
 	puts ("FAIL");
     }
-  else
+  else if (check)
     {
       rc = pskc_output (container, PSKC_OUTPUT_HUMAN_COMPLETE, &out, &len);
       if (rc != PSKC_OK)
@@ -154,18 +139,18 @@ checkvalidate (const char *filename, int validate,
 	printf ("%.*s\n", (int) len, out);
 
       pskc_free (out);
+    }
 
-      if (verbose)
-	{
-	  rc = pskc_build_xml (container, &out, &len);
-	  if (rc != PSKC_OK)
-	    error (EXIT_FAILURE, 0, "cannot build PSKC data: %s",
-		   pskc_strerror (rc));
+  if (build || verbose)
+    {
+      rc = pskc_build_xml (container, &out, &len);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "cannot build PSKC data: %s",
+	       pskc_strerror (rc));
 
-	  printf ("%.*s", (int) len, out);
+      printf ("%.*s", (int) len, out);
 
-	  pskc_free (out);
-	}
+      pskc_free (out);
     }
 
   pskc_done (container);
@@ -211,13 +196,8 @@ main (int argc, char *argv[])
   if (args_info.debug_flag)
     pskc_global_log (debuglog);
 
-  if (args_info.build_flag)
-    build ();
-  else if (args_info.check_flag || args_info.validate_flag)
-    checkvalidate (args_info.inputs ? args_info.inputs[0] : NULL,
-		   args_info.validate_flag, args_info.strict_flag,
-		   args_info.verbose_flag,
-		   args_info.quiet_flag);
+  if (args_info.build_flag || args_info.check_flag || args_info.validate_flag)
+    doit (&args_info);
   else
     {
       cmdline_parser_print_help ();
