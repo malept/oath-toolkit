@@ -23,6 +23,7 @@
 
 #include <pskc/pskc.h>
 
+#define INTERNAL_NEED_PSKC_STRUCT
 #include "internal.h"
 #include <stdlib.h>		/* malloc */
 #include <string.h>		/* memcpy */
@@ -475,9 +476,10 @@ build_keycont (pskc_t *container, xmlNodePtr keycont)
  * @out: pointer to output variable to hold newly allocated string.
  * @len: output variable holding length of *@out.
  *
- * This function builds a XML file from the data in @container and
- * converts it to a string placed in the newly allocated *@out of
- * length @len.
+ * This function builds a XML file from the data in @container.  As a
+ * convenience, it also converts the XML into a string placed in the
+ * newly allocated *@out of length @len using pskc_output() with
+ * %PSKC_OUTPUT_XML.
  *
  * Returns: On success, %PSKC_OK (zero) is returned, on memory
  *   allocation errors %PSKC_MALLOC_ERROR is returned.
@@ -487,8 +489,6 @@ pskc_build_xml (pskc_t *container, char **out, size_t *len)
 {
   xmlDocPtr doc = NULL;
   xmlNodePtr keycont = NULL;
-  xmlChar *mem = NULL;
-  int buffersize = 0;
   int rc;
 
   doc = xmlNewDoc (BAD_CAST "1.0");
@@ -499,41 +499,28 @@ pskc_build_xml (pskc_t *container, char **out, size_t *len)
   if (keycont == NULL)
     {
       _pskc_debug ("xmlNewNode failed\n");
-      rc = PSKC_XML_ERROR;
-      goto done;
+      xmlFreeDoc (doc);
+      return PSKC_XML_ERROR;
     }
 
   rc = build_keycont (container, keycont);
   if (rc != PSKC_OK)
-    goto done;
+    {
+      xmlFreeDoc (doc);
+      return rc;
+    }
 
   xmlDocSetRootElement (doc, keycont);
 
-  xmlDocDumpFormatMemory (doc, &mem, &buffersize, 1);
-  *len = buffersize;
-  if (mem == NULL || buffersize <= 0)
-    {
-      _pskc_debug ("xmlDocDumpFormatMemory failed\n");
-      rc = PSKC_XML_ERROR;
-      goto done;
-    }
+  if (container->xmldoc)
+    xmlFreeDoc (container->xmldoc);
+  container->xmldoc = doc;
+  doc = NULL;
 
-  *len = buffersize;
-  *out = malloc (buffersize);
-  if (*out == NULL)
-    {
-      rc = PSKC_MALLOC_ERROR;
-      goto done;
-    }
+  if (out || len)
+    rc = pskc_output (container, PSKC_OUTPUT_XML, out, len);
+  else
+    rc = PSKC_OK;
 
-  memcpy (*out, mem, buffersize);
-
-  rc = PSKC_OK;
-
- done:
-  if (mem)
-    xmlFree (mem);
-  if (doc)
-    xmlFreeDoc (doc);
   return rc;
 }

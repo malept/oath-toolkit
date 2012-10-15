@@ -25,6 +25,7 @@
 
 #include "minmax.h"
 
+#define INTERNAL_NEED_PSKC_STRUCT
 #include "internal.h"
 #include <stdlib.h>		/* malloc */
 #include <string.h>		/* memmove */
@@ -362,19 +363,46 @@ int
 pskc_output (pskc_t * container,
 	     pskc_output_formats_t format, char **out, size_t * len)
 {
-  struct buffer buf;
+  if (format == PSKC_OUTPUT_HUMAN_COMPLETE)
+    {
+      struct buffer buf;
 
-  if (format != PSKC_OUTPUT_HUMAN_COMPLETE)
+      buffer_init (&buf);
+      buffer_addz (&buf, "Portable Symmetric Key Container (PSKC):\n");
+
+      print_keycontainer (container, &buf);
+
+      buffer_getstr (&buf, out, len);
+      if (*out == NULL)
+	return PSKC_MALLOC_ERROR;
+    }
+  else if (format == PSKC_OUTPUT_XML)
+    {
+      xmlChar *mem;
+      int size;
+
+      xmlDocDumpFormatMemory (container->xmldoc, &mem, &size, 1);
+      if (mem == NULL || size <= 0)
+	{
+	  _pskc_debug ("xmlDocDumpFormatMemory failed\n");
+	  return PSKC_XML_ERROR;
+	}
+
+      if (len)
+	*len = size;
+      if (out)
+	{
+	  *out = malloc (size);
+	  if (*out == NULL)
+	    return PSKC_MALLOC_ERROR;
+
+	  memcpy (*out, mem, size);
+	}
+
+      xmlFree (mem);
+    }
+  else
     return PSKC_UNKNOWN_OUTPUT_FORMAT;
-
-  buffer_init (&buf);
-  buffer_addz (&buf, "Portable Symmetric Key Container (PSKC):\n");
-
-  print_keycontainer (container, &buf);
-
-  buffer_getstr (&buf, out, len);
-  if (*out == NULL)
-    return PSKC_MALLOC_ERROR;
 
   return PSKC_OK;
 }

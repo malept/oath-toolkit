@@ -613,6 +613,7 @@ libpskc/man/pskc_keyusage2str.3
 libpskc/man/pskc_output.3
 libpskc/man/pskc_parse_from_memory.3
 libpskc/man/pskc_pinusagemode2str.3
+libpskc/man/pskc_sign_x509.3
 libpskc/man/pskc_str2keyusage.3
 libpskc/man/pskc_str2pinusagemode.3
 libpskc/man/pskc_str2valueformat.3
@@ -624,6 +625,8 @@ libpskc/output.lo
 libpskc/output.o
 libpskc/parser.lo
 libpskc/parser.o
+libpskc/sign.lo
+libpskc/sign.o
 libpskc/stamp-h1
 libpskc/tests/.deps/
 libpskc/tests/test-suite.log

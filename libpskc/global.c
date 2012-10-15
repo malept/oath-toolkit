@@ -27,6 +27,8 @@
 #include <string.h>		/* strverscmp */
 #include <libxml/parser.h>	/* xmlInitParser */
 #include <libxml/xmlschemas.h>	/* xmlSchemaParse */
+#include <xmlsec/xmlsec.h>
+#include <xmlsec/crypto.h>
 
 xmlDocPtr _pskc_schema_doc = NULL;
 xmlSchemaParserCtxtPtr _pskc_parser_ctxt = NULL;
@@ -362,6 +364,40 @@ pskc_global_init (void)
       return PSKC_XML_ERROR;
     }
 
+#ifdef USE_XMLSEC
+  if(xmlSecInit() < 0)
+    {
+      _pskc_debug ("xmlSecInit failed\n");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if(xmlSecCheckVersion() != 1)
+    {
+      _pskc_debug ("xmlSecCheckVersion failed\n");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+#ifdef XMLSEC_CRYPTO_DYNAMIC_LOADING
+  if(xmlSecCryptoDLLoadLibrary(BAD_CAST XMLSEC_CRYPTO) < 0)
+    {
+      _pskc_debug ("xmlSecCryptoDLLoadLibrary failed\n");
+      return PSKC_XMLSEC_ERROR;
+    }
+#endif
+
+  if(xmlSecCryptoAppInit(NULL) < 0)
+    {
+      _pskc_debug ("xmlSecCryptoAppInit failed\n");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if(xmlSecCryptoInit() < 0)
+    {
+      _pskc_debug ("xmlSecCryptoInit failed\n");
+      return PSKC_XMLSEC_ERROR;
+    }
+#endif
+
   return PSKC_OK;
 }
 
@@ -378,6 +414,11 @@ pskc_global_done (void)
 {
   if (_pskc_init == 1)
     {
+#ifdef USE_XMLSEC
+      xmlSecCryptoShutdown();
+      xmlSecCryptoAppShutdown();
+      xmlSecShutdown();
+#endif
       xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
       xmlSchemaFree (_pskc_schema);
       xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);

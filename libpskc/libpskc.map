@@ -74,6 +74,7 @@ LIBPSKC_2.0.0 {
     pskc_output;
     pskc_parse_from_memory;
     pskc_pinusagemode2str;
+    pskc_sign_x509;
     pskc_str2keyusage;
     pskc_str2pinusagemode;
     pskc_str2valueformat;

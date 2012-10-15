@@ -38,7 +38,8 @@ static const err_t errors[] = {
   ERR (PSKC_XML_ERROR, "error returned from XML library"),
   ERR (PSKC_PARSE_ERROR, "error parsing PSKC data"),
   ERR (PSKC_BASE64_ERROR, "error base64 decoding data"),
-  ERR (PSKC_UNKNOWN_OUTPUT_FORMAT, "unknown output format")
+  ERR (PSKC_UNKNOWN_OUTPUT_FORMAT, "unknown output format"),
+  ERR (PSKC_XMLSEC_ERROR, "error returned from XMLSec library")
 };
 
 /**

@@ -80,6 +80,11 @@ doit (const struct gengetopt_args_info *args_info)
   int check = args_info->check_flag;
   int validate = args_info->validate_flag;
   int strict = args_info->strict_flag;
+  int sign = args_info->sign_flag;
+  const char *sign_key =
+    args_info->sign_key_given ? args_info->sign_key_arg : NULL;
+  const char *sign_crt =
+    args_info->sign_crt_given ? args_info->sign_crt_arg : NULL;
   int verbose = args_info->verbose_flag;
   int quiet = args_info->quiet_flag;
   char *buffer;
@@ -141,14 +146,30 @@ doit (const struct gengetopt_args_info *args_info)
       pskc_free (out);
     }
 
-  if (build || verbose)
+  if (build)
     {
-      rc = pskc_build_xml (container, &out, &len);
+      rc = pskc_build_xml (container, NULL, NULL);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "cannot build PSKC data: %s",
 	       pskc_strerror (rc));
+    }
 
-      printf ("%.*s", (int) len, out);
+  if (sign)
+    {
+      rc = pskc_sign_x509 (container, sign_key, sign_crt);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "signing PSKC data: %s",
+	       pskc_strerror (rc));
+    }
+
+  if (build || verbose || sign)
+    {
+      rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "converting PSKC data: %s",
+	       pskc_strerror (rc));
+
+      printf ("%.*s\n", (int) len, out);
 
       pskc_free (out);
     }
@@ -195,6 +216,10 @@ main (int argc, char *argv[])
 
   if (args_info.debug_flag)
     pskc_global_log (debuglog);
+
+  if (args_info.sign_flag && (!args_info.sign_key_given
+			      || !args_info.sign_crt_given))
+    error (EXIT_FAILURE, 0, "--sign require --sign-key and --sign-crt");
 
   if (args_info.build_flag || args_info.check_flag || args_info.validate_flag)
     doit (&args_info);

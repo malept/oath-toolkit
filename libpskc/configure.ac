@@ -45,6 +45,13 @@ gl_INIT
 GTK_DOC_CHECK(1.1)
 
 AM_PATH_XML2([], [], [AC_MSG_ERROR(["cannot find libxml2"])])
+PKG_CHECK_MODULES(XMLSEC, xmlsec1 >= 1.2.16, [xmlsec=yes], [xmlsec=no])
+if test "$xmlsec" != "no" ; then
+  AC_DEFINE(USE_XMLSEC, 1, [Define to 1 if you want to use xmlsec.])
+fi
+AC_MSG_CHECKING([if xmlsec should be used])
+AC_MSG_RESULT($xmlsec)
+AM_CONDITIONAL(XMLSEC, test x$xmlsec = xyes)
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],

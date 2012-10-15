@@ -55,17 +55,23 @@ extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
 
 extern PSKCAPI int pskc_validate (pskc_t *container, int *isvalid);
 
+extern PSKCAPI int pskc_sign_x509 (pskc_t *container,
+				   const char *key_file,
+				   const char *cert_file);
+
 extern PSKCAPI int pskc_build_xml (pskc_t *container, char **out, size_t *len);
 
 /**
  * pskc_output_formats_t:
  * @PSKC_OUTPUT_HUMAN_COMPLETE: All information in human-readable format.
+ * @PSKC_OUTPUT_XML: Output container in XML format.
  *
  * Enumeration of different PSKC output formats.
  */
 typedef enum pskc_output_formats
   {
-    PSKC_OUTPUT_HUMAN_COMPLETE = 0
+    PSKC_OUTPUT_HUMAN_COMPLETE = 0,
+    PSKC_OUTPUT_XML = 1
   } pskc_output_formats_t;
 
 extern PSKCAPI int pskc_output (pskc_t *container,

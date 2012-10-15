@@ -41,6 +41,7 @@
  * @PSKC_PARSE_ERROR: Error parsing PSKC data.
  * @PSKC_BASE64_ERROR: Error decoding base64 data.
  * @PSKC_UNKNOWN_OUTPUT_FORMAT: Unknown output format.
+ * @PSKC_XMLSEC_ERROR: Error returned from XMLSec library.
  * @PSKC_LAST_ERROR: Meta-error indicating the last error code, for use
  *   when iterating over all error codes or similar.
  *
@@ -59,9 +60,10 @@ typedef enum
   PSKC_PARSE_ERROR = -3,
   PSKC_BASE64_ERROR = -4,
   PSKC_UNKNOWN_OUTPUT_FORMAT = -5,
+  PSKC_XMLSEC_ERROR = -6,
   /* When adding anything above, you need to update errors.c and
      the following constant. */
-  PSKC_LAST_ERROR = -5
+  PSKC_LAST_ERROR = -6
 } pskc_rc;
 
 extern PSKCAPI const char *pskc_strerror (int err);
