@@ -129,8 +129,5 @@ pskc_sign_x509 (pskc_t * container,
       return PSKC_XMLSEC_ERROR;
     }
 
-  /* XXX workaround to get PSKC schema valid. */
-  xmlSetNs (signNode, NULL);
-
   return PSKC_OK;
 }
