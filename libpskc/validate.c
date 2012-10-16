@@ -27,8 +27,7 @@
 #include "internal.h"
 #include <libxml/xmlschemas.h>
 
-/* global.c */
-extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
+#define PSKC_SCHEMA_URI "urn:ietf:params:xml:ns:keyprov:pskc"
 
 /**
  * pskc_validate:
@@ -43,8 +42,40 @@ extern xmlSchemaValidCtxtPtr _pskc_schema_validctxt;
 int
 pskc_validate (pskc_t * container, int *isvalid)
 {
+  xmlSchemaParserCtxtPtr _pskc_parser_ctxt = NULL;
+  xmlSchemaPtr _pskc_schema = NULL;
+  xmlSchemaValidCtxtPtr _pskc_schema_validctxt = NULL;
+
+  _pskc_parser_ctxt = xmlSchemaNewParserCtxt (PSKC_SCHEMA_URI);
+  if (_pskc_parser_ctxt == NULL)
+    {
+      _pskc_debug ("xmlSchemaNewDocParserCtxt failed\n");
+      return PSKC_XML_ERROR;
+    }
+
+  _pskc_schema = xmlSchemaParse (_pskc_parser_ctxt);
+  if (_pskc_schema == NULL)
+    {
+      _pskc_debug ("xmlSchemaParse failed\n");
+      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
+      return PSKC_XML_ERROR;
+    }
+
+  _pskc_schema_validctxt = xmlSchemaNewValidCtxt (_pskc_schema);
+  if (_pskc_schema_validctxt == NULL)
+    {
+      _pskc_debug ("xmlSchemaNewValidCtxt failed\n");
+      xmlSchemaFree (_pskc_schema);
+      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
+      return PSKC_XML_ERROR;
+    }
+
   *isvalid = xmlSchemaValidateDoc (_pskc_schema_validctxt,
 				   container->xmldoc) == 0;
+
+  xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
+  xmlSchemaFree (_pskc_schema);
+  xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
 
   return PSKC_OK;
 }

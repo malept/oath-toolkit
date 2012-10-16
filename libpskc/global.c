@@ -26,292 +26,10 @@
 #include "internal.h"
 #include <string.h>		/* strverscmp */
 #include <libxml/parser.h>	/* xmlInitParser */
-#include <libxml/xmlschemas.h>	/* xmlSchemaParse */
 #include <xmlsec/xmlsec.h>
 #include <xmlsec/crypto.h>
 
-xmlDocPtr _pskc_schema_doc = NULL;
-xmlSchemaParserCtxtPtr _pskc_parser_ctxt = NULL;
-xmlSchemaPtr _pskc_schema = NULL;
-xmlSchemaValidCtxtPtr _pskc_schema_validctxt = NULL;
 int _pskc_init = 0;
-
-/* From RFC 6030 with errata fix and no references to xenc/ds. */
-static const char *pskc_schema_str =
-  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-  "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n"
-  "     xmlns:pskc=\"urn:ietf:params:xml:ns:keyprov:pskc\"\n"
-  "     targetNamespace=\"urn:ietf:params:xml:ns:keyprov:pskc\"\n"
-  "     elementFormDefault=\"qualified\"\n"
-  "     attributeFormDefault=\"unqualified\">\n"
-  "     <xs:import namespace=\"http://www.w3.org/XML/1998/namespace\"/>\n"
-  "     <xs:complexType name=\"KeyContainerType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"MACMethod\"\n"
-  "                    type=\"pskc:MACMethodType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"KeyPackage\"\n"
-  "                    type=\"pskc:KeyPackageType\" maxOccurs=\"unbounded\"/>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\"\n"
-  "                    minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "          <xs:attribute name=\"Version\"\n"
-  "               type=\"pskc:VersionType\" use=\"required\"/>\n"
-  "          <xs:attribute name=\"Id\"\n"
-  "               type=\"xs:ID\" use=\"optional\"/>\n"
-  "     </xs:complexType>\n"
-  "     <xs:simpleType name=\"VersionType\" final=\"restriction\">\n"
-  "          <xs:restriction base=\"xs:string\">\n"
-  "               <xs:pattern value=\"\\d{1,2}\\.\\d{1,3}\"/>\n"
-  "          </xs:restriction>\n"
-  "     </xs:simpleType>\n"
-  "     <xs:complexType name=\"KeyType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"Issuer\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"AlgorithmParameters\"\n"
-  "                    type=\"pskc:AlgorithmParametersType\"\n"
-  "                    minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"KeyProfileId\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"KeyReference\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"FriendlyName\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Data\"\n"
-  "                    type=\"pskc:KeyDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"UserId\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Policy\"\n"
-  "                    type=\"pskc:PolicyType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\" minOccurs=\"0\"\n"
-  "                    maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "          <xs:attribute name=\"Id\"\n"
-  "               type=\"xs:string\" use=\"required\"/>\n"
-  "          <xs:attribute name=\"Algorithm\"\n"
-  "               type=\"pskc:KeyAlgorithmType\" use=\"optional\"/>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"PolicyType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"StartDate\"\n"
-  "                    type=\"xs:dateTime\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"ExpiryDate\"\n"
-  "                    type=\"xs:dateTime\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"PINPolicy\"\n"
-  "                    type=\"pskc:PINPolicyType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"KeyUsage\"\n"
-  "                    type=\"pskc:KeyUsageType\"\n"
-  "                    minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n"
-  "               <xs:element name=\"NumberOfTransactions\"\n"
-  "                    type=\"xs:nonNegativeInteger\" minOccurs=\"0\"/>\n"
-  "               <xs:any namespace=\"##other\"\n"
-  "                    minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"KeyDataType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"Secret\"\n"
-  "                    type=\"pskc:binaryDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Counter\"\n"
-  "                    type=\"pskc:longDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Time\"\n"
-  "                    type=\"pskc:intDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"TimeInterval\"\n"
-  "                    type=\"pskc:intDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"TimeDrift\"\n"
-  "                    type=\"pskc:intDataType\" minOccurs=\"0\"/>\n"
-  "               <xs:any namespace=\"##other\"\n"
-  "                    processContents=\"lax\"\n"
-  "                    minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"binaryDataType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:choice>\n"
-  "                    <xs:element name=\"PlainValue\"\n"
-  "                         type=\"xs:base64Binary\"/>\n"
-  "               </xs:choice>\n"
-  "               <xs:element name=\"ValueMAC\"\n"
-  "                    type=\"xs:base64Binary\" minOccurs=\"0\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"intDataType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:choice>\n"
-  "                    <xs:element name=\"PlainValue\" type=\"xs:int\"/>\n"
-  "               </xs:choice>\n"
-  "               <xs:element name=\"ValueMAC\"\n"
-  "                    type=\"xs:base64Binary\" minOccurs=\"0\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"stringDataType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:choice>\n"
-  "                    <xs:element name=\"PlainValue\" type=\"xs:string\"/>\n"
-  "               </xs:choice>\n"
-  "               <xs:element name=\"ValueMAC\"\n"
-  "                    type=\"xs:base64Binary\" minOccurs=\"0\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"longDataType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:choice>\n"
-  "                    <xs:element name=\"PlainValue\" type=\"xs:long\"/>\n"
-  "               </xs:choice>\n"
-  "               <xs:element name=\"ValueMAC\"\n"
-  "                    type=\"xs:base64Binary\" minOccurs=\"0\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"PINPolicyType\">\n"
-  "          <xs:attribute name=\"PINKeyId\"\n"
-  "               type=\"xs:string\" use=\"optional\"/>\n"
-  "          <xs:attribute name=\"PINUsageMode\"\n"
-  "               type=\"pskc:PINUsageModeType\"/>\n"
-  "          <xs:attribute name=\"MaxFailedAttempts\"\n"
-  "               type=\"xs:unsignedInt\" use=\"optional\"/>\n"
-  "          <xs:attribute name=\"MinLength\"\n"
-  "               type=\"xs:unsignedInt\" use=\"optional\"/>\n"
-  "          <xs:attribute name=\"MaxLength\"\n"
-  "               type=\"xs:unsignedInt\" use=\"optional\"/>\n"
-  "          <xs:attribute name=\"PINEncoding\"\n"
-  "               type=\"pskc:ValueFormatType\" use=\"optional\"/>\n"
-  "          <xs:anyAttribute namespace=\"##other\"/>\n"
-  "     </xs:complexType>\n"
-  "     <xs:simpleType name=\"PINUsageModeType\">\n"
-  "          <xs:restriction base=\"xs:string\">\n"
-  "               <xs:enumeration value=\"Local\"/>\n"
-  "               <xs:enumeration value=\"Prepend\"/>\n"
-  "               <xs:enumeration value=\"Append\"/>\n"
-  "               <xs:enumeration value=\"Algorithmic\"/>\n"
-  "          </xs:restriction>\n"
-  "     </xs:simpleType>\n"
-  "     <xs:simpleType name=\"KeyUsageType\">\n"
-  "          <xs:restriction base=\"xs:string\">\n"
-  "               <xs:enumeration value=\"OTP\"/>\n"
-  "               <xs:enumeration value=\"CR\"/>\n"
-  "               <xs:enumeration value=\"Encrypt\"/>\n"
-  "               <xs:enumeration value=\"Integrity\"/>\n"
-  "               <xs:enumeration value=\"Verify\"/>\n"
-  "               <xs:enumeration value=\"Unlock\"/>\n"
-  "               <xs:enumeration value=\"Decrypt\"/>\n"
-  "               <xs:enumeration value=\"KeyWrap\"/>\n"
-  "               <xs:enumeration value=\"Unwrap\"/>\n"
-  "               <xs:enumeration value=\"Derive\"/>\n"
-  "               <xs:enumeration value=\"Generate\"/>\n"
-  "          </xs:restriction>\n"
-  "     </xs:simpleType>\n"
-  "     <xs:complexType name=\"DeviceInfoType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"Manufacturer\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"SerialNo\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Model\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"IssueNo\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"DeviceBinding\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"StartDate\"\n"
-  "                    type=\"xs:dateTime\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"ExpiryDate\"\n"
-  "                    type=\"xs:dateTime\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"UserId\"\n"
-  "                    type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\" minOccurs=\"0\"\n"
-  "                    maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"CryptoModuleInfoType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"Id\" type=\"xs:string\"/>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\" minOccurs=\"0\"\n"
-  "                    maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"KeyPackageType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"DeviceInfo\"\n"
-  "                    type=\"pskc:DeviceInfoType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"CryptoModuleInfo\"\n"
-  "                    type=\"pskc:CryptoModuleInfoType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Key\"\n"
-  "                    type=\"pskc:KeyType\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\" minOccurs=\"0\"\n"
-  "                    maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"AlgorithmParametersType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:element name=\"Suite\" type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "               <xs:element name=\"ChallengeFormat\" minOccurs=\"0\">\n"
-  "                    <xs:complexType>\n"
-  "                         <xs:attribute name=\"Encoding\"\n"
-  "                              type=\"pskc:ValueFormatType\"\n"
-  "                                                      use=\"required\"/>\n"
-  "                         <xs:attribute name=\"Min\"\n"
-  "                              type=\"xs:unsignedInt\" use=\"required\"/>\n"
-  "                         <xs:attribute name=\"Max\"\n"
-  "                              type=\"xs:unsignedInt\" use=\"required\"/>\n"
-  "                         <xs:attribute name=\"CheckDigits\"\n"
-  "                              type=\"xs:boolean\" default=\"false\"/>\n"
-  "                    </xs:complexType>\n"
-  "               </xs:element>\n"
-  "               <xs:element name=\"ResponseFormat\" minOccurs=\"0\">\n"
-  "                    <xs:complexType>\n"
-  "                         <xs:attribute name=\"Encoding\"\n"
-  "                              type=\"pskc:ValueFormatType\"\n"
-  "                                                      use=\"required\"/>\n"
-  "                         <xs:attribute name=\"Length\"\n"
-  "                              type=\"xs:unsignedInt\" use=\"required\"/>\n"
-  "                         <xs:attribute name=\"CheckDigits\"\n"
-  "                              type=\"xs:boolean\" default=\"false\"/>\n"
-  "                    </xs:complexType>\n"
-  "               </xs:element>\n"
-  "               <xs:element name=\"Extensions\"\n"
-  "                    type=\"pskc:ExtensionsType\" minOccurs=\"0\"\n"
-  "                    maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "     </xs:complexType>\n"
-  "     <xs:complexType name=\"ExtensionsType\">\n"
-  "          <xs:sequence>\n"
-  "               <xs:any namespace=\"##other\"\n"
-  "                    processContents=\"lax\" maxOccurs=\"unbounded\"/>\n"
-  "          </xs:sequence>\n"
-  "          <xs:attribute name=\"definition\"\n"
-  "               type=\"xs:anyURI\" use=\"optional\"/>\n"
-  "     </xs:complexType>\n"
-  "     <xs:simpleType name=\"KeyAlgorithmType\">\n"
-  "          <xs:restriction base=\"xs:anyURI\"/>\n"
-  "     </xs:simpleType>\n"
-  "     <xs:simpleType name=\"ValueFormatType\">\n"
-  "          <xs:restriction base=\"xs:string\">\n"
-  "               <xs:enumeration value=\"DECIMAL\"/>\n"
-  "               <xs:enumeration value=\"HEXADECIMAL\"/>\n"
-  "               <xs:enumeration value=\"ALPHANUMERIC\"/>\n"
-  "               <xs:enumeration value=\"BASE64\"/>\n"
-  "               <xs:enumeration value=\"BINARY\"/>\n"
-  "          </xs:restriction>\n"
-  "     </xs:simpleType>\n"
-  "     <xs:complexType name=\"MACMethodType\">\n"
-  "           <xs:sequence>\n"
-  "                  <xs:choice>\n"
-  "                        <xs:element name=\"MACKeyReference\"\n"
-  "                                type=\"xs:string\" minOccurs=\"0\"/>\n"
-  "                        </xs:choice>\n"
-  "                        <xs:any namespace=\"##other\"\n"
-  "           processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n"
-  "       </xs:sequence>\n"
-  "       <xs:attribute name=\"Algorithm\" type=\"xs:anyURI\" use=\"required\"/>\n"
-  "        </xs:complexType>\n"
-  "     <xs:element name=\"KeyContainer\"\n"
-  "          type=\"pskc:KeyContainerType\"/>\n"
-  "</xs:schema>\n";
 
 /**
  * pskc_global_init:
@@ -332,66 +50,34 @@ pskc_global_init (void)
 
   xmlInitParser ();
 
-  _pskc_schema_doc = xmlReadMemory (pskc_schema_str, strlen (pskc_schema_str),
-				    NULL, NULL, XML_PARSE_NONET);
-  if (_pskc_schema_doc == NULL)
-    {
-      _pskc_debug ("xmlReadMemory failed\n");
-      return PSKC_XML_ERROR;
-    }
-
-  _pskc_parser_ctxt = xmlSchemaNewDocParserCtxt (_pskc_schema_doc);
-  if (_pskc_parser_ctxt == NULL)
-    {
-      _pskc_debug ("xmlSchemaNewDocParserCtxt failed\n");
-      return PSKC_XML_ERROR;
-    }
-
-  _pskc_schema = xmlSchemaParse (_pskc_parser_ctxt);
-  if (_pskc_schema == NULL)
-    {
-      _pskc_debug ("xmlSchemaParse failed\n");
-      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
-      return PSKC_XML_ERROR;
-    }
-
-  _pskc_schema_validctxt = xmlSchemaNewValidCtxt (_pskc_schema);
-  if (_pskc_schema_validctxt == NULL)
-    {
-      _pskc_debug ("xmlSchemaNewValidCtxt failed\n");
-      xmlSchemaFree (_pskc_schema);
-      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
-      return PSKC_XML_ERROR;
-    }
-
 #ifdef USE_XMLSEC
-  if(xmlSecInit() < 0)
+  if (xmlSecInit () < 0)
     {
       _pskc_debug ("xmlSecInit failed\n");
       return PSKC_XMLSEC_ERROR;
     }
 
-  if(xmlSecCheckVersion() != 1)
+  if (xmlSecCheckVersion () != 1)
     {
       _pskc_debug ("xmlSecCheckVersion failed\n");
       return PSKC_XMLSEC_ERROR;
     }
 
 #ifdef XMLSEC_CRYPTO_DYNAMIC_LOADING
-  if(xmlSecCryptoDLLoadLibrary(BAD_CAST XMLSEC_CRYPTO) < 0)
+  if (xmlSecCryptoDLLoadLibrary (BAD_CAST XMLSEC_CRYPTO) < 0)
     {
       _pskc_debug ("xmlSecCryptoDLLoadLibrary failed\n");
       return PSKC_XMLSEC_ERROR;
     }
 #endif
 
-  if(xmlSecCryptoAppInit(NULL) < 0)
+  if (xmlSecCryptoAppInit (NULL) < 0)
     {
       _pskc_debug ("xmlSecCryptoAppInit failed\n");
       return PSKC_XMLSEC_ERROR;
     }
 
-  if(xmlSecCryptoInit() < 0)
+  if (xmlSecCryptoInit () < 0)
     {
       _pskc_debug ("xmlSecCryptoInit failed\n");
       return PSKC_XMLSEC_ERROR;
@@ -415,13 +101,10 @@ pskc_global_done (void)
   if (_pskc_init == 1)
     {
 #ifdef USE_XMLSEC
-      xmlSecCryptoShutdown();
-      xmlSecCryptoAppShutdown();
-      xmlSecShutdown();
+      xmlSecCryptoShutdown ();
+      xmlSecCryptoAppShutdown ();
+      xmlSecShutdown ();
 #endif
-      xmlSchemaFreeValidCtxt (_pskc_schema_validctxt);
-      xmlSchemaFree (_pskc_schema);
-      xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
       xmlCleanupParser ();
       xmlMemoryDump ();
     }
@@ -504,7 +187,7 @@ _pskc_debug (const char *format, ...)
 
   va_start (ap, format);
   rc = vasprintf (&str, format, ap);
-  va_end(ap);
+  va_end (ap);
 
   if (rc != -1)
     {
