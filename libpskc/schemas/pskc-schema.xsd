@@ -238,7 +238,7 @@ Extracted from RFC 6030.  Modified as follows:
           </xs:sequence>
      </xs:complexType>
      <xs:complexType name="AlgorithmParametersType">
-          <xs:choice>
+          <xs:sequence>
                <xs:element name="Suite" type="xs:string" minOccurs="0"/>
                <xs:element name="ChallengeFormat" minOccurs="0">
                     <xs:complexType>
@@ -267,7 +267,7 @@ Extracted from RFC 6030.  Modified as follows:
                <xs:element name="Extensions"
                     type="pskc:ExtensionsType" minOccurs="0"
                     maxOccurs="unbounded"/>
-          </xs:choice>
+          </xs:sequence>
      </xs:complexType>
      <xs:complexType name="ExtensionsType">
           <xs:sequence>
