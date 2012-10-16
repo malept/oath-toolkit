@@ -50,6 +50,7 @@ extern PSKCAPI int pskc_parse_from_memory (pskc_t *container,
 
 extern PSKCAPI const char *pskc_get_version (pskc_t *container);
 extern PSKCAPI const char *pskc_get_id (pskc_t *container);
+extern PSKCAPI int pskc_get_signed_p (pskc_t *container);
 extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
 						size_t i);
 

@@ -4,7 +4,7 @@ Current limitations of Libpskc:
 
 * No functions to set fields, only to read them.
 
-* The EncryptionKey, MACMethod, Signature types are not supported.
+* The EncryptionKey and MACMethod types are not supported.
 
 * Only PlainValue data fields are supported (i.e., EncryptedValue and
   ValueMAC fields are not supported).

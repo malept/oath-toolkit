@@ -331,6 +331,7 @@ print_keycontainer (pskc_t * data, struct buffer *buf)
 {
   const char *version = pskc_get_version (data);
   const char *id = pskc_get_id (data);
+  int signed_p = pskc_get_signed_p (data);
   pskc_key_t *key;
   size_t i;
 
@@ -338,6 +339,7 @@ print_keycontainer (pskc_t * data, struct buffer *buf)
     buffer_addf (buf, "\tVersion: %s\n", version);
   if (id)
     buffer_addf (buf, "\tId: %s\n", id);
+  buffer_addf (buf, "\tSigned: %s\n", signed_p ? "YES" : "NO");
 
   for (i = 0; (key = pskc_get_keypackage (data, i)); i++)
     {

@@ -107,6 +107,7 @@ struct pskc
   /* parsed version */
   const char *version;
   const char *id;
+  int signed_p;
   size_t nkeypackages;
   struct pskc_key *keypackages;
 };

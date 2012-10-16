@@ -604,6 +604,7 @@ libpskc/man/pskc_get_key_profileid.3
 libpskc/man/pskc_get_key_reference.3
 libpskc/man/pskc_get_key_userid.3
 libpskc/man/pskc_get_keypackage.3
+libpskc/man/pskc_get_signed_p.3
 libpskc/man/pskc_get_version.3
 libpskc/man/pskc_global_done.3
 libpskc/man/pskc_global_init.3

@@ -601,6 +601,8 @@ parse_keypackages (pskc_t * pd, xmlNode * x, int *rc)
 	  parse_keypackage (cur_node->children,
 			    &pd->keypackages[pd->nkeypackages - 1], rc);
 	}
+      else if (strcmp ("Signature", name) == 0)
+	pd->signed_p = 1;
       else
 	{
 	  _pskc_debug ("unknown <%s> element <%s>", x->parent->name, name);

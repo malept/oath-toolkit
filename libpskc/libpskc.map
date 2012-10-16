@@ -65,6 +65,7 @@ LIBPSKC_2.0.0 {
     pskc_get_key_reference;
     pskc_get_key_userid;
     pskc_get_keypackage;
+    pskc_get_signed_p;
     pskc_get_version;
     pskc_global_done;
     pskc_global_init;

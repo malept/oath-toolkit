@@ -304,6 +304,15 @@ main (void)
       }
   }
 
+  {
+    int signed_p = pskc_get_signed_p (pskc);
+    if (signed_p != 0)
+      {
+	printf ("pskc_get_signed_p\n");
+	return 1;
+      }
+  }
+
   pskc_key = pskc_get_keypackage (pskc, 0);
   if (pskc_key == NULL)
     {

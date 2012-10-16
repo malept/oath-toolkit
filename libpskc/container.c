@@ -60,6 +60,22 @@ pskc_get_id (pskc_t *container)
 }
 
 /**
+ * pskc_get_signed_p:
+ * @container: a #pskc_t handle, from pskc_init().
+ *
+ * Check whether the container is signed or not (note that it does not
+ * validate the signature, merely checks whether there is one).
+ *
+ * Returns: a non-0 value if the container contains a Signature
+ * element, 0 if there is no Signature element.
+ */
+int
+pskc_get_signed_p (pskc_t *container)
+{
+  return container->signed_p;
+}
+
+/**
  * pskc_get_keypackage:
  * @container: a #pskc_t handle, from pskc_init().
  * @i: number of keypackage to get.
