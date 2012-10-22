@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# tst_roundtrip.sh - test that pskctool generates what it parses without errors
+# tst_sign.sh - test that pskctool can sign and verify
 # Copyright (C) 2012 Simon Josefsson
 
 # This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,29 @@ PSKCTOOL=../pskctool
 
 srcdir="${srcdir:-.}"
 pskc_all="$srcdir/pskc-all.xml"
-pskc_all_human="$srcdir/pskc-all-human.txt"
+pskc_all_signed="$srcdir/pskc-all-signed.xml"
+pskc_ee_key="$srcdir/pskc-ee-key.pem"
+pskc_ee_crt="$srcdir/pskc-ee-crt.pem"
+pskc_root_crt="$srcdir/pskc-root-crt.pem"
 
-$PSKCTOOL --info --verbose --quiet --debug $pskc_all > tmp 2>&1
+$PSKCTOOL --info --strict --debug $pskc_all > tmp-pre-human.txt
 
-diff -ur $pskc_all tmp
+$PSKCTOOL --sign \
+    --sign-key $pskc_ee_key \
+    --sign-crt $pskc_ee_crt \
+    $pskc_all > tmp-signed.xml
 
-$PSKCTOOL --info --debug $pskc_all > tmp 2>&1
+diff -ur $pskc_all_signed tmp-signed.xml
 
-diff -ur $pskc_all_human tmp
+$PSKCTOOL --info --strict --debug tmp-signed.xml \
+    | sed 's/Signed: YES/Signed: NO/' > tmp-post-human.txt
 
-rm -f tmp
+diff -ur tmp-pre-human.txt tmp-post-human.txt
+
+$PSKCTOOL --verify --quiet \
+    --verify-crt $pskc_root_crt \
+    tmp-signed.xml
+
+rm -f tmp-pre-human.txt tmp-signed.xml tmp-post-human.txt
 
 exit 0

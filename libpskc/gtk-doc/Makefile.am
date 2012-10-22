@@ -66,7 +66,7 @@ HTML_IMAGES=
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
 # e.g. content_files=running.sgml building.sgml changes-2.0.sgml
-content_files=serialno.sgml pskc-mini.sgml pskc-hotp.sgml pskc-hotp-human.sgml pskc2csv.sgml pskctool-h.sgml
+content_files=serialno.sgml pskc-mini.sgml pskc-hotp.sgml pskc-hotp-human.sgml pskc2csv.sgml pskctool-h.sgml pskc-figure6-debug.sgml pskc-hotp-signed.sgml pskcsign.sgml pskcverify.sgml
 
 # SGML files where gtk-doc abbrevations (#GtkWidget) are expanded
 # These files must be listed here *and* in content_files

@@ -1,0 +1,43 @@
+Portable Symmetric Key Container (PSKC):
+	Version: 1.0
+	Id: KCID
+	Signed: NO
+	KeyPackage 0:
+		DeviceInfo:
+			Manufacturer: iana.dummy
+			SerialNo: SerialNo
+			Model: Model
+			IssueNo: IssueNo
+			DeviceBinding: DeviceBinding
+			Device StartDate: 2006-05-01 00:00:00
+			Device ExpiryDate: 2012-05-01 00:00:00
+			UserId: DeviceUserId
+		CryptoModuleInfo Id: CMID
+		Key:
+			Id: KID1
+			FriendlyName: FriendlyName
+			Issuer: Issuer
+			Algorithm: urn:ietf:params:xml:ns:keyprov:pskc:hotp
+			Key User Id: KeyUserId
+			Key Profile Id: KeyProfileId
+			Key Reference: KeyReference
+			Key Secret (base64): MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+			Key Counter: 0
+			Key Time: 100
+			Key TimeInterval: 200
+			Key TimeDrift: 300
+			Key Usage: OTP CR
+			Policy StartDate: 2006-05-01 00:00:00
+			Policy ExpiryDate: 2006-05-31 00:00:00
+			PIN Policy Minimum Length: 99
+			PIN Policy Maximum Length: 999
+			PIN Policy PIN Key Id: 123456781
+			PIN Policy PIN Encoding: DECIMAL
+			PIN Policy PIN Usage Mode: Local
+			PIN Policy PIN Max Failed Attempts: 8
+			Algorithm Parameters Suite: Suite
+			Challenge Format Encoding: DECIMAL
+			Challenge Format Min: 42
+			Challenge Format Max: 4711
+			Response Format Length: 8
+			Response Format Encoding: DECIMAL

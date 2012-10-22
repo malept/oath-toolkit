@@ -186,6 +186,7 @@ verify (pskc_t * container, xmlSecKeysMngrPtr mngr,
  * pskc_verify_x509crt:
  * @container: a #pskc_t handle, from pskc_init().
  * @cert_file: filename of file containing trusted X.509 certificate.
+ * @valid_signature: output variable with result of verification.
  *
  * Verify signature in PSKC data against trusted X.509 certificate.
  *

@@ -13,20 +13,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-purpose "Manage Portable Symmetric Key Container (PSKC) data."
+purpose "Manipulate Portable Symmetric Key Container (PSKC) data."
 
-option "validate" e "validate PSKC input according to XML Schema" flag off
-option "check" c "parse and print human readable summary of PSKC input" flag off
-option "build" b "rebuild PSKC data" flag off
+description "This tool allows you to parse, print, validate, sign and verify PSKC data.  The input is provided in FILE or on standard input."
 
-option "sign" - "sign PSKC input" flag off
-option "sign-key" - "private key to sign with" string typestr="FILE" no
-option "sign-crt" - "X.509 certificate to sign with" string typestr="FILE" no
+option "strict" - "Fail hard on PSKC parse error" flag off
+option "debug" d "Show debug mesages on stderr" flag off
+option "quiet" q "Quiet operation" flag off
+option "verbose" v "Produce more output" flag off
 
-option "verify" - "verify signed PSKC input" flag off
-option "verify-crt" - "trusted X.509 certificate for verification" string typestr="FILE" no
+section "Selecting one of the following modes is required"
 
-option "strict" - "fail hard on PSKC parse error" flag off
-option "debug" d "enable debug logging" flag off
-option "quiet" q "quiet operation" flag off
-option "verbose" v "produce more output" flag off
+defmode "info"
+modeoption "info" i "Parse and print human readable summary of PSKC input" mode="info" flag off
+
+defmode "validate"
+modeoption "validate" e "Validate PSKC input against XML Schema" mode="validate" flag off
+
+defmode "sign" modedesc="Digitally sign PSKC data"
+modeoption "sign" - "Sign PSKC input" mode="sign" flag off
+modeoption "sign-key" - "Private key to sign with" mode="sign" string typestr="FILE" dependon="sign" required
+modeoption "sign-crt" - "X.509 certificate to sign with" mode="sign" string typestr="FILE" dependon="sign" required
+
+defmode "verify" modedesc="Verify digitally signed PSKC data"
+modeoption "verify" - "Verify signed PSKC input" mode="verify" flag off
+modeoption "verify-crt" - "Trusted X.509 certificate for verification" mode="verify" string typestr="FILE" dependon="verify" required no

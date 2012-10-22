@@ -3,8 +3,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <pskc/pskc.h>
+
+/*
+ * $ cc -o pskc2csv pskc2csv.c $(pkg-config --cflags --libs libpskc)
+ * $ ./pskc2csv pskc.xml 2> /dev/null
+ * 12345678,12345678,MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+ * $
+ */
 
 int
 main (int argc, const char *argv[])

@@ -20,10 +20,33 @@ AM_LDFLAGS = -no-install
 
 LDADD = ../libpskc.la
 
-noinst_PROGRAMS = serialno pskc2csv
+noinst_PROGRAMS = serialno pskc2csv pskcsign pskcverify
 
-EXTRA_DIST = pskc-mini.xml pskc-hotp.xml pskctool-h.txt pskc-hotp-human.txt
+# Manually maintained.
+EXTRA_DIST = pskc-mini.xml pskc-hotp.xml
+
+# Semi-generated.
+EXTRA_DIST += pskctool-h.txt
+EXTRA_DIST += pskc-hotp-human.txt pskc-hotp-signed.xml
+EXTRA_DIST += pskc-figure6-debug.txt
+
+pskc-hotp-human.txt: $(srcdir)/pskc-hotp.xml
+	$(top_builddir)/../pskctool/pskctool --info \
+		$(srcdir)/pskc-hotp.xml > tmp 2>&1
+	mv tmp $@
+
+pskc-hotp-signed.xml: $(srcdir)/pskc-hotp.xml
+	$(top_builddir)/../pskctool/pskctool --sign \
+		--sign-key $(top_srcdir)/../pskctool/tests/pskc-ee-key.pem \
+		--sign-crt $(top_srcdir)/../pskctool/tests/pskc-ee-crt.pem \
+		$(srcdir)/pskc-hotp.xml > tmp 2>&1
+	mv tmp $@
 
 pskctool-h.txt: $(top_srcdir)/../pskctool/pskctool.ggo $(top_srcdir)/../pskctool/pskctool.c
-	$(top_builddir)/../pskctool/pskctool > tmp
-	sed '1,2d' < tmp > $@
+	$(top_builddir)/../pskctool/pskctool | sed '1,2d' > tmp 2>&1
+	mv tmp $@
+
+pskc-figure6-debug.txt: $(top_srcdir)/../pskctool/tests/pskc-figure6.xml
+	$(top_builddir)/../pskctool/pskctool --info --debug --quiet \
+		$(top_srcdir)/../pskctool/tests/pskc-figure6.xml > tmp 2>&1
+	mv tmp $@

@@ -2,9 +2,9 @@
 #include <pskc/pskc.h>
 
 /*
- * $ cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)
- * $ ./serialno pskc-hotp.xml
- * SerialNo: 987654321
+ * $ cc -o pskcverify pskcverify.c $(pkg-config --cflags --libs libpskc)
+ * $ ./pskcverify signed.xml pskc-root-crt.pem
+ * OK
  * $
  */
 
@@ -22,8 +22,7 @@ main (int argc, const char *argv[])
   FILE *fh = fopen (argv[1], "r");
   size_t len = fread (buffer, 1, sizeof (buffer), fh);
   pskc_t *container;
-  pskc_key_t *keypackage;
-  int rc;
+  int rc, valid_sig;
 
   fclose (fh);
 
@@ -32,10 +31,8 @@ main (int argc, const char *argv[])
   rc = pskc_init (&container); PSKC_CHECK_RC;
   rc = pskc_parse_from_memory (container, len, buffer); PSKC_CHECK_RC;
 
-  keypackage = pskc_get_keypackage (container, 0);
-
-  if (keypackage)
-    printf ("SerialNo: %s\n", pskc_get_device_serialno (keypackage));
+  rc = pskc_verify_x509crt (container, argv[2], &valid_sig); PSKC_CHECK_RC;
+  puts (valid_sig ? "OK" : "FAIL");
 
   pskc_done (container);
   pskc_global_done ();

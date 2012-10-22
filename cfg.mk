@@ -31,7 +31,7 @@ bootstrap:
 	make
 
 # syntax-check
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|m4/libxml2.m4|oathtool/doc/parse-datetime.texi|(liboath|libpskc)/man/gdoc|liboath/gtk-doc.make|libpskc/gtk-doc.make|(oathtool|liboath)/(build-aux|gl)/.*$$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^GNUmakefile|maint.mk|build-aux/|gl/|m4/libxml2.m4|oathtool/doc/parse-datetime.texi|(liboath|libpskc)/man/gdoc|liboath/gtk-doc.make|libpskc/gtk-doc.make|libpskc/schemas/|(oathtool|liboath)/(build-aux|gl)/.*$$
 # syntax-check: Project wide exceptions on philosophical grounds.
 local-checks-to-skip = sc_GPL_version sc_immutable_NEWS	\
 	sc_prohibit_strcmp
@@ -43,8 +43,10 @@ local-checks-to-skip += sc_prohibit_atoi_atof
 exclude_file_name_regexp--sc_program_name = ^liboath/tests/|libpskc/examples/|libpskc/tests/|pam_oath/tests/
 exclude_file_name_regexp--sc_texinfo_acronym = ^oathtool/doc/parse-datetime.texi
 exclude_file_name_regexp--sc_error_message_uppercase = ^oathtool/oathtool.c|pskctool/pskctool.c
-exclude_file_name_regexp--sc_require_config_h = ^libpskc/examples/pskc2csv.c|libpskc/examples/serialno.c
+exclude_file_name_regexp--sc_require_config_h = ^libpskc/examples/
 exclude_file_name_regexp--sc_require_config_h_first = $(exclude_file_name_regexp--sc_require_config_h)
+exclude_file_name_regexp--sc_trailing_blank = ^libpskc/examples/pskctool-h.txt
+exclude_file_name_regexp--sc_two_space_separator_in_usage = ^pskctool/tests/
 
 update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=1
 

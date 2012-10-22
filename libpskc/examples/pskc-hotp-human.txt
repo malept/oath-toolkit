@@ -1,5 +1,6 @@
 Portable Symmetric Key Container (PSKC):
 	Version: 1.0
+	Signed: NO
 	KeyPackage 0:
 		DeviceInfo:
 			Manufacturer: Manufacturer

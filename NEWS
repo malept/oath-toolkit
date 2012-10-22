@@ -3,13 +3,15 @@ Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 2.0.1 (unreleased)
 
-** libpskc, pskctool: Support signing PSKC data using XML DigSig.
+** libpskc, pskctool: Support sign and verify of PSKC data using XML DigSig.
 
 ** libpskc: XML Schema validation modified.
 The entire PSKC schema is now supported (before the XML Digital
 Signatures and Encryption parts were removed).  The code now assumes
 that the schema is available in the local XML catalog.  Thanks to Liam
 Quin for hints about XML catalogs.
+
+** pskctool: the --check (-c) parameter was renamed to --info (-i).
 
 ** API and ABI is backwards compatible with the previous version.
 

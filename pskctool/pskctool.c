@@ -49,50 +49,43 @@ const char version_etc_copyright[] =
 
 /* *INDENT-OFF* */
 static void
-usage (int status)
+version (void)
   PSKC_ATTR_NO_RETURN;
 /* *INDENT-ON* */
 
 static void
-usage (int status)
+version (void)
 {
-  if (status != EXIT_SUCCESS)
-    fprintf (stderr, "Try `%s --help' for more information.\n", program_name);
-  else
-    {
-      cmdline_parser_print_help ();
-      emit_bug_reporting_address ();
-    }
-  exit (status);
+  char *p;
+  int l = -1;
+
+  if (strcmp (pskc_check_version (NULL), PSKC_VERSION) != 0)
+    l = asprintf (&p, "PSKC Toolkit libpskc.so %s pskc.h %s",
+		  pskc_check_version (NULL), PSKC_VERSION);
+  else if (strcmp (PSKC_VERSION, PACKAGE_VERSION) != 0)
+    l = asprintf (&p, "PSKC Toolkit %s", pskc_check_version (NULL));
+  version_etc (stdout, "pskctool", l == -1 ? "PSKC Toolkit" : p,
+	       PACKAGE_VERSION, "Simon Josefsson", (char *) NULL);
+  if (l != -1)
+    free (p);
+
+  exit (EXIT_SUCCESS);
 }
 
-void
+static void
 debuglog (const char *msg)
 {
   fprintf (stderr, "debug: %s\n", msg);
 }
 
-static void
-doit (const struct gengetopt_args_info *args_info)
+static pskc_t *
+get_container (const struct gengetopt_args_info *args_info)
 {
   const char *filename = args_info->inputs ? args_info->inputs[0] : NULL;
-  int build = args_info->build_flag;
-  int check = args_info->check_flag;
-  int validate = args_info->validate_flag;
   int strict = args_info->strict_flag;
-  int sign = args_info->sign_flag;
-  const char *sign_key =
-    args_info->sign_key_given ? args_info->sign_key_arg : NULL;
-  const char *sign_crt =
-    args_info->sign_crt_given ? args_info->sign_crt_arg : NULL;
-  int verify = args_info->verify_flag;
-  const char *verify_crt =
-    args_info->verify_crt_given ? args_info->verify_crt_arg : NULL;
-  int verbose = args_info->verbose_flag;
-  int quiet = args_info->quiet_flag;
-  char *out;
-  size_t len;
   pskc_t *container;
+  char *buffer;
+  size_t len;
   int rc;
 
   rc = pskc_init (&container);
@@ -100,99 +93,132 @@ doit (const struct gengetopt_args_info *args_info)
     error (EXIT_FAILURE, 0, "initializing PSKC structure: %s",
 	   pskc_strerror (rc));
 
-  if (!build || check)
-    {
-      char *buffer;
+  if (filename)
+    buffer = read_binary_file (filename, &len);
+  else
+    buffer = fread_file (stdin, &len);
+  if (buffer == NULL)
+    error (EXIT_FAILURE, errno, "read");
 
-      if (filename)
-	buffer = read_binary_file (filename, &len);
-      else
-	buffer = fread_file (stdin, &len);
-      if (buffer == NULL)
-	error (EXIT_FAILURE, errno, "read");
+  rc = pskc_parse_from_memory (container, len, buffer);
+  if (!strict && rc == PSKC_PARSE_ERROR)
+    fprintf (stderr, "warning: parse error (use -d to diagnose), output "
+	     "may be incomplete\n");
+  else if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
 
-      rc = pskc_parse_from_memory (container, len, buffer);
-      if (!strict && rc == PSKC_PARSE_ERROR)
-	fprintf (stderr, "warning: parse error (use -d to diagnose), output "
-		 "may be incomplete\n");
-      else if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "parsing PSKC data: %s", pskc_strerror (rc));
+  free (buffer);
 
-      free (buffer);
-    }
+  return container;
+}
 
-  if (validate)
-    {
-      int isvalid;
+static void
+validate (const struct gengetopt_args_info *args_info)
+{
+  int quiet = args_info->quiet_flag;
+  pskc_t *container = get_container (args_info);
+  int rc;
+  int isvalid;
 
-      rc = pskc_validate (container, &isvalid);
-      if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "validation of PSKC data failed: %s",
-	       pskc_strerror (rc));
+  rc = pskc_validate (container, &isvalid);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "validation of PSKC data failed: %s",
+	   pskc_strerror (rc));
 
-      if (quiet && !isvalid)
-	error (EXIT_FAILURE, 0, "");
-      if (!quiet && isvalid)
-	puts ("OK");
-      else if (!quiet)
-	puts ("FAIL");
-    }
-  else if (verify)
-    {
-      int valid_signature;
+  if (quiet && !isvalid)
+    error (EXIT_FAILURE, 0, "");
+  if (!quiet && isvalid)
+    puts ("OK");
+  else if (!quiet)
+    puts ("FAIL");
 
-      rc = pskc_verify_x509crt (container, verify_crt, &valid_signature);
-      if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "verifying PSKC data: %s",
-	       pskc_strerror (rc));
+  pskc_done (container);
+}
 
-      if (quiet && !valid_signature)
-	error (EXIT_FAILURE, 0, "");
-      if (!quiet && valid_signature)
-	puts ("OK");
-      else if (!quiet)
-	puts ("FAIL");
-    }
-  else if (check)
+static void
+verify (const struct gengetopt_args_info *args_info)
+{
+  const char *verify_crt =
+    args_info->verify_crt_given ? args_info->verify_crt_arg : NULL;
+  int quiet = args_info->quiet_flag;
+  pskc_t *container = get_container (args_info);
+  int rc;
+  int valid_signature;
+
+  rc = pskc_verify_x509crt (container, verify_crt, &valid_signature);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "verifying PSKC data: %s", pskc_strerror (rc));
+
+  if (quiet && !valid_signature)
+    error (EXIT_FAILURE, 0, "");
+  if (!quiet && valid_signature)
+    puts ("OK");
+  else if (!quiet)
+    puts ("FAIL");
+
+  pskc_done (container);
+}
+
+static void
+sign (const struct gengetopt_args_info *args_info)
+{
+  const char *sign_key =
+    args_info->sign_key_given ? args_info->sign_key_arg : NULL;
+  const char *sign_crt =
+    args_info->sign_crt_given ? args_info->sign_crt_arg : NULL;
+  pskc_t *container = get_container (args_info);
+  char *out;
+  size_t len;
+  int rc;
+
+  rc = pskc_sign_x509 (container, sign_key, sign_crt);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "signing PSKC data: %s", pskc_strerror (rc));
+
+  rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
+  if (rc != PSKC_OK)
+    error (EXIT_FAILURE, 0, "converting PSKC data: %s", pskc_strerror (rc));
+
+  printf ("%.*s", (int) len, out);
+
+  pskc_free (out);
+
+  pskc_done (container);
+}
+
+static void
+info (const struct gengetopt_args_info *args_info)
+{
+  int verbose = args_info->verbose_flag;
+  int quiet = args_info->quiet_flag;
+  pskc_t *container = get_container (args_info);
+  char *out;
+  size_t len;
+  int rc;
+
+  if (!quiet)
     {
       rc = pskc_output (container, PSKC_OUTPUT_HUMAN_COMPLETE, &out, &len);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "converting PSKC data: %s",
 	       pskc_strerror (rc));
 
-      if (!quiet)
-	printf ("%.*s\n", (int) len, out);
+      printf ("%.*s", (int) len, out);
 
       pskc_free (out);
     }
 
-  if (build)
-    {
-      rc = pskc_build_xml (container, NULL, NULL);
-      if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "cannot build PSKC data: %s",
-	       pskc_strerror (rc));
-    }
+  if (!quiet && verbose)
+    printf ("\n");
 
-  if (sign)
+  if (verbose)
     {
-      rc = pskc_sign_x509 (container, sign_key, sign_crt);
-      if (rc != PSKC_OK)
-	error (EXIT_FAILURE, 0, "signing PSKC data: %s",
-	       pskc_strerror (rc));
-    }
-
-  if (build || verbose || sign)
-    {
-      if (sign)
-	rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
-      else
-	rc = pskc_output (container, PSKC_OUTPUT_INDENTED_XML, &out, &len);
+      rc = pskc_output (container, PSKC_OUTPUT_INDENTED_XML, &out, &len);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "converting PSKC data: %s",
 	       pskc_strerror (rc));
 
-      printf ("%.*s\n", (int) len, out);
+      printf ("%.*s", (int) len, out);
 
       pskc_free (out);
     }
@@ -211,27 +237,6 @@ main (int argc, char *argv[])
   if (cmdline_parser (argc, argv, &args_info) != 0)
     return EXIT_FAILURE;
 
-  if (args_info.version_given)
-    {
-      char *p;
-      int l = -1;
-
-      if (strcmp (pskc_check_version (NULL), PSKC_VERSION) != 0)
-	l = asprintf (&p, "PSKC Toolkit libpskc.so %s pskc.h %s",
-		      pskc_check_version (NULL), PSKC_VERSION);
-      else if (strcmp (PSKC_VERSION, PACKAGE_VERSION) != 0)
-	l = asprintf (&p, "PSKC Toolkit %s",
-		      pskc_check_version (NULL), PSKC_VERSION);
-      version_etc (stdout, "pskctool", l == -1 ? "PSKC Toolkit" : p,
-		   PACKAGE_VERSION, "Simon Josefsson", (char *) NULL);
-      if (l != -1)
-	free (p);
-      return EXIT_SUCCESS;
-    }
-
-  if (args_info.help_given)
-    usage (EXIT_SUCCESS);
-
   rc = pskc_global_init ();
   if (rc != PSKC_OK)
     error (EXIT_FAILURE, 0, "libpskc initialization failed: %s",
@@ -240,19 +245,20 @@ main (int argc, char *argv[])
   if (args_info.debug_flag)
     pskc_global_log (debuglog);
 
-  if (args_info.sign_flag && (!args_info.sign_key_given
-			      || !args_info.sign_crt_given))
-    error (EXIT_FAILURE, 0, "--sign require --sign-key and --sign-crt");
-
-  if (args_info.build_flag || args_info.check_flag
-      || args_info.validate_flag || args_info.verify_flag
-      || args_info.sign_flag)
-    doit (&args_info);
+  if (args_info.version_given)
+    version ();
+  else if (args_info.validate_flag)
+    validate (&args_info);
+  else if (args_info.sign_flag)
+    sign (&args_info);
+  else if (args_info.verify_flag)
+    verify (&args_info);
+  else if (args_info.info_flag)
+    info (&args_info);
   else
     {
       cmdline_parser_print_help ();
       emit_bug_reporting_address ();
-      return EXIT_SUCCESS;
     }
 
   pskc_global_done ();

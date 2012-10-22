@@ -1,0 +1,6 @@
+debug: unknown <KeyContainer> element <EncryptionKey>
+debug: unknown <KeyContainer> element <MACMethod>
+debug: non-compliant Manufacturer value: Manufacturer
+debug: unknown <Secret> element <EncryptedValue>
+debug: unknown <Secret> element <ValueMAC>
+warning: parse error (use -d to diagnose), output may be incomplete

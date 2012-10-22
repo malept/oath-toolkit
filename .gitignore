@@ -420,6 +420,10 @@ libpskc/errors.o
 libpskc/examples/.deps/
 libpskc/examples/pskc2csv
 libpskc/examples/pskc2csv.o
+libpskc/examples/pskcsign
+libpskc/examples/pskcsign.o
+libpskc/examples/pskcverify
+libpskc/examples/pskcverify.o
 libpskc/examples/serialno
 libpskc/examples/serialno.o
 libpskc/gl/.deps/
@@ -532,11 +536,15 @@ libpskc/gtk-doc/libpskc.signals
 libpskc/gtk-doc/libpskc.types
 libpskc/gtk-doc/pdf-build.stamp
 libpskc/gtk-doc/pdf.stamp
+libpskc/gtk-doc/pskc-figure6-debug.sgml
 libpskc/gtk-doc/pskc-hotp-human.sgml
+libpskc/gtk-doc/pskc-hotp-signed.sgml
 libpskc/gtk-doc/pskc-hotp.sgml
 libpskc/gtk-doc/pskc-mini.sgml
 libpskc/gtk-doc/pskc2csv.sgml
+libpskc/gtk-doc/pskcsign.sgml
 libpskc/gtk-doc/pskctool-h.sgml
+libpskc/gtk-doc/pskcverify.sgml
 libpskc/gtk-doc/scan-build.stamp
 libpskc/gtk-doc/serialno.sgml
 libpskc/gtk-doc/setup-build.stamp

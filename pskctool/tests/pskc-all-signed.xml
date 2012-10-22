@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0" Id="KCID"><KeyPackage><DeviceInfo><Manufacturer>iana.dummy</Manufacturer><SerialNo>SerialNo</SerialNo><Model>Model</Model><IssueNo>IssueNo</IssueNo><DeviceBinding>DeviceBinding</DeviceBinding><StartDate>2006-05-01T00:00:00Z</StartDate><ExpiryDate>2012-05-01T00:00:00Z</ExpiryDate><UserId>DeviceUserId</UserId></DeviceInfo><CryptoModuleInfo><Id>CMID</Id></CryptoModuleInfo><Key Id="KID1" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp"><Issuer>Issuer</Issuer><AlgorithmParameters><Suite>Suite</Suite><ChallengeFormat Encoding="DECIMAL" Min="42" Max="4711" CheckDigits="true"/><ResponseFormat Encoding="DECIMAL" Length="8" CheckDigits="true"/></AlgorithmParameters><KeyProfileId>KeyProfileId</KeyProfileId><KeyReference>KeyReference</KeyReference><FriendlyName>FriendlyName</FriendlyName><Data><Secret><PlainValue>MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=</PlainValue></Secret><Counter><PlainValue>0</PlainValue></Counter><Time><PlainValue>100</PlainValue></Time><TimeInterval><PlainValue>200</PlainValue></TimeInterval><TimeDrift><PlainValue>300</PlainValue></TimeDrift></Data><UserId>KeyUserId</UserId><Policy><StartDate>2006-05-01T00:00:00Z</StartDate><ExpiryDate>2006-05-31T00:00:00Z</ExpiryDate><PINPolicy PINKeyId="123456781" PINUsageMode="Local" MaxFailedAttempts="8" MinLength="99" MaxLength="999" PINEncoding="DECIMAL"/><KeyUsage>OTP</KeyUsage><KeyUsage>CR</KeyUsage><NumberOfTransactions>1234</NumberOfTransactions></Policy></Key></KeyPackage><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference>
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>cmAFA+PeXgQ1dmw604X3LA3eaDI=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>VAAMsUPpy7gn/tA8Fo8ZQlgSKZKN8NY3jSL2eoWQM2YXVnQcM/qazv9DFJ7GkUXV
+syCMBeDrZp7+hUNGqSDDBBCkjSCJapnPA2pZi8d+ebZI5Q2gHwmA5Dz3L651MS21
+VGW0PXbfcCYZK1pEhdr9WxyMyw/e0VX4Eo/qGo6/52IIb+P90BGzz4GNopkLf9WO
+4n9FBaRu6Ut3yDORvmQoikA5fNDGjtYXt5qH/hDlGVNGDUrPBXNaw+Svzh7JCli4
+EkIhmFLpWfcXlxA6mIcgi3380Dx3MN3KbofJCnXrBPcwK1bcbcH4GDqUiAAi0mn6
+TkVXRu/4ERG4t17DECA707dJcFHBbMG0JCJdG5eUPMrxCBEOokex6n0suIdKdhS/
+h+9dkyPUaKOKK87vGaA2og==</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>MIIDczCCAiugAwIBAgIEUIW0uTANBgkqhkiG9w0BAQsFADAXMRUwEwYDVQQDEwxN
+eSBQU0tDIHJvb3QwHhcNMTIxMDIyMjEwMzU0WhcNMTIxMjExMjEwMzU3WjAdMRsw
+GQYDVQQDExJNeSBQU0tDIGVuZCBlbnRpdHkwggFSMA0GCSqGSIb3DQEBAQUAA4IB
+PwAwggE6AoIBMQDETCuNMykUD0tJ9Y4M9lufD+MXqsV3jdRkFsTUTX0ELQ0UeHe6
+TDy9XEae0CS5uz2SLCEpw+bqX07nLmDGDg7+o6yU6Q6/hI8725dFK3JYBwsfWk6z
+xuSZMopWp0BupZNimZ3rXmQgirzeTZ7jYiK0b8hQwQlCqJDBdnVXBauw+fboJnMj
+RcQ+MSs60CPbQtcb0le+FsxxTSuxT1mIDymf/7gFSvePxsTLoHdtCzVbNXqt09cb
+tN3c2KCNq/vAq+wbN0cLBtkUH/L8uz3tLV60pcvsTqu6UgJAIaaOPjt4D6dzYjBL
+BXIqcRqBMdXkxBLpfpWinB9TL7vwM843xFj82jUrCRg8lCHTfdnZsM7Quch3teHO
+m4N85YR9TmRfwCvbGg4GR+QkRO0UBUlvF3jjAgMBAAGjYTBfMAwGA1UdEwEB/wQC
+MAAwDwYDVR0PAQH/BAUDAweAADAdBgNVHQ4EFgQUDYrtn07U4sPhL3ykX8boyPVr
+ucIwHwYDVR0jBBgwFoAUHyUHxSU1iBdATJC38247l9u+wJgwDQYJKoZIhvcNAQEL
+BQADggExALTWzEc9/U+yXxGEt0xVTheFzJ8m24kzA6H9Mg8PB3EApsyhZiC7wkYM
+oB7KZfq09Kur424iPFXfI32GIF1/gkc44TvqiUyaI7Rg0slnJ4dU4ePn1DzhNct0
+PExabhpmY8Af1MKUCAnpUZRmsiibKBnWmZckJMiw7oRSzDsCNaCPLumkuZG7TQLo
+NruyeaCyN+1pYm4V8apitVYyBj94OKKR4x9NzVSwhRQuRE3alcIUFRl85lTJ6xng
+GyRoH0HKgMutcuN9HQzXV966eM7nu4Kpwd7x4drmHUtnqXvsUxvP8c1QXlFINHCJ
+nUvnOLePbQbe03xu6vOtu9yWQ0VDXDbfwjrI5KqvS27OXXWHGUw2DN5dc16TOmoh
+XoqCu9ap5WZeKbUJgfgb1H42DUnXlHs=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></KeyContainer>

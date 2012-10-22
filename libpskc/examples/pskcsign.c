@@ -2,10 +2,8 @@
 #include <pskc/pskc.h>
 
 /*
- * $ cc -o serialno serialno.c $(pkg-config --cflags --libs libpskc)
- * $ ./serialno pskc-hotp.xml
- * SerialNo: 987654321
- * $
+ * $ cc -o pskcsign pskcsign.c $(pkg-config --cflags --libs libpskc)
+ * $ ./pskcsign pskc-hotp.xml pskc-ee-key.pem pskc-ee-crt.pem > signed.xml
  */
 
 #define PSKC_CHECK_RC					   \
@@ -22,7 +20,7 @@ main (int argc, const char *argv[])
   FILE *fh = fopen (argv[1], "r");
   size_t len = fread (buffer, 1, sizeof (buffer), fh);
   pskc_t *container;
-  pskc_key_t *keypackage;
+  char *out;
   int rc;
 
   fclose (fh);
@@ -32,11 +30,14 @@ main (int argc, const char *argv[])
   rc = pskc_init (&container); PSKC_CHECK_RC;
   rc = pskc_parse_from_memory (container, len, buffer); PSKC_CHECK_RC;
 
-  keypackage = pskc_get_keypackage (container, 0);
+  rc = pskc_sign_x509 (container, argv[2], argv[3]); PSKC_CHECK_RC;
 
-  if (keypackage)
-    printf ("SerialNo: %s\n", pskc_get_device_serialno (keypackage));
+  rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len); PSKC_CHECK_RC;
+  fwrite (out, 1, len, stdout);
+  pskc_free (out);
 
   pskc_done (container);
   pskc_global_done ();
+
+  return 0;
 }

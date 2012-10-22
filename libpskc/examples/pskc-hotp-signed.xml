@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0"><KeyPackage><DeviceInfo><Manufacturer>Manufacturer</Manufacturer><SerialNo>987654321</SerialNo></DeviceInfo><Key Id="12345678" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp"><AlgorithmParameters><ResponseFormat Encoding="DECIMAL" Length="8"/></AlgorithmParameters><Data><Secret><PlainValue>MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=</PlainValue></Secret><Counter><PlainValue>0</PlainValue></Counter></Data></Key></KeyPackage><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference>
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>scw48LN8ec/vu7/f7F1AGcfjDpI=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>HYDZFC205862s+zoas+Ny6h0ckDJmqDGz81lEPjvjGcN1AYzT7PATsIUVure0QNl
+Kvt2TxdSDgnYlWwAJWjAtmp0UHRzF6hsmDl7WiHpeCkfxpwvdz8K469rbLPUwB6I
+Zyfx/msTwJGbycPek9SFoaEqn8G7oNU59UH1HjDO0ERyKXhkiIrRaIWfGdqy4v0z
+xYbPnAvzdHcEBdVOVQ3d+zeR/3nWGINjmxPnYGiCrY4YoktKm/VPNw3yuo3CNTIs
+N4Vs4rjNVr7NcplFKLOmBBsQwKRg3JXnVW7kQu9ZonJyJEeDoNXdrG8uCa7EYT+s
+eh6486o/Wvb7oUVbUN3JW5VRTnVK8YNOwAnxB1fTa92pJwffLB+knBlzVNteWCyA
+BciIcboYbMdxLVmNKcF5pA==</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>MIIDczCCAiugAwIBAgIEUIW0uTANBgkqhkiG9w0BAQsFADAXMRUwEwYDVQQDEwxN
+eSBQU0tDIHJvb3QwHhcNMTIxMDIyMjEwMzU0WhcNMTIxMjExMjEwMzU3WjAdMRsw
+GQYDVQQDExJNeSBQU0tDIGVuZCBlbnRpdHkwggFSMA0GCSqGSIb3DQEBAQUAA4IB
+PwAwggE6AoIBMQDETCuNMykUD0tJ9Y4M9lufD+MXqsV3jdRkFsTUTX0ELQ0UeHe6
+TDy9XEae0CS5uz2SLCEpw+bqX07nLmDGDg7+o6yU6Q6/hI8725dFK3JYBwsfWk6z
+xuSZMopWp0BupZNimZ3rXmQgirzeTZ7jYiK0b8hQwQlCqJDBdnVXBauw+fboJnMj
+RcQ+MSs60CPbQtcb0le+FsxxTSuxT1mIDymf/7gFSvePxsTLoHdtCzVbNXqt09cb
+tN3c2KCNq/vAq+wbN0cLBtkUH/L8uz3tLV60pcvsTqu6UgJAIaaOPjt4D6dzYjBL
+BXIqcRqBMdXkxBLpfpWinB9TL7vwM843xFj82jUrCRg8lCHTfdnZsM7Quch3teHO
+m4N85YR9TmRfwCvbGg4GR+QkRO0UBUlvF3jjAgMBAAGjYTBfMAwGA1UdEwEB/wQC
+MAAwDwYDVR0PAQH/BAUDAweAADAdBgNVHQ4EFgQUDYrtn07U4sPhL3ykX8boyPVr
+ucIwHwYDVR0jBBgwFoAUHyUHxSU1iBdATJC38247l9u+wJgwDQYJKoZIhvcNAQEL
+BQADggExALTWzEc9/U+yXxGEt0xVTheFzJ8m24kzA6H9Mg8PB3EApsyhZiC7wkYM
+oB7KZfq09Kur424iPFXfI32GIF1/gkc44TvqiUyaI7Rg0slnJ4dU4ePn1DzhNct0
+PExabhpmY8Af1MKUCAnpUZRmsiibKBnWmZckJMiw7oRSzDsCNaCPLumkuZG7TQLo
+NruyeaCyN+1pYm4V8apitVYyBj94OKKR4x9NzVSwhRQuRE3alcIUFRl85lTJ6xng
+GyRoH0HKgMutcuN9HQzXV966eM7nu4Kpwd7x4drmHUtnqXvsUxvP8c1QXlFINHCJ
+nUvnOLePbQbe03xu6vOtu9yWQ0VDXDbfwjrI5KqvS27OXXWHGUw2DN5dc16TOmoh
+XoqCu9ap5WZeKbUJgfgb1H42DUnXlHs=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></KeyContainer>

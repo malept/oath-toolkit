@@ -7,8 +7,12 @@
 	  <!ENTITY pskc-example-serialno SYSTEM "serialno.sgml">
 	  <!ENTITY pskc-example-mini SYSTEM "pskc-mini.sgml">
 	  <!ENTITY pskc-example-hotp SYSTEM "pskc-hotp.sgml">
+	  <!ENTITY pskc-example-hotp-signed SYSTEM "pskc-hotp-signed.sgml">
 	  <!ENTITY pskc-example-hotp-human SYSTEM "pskc-hotp-human.sgml">
+	  <!ENTITY pskc-example-figure6-debug SYSTEM "pskc-figure6-debug.sgml">
 	  <!ENTITY pskc-example-pskc2csv SYSTEM "pskc2csv.sgml">
+	  <!ENTITY pskc-example-pskcsign SYSTEM "pskcsign.sgml">
+	  <!ENTITY pskc-example-pskcverify SYSTEM "pskcverify.sgml">
 	  <!ENTITY pskc-example-pskctool-h SYSTEM "pskctool-h.sgml">
 	  ]>
 <book id="index">
@@ -89,8 +93,8 @@
       <para>
 	To illustrate how the library works, let's give an example on
 	how to parse the data above and print the device serial number
-	(SerialNo field).  The code below is complete but performs no
-	error checking whatsoever and is thus unsafe to use as-is.
+	(SerialNo field).  The code below is complete and working but
+	performs minimal error checking.
       </para>
 
 	&pskc-example-serialno;
@@ -126,27 +130,30 @@
 SerialNo: 987654321
 jas@latte:~$</programlisting></informalexample></para>
 
-      <para>
-	We conclude with a larger example illustrating how to read a
-	PSKC file, parse it and print a human readable summary of the
-	PSKC data to stderr, validate it against the PSKC XML Schema
-	(this is normally not needed) and print the validation outcome
-	to stderr, and iterate through all keys in the file and print
-	to stdout a comma-separated list with three fields: the key
-	id, the device serialno, and the hex encoded cryptographic
-	key.  This code example check error codes and releases
-	resources.
-      </para>
+      <section id="pskc-tutorial-libpskc-pskc2csv">
+	<title>Converting PSKC data to CSV format</title>
+
+	<para>
+	  We conclude with a larger example illustrating how to read a
+	  PSKC file, parse it and print a human readable summary of
+	  the PSKC data to stderr, validate it against the PSKC XML
+	  Schema (this is normally not needed) and print the
+	  validation outcome to stderr, and iterate through all keys
+	  in the file and print to stdout a comma-separated list with
+	  three fields: the key id, the device serialno, and the hex
+	  encoded cryptographic key.  This code example check error
+	  codes and releases resources.
+	</para>
 
 	&pskc-example-pskc2csv;
 
-      <para>
-	Below we'll illustrate how to build the tool and run it on the
-	same PSKC data as above.  The tool prints different things to
-	stdout and stderr, which you can see below.
-      </para>
+	<para>
+	  Below we'll illustrate how to build the tool and run it on
+	  the same PSKC data as above.  The tool prints different
+	  things to stdout and stderr, which you can see below.
+	</para>
 
-      <para><informalexample><programlisting>
+	<para><informalexample><programlisting>
 jas@latte:~$ cc -o pskc2csv pskc2csv.c $(pkg-config --cflags --libs libpskc)
 jas@latte:~$ ./pskc2csv pskc.xml 2&gt; /dev/null
 12345678,12345678,MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
@@ -168,29 +175,95 @@ Portable Symmetric Key Container (PSKC):
 PSKC data is Schema valid: YES
 jas@latte:~$</programlisting></informalexample></para>
 
+      </section>
+
+      <section id="pskc-tutorial-libpskc-sign">
+	<title>Digitally sign PSKC data</title>
+
+	<para>
+	  The library can also digitally sign PSKC data using a X.509
+	  private key and certificate, both stored in files.  Below is
+	  a minimal example illustring how to read a PSKC file,
+	  digitally sign it and then print the signed XML to stdout.
+	</para>
+
+	&pskc-example-pskcsign;
+
+	<para>
+	  You would compile and use the example like this.
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ cc -o pskcsign pskcsign.c $(pkg-config --cflags --libs libpskc)
+jas@latte:~$ ./pskcsign pskc-hotp.xml pskc-ee-key.pem pskc-ee-crt.pem > signed.xml
+jas@latte:~$</programlisting></informalexample></para>
+
+	<para>
+	  The next section illustrate how to verify the content of
+	  "signed.xml".  For more background and information on how to
+	  generate the necessary private key and certificates, see the
+	  "pskctool" command line tool documentation.
+	</para>
+
+      </section>
+
+      <section id="pskc-tutorial-libpskc-verify">
+	<title>Verify signed PSKC data</title>
+
+	<para>
+	  To verify XML digital signatures in PSKC data, you may use
+	  the <link linkend="pskc_verify_x509crt">pskc_verify_x509crt</link>
+	  function.
+	</para>
+
+	&pskc-example-pskcverify;
+
+	<para>
+	  You would compile and use the example like this.
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ cc -o pskcverify pskcverify.c $(pkg-config --cflags --libs libpskc)
+jas@latte:~$ ./pskcverify signed.xml pskc-root-crt.pem
+OK
+jas@latte:~$</programlisting></informalexample></para>
+
+	<para>
+	  For more background and information on how to generate the
+	  necessary private key and certificates, see the "pskctool"
+	  command line tool documentation.
+	</para>
+
+      </section>
+
     </chapter>
 
     <chapter id="pskc-tutorial-pskctool">
       <title>Command line pskctool</title>
       <para>
 	To simplify working with PSKC data a command line tool is also
-	provided, called "pskctool".  This tool can be used to parse,
-	validate, and build PSKC data.  When invoked without
-	parameters, it will print some instructions describing the
-	parameters it accepts.
+	provided, called "pskctool".  When invoked without parameters,
+	it will print some instructions describing what it does and
+	the parameters it accepts.
       </para>
 
       &pskc-example-pskctool-h;
+
+      <para>
+	As you can see, the pskctool have a few different modes: info,
+	validate, sign and verify.  We describe each of them in the
+	next few sections.
+      </para>
 
       <section>
 	<title>Parse and print summary of PSKC data</title>
 
 	<para>
-	  The most common parameter to use is --check (-c) to parse
-	  and print a human readable summary of PSKC data.  This step
-	  is also known as "pretty printing" the data.  A filename can
-	  be supplied to have the tool read PSKC data from that file,
-	  or if no filename is supplied, the tool will read from
+	  The most common parameter to use is --info (-i) to parse and
+	  print a human readable summary of PSKC data.  This step is
+	  also known as "pretty printing" the PSKC data.  A filename
+	  can be supplied to have the tool read PSKC data from that
+	  file, or if no filename is supplied, the tool will read from
 	  standard input.  To illustrate how the tool works, we will
 	  assume the following PSKC data is available in a file
 	  "pskc.xml".
@@ -199,8 +272,8 @@ jas@latte:~$</programlisting></informalexample></para>
 	&pskc-example-hotp;
 
 	<para>
-	  Running the tool with the --check parameter, i.e., "pskctool
-	  --check pskc.xml" will produce a human readable variant of
+	  Running the tool with the --info parameter, i.e., "pskctool
+	  --info pskc.xml" will produce a human readable variant of
 	  the PSKC data.
 	</para>
 
@@ -210,28 +283,26 @@ jas@latte:~$</programlisting></informalexample></para>
 	  If the --verbose (-v) parameter is given, the tool will also
 	  print an indented version of the XML structure.  Note that
 	  this will invalidate any digital signatures on the PSKC
-	  data.  This is normally only useful to simplify manually
-	  reading of an otherwise difficult to read PSKC file.  The
-	  output still include the human readable summary, but you may
-	  use --quiet (-q) to suppress that part.  Together, the
-	  combination --verbose --quiet can be used in batch jobs to
-	  indent PSKC data (but beware that this breaks any
+	  data.  Thus, this is normally only useful to simplify human
+	  reading of the XML code of an PSKC file.  The output will
+	  also contain the human readable summary, but you may use
+	  --quiet (-q) to suppress that part.  Together, the
+	  combination of --verbose and --quiet can be used in batch
+	  jobs to indent PSKC data (but beware that this breaks any
 	  signatures).
 	</para>
 
 	<para>
-	  In some situations when using pskctool --check the tool may
+	  In some situations when using pskctool --info the tool may
 	  print a warning about unsupported elements.  The --debug
 	  parameter can be used in these situations to get more
 	  information about the source of the problem.  For example,
-	  running "pskctool --check --debug" on the data in figure 9
-	  of RFC 6030 will currently yield the following output.
+	  running "pskctool --info --debug --quiet" on the data in
+	  figure 6 of RFC 6030 will currently yield the following
+	  output on stderr.
 	</para>
 
-	<para><informalexample><programlisting>
-debug: unknown &lt;KeyContainer&gt; element &lt;Signature&gt;
-warning: parse error (use -d to diagnose), output may be incomplete
-	</programlisting></informalexample></para>
+	&pskc-example-figure6-debug;
 
 	<para>
 	  Even when noticing a problem, the tool continue with the
@@ -262,10 +333,278 @@ $
 	</programlisting></informalexample></para>
 
 	<para>
-	  Note that the exit code from pskctool --validate is 0 even
-	  when FAIL is printed, use --quiet to suppress output and let
-	  the exit code correspond to validation result.
+	  Note that the exit code from pskctool --validate is 0
+	  (indicating success) even when FAIL is printed.  Use --quiet
+	  to suppress output and let the exit code correspond to
+	  validation result.
 	</para>
+
+	<para>
+	  Note: If this command always results in errors, the XML
+	  catalog on your system needs to be updated to point to the
+	  installed PSKC schema files.
+	</para>
+      </section>
+
+      <section>
+	<title>Digitally sign PSKC data</title>
+
+	<para>
+	  PSKC files can be integrity protected and authenticated
+	  using XML Digital Signatures.  We support using a X.509
+	  end-entity certificate together with a private key.  To
+	  verify the signature, you will need to supply the issuer of
+	  the end-entity certificate as a trusted root.  To illustrate
+	  this, we first show how to generate example root and
+	  end-entity private keys and certificates using GnuTLS.
+	  First generate the root private key and certificate:
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ certtool --generate-privkey --outfile pskc-root-key.pem
+Generating a 2432 bit RSA private key...
+jas@latte:~$ certtool --generate-self-signed --load-privkey pskc-root-key.pem --outfile pskc-root-crt.pem
+Generating a self signed certificate...
+Please enter the details of the certificate's distinguished name. Just press enter to ignore a field.
+Country name (2 chars):
+Organization name:
+Organizational unit name:
+Locality name:
+State or province name:
+Common name: My PSKC root
+UID:
+This field should not be used in new certificates.
+E-mail:
+Enter the certificate's serial number in decimal (default: 1350939670):
+
+
+Activation/Expiration time.
+The certificate will expire in (days): 100
+
+
+Extensions.
+Does the certificate belong to an authority? (y/N): y
+Path length constraint (decimal, -1 for no constraint):
+Is this a TLS web client certificate? (y/N):
+Will the certificate be used for IPsec IKE operations? (y/N):
+Is this also a TLS web server certificate? (y/N):
+Enter the e-mail of the subject of the certificate:
+Will the certificate be used to sign other certificates? (y/N): y
+Will the certificate be used to sign CRLs? (y/N):
+Will the certificate be used to sign code? (y/N):
+Will the certificate be used to sign OCSP requests? (y/N):
+Will the certificate be used for time stamping? (y/N):
+Enter the URI of the CRL distribution point:
+X.509 Certificate Information:
+	Version: 3
+	Serial Number (hex): 5085b416
+	Validity:
+		Not Before: Mon Oct 22 21:01:11 UTC 2012
+		Not After: Wed Jan 30 21:01:13 UTC 2013
+	Subject: CN=My PSKC root
+	Subject Public Key Algorithm: RSA
+	Certificate Security Level: Normal
+		Modulus (bits 2432):
+			00:d3:cf:07:f9:75:df:61:91:a4:a9:e2:a6:54:fa:48
+			b1:70:8c:a1:83:4e:ce:fa:01:d7:01:96:7a:5f:57:27
+			1a:5a:fb:02:f4:50:b5:40:b6:67:8a:63:e3:60:8f:ed
+			6e:9d:40:df:46:0d:8c:42:31:d9:74:08:f9:7d:48:fc
+			e2:21:2e:fe:fd:e1:02:55:54:b5:6e:57:f8:5f:a0:8c
+			81:5e:ca:5c:bd:64:41:5d:71:b5:81:84:1b:dc:36:75
+			cc:19:62:19:f1:36:ed:00:98:13:5c:ce:3b:8c:ba:f9
+			7f:9f:21:20:c2:0d:08:4e:e5:08:ad:5c:83:4e:c3:7c
+			2a:4d:e0:7c:45:d2:b6:b9:42:8b:de:48:5f:60:2d:2e
+			18:a7:f5:da:81:cf:24:d6:de:6d:31:07:63:20:d9:5e
+			7c:ba:88:fa:1b:d8:98:3c:ab:05:4e:ca:a8:60:8d:6e
+			9c:13:35:01:23:82:53:36:5b:e1:01:62:7f:ce:41:d1
+			74:67:1b:f8:60:4b:87:e4:2c:52:6a:0a:67:4c:0d:27
+			80:2d:6d:f7:2e:6f:2e:12:fb:d2:09:dc:d9:11:b1:b8
+			c0:a4:34:00:3b:a0:87:c7:f2:2f:7f:30:6a:b6:c7:f1
+			96:fc:6f:de:df:40:ac:2b:1a:d7:24:18:ae:1a:d7:8a
+			4b:6b:a8:93:36:af:72:0e:93:15:30:47:fa:58:8a:4e
+			97:86:14:a0:ef:84:46:5f:b4:a1:cd:98:d5:eb:97:fb
+			4e:94:10:08:ba:c6:3f:57:0d:ef:1b:1b:21:af:4a:bd
+			e7
+		Exponent (bits 24):
+			01:00:01
+	Extensions:
+		Basic Constraints (critical):
+			Certificate Authority (CA): TRUE
+		Key Usage (critical):
+			Certificate signing.
+		Subject Key Identifier (not critical):
+			1f2507c525358817404c90b7f36e3b97dbbec098
+Other Information:
+	Public Key Id:
+		1f2507c525358817404c90b7f36e3b97dbbec098
+
+Is the above information ok? (y/N): y
+
+
+Signing certificate...
+jas@latte:~$
+	</programlisting></informalexample></para>
+
+	<para>
+	  Next we generate a private key and certificate for the
+	  end-entity that will sign the PSKC data.
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ certtool --generate-privkey --outfile pskc-ee-key.pem
+Generating a 2432 bit RSA private key...
+jas@latte:~$ certtool --generate-certificate --load-ca-privkey pskc-root-key.pem --load-ca-certificate pskc-root-crt.pem --load-privkey pskc-ee-key.pem --outfile pskc-ee-crt.pem
+Generating a signed certificate...
+Please enter the details of the certificate's distinguished name. Just press enter to ignore a field.
+Country name (2 chars):
+Organization name:
+Organizational unit name:
+Locality name:
+State or province name:
+Common name: My PSKC end entity
+UID:
+This field should not be used in new certificates.
+E-mail:
+Enter the certificate's serial number in decimal (default: 1350939833):
+
+
+Activation/Expiration time.
+The certificate will expire in (days): 50
+
+
+Extensions.
+Does the certificate belong to an authority? (y/N):
+Is this a TLS web client certificate? (y/N):
+Will the certificate be used for IPsec IKE operations? (y/N):
+Is this also a TLS web server certificate? (y/N):
+Enter the e-mail of the subject of the certificate:
+Will the certificate be used for signing (required for TLS)? (y/N): y
+Will the certificate be used for encryption (not required for TLS)? (y/N):
+X.509 Certificate Information:
+	Version: 3
+	Serial Number (hex): 5085b4b9
+	Validity:
+		Not Before: Mon Oct 22 21:03:54 UTC 2012
+		Not After: Tue Dec 11 21:03:57 UTC 2012
+	Subject: CN=My PSKC end entity
+	Subject Public Key Algorithm: RSA
+	Certificate Security Level: Normal
+		Modulus (bits 2432):
+			00:c4:4c:2b:8d:33:29:14:0f:4b:49:f5:8e:0c:f6:5b
+			9f:0f:e3:17:aa:c5:77:8d:d4:64:16:c4:d4:4d:7d:04
+			2d:0d:14:78:77:ba:4c:3c:bd:5c:46:9e:d0:24:b9:bb
+			3d:92:2c:21:29:c3:e6:ea:5f:4e:e7:2e:60:c6:0e:0e
+			fe:a3:ac:94:e9:0e:bf:84:8f:3b:db:97:45:2b:72:58
+			07:0b:1f:5a:4e:b3:c6:e4:99:32:8a:56:a7:40:6e:a5
+			93:62:99:9d:eb:5e:64:20:8a:bc:de:4d:9e:e3:62:22
+			b4:6f:c8:50:c1:09:42:a8:90:c1:76:75:57:05:ab:b0
+			f9:f6:e8:26:73:23:45:c4:3e:31:2b:3a:d0:23:db:42
+			d7:1b:d2:57:be:16:cc:71:4d:2b:b1:4f:59:88:0f:29
+			9f:ff:b8:05:4a:f7:8f:c6:c4:cb:a0:77:6d:0b:35:5b
+			35:7a:ad:d3:d7:1b:b4:dd:dc:d8:a0:8d:ab:fb:c0:ab
+			ec:1b:37:47:0b:06:d9:14:1f:f2:fc:bb:3d:ed:2d:5e
+			b4:a5:cb:ec:4e:ab:ba:52:02:40:21:a6:8e:3e:3b:78
+			0f:a7:73:62:30:4b:05:72:2a:71:1a:81:31:d5:e4:c4
+			12:e9:7e:95:a2:9c:1f:53:2f:bb:f0:33:ce:37:c4:58
+			fc:da:35:2b:09:18:3c:94:21:d3:7d:d9:d9:b0:ce:d0
+			b9:c8:77:b5:e1:ce:9b:83:7c:e5:84:7d:4e:64:5f:c0
+			2b:db:1a:0e:06:47:e4:24:44:ed:14:05:49:6f:17:78
+			e3
+		Exponent (bits 24):
+			01:00:01
+	Extensions:
+		Basic Constraints (critical):
+			Certificate Authority (CA): FALSE
+		Key Usage (critical):
+			Digital signature.
+		Subject Key Identifier (not critical):
+			0d8aed9f4ed4e2c3e12f7ca45fc6e8c8f56bb9c2
+		Authority Key Identifier (not critical):
+			1f2507c525358817404c90b7f36e3b97dbbec098
+Other Information:
+	Public Key Id:
+		0d8aed9f4ed4e2c3e12f7ca45fc6e8c8f56bb9c2
+
+Is the above information ok? (y/N): y
+
+
+Signing certificate...
+jas@latte:~$
+	</programlisting></informalexample></para>
+
+	<para>
+	  At this point, we have the following files:
+	  <itemizedlist>
+	    <listitem><para>"pskc-root-key.pem" root private key;
+	    </para></listitem>
+	    <listitem><para>"pskc-root-crt.pem" root certificate;
+	    </para></listitem>
+	    <listitem><para>"pskc-ee-key.pem" end entity private key;
+	    </para></listitem>
+	    <listitem><para>"pskc-ee-crt.pem" end entity certificate.
+	    </para></listitem>
+	</itemizedlist>
+	</para>
+
+	<para>
+	  Let's use these files to digitally sign the following PSKC
+	  data, stored in a file "pskc-hotp.xml".
+	</para>
+
+	&pskc-example-hotp;
+
+	<para>
+	  The --sign mode flag requires the --sign-key and --sign-crt
+	  which specify the private key and certificate to use for
+	  signing.
+	</para>
+
+	<para><informalexample><programlisting>
+$ pskctool --sign --sign-key pskc-ee-key.pem --sign-crt pskc-ee-crt.pem pskc-hotp.xml > pskc-hotp-signed.xml
+$
+	</programlisting></informalexample></para>
+
+	<para>
+	  Below is the signed XML output.  As you can see, due to the
+	  signature it becomes rather unreadable.  You may use
+	  "pskctool --info" to analyse it, or "pskctool --info
+	  --verbose --quiet" to print indented XML (however that will
+	  invalidate signature).
+	</para>
+
+	&pskc-example-hotp-signed;
+
+      </section>
+
+      <section>
+	<title>Verify digitally signed PSKC data</title>
+
+	<para>
+	  To verify signed PSKC data you use the --verify parameter.
+	  It requires another parameter, --verify-crt, which should
+	  contain a trusted X.509 certificate.  The signature will be
+	  validated against the end-entity X.509 certificate inside
+	  the PSKC file, and the end-entity certificate will be
+	  verified against the indicated --verify-crt trust root.
+	  Using the files "pskc-hotp-signed.xml" and
+	  "pskc-root-crt.pem" prepared in the previous section, below
+	  we illustrate how verifying signatures work.
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ pskctool --verify --verify-crt pskc-root-crt.pem pskc-hotp-signed.xml
+OK
+jas@latte:~$
+	</programlisting></informalexample></para>
+
+	<para>
+	  If verification fails, it prints "FAIL" to standard output.
+	  Note that the exit code from pskctool --verify is 0
+	  (indicating success) even when FAIL is printed.  Use --quiet
+	  to suppress output and let the exit code correspond to
+	  validation result.
+	</para>
+
       </section>
 
     </chapter>
