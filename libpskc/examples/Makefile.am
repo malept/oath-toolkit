@@ -23,3 +23,7 @@ LDADD = ../libpskc.la
 noinst_PROGRAMS = serialno pskc2csv
 
 EXTRA_DIST = pskc-mini.xml pskc-hotp.xml pskctool-h.txt pskc-hotp-human.txt
+
+pskctool-h.txt: $(top_srcdir)/../pskctool/pskctool.ggo $(top_srcdir)/../pskctool/pskctool.c
+	$(top_builddir)/../pskctool/pskctool > tmp
+	sed '1,2d' < tmp > $@

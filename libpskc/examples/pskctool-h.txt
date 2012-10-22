@@ -2,15 +2,20 @@ Manage Portable Symmetric Key Container (PSKC) data.
 
 Usage: pskctool [OPTIONS]... [FILE]...
 
-  -h, --help      Print help and exit
-  -V, --version   Print version and exit
-  -b, --build     build PSKC data  (default=off)
-  -c, --check     parse and pretty print PSKC input  (default=off)
-  -e, --validate  validate PSKC input according to schema  (default=off)
-      --strict    fail hard on PSKC parse error  (default=off)
-  -d, --debug     enable debug logging  (default=off)
-  -q, --quiet     quiet operation  (default=off)
-  -v, --verbose   produce more output  (default=off)
+  -h, --help             Print help and exit
+  -V, --version          Print version and exit
+  -b, --build            build PSKC data  (default=off)
+  -c, --check            parse and pretty print PSKC input  (default=off)
+  -e, --validate         validate PSKC input according to schema  (default=off)
+      --sign             sign PSKC data  (default=off)
+      --sign-key=FILE    private key to sign with
+      --sign-crt=FILE    X.509 certificate to sign with
+      --verify           verify signed PSKC data  (default=off)
+      --verify-crt=FILE  trusted X.509 certificate for verification
+      --strict           fail hard on PSKC parse error  (default=off)
+  -d, --debug            enable debug logging  (default=off)
+  -q, --quiet            quiet operation  (default=off)
+  -v, --verbose          produce more output  (default=off)
 
 Report bugs to: oath-toolkit-help@nongnu.org
 pskctool home page: <http://www.nongnu.org/oath-toolkit/>

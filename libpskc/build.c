@@ -498,7 +498,7 @@ pskc_build_xml (pskc_t *container, char **out, size_t *len)
   keycont = xmlNewNode (NULL, BAD_CAST "KeyContainer");
   if (keycont == NULL)
     {
-      _pskc_debug ("xmlNewNode failed\n");
+      _pskc_debug ("xmlNewNode failed");
       xmlFreeDoc (doc);
       return PSKC_XML_ERROR;
     }

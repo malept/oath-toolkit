@@ -49,14 +49,14 @@ pskc_validate (pskc_t * container, int *isvalid)
   _pskc_parser_ctxt = xmlSchemaNewParserCtxt (PSKC_SCHEMA_URI);
   if (_pskc_parser_ctxt == NULL)
     {
-      _pskc_debug ("xmlSchemaNewDocParserCtxt failed\n");
+      _pskc_debug ("xmlSchemaNewDocParserCtxt failed");
       return PSKC_XML_ERROR;
     }
 
   _pskc_schema = xmlSchemaParse (_pskc_parser_ctxt);
   if (_pskc_schema == NULL)
     {
-      _pskc_debug ("xmlSchemaParse failed\n");
+      _pskc_debug ("xmlSchemaParse failed");
       xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
       return PSKC_XML_ERROR;
     }
@@ -64,7 +64,7 @@ pskc_validate (pskc_t * container, int *isvalid)
   _pskc_schema_validctxt = xmlSchemaNewValidCtxt (_pskc_schema);
   if (_pskc_schema_validctxt == NULL)
     {
-      _pskc_debug ("xmlSchemaNewValidCtxt failed\n");
+      _pskc_debug ("xmlSchemaNewValidCtxt failed");
       xmlSchemaFree (_pskc_schema);
       xmlSchemaFreeParserCtxt (_pskc_parser_ctxt);
       return PSKC_XML_ERROR;

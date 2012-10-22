@@ -12,4 +12,11 @@ Current limitations of Libpskc:
 * No extensions are implemented.
 
 Otherwise Libpskc is believed to be a complete PSKC implementation
-conforming to the PSKC standard RFC 6030.
+conforming to the PSKC standard RFC 6030, including the following
+features:
+
+* Parse PSKC data and print human readable information.
+
+* Validate PSKC data against XML Schema.
+
+* Sign and verify PSKC data using XML Digital Signatures.

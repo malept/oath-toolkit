@@ -65,14 +65,14 @@ pskc_strerror (int err)
 
   if (-err < 0 || -err >= (int) (sizeof (errors) / sizeof (errors[0])))
     {
-      _pskc_debug ("out of range error code %d\n", err);
+      _pskc_debug ("out of range error code %d", err);
       return unknown;
     }
 
   p = errors[-err].description;
   if (!p)
     {
-      _pskc_debug ("missing description field for error code %d\n", err);
+      _pskc_debug ("missing description field for error code %d", err);
       p = unknown;
     }
 
@@ -102,7 +102,7 @@ pskc_strerror_name (int err)
 {
   if (-err < 0 || -err >= (int) (sizeof (errors) / sizeof (errors[0])))
     {
-      _pskc_debug ("attempted naming out of range error code %d\n", err);
+      _pskc_debug ("attempted naming out of range error code %d", err);
       return NULL;
     }
 

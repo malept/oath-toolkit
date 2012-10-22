@@ -27,6 +27,7 @@
 #include "internal.h"
 #include <xmlsec/xmlsec.h>
 #include <xmlsec/crypto.h>
+#include <xmlsec/xmltree.h>
 #include <xmlsec/xmldsig.h>
 #include <xmlsec/templates.h>
 
@@ -52,13 +53,12 @@ pskc_sign_x509 (pskc_t * container,
   pskc_build_xml (container, NULL, NULL);
 
   /* create signature template for RSA-SHA1 enveloped signature */
-  signNode = xmlSecTmplSignatureCreateNsPref (container->xmldoc,
-					      xmlSecTransformExclC14NId,
-					      xmlSecTransformRsaSha1Id, NULL,
-					      BAD_CAST "ds");
+  signNode = xmlSecTmplSignatureCreate(container->xmldoc,
+				       xmlSecTransformExclC14NId,
+				       xmlSecTransformRsaSha1Id, NULL);
   if (signNode == NULL)
     {
-      _pskc_debug ("xmlSecTmplSignatureCreateNsPref failed\n");
+      _pskc_debug ("xmlSecTmplSignatureCreateNsPref failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -70,7 +70,7 @@ pskc_sign_x509 (pskc_t * container,
 					     NULL, NULL, NULL);
   if (refNode == NULL)
     {
-      _pskc_debug ("xmlSecTmplSignatureAddReference failed\n");
+      _pskc_debug ("xmlSecTmplSignatureAddReference failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -78,7 +78,7 @@ pskc_sign_x509 (pskc_t * container,
   if (xmlSecTmplReferenceAddTransform (refNode,
 				       xmlSecTransformEnvelopedId) == NULL)
     {
-      _pskc_debug ("xmlSecTmplReferenceAddTransform failed\n");
+      _pskc_debug ("xmlSecTmplReferenceAddTransform failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -86,13 +86,13 @@ pskc_sign_x509 (pskc_t * container,
   keyInfoNode = xmlSecTmplSignatureEnsureKeyInfo (signNode, NULL);
   if (keyInfoNode == NULL)
     {
-      _pskc_debug ("xmlSecTmplSignatureEnsureKeyInfo failed\n");
+      _pskc_debug ("xmlSecTmplSignatureEnsureKeyInfo failed");
       return PSKC_XMLSEC_ERROR;
     }
 
   if (xmlSecTmplKeyInfoAddX509Data (keyInfoNode) == NULL)
     {
-      _pskc_debug ("xmlSecTmplKeyInfoAddX509Data failed\n");
+      _pskc_debug ("xmlSecTmplKeyInfoAddX509Data failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -100,7 +100,7 @@ pskc_sign_x509 (pskc_t * container,
   dsigCtx = xmlSecDSigCtxCreate (NULL);
   if (dsigCtx == NULL)
     {
-      _pskc_debug ("xmlSecDSigCtxCreate failed\n");
+      _pskc_debug ("xmlSecDSigCtxCreate failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -110,7 +110,7 @@ pskc_sign_x509 (pskc_t * container,
 					     NULL, NULL, NULL);
   if (dsigCtx->signKey == NULL)
     {
-      _pskc_debug ("xmlSecCryptoAppKeyLoad failed\n");
+      _pskc_debug ("xmlSecCryptoAppKeyLoad failed");
       return PSKC_XMLSEC_ERROR;
     }
 
@@ -118,16 +118,106 @@ pskc_sign_x509 (pskc_t * container,
   if (xmlSecCryptoAppKeyCertLoad
       (dsigCtx->signKey, cert_file, xmlSecKeyDataFormatCertPem) < 0)
     {
-      _pskc_debug ("xmlSecCryptoAppKeyCertLoad failed\n");
+      _pskc_debug ("xmlSecCryptoAppKeyCertLoad failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  /* set key name to the file name, this is just an example! */
+  if (xmlSecKeySetName (dsigCtx->signKey, BAD_CAST key_file) < 0)
+    {
+      _pskc_debug ("xmlSecKeySetName failed");
       return PSKC_XMLSEC_ERROR;
     }
 
   /* sign the template */
   if (xmlSecDSigCtxSign (dsigCtx, signNode) < 0)
     {
-      _pskc_debug ("xmlSecDSigCtxSign failed\n");
+      _pskc_debug ("xmlSecDSigCtxSign failed");
       return PSKC_XMLSEC_ERROR;
     }
 
   return PSKC_OK;
+}
+
+static int
+verify (pskc_t * container, xmlSecKeysMngrPtr mngr,
+	xmlSecDSigCtxPtr dsigCtx, const char *cert_file,
+	int *valid_signature)
+{
+  xmlNodePtr node = NULL;
+
+  node = xmlSecFindNode (xmlDocGetRootElement (container->xmldoc),
+			 xmlSecNodeSignature, xmlSecDSigNs);
+  if (node == NULL)
+    {
+      _pskc_debug ("xmlSecFindNode failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if (xmlSecCryptoAppDefaultKeysMngrInit (mngr) < 0)
+    {
+      _pskc_debug ("xmlSecCryptoAppDefaultKeysMngrInit failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if (xmlSecCryptoAppKeysMngrCertLoad (mngr, cert_file,
+				       xmlSecKeyDataFormatPem,
+				       xmlSecKeyDataTypeTrusted) < 0)
+    {
+      _pskc_debug ("xmlSecCryptoAppKeysMngrCertLoad failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if (xmlSecDSigCtxVerify (dsigCtx, node) < 0)
+    {
+      _pskc_debug ("xmlSecDSigCtxVerify failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  if (dsigCtx->status == xmlSecDSigStatusSucceeded)
+    *valid_signature = 1;
+  else
+    *valid_signature = 0;
+
+  return PSKC_OK;
+}
+
+/**
+ * pskc_verify_x509crt:
+ * @container: a #pskc_t handle, from pskc_init().
+ * @cert_file: filename of file containing trusted X.509 certificate.
+ *
+ * Verify signature in PSKC data against trusted X.509 certificate.
+ *
+ * Returns: On success, %PSKC_OK (zero) is returned, or an error code.
+ */
+int
+pskc_verify_x509crt (pskc_t * container, const char *cert_file,
+		     int *valid_signature)
+{
+  xmlSecKeysMngrPtr mngr = NULL;
+  xmlSecDSigCtxPtr dsigCtx = NULL;
+  int rc;
+
+  mngr = xmlSecKeysMngrCreate ();
+  if (mngr == NULL)
+    {
+      _pskc_debug ("xmlSecKeysMngrCreate failed");
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  dsigCtx = xmlSecDSigCtxCreate (mngr);
+  if (dsigCtx == NULL)
+    {
+      _pskc_debug ("xmlSecDSigCtxCreate failed");
+      xmlSecKeysMngrDestroy (mngr);
+      return PSKC_XMLSEC_ERROR;
+    }
+
+  rc = verify (container, mngr, dsigCtx, cert_file, valid_signature);
+
+  xmlSecDSigCtxDestroy (dsigCtx);
+  xmlSecKeysMngrDestroy (mngr);
+
+  return rc;
 }

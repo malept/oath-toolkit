@@ -53,33 +53,33 @@ pskc_global_init (void)
 #ifdef USE_XMLSEC
   if (xmlSecInit () < 0)
     {
-      _pskc_debug ("xmlSecInit failed\n");
+      _pskc_debug ("xmlSecInit failed");
       return PSKC_XMLSEC_ERROR;
     }
 
   if (xmlSecCheckVersion () != 1)
     {
-      _pskc_debug ("xmlSecCheckVersion failed\n");
+      _pskc_debug ("xmlSecCheckVersion failed");
       return PSKC_XMLSEC_ERROR;
     }
 
 #ifdef XMLSEC_CRYPTO_DYNAMIC_LOADING
   if (xmlSecCryptoDLLoadLibrary (BAD_CAST XMLSEC_CRYPTO) < 0)
     {
-      _pskc_debug ("xmlSecCryptoDLLoadLibrary failed\n");
+      _pskc_debug ("xmlSecCryptoDLLoadLibrary failed");
       return PSKC_XMLSEC_ERROR;
     }
 #endif
 
   if (xmlSecCryptoAppInit (NULL) < 0)
     {
-      _pskc_debug ("xmlSecCryptoAppInit failed\n");
+      _pskc_debug ("xmlSecCryptoAppInit failed");
       return PSKC_XMLSEC_ERROR;
     }
 
   if (xmlSecCryptoInit () < 0)
     {
-      _pskc_debug ("xmlSecCryptoInit failed\n");
+      _pskc_debug ("xmlSecCryptoInit failed");
       return PSKC_XMLSEC_ERROR;
     }
 #endif

@@ -83,6 +83,7 @@ LIBPSKC_2.0.0 {
     pskc_strerror_name;
     pskc_validate;
     pskc_valueformat2str;
+    pskc_verify_x509crt;
 
   local:
     *;

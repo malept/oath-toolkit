@@ -622,6 +622,7 @@ libpskc/man/pskc_strerror.3
 libpskc/man/pskc_strerror_name.3
 libpskc/man/pskc_validate.3
 libpskc/man/pskc_valueformat2str.3
+libpskc/man/pskc_verify_x509crt.3
 libpskc/output.lo
 libpskc/output.o
 libpskc/parser.lo

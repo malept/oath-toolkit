@@ -60,7 +60,7 @@ pskc_pinusagemode2str (pskc_pinusagemode pinusagemode)
       break;
 
     default:
-      _pskc_debug ("unknown pinusagemode value %d\n", pinusagemode);
+      _pskc_debug ("unknown pinusagemode value %d", pinusagemode);
       p = "Unknown";
       break;
     }
@@ -106,7 +106,7 @@ pskc_valueformat2str (pskc_valueformat valueformat)
       break;
 
     default:
-      _pskc_debug ("unknown valueformat value %d\n", valueformat);
+      _pskc_debug ("unknown valueformat value %d", valueformat);
       p = "Unknown";
       break;
     }
@@ -176,7 +176,7 @@ pskc_keyusage2str (pskc_keyusage keyusage)
       break;
 
     default:
-      _pskc_debug ("unknown keyusage value %d\n", keyusage);
+      _pskc_debug ("unknown keyusage value %d", keyusage);
       p = "Unknown";
       break;
     }
@@ -205,7 +205,7 @@ pskc_str2pinusagemode (const char *pinusagemode)
     return PSKC_PINUSAGEMODE_APPEND;
   else if (strcmp ("Algorithmic", pinusagemode) == 0)
     return PSKC_PINUSAGEMODE_ALGORITHMIC;
-  _pskc_debug ("unknown pinusagemode value '%s'\n", pinusagemode);
+  _pskc_debug ("unknown pinusagemode value '%s'", pinusagemode);
   return PSKC_PINUSAGEMODE_UNKNOWN;
 }
 
@@ -232,7 +232,7 @@ pskc_str2valueformat (const char *valueformat)
     return PSKC_VALUEFORMAT_BASE64;
   else if (strcmp ("BINARY", valueformat) == 0)
     return PSKC_VALUEFORMAT_BINARY;
-  _pskc_debug ("unknown valueformat value '%s'\n", valueformat);
+  _pskc_debug ("unknown valueformat value '%s'", valueformat);
   return PSKC_VALUEFORMAT_UNKNOWN;
 }
 
@@ -270,6 +270,6 @@ pskc_str2keyusage (const char *keyusage)
     return PSKC_KEYUSAGE_DERIVE;
   else if (strcmp ("Generate", keyusage) == 0)
     return PSKC_KEYUSAGE_GENERATE;
-  _pskc_debug ("unknown keyusage value '%s'\n", keyusage);
+  _pskc_debug ("unknown keyusage value '%s'", keyusage);
   return PSKC_KEYUSAGE_UNKNOWN;
 }

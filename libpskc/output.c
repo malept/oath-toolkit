@@ -383,10 +383,10 @@ pskc_output (pskc_t * container,
       xmlChar *mem;
       int size;
 
-      xmlDocDumpFormatMemory (container->xmldoc, &mem, &size, 1);
+      xmlDocDumpMemory (container->xmldoc, &mem, &size);
       if (mem == NULL || size <= 0)
 	{
-	  _pskc_debug ("xmlDocDumpFormatMemory failed\n");
+	  _pskc_debug ("xmlDocDumpMemory failed");
 	  return PSKC_XML_ERROR;
 	}
 

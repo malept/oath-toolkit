@@ -19,9 +19,12 @@ option "build" b "build PSKC data" flag off
 option "check" c "parse and pretty print PSKC input" flag off
 option "validate" e "validate PSKC input according to schema" flag off
 
-option "sign" s "sign PSKC data" flag off
+option "sign" - "sign PSKC data" flag off
 option "sign-key" - "private key to sign with" string typestr="FILE" no
 option "sign-crt" - "X.509 certificate to sign with" string typestr="FILE" no
+
+option "verify" - "verify signed PSKC data" flag off
+option "verify-crt" - "trusted X.509 certificate for verification" string typestr="FILE" no
 
 option "strict" - "fail hard on PSKC parse error" flag off
 option "debug" d "enable debug logging" flag off

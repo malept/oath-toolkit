@@ -56,11 +56,14 @@ extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
 
 extern PSKCAPI int pskc_validate (pskc_t *container, int *isvalid);
 
+extern PSKCAPI int pskc_build_xml (pskc_t *container, char **out, size_t *len);
+
 extern PSKCAPI int pskc_sign_x509 (pskc_t *container,
 				   const char *key_file,
 				   const char *cert_file);
-
-extern PSKCAPI int pskc_build_xml (pskc_t *container, char **out, size_t *len);
+extern PSKCAPI int pskc_verify_x509crt (pskc_t * container,
+					const char *cert_file,
+					int *valid_signature);
 
 /**
  * pskc_output_formats_t:

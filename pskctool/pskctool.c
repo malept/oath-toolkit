@@ -85,9 +85,11 @@ doit (const struct gengetopt_args_info *args_info)
     args_info->sign_key_given ? args_info->sign_key_arg : NULL;
   const char *sign_crt =
     args_info->sign_crt_given ? args_info->sign_crt_arg : NULL;
+  int verify = args_info->verify_flag;
+  const char *verify_crt =
+    args_info->verify_crt_given ? args_info->verify_crt_arg : NULL;
   int verbose = args_info->verbose_flag;
   int quiet = args_info->quiet_flag;
-  char *buffer;
   char *out;
   size_t len;
   pskc_t *container;
@@ -98,8 +100,10 @@ doit (const struct gengetopt_args_info *args_info)
     error (EXIT_FAILURE, 0, "initializing PSKC structure: %s",
 	   pskc_strerror (rc));
 
-  if (!build)
+  if (!build || check)
     {
+      char *buffer;
+
       if (filename)
 	buffer = read_binary_file (filename, &len);
       else
@@ -129,6 +133,22 @@ doit (const struct gengetopt_args_info *args_info)
       if (quiet && !isvalid)
 	error (EXIT_FAILURE, 0, "");
       if (!quiet && isvalid)
+	puts ("OK");
+      else if (!quiet)
+	puts ("FAIL");
+    }
+  else if (verify)
+    {
+      int valid_signature;
+
+      rc = pskc_verify_x509crt (container, verify_crt, &valid_signature);
+      if (rc != PSKC_OK)
+	error (EXIT_FAILURE, 0, "verifying PSKC data: %s",
+	       pskc_strerror (rc));
+
+      if (quiet && !valid_signature)
+	error (EXIT_FAILURE, 0, "");
+      if (!quiet && valid_signature)
 	puts ("OK");
       else if (!quiet)
 	puts ("FAIL");
@@ -221,7 +241,9 @@ main (int argc, char *argv[])
 			      || !args_info.sign_crt_given))
     error (EXIT_FAILURE, 0, "--sign require --sign-key and --sign-crt");
 
-  if (args_info.build_flag || args_info.check_flag || args_info.validate_flag)
+  if (args_info.build_flag || args_info.check_flag
+      || args_info.validate_flag || args_info.verify_flag
+      || args_info.sign_flag)
     doit (&args_info);
   else
     {
