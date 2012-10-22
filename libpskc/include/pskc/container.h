@@ -69,13 +69,16 @@ extern PSKCAPI int pskc_verify_x509crt (pskc_t * container,
  * pskc_output_formats_t:
  * @PSKC_OUTPUT_HUMAN_COMPLETE: All information in human-readable format.
  * @PSKC_OUTPUT_XML: Output container in XML format.
+ * @PSKC_OUTPUT_INDENTED_XML: Output container in intended XML format (will
+ *   invalidate any XML Digital Signatures).
  *
  * Enumeration of different PSKC output formats.
  */
 typedef enum pskc_output_formats
   {
     PSKC_OUTPUT_HUMAN_COMPLETE = 0,
-    PSKC_OUTPUT_XML = 1
+    PSKC_OUTPUT_XML = 1,
+    PSKC_OUTPUT_INDENTED_XML = 2
   } pskc_output_formats_t;
 
 extern PSKCAPI int pskc_output (pskc_t *container,

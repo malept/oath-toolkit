@@ -378,15 +378,35 @@ pskc_output (pskc_t * container,
       if (*out == NULL)
 	return PSKC_MALLOC_ERROR;
     }
-  else if (format == PSKC_OUTPUT_XML)
+  else if (format == PSKC_OUTPUT_XML || format == PSKC_OUTPUT_INDENTED_XML)
     {
       xmlChar *mem;
       int size;
 
       xmlDocDumpMemory (container->xmldoc, &mem, &size);
+
+      if (format == PSKC_OUTPUT_INDENTED_XML)
+	{
+	  xmlDocPtr xmldoc;
+
+	  xmldoc = xmlReadMemory ((const char *) mem, size, NULL, NULL,
+				  XML_PARSE_NONET | XML_PARSE_NOBLANKS);
+	  if (xmldoc == NULL)
+	    return PSKC_XML_ERROR;
+
+	  xmlFree (mem);
+
+	  xmlDocDumpFormatMemory (xmldoc, &mem, &size, 1);
+
+	  xmlFreeDoc (xmldoc);
+	}
+
       if (mem == NULL || size <= 0)
 	{
-	  _pskc_debug ("xmlDocDumpMemory failed");
+	  if (format == PSKC_OUTPUT_XML)
+	    _pskc_debug ("xmlDocDumpMemory failed");
+	  else
+	    _pskc_debug ("xmlDocDumpFormatMemory failed");
 	  return PSKC_XML_ERROR;
 	}
 

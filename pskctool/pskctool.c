@@ -184,7 +184,10 @@ doit (const struct gengetopt_args_info *args_info)
 
   if (build || verbose || sign)
     {
-      rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
+      if (sign)
+	rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
+      else
+	rc = pskc_output (container, PSKC_OUTPUT_INDENTED_XML, &out, &len);
       if (rc != PSKC_OK)
 	error (EXIT_FAILURE, 0, "converting PSKC data: %s",
 	       pskc_strerror (rc));

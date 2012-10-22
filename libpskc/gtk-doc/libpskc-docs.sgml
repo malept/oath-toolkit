@@ -182,76 +182,91 @@ jas@latte:~$</programlisting></informalexample></para>
 
       &pskc-example-pskctool-h;
 
-      <para>
-	The most common parameter to use is --check (-c) to parse and
-	pretty print PSKC data.  A filename can be supplied to have
-	the tool read PSKC data from that file, or if no filename is
-	supplied, the tool will read from standard input.  To
-	illustrate how the tool works, we will assume the following
-	PSKC data is available in a file "pskc.xml".
-      </para>
+      <section>
+	<title>Parse and print summary of PSKC data</title>
 
-      &pskc-example-hotp;
+	<para>
+	  The most common parameter to use is --check (-c) to parse
+	  and print a human readable summary of PSKC data.  This step
+	  is also known as "pretty printing" the data.  A filename can
+	  be supplied to have the tool read PSKC data from that file,
+	  or if no filename is supplied, the tool will read from
+	  standard input.  To illustrate how the tool works, we will
+	  assume the following PSKC data is available in a file
+	  "pskc.xml".
+	</para>
 
-      <para>
-	Running the tool with the --check parameter, i.e., "pskctool
-	--check pskc.xml" will produce a human readable variant of the
-	PSKC data.
-      </para>
+	&pskc-example-hotp;
 
-      &pskc-example-hotp-human;
+	<para>
+	  Running the tool with the --check parameter, i.e., "pskctool
+	  --check pskc.xml" will produce a human readable variant of
+	  the PSKC data.
+	</para>
 
-      <para>
-	If the --verbose (-v) parameter is given, the tool will also
-	build a new XML structure using the parsed values and then
-	print the generated XML structure.  This can be useful to
-	cleanup a non-indented or manually crafted PSKC file.  The
-	output will still contain the human readable summary, but you
-	may use --quiet (-q) to suppress that part.  Together, the
-	combination --verbose --quiet can be used in batch jobs to
-	clean up PSKC data.
-      </para>
+	&pskc-example-hotp-human;
 
-      <para>
-	In some situations when using pskctool --check the tool may
-	print a warning about unsupported elements.  The --debug
-	parameter can be used in these situations to get more
-	information about the source of the problem.  For example,
-	running "pskctool --check --debug" on the data in figure 9 of
-	RFC 6030 will currently yield the following output.
-      </para>
+	<para>
+	  If the --verbose (-v) parameter is given, the tool will also
+	  print an indented version of the XML structure.  Note that
+	  this will invalidate any digital signatures on the PSKC
+	  data.  This is normally only useful to simplify manually
+	  reading of an otherwise difficult to read PSKC file.  The
+	  output still include the human readable summary, but you may
+	  use --quiet (-q) to suppress that part.  Together, the
+	  combination --verbose --quiet can be used in batch jobs to
+	  indent PSKC data (but beware that this breaks any
+	  signatures).
+	</para>
 
-      <para><informalexample><programlisting>
+	<para>
+	  In some situations when using pskctool --check the tool may
+	  print a warning about unsupported elements.  The --debug
+	  parameter can be used in these situations to get more
+	  information about the source of the problem.  For example,
+	  running "pskctool --check --debug" on the data in figure 9
+	  of RFC 6030 will currently yield the following output.
+	</para>
+
+	<para><informalexample><programlisting>
 debug: unknown &lt;KeyContainer&gt; element &lt;Signature&gt;
 warning: parse error (use -d to diagnose), output may be incomplete
-      </programlisting></informalexample></para>
+	</programlisting></informalexample></para>
 
-      <para>
-	Even when noticing a problem, the tool continue with the
-	parsing and will eventually print the information it managed
-	to parse.  In some situations (e.g., batch jobs) you would
-	prefer the tool to signal this error.  The --strict parameter
-	can be used to make the tool fail when there is a parse error.
-      </para>
+	<para>
+	  Even when noticing a problem, the tool continue with the
+	  parsing and will eventually print the information it managed
+	  to parse.  In some situations (e.g., batch jobs) you would
+	  prefer the tool to signal this error.  The --strict
+	  parameter can be used to make the tool fail when there is a
+	  parse error.
+	</para>
 
-      <para>
-	The --validate (-e) parameter can be used to validate PSKC
-	data according to the XML Schema specified in RFC 6030.  This
-	performs a deep analysis and syntax check of the data and will
-	print either "OK" or "FAIL" depending on validation outcome.
-      </para>
+      </section>
 
-      <para><informalexample><programlisting>
+      <section>
+	<title>Validate PSKC against XML Schema</title>
+
+	<para>
+	  The --validate (-e) parameter can be used to validate PSKC
+	  data according to the XML Schema specified in RFC 6030.
+	  This performs a deep analysis and syntax check of the data
+	  and will print either "OK" or "FAIL" depending on validation
+	  outcome.
+	</para>
+
+	<para><informalexample><programlisting>
 $ pskctool -e pskc-ocra.xml
 OK
 $
-      </programlisting></informalexample></para>
+	</programlisting></informalexample></para>
 
-      <para>
-	Note that the exit code from pskctool --validate is 0 even
-	when FAIL is printed, use --quiet to suppress output and let
-	the exit code correspond to validation result.
-      </para>
+	<para>
+	  Note that the exit code from pskctool --validate is 0 even
+	  when FAIL is printed, use --quiet to suppress output and let
+	  the exit code correspond to validation result.
+	</para>
+      </section>
 
     </chapter>
   </part>
