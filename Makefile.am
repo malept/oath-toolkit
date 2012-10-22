@@ -34,7 +34,7 @@ EXTRA_DIST += HACKING
 
 # Website
 EXTRA_DIST += website/asciidoc.css website/build-website.sh	\
-	website/docs.txt website/download.txt website/index.txt	\
+	website/docs.txt website/download.txt website/intro.txt	\
 	website/config.cfg website/layout.css			\
 	website/oath-toolkit.xsl website/style.css
 

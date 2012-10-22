@@ -1018,6 +1018,7 @@ website/contrib.txt
 website/docs.html
 website/download.html
 website/index.html
+website/index.txt
 website/liboath-api/
 website/libpskc-api/
 website/oathtool.1.html

@@ -21,6 +21,16 @@
     cat ../pam_oath/README | sed -e '1,5d'
 ) > pam_oath.txt
 
+(
+    LAST_VERSION=$(grep '^\* Version.*(released' ../NEWS |head -1|sed -n -e 's/^* Version \(.*\) (released \(.*\))/\1/;p')
+    LAST_DATE=$(grep '^\* Version.*(released' ../NEWS |head -1|sed -n -e 's/^* Version \(.*\) (released \(.*\))/\2/;p')
+    echo 'OATH Toolkit'
+    echo '============'
+    echo ''
+    echo ".$LAST_DATE: OATH Toolkit $LAST_VERSION Released"
+    cat intro.txt
+) > index.txt
+
 for txt in index.txt NEWS.txt download.txt docs.txt pam_oath.txt contrib.txt; do
     html=`echo $txt | sed 's/\.txt$/.html/'`
     asciidoc --backend=xhtml11 --conf-file=config.cfg -a index-only -o tmp $txt
