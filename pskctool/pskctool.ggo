@@ -37,4 +37,4 @@ modeoption "sign-crt" - "X.509 certificate to sign with" mode="sign" string type
 
 defmode "verify" modedesc="Verify digitally signed PSKC data"
 modeoption "verify" - "Verify signed PSKC input" mode="verify" flag off
-modeoption "verify-crt" - "Trusted X.509 certificate for verification" mode="verify" string typestr="FILE" dependon="verify" required no
+modeoption "verify-crt" - "Trusted X.509 certificate for verification" mode="verify" string typestr="FILE" dependon="verify" required

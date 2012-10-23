@@ -5,7 +5,7 @@ The components for the OATH Toolkit are documented separately.
 
 * The oathtool command line tool: link:oathtool.1.html[oathtool man page].
 
-* The pskctool command line tool: link:pskctool.1.html[pskctool man page].
+* The pskctool command line tool: link:libpskc-api/pskc-tutorial-pskctool.html[pskctool man page].
 
 * The liboath library: link:liboath-api/[Liboath API Reference Manual].
 
