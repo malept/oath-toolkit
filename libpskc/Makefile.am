@@ -17,7 +17,7 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-SUBDIRS = gl include . examples tests gtk-doc man
+SUBDIRS = gl schemas include . examples tests gtk-doc man
 
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
@@ -25,6 +25,7 @@ AM_CPPFLAGS = -DPSKC_BUILDING
 AM_CPPFLAGS += -I$(srcdir)/gl -I$(builddir)/gl
 AM_CPPFLAGS += -I$(srcdir)/include -I$(builddir)/include
 AM_CPPFLAGS += $(XML_CPPFLAGS) $(XMLSEC_CFLAGS)
+AM_CPPFLAGS += -DPSKC_SCHEMA_CATALOG=\"$(pskcschemadir)/catalog-pskc.xml\"
 
 AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
 AM_CFLAGS += $(CFLAG_VISIBILITY)

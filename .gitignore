@@ -650,6 +650,9 @@ libpskc/tests/tst_basic.o
 libpskc/tests/tst_errors
 libpskc/tests/tst_errors.log
 libpskc/tests/tst_errors.o
+libpskc/tests/tst_validate
+libpskc/tests/tst_validate.log
+libpskc/tests/tst_validate.o
 libpskc/validate.lo
 libpskc/validate.o
 oath-toolkit-*.tar.gz

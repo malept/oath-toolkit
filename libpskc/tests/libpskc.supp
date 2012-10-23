@@ -1,0 +1,48 @@
+# Copyright (C) 2012 Simon Josefsson
+
+# This library is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation; either version 2.1 of the
+# License, or (at your option) any later version.
+
+# This library is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301 USA
+
+{
+   libz problem
+   Memcheck:Cond
+   fun:inflateReset2
+   fun:inflateInit2_
+   obj:/lib/x86_64-linux-gnu/libz.so.1.2.3.4
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   fun:__xmlParserInputBufferCreateFilename
+   fun:xmlParseCatalogFile
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   fun:xmlACatalogResolve
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   fun:xmlLoadExternalEntity
+}
+
+{
+   libxml leak
+   Memcheck:Leak
+   fun:malloc
+   fun:xmlStrndup
+   fun:xmlSchemaCollapseString
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   fun:xmlSchemaValPredefTypeNode
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   obj:/usr/lib/x86_64-linux-gnu/libxml2.so.2.7.8
+   fun:xmlSchemaParse
+   fun:pskc_validate
+   fun:main
+}

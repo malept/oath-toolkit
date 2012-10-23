@@ -30,3 +30,7 @@ EXTRA_DIST += pskc-root-key.pem pskc-root-crt.pem \
 
 # http://download.gooze.eu/otp/seeds/
 EXTRA_DIST += 20120919-test001-4282.xml
+
+# Schema validation needs the XML Schemas, use our non-installed catalog.
+TESTS_ENVIRONMENT = \
+	XML_CATALOG_FILES=$(top_builddir)/../libpskc/schemas/catalog-pskc.xml

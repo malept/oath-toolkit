@@ -19,13 +19,32 @@ PSKC_URI = "urn:ietf:params:xml:ns:keyprov:pskc"
 XDSIG_URI = "http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"
 XENC_URI = "http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"
 
+dist_pskcschema_DATA = pskc-schema.xsd xmldsig-core-schema.xsd xenc-schema.xsd
+
+BUILT_SOURCES = catalog-pskc.xml
+CLEANFILES = $(BUILT_SOURCES)
+
 catalog-pskc.xml:
-	xmlcatalog --create -noout \
+	$(AM_V_GEN)$(XMLCATALOG) --create -noout \
 		--add "system" $(PSKC_URI) \
 			"$(abs_srcdir)/pskc-schema.xsd" \
 		--add "system" $(XDSIG_URI) \
 			"$(abs_srcdir)/xmldsig-core-schema.xsd" \
 		--add "system" $(XENC_URI) \
 			"$(abs_srcdir)/xenc-schema.xsd" \
-	tmp
+		tmp
 	mv tmp $@
+
+install-data-hook:
+	$(AM_V_GEN)$(XMLCATALOG) --create -noout \
+		--add "system" $(PSKC_URI) \
+			"$(pskcschemadir)/pskc-schema.xsd" \
+		--add "system" $(XDSIG_URI) \
+			"$(pskcschemadir)/xmldsig-core-schema.xsd" \
+		--add "system" $(XENC_URI) \
+			"$(pskcschemadir)/xenc-schema.xsd" \
+		tmp
+	mv tmp $(DESTDIR)$(pskcschemadir)/catalog-pskc.xml
+
+uninstall-local:
+	rm -f $(DESTDIR)$(pskcschemadir)/catalog-pskc.xml

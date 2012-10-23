@@ -26,6 +26,7 @@
 #include "internal.h"
 #include <string.h>		/* strverscmp */
 #include <libxml/parser.h>	/* xmlInitParser */
+#include <libxml/catalog.h>	/* xmlLoadCatalog */
 #include <xmlsec/xmlsec.h>
 #include <xmlsec/crypto.h>
 
@@ -49,6 +50,13 @@ pskc_global_init (void)
     return PSKC_OK;
 
   xmlInitParser ();
+
+  xmlInitializeCatalog ();
+  if (xmlLoadCatalog (PSKC_SCHEMA_CATALOG) < 0)
+    /* Don't return here, let's treat not finding the catalog a
+       non-fatal error.  The pskc_validate function will not work
+       properly, but it will return an error in this case. */
+    _pskc_debug ("xmlLoadCatalog failed");
 
 #ifdef USE_XMLSEC
   if (xmlSecInit () < 0)

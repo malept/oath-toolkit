@@ -20,10 +20,13 @@ AM_LDFLAGS = -no-install
 
 LDADD = ../libpskc.la
 
+EXTRA_DIST = libpskc.supp
+
 ctests = \
 	tst_basic \
 	tst_errors \
-	tst_accessors
+	tst_accessors \
+	tst_validate
 
 check_PROGRAMS = $(ctests)
 
@@ -34,3 +37,6 @@ TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT)
 AUTOMAKE_OPTIONS = parallel-tests
 TEST_EXTENSIONS = .sh
 LOG_COMPILER = $(VALGRIND)
+
+# Schema validation needs the XML Schemas, use our non-installed catalog.
+TESTS_ENVIRONMENT += XML_CATALOG_FILES=$(top_builddir)/schemas/catalog-pskc.xml

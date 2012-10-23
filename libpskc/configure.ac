@@ -51,7 +51,19 @@ if test "$xmlsec" != "no" ; then
 fi
 AC_MSG_CHECKING([if xmlsec should be used])
 AC_MSG_RESULT($xmlsec)
-AM_CONDITIONAL(XMLSEC, test x$xmlsec = xyes)
+
+AC_PATH_PROG(XMLCATALOG, xmlcatalog)
+
+AC_SUBST(pskcschemadir, "\$(datarootdir)/xml/pskc")
+AC_ARG_WITH(pskc-schema-dir,
+  AC_HELP_STRING([--with-pskc-schema-dir=DIR],
+    [Put PSKC schemas in DIR [[PREFIX/share/xml/pskc]]]),
+  [case "${withval}" in
+    /*)        pskcschemadir="${withval}";;
+    ./*|../*)  AC_MSG_ERROR([Bad value for --with-pskc-schema-dir]);;
+    *)         pskcschemadir="\$(datarootdir)/xml/${withval}";;
+  esac])
+AC_MSG_NOTICE([putting PSKC schema files in $pskcschemadir])
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
