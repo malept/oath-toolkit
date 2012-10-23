@@ -635,6 +635,7 @@ libpskc/output.lo
 libpskc/output.o
 libpskc/parser.lo
 libpskc/parser.o
+libpskc/schemas/catalog-pskc.xml
 libpskc/sign.lo
 libpskc/sign.o
 libpskc/stamp-h1

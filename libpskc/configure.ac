@@ -101,16 +101,17 @@ fi
 
 AC_CONFIG_FILES([
   Makefile
-  libpskc.pc
+  examples/Makefile
+  gl/Makefile
+  gl/tests/Makefile
+  gtk-doc/Makefile
+  gtk-doc/version.xml
   include/Makefile
   include/pskc/Makefile
   include/pskc/version.h
-  gl/Makefile
-  gl/tests/Makefile
-  examples/Makefile
-  tests/Makefile
-  gtk-doc/Makefile
-  gtk-doc/version.xml
+  libpskc.pc
   man/Makefile
+  schemas/Makefile
+  tests/Makefile
 ])
 AC_OUTPUT
