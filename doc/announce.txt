@@ -1,26 +1,39 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 1.12.6
+Subject: OATH Toolkit 2.0.0
 <#part sign=pgpmime>
-* Version 1.12.6 (released 2012-09-04)
+This release introduces PSKC support -- all kind of feedback on that
+would be very welcome!  Useful introduction pointers:
 
-** liboath: The usersfile is now fflush'ed and fsync'ed.
-** liboath: A memory leak fixed.
-Patch from Jed Laundry <jlaundry@jlaundry.com>, somewhat modified.
+http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-pskctool.html
+http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-quickstart.html
 
-** oathtool: The --counter parameter now works on 32-bit platforms.
+Happy hacking,
+Simon
+
+* Version 2.0.0 (released 2012-10-10)
+
+** libpskc, pskctool: New components.
+The OATH Toolkit now supports the Portable Symmetric Key Container
+(PSKC) data format specified in RFC 6030 for dealing with key
+provisioning.  There is a new low-level library libpskc for managing
+PSKC data for application developers and a new command line tool
+pskctool for interacting with PSKC data for users.  The PSKC
+functionality depends on Libxml2 <http://xmlsoft.org/>.  It can be
+disabled unconditionally using the ./configure-parameter
+--disable-pskc.
+
+** liboath: Add manpages for library API.
 
 ** API and ABI is backwards compatible with the previous version.
-OATH_FILE_FLUSH_ERROR: Added.
-OATH_FILE_SYNC_ERROR: Added.
-OATH_FILE_CLOSE_ERROR: Added.
-OATH_LAST_ERROR: Added.
 
-The OATH Toolkit makes it easy to build one-time password authentication
-systems.  It contains a shared library, a command line tool and a PAM
-module.  Supported technologies include the event-based HOTP algorithm
-(RFC4226) and the time-based TOTP algorithm (RFC6238).  OATH stands for
-Open AuTHentication, which is the organization that specify the
-algorithms.
+The OATH Toolkit makes it easy to build one-time password
+authentication systems.  It contains shared libraries, command line
+tools and a PAM module.  Supported technologies include the
+event-based HOTP algorithm (RFC4226) and the time-based TOTP algorithm
+(RFC6238).  OATH stands for Open AuTHentication, which is the
+organization that specify the algorithms.  For managing secret key
+files, the Portable Symmetric Key Container (PSKC) format described in
+RFC6030 is supported.
 
 The components included in the package is:
 
@@ -30,25 +43,34 @@ The components included in the package is:
 
   * pam_oath: A PAM module for pluggable login authentication for OATH.
 
+  * libpskc: A shared and static C library for PSKC handling.
+
+  * pskctool: A command line tool for manipulating PSKC data.
+
 The project's web page is available at:
   http://www.nongnu.org/oath-toolkit/
 
-Man page for oathtool:
-  http://www.nongnu.org/oath-toolkit/man-oathtool.html
+Man page for oathtool and pskctool:
+  http://www.nongnu.org/oath-toolkit/oathtool.1.html
+  http://www.nongnu.org/oath-toolkit/pskctool.1.html
 
 Manual for PAM module:
   http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/README
 
-Liboath GTK-DOC API Reference manual:
-  http://www.nongnu.org/oath-toolkit/reference/liboath-oath.html
+Liboath manual:
+  http://www.nongnu.org/oath-toolkit/liboath-api/liboath-oath.html
+
+Libpskc Tutorial & Manual
+  http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-quickstart.html
+  http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-reference.html
 
 If you need help to use the OATH Toolkit, or want to help others, you
 are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.6.tar.gz (2.2MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-1.12.6.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.0.tar.gz (3.7MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.0.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -67,8 +89,11 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-e1d116d7a60aca902b880cd99d542f7896f21e39  oath-toolkit-1.12.6.tar.gz
-9cce4c4d11e24f4ef0f9da9db573d91473b34f6b9699c24d150ef863  oath-toolkit-1.12.6.tar.gz
+cf215290d94a41d5850b2938a97d29a029477eae  oath-toolkit-2.0.0.tar.gz
+e9e60cac2b1d3cad79c02da703c83a39c5bd3dc9859bd2ed909b4e25  oath-toolkit-2.0.0.tar.gz
+
+General information on contributing:
+  http://www.nongnu.org/oath-toolkit/contrib.html
 
 Savannah developer's home page:
   https://savannah.nongnu.org/projects/oath-toolkit/
