@@ -1,28 +1,31 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 2.0.0
+Subject: OATH Toolkit 2.0.1
 <#part sign=pgpmime>
-This release introduces PSKC support -- all kind of feedback on that
-would be very welcome!  Useful introduction pointers:
+The PSKC support has now been extended with support for signing and
+verifying PSKC data (using XML Digital Signatures).  Quick introduction
+documentation is available here:
 
 http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-pskctool.html
 http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-quickstart.html
 
+You'll need the XMLSec library, but it is an optional dependency and if
+you don't have it, the signing stuff will be disable.
+http://www.aleksey.com/xmlsec/
+
 Happy hacking,
 Simon
 
-* Version 2.0.0 (released 2012-10-10)
+* Version 2.0.1 (released 2012-10-24)
 
-** libpskc, pskctool: New components.
-The OATH Toolkit now supports the Portable Symmetric Key Container
-(PSKC) data format specified in RFC 6030 for dealing with key
-provisioning.  There is a new low-level library libpskc for managing
-PSKC data for application developers and a new command line tool
-pskctool for interacting with PSKC data for users.  The PSKC
-functionality depends on Libxml2 <http://xmlsoft.org/>.  It can be
-disabled unconditionally using the ./configure-parameter
---disable-pskc.
+** libpskc, pskctool: Support sign and verify of PSKC data using XML DigSig.
 
-** liboath: Add manpages for library API.
+** libpskc: XML Schema validation modified.
+The entire PSKC schema is now supported (before the XML Digital
+Signatures and Encryption parts were removed).  The code now assumes
+that the schema is available in the local XML catalog.  Thanks to Liam
+Quin for hints about XML catalogs.
+
+** pskctool: the --check (-c) parameter was renamed to --info (-i).
 
 ** API and ABI is backwards compatible with the previous version.
 
@@ -50,9 +53,10 @@ The components included in the package is:
 The project's web page is available at:
   http://www.nongnu.org/oath-toolkit/
 
-Man page for oathtool and pskctool:
+Documentation for the command line tools oathtool and pskctool:
   http://www.nongnu.org/oath-toolkit/oathtool.1.html
   http://www.nongnu.org/oath-toolkit/pskctool.1.html
+  http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-pskctool.html
 
 Manual for PAM module:
   http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/README
@@ -69,8 +73,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.0.tar.gz (3.7MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.0.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.1.tar.gz (3.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.1.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -89,8 +93,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-cf215290d94a41d5850b2938a97d29a029477eae  oath-toolkit-2.0.0.tar.gz
-e9e60cac2b1d3cad79c02da703c83a39c5bd3dc9859bd2ed909b4e25  oath-toolkit-2.0.0.tar.gz
+41f0e3f39391138f737d2c10cfa99385617a88ad  oath-toolkit-2.0.1.tar.gz
+8f61890aa5bfd90d69e9e5b82b021c3da0be364af856e5a25f291692  oath-toolkit-2.0.1.tar.gz
 
 General information on contributing:
   http://www.nongnu.org/oath-toolkit/contrib.html
