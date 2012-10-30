@@ -294,5 +294,45 @@ main (void)
     }
   free (tmp);
 
+  rc = oath_base32_decode ("MZ XW 6===", 10, &tmp, &len);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_base32_decode: %d\n", rc);
+      return 1;
+    }
+  if (len != 3 || memcmp (tmp, "foo", len) != 0)
+    {
+      printf ("oath_base32_decode failure: %ld/%s\n", len, tmp);
+      return 1;
+    }
+  free (tmp);
+
+  rc = oath_base32_decode ("MZ XW 6", 7, &tmp, &len);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_base32_decode: %d\n", rc);
+      return 1;
+    }
+  if (len != 3 || memcmp (tmp, "foo", len) != 0)
+    {
+      printf ("oath_base32_decode failure: %ld/%s\n", len, tmp);
+      return 1;
+    }
+  free (tmp);
+
+#define DROPBOX "gr6d 5br7 25s6 vnck v4vl hlao re"
+  rc = oath_base32_decode (DROPBOX, strlen (DROPBOX), &tmp, &len);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_base32_decode: %d\n", rc);
+      return 1;
+    }
+  if (len != 16)
+    {
+      printf ("oath_base32_decode failure: %ld\n", len);
+      return 1;
+    }
+  free (tmp);
+
   return 0;
 }

@@ -179,8 +179,9 @@ oath_bin2hex (const char *binstr, size_t binlen, char *hexstr)
  *
  * Decode a base32 encoded string into binary data.
  *
- * Non-base32 data are not ignored but instead will lead to an
- * %OATH_INVALID_BASE32 error.
+ * Space characters are ignored and pad characters are added if
+ * needed.  Non-base32 data are not ignored but instead will lead to
+ * an %OATH_INVALID_BASE32 error.
  *
  * The @in parameter should contain @inlen bytes of base32 encoded
  * data.  The function allocates a new string in *@out to hold the
@@ -204,19 +205,40 @@ oath_bin2hex (const char *binstr, size_t binlen, char *hexstr)
 int
 oath_base32_decode (const char *in, size_t inlen, char **out, size_t * outlen)
 {
-  size_t i, tmplen = 0;
+  size_t i, j, tmplen = 0;
   char *in_upcase;
   char *tmp;
   bool ok;
 
-  in_upcase = malloc (inlen);
+  in_upcase = malloc (inlen + 6); /* leave room for up to 6 '=' */
   if (!in_upcase)
     return OATH_MALLOC_ERROR;
 
-  for (i = 0; i < inlen; i++)
-    in_upcase[i] = c_toupper (in[i]);
+  for (i = 0, j = 0; i < inlen; i++)
+    {
+      if (in[i] != ' ')
+	in_upcase[j++] = c_toupper (in[i]);
+    }
 
-  ok = base32_decode_alloc (in_upcase, inlen, &tmp, &tmplen);
+  /* add pad characters if needed */
+  switch (j % 8)
+    {
+    case 2:
+      in_upcase[j++] = '=';
+      in_upcase[j++] = '=';
+    case 4:
+      in_upcase[j++] = '=';
+    case 5:
+      in_upcase[j++] = '=';
+      in_upcase[j++] = '=';
+    case 7:
+      in_upcase[j++] = '=';
+    default:
+    case 0:
+      break;
+    }
+
+  ok = base32_decode_alloc (in_upcase, j, &tmp, &tmplen);
 
   free (in_upcase);
 
