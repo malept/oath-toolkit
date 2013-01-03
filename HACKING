@@ -1,4 +1,4 @@
-Copyright (C) 2009-2012 Simon Josefsson.  Licensed under the GPLv3+.
+Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
 .Download, build and self-check version controlled sources:
 ----
@@ -42,13 +42,14 @@ Several tools are required to build the software, including:
 - Git <http://git.or.cz/>
 - Valgrind <http://valgrind.org/> (optional)
 - PAM library/headers (optional, required for PAM module)
+- XMLSec <http://www.aleksey.com/xmlsec/> (optional, for libpskc)
 
 The software is typically distributed with your operating system, and
 the instructions for installing them differ.  Here are some hints:
 
 .gNewSense/Debian/Ubuntu dependencies:
 -----
-apt-get install make git autoconf automake libtool bison
+apt-get install make git autoconf automake libtool bison libxmlsec1-dev
 apt-get install help2man gtk-doc-tools valgrind gengetopt
 -----
 
