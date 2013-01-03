@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2012 Free Software Foundation, Inc.
+# Copyright (C) 2002-2013 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -69,7 +69,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module gettimeofday:
   # Code from module gettimeofday-tests:
   # Code from module include_next:
-  # Code from module inline:
   # Code from module intprops:
   # Code from module intprops-tests:
   # Code from module inttypes:
@@ -195,7 +194,6 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_GETTIMEOFDAY
   fi
   gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
-  gl_INLINE
   gl_INTTYPES_H
   gl_INTTYPES_INCOMPLETE
   gl_MALLOCA
@@ -221,7 +219,6 @@ AC_DEFUN([gl_INIT],
   fi
   gl_MULTIARCH
   gl_PARSE_DATETIME
-  AC_REQUIRE([AC_C_INLINE])
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
   gl_FUNC_SETENV
@@ -350,8 +347,8 @@ changequote([, ])dnl
     AC_LIBOBJ([putenv])
   fi
   gl_STDLIB_MODULE_INDICATOR([putenv])
-  gt_TYPE_WCHAR_T
-  gt_TYPE_WINT_T
+  AC_REQUIRE([gt_TYPE_WCHAR_T])
+  AC_REQUIRE([gt_TYPE_WINT_T])
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -495,6 +492,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdbool.in.h
   lib/stddef.in.h
   lib/stdint.in.h
+  lib/stdio.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/strerror-override.c
@@ -507,6 +505,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/time_r.c
   lib/timespec.c
   lib/timespec.h
+  lib/unistd.c
   lib/unistd.in.h
   lib/unsetenv.c
   lib/vasnprintf.c
@@ -541,7 +540,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/gettimeofday.m4
   m4/gnulib-common.m4
   m4/include_next.m4
-  m4/inline.m4
   m4/intmax_t.m4
   m4/inttypes-pri.m4
   m4/inttypes.m4

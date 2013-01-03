@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2012 Free Software Foundation, Inc.
+# Copyright (C) 2002-2013 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -549,8 +549,8 @@ changequote([, ])dnl
     AC_LIBOBJ([readdir])
   fi
   gl_DIRENT_MODULE_INDICATOR([readdir])
-  gt_TYPE_WCHAR_T
-  gt_TYPE_WINT_T
+  AC_REQUIRE([gt_TYPE_WCHAR_T])
+  AC_REQUIRE([gt_TYPE_WINT_T])
   gl_FUNC_SYMLINK
   if test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1; then
     AC_LIBOBJ([symlink])
@@ -733,6 +733,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stddef.in.h
   lib/stdint.in.h
   lib/stdio-impl.h
+  lib/stdio.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/strdup.c
@@ -743,6 +744,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_stat.in.h
   lib/sys_types.in.h
   lib/time.in.h
+  lib/unistd.c
   lib/unistd.in.h
   lib/unlink.c
   lib/vasnprintf.c

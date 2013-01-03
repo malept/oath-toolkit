@@ -1,5 +1,5 @@
 /* Substitute for and wrapper around <unistd.h>.
-   Copyright (C) 2003-2012 Free Software Foundation, Inc.
+   Copyright (C) 2003-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -125,6 +125,11 @@
    But avoid namespace pollution on glibc systems.  */
 #if @GNULIB_UNISTD_H_GETOPT@ && !defined __GLIBC__ && !defined _GL_SYSTEM_GETOPT
 # include <getopt.h>
+#endif
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GL_UNISTD_INLINE
+# define _GL_UNISTD_INLINE _GL_INLINE
 #endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
@@ -404,7 +409,7 @@ extern char **environ;
 # endif
 #elif defined GNULIB_POSIXCHECK
 # if HAVE_RAW_DECL_ENVIRON
-static inline char ***
+_GL_UNISTD_INLINE char ***
 rpl_environ (void)
 {
   return &environ;
@@ -862,7 +867,7 @@ _GL_CXXALIAS_RPL (getpagesize, int, (void));
 #     define getpagesize() _gl_getpagesize ()
 #    else
 #     if !GNULIB_defined_getpagesize_function
-static inline int
+_GL_UNISTD_INLINE int
 getpagesize ()
 {
   return _gl_getpagesize ();
@@ -1530,6 +1535,7 @@ _GL_CXXALIAS_SYS_CAST (write, ssize_t, (int fd, const void *buf, size_t count));
 _GL_CXXALIASWARN (write);
 #endif
 
+_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_UNISTD_H */
 #endif /* _@GUARD_PREFIX@_UNISTD_H */

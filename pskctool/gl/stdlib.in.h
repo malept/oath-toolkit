@@ -1,6 +1,6 @@
 /* A GNU-like <stdlib.h>.
 
-   Copyright (C) 1995, 2001-2004, 2006-2012 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2004, 2006-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -458,7 +458,7 @@ _GL_WARN_ON_USE (posix_openpt, "posix_openpt is not portable - "
 /* Return the pathname of the pseudo-terminal slave associated with
    the master FD is open on, or NULL on errors.  */
 # if @REPLACE_PTSNAME@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPCE)
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef ptsname
 #   define ptsname rpl_ptsname
 #  endif

@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2012 Free Software Foundation, Inc.
+# Copyright (C) 2002-2013 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -454,8 +454,10 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/printf-parse.h
   tests=lib/size_max.h
   tests=lib/snprintf.c
+  tests=lib/stdio.c
   tests=lib/stdio.in.h
   tests=lib/sys_types.in.h
+  tests=lib/unistd.c
   tests=lib/unistd.in.h
   tests=lib/vasnprintf.c
   tests=lib/vasnprintf.h

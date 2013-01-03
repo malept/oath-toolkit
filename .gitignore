@@ -90,6 +90,8 @@ liboath/gl/sha1.lo
 liboath/gl/sha1.o
 liboath/gl/stdalign.h
 liboath/gl/stdio.h
+liboath/gl/stdio.lo
+liboath/gl/stdio.o
 liboath/gl/stdlib.h
 liboath/gl/string.h
 liboath/gl/stripslash.lo
@@ -254,6 +256,8 @@ liboath/gl/tests/unused-parameter.h
 liboath/gl/tests/warn-on-use.h
 liboath/gl/time.h
 liboath/gl/unistd.h
+liboath/gl/unistd.lo
+liboath/gl/unistd.o
 liboath/gl/unused-parameter.h
 liboath/gl/vasnprintf.lo
 liboath/gl/vasnprintf.o
@@ -709,6 +713,8 @@ oathtool/gl/printf-parse.o
 oathtool/gl/progname.lo
 oathtool/gl/progname.o
 oathtool/gl/stdio.h
+oathtool/gl/stdio.lo
+oathtool/gl/stdio.o
 oathtool/gl/stdlib.h
 oathtool/gl/string.h
 oathtool/gl/sys/
@@ -794,6 +800,8 @@ oathtool/gl/time.h
 oathtool/gl/timespec.lo
 oathtool/gl/timespec.o
 oathtool/gl/unistd.h
+oathtool/gl/unistd.lo
+oathtool/gl/unistd.o
 oathtool/gl/vasnprintf.lo
 oathtool/gl/vasnprintf.o
 oathtool/gl/version-etc.lo
@@ -921,6 +929,8 @@ pskctool/gl/progname.o
 pskctool/gl/read-file.lo
 pskctool/gl/read-file.o
 pskctool/gl/stdio.h
+pskctool/gl/stdio.lo
+pskctool/gl/stdio.o
 pskctool/gl/stdlib.h
 pskctool/gl/string.h
 pskctool/gl/sys/
@@ -999,6 +1009,8 @@ pskctool/gl/tests/warn-on-use.h
 pskctool/gl/tests/wchar.h
 pskctool/gl/time.h
 pskctool/gl/unistd.h
+pskctool/gl/unistd.lo
+pskctool/gl/unistd.o
 pskctool/gl/version-etc.lo
 pskctool/gl/version-etc.o
 pskctool/gl/warn-on-use.h
