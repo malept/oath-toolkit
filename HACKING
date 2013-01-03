@@ -56,4 +56,27 @@ apt-get install help2man gtk-doc-tools valgrind gengetopt
 If you have hints on how to install the required dependencies on other
 operating systems, please let us know.
 
+When building from version controlled sources, some developer specific
+flags are automatically enabled.  For example, the self-checks are run
+under valgrind if available.  For various reasons, you may run into
+valgrind false positives that will cause self-checks to fail.  We ship
+a Valgrind suppression file to address common issues.  You can use it
+by putting the following in your ~/.valgrindrc:
+
+----
+--suppressions=/path/to/oath-toolkit/libpskc/tests/libpskc.supp
+----
+
+To prepare releases (see rules in cfg.mk) you need some additional
+tools:
+
+- Asciidoc <http://www.methods.co.nz/asciidoc/>
+- Lcov (to produce coverage HTML pages)
+- Clang (to produce clang analysis)
+
+.gNewSense/Debian/Ubuntu dependencies:
+-----
+apt-get install asciidoc lcov clang
+-----
+
 Happy hacking!
