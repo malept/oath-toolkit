@@ -1,6 +1,6 @@
 /*
  * aux.c - auxilliary helper functions for other parts of liboath
- * Copyright (C) 2011-2012 Simon Josefsson
+ * Copyright (C) 2011-2013 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

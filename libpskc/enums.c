@@ -1,6 +1,6 @@
 /*
  * enums.c - support functions for PSKC enums.
- * Copyright (C) 2012 Simon Josefsson
+ * Copyright (C) 2012-2013 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

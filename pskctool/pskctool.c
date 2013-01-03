@@ -1,6 +1,6 @@
 /*
  * pskctool.c - Manage Portable Symmetric Key Container (PSKC) data.
- * Copyright (C) 2012 Simon Josefsson
+ * Copyright (C) 2012-2013 Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

@@ -1,6 +1,6 @@
 /*
  * tst_totp_algo.c - self-tests for liboath TOTP algorithm functions
- * Copyright (C) 2009-2012 Simon Josefsson
+ * Copyright (C) 2009-2013 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

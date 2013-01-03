@@ -1,6 +1,6 @@
 /*
  * test-pam_oath.c - self-tests for PAM module for OATH one-time passwords
- * Copyright (C) 2009-2012 Simon Josefsson
+ * Copyright (C) 2009-2013 Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
