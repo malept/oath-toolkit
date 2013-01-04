@@ -121,6 +121,10 @@ parse_usersfile (const char *username,
 	      if (*passwd != '\0')
 		return OATH_BAD_PASSWORD;
 	    }
+	  else if (strcmp (p, "+") == 0)
+	    {
+	      /* Externally verified. */
+	    }
 	  else if (strcmp (p, passwd) != 0)
 	    return OATH_BAD_PASSWORD;
 	}

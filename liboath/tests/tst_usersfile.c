@@ -353,6 +353,25 @@ main (void)
       return 1;
     }
 
+  /* Test password field of + */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "plus", "328482", 1, "4711", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[26]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS,
+				    "plus", "812658", 1, "4712", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[27]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
   rc = oath_done ();
   if (rc != OATH_OK)
     {

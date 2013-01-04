@@ -10,6 +10,10 @@ The old proper base32 format is still supported.
 
 ** liboath: oath_base32_decode now ignores SPC and adds pad characters.
 
+** liboath: If password in usersfile is + then ignore supplied password.
+This enables the pam_oath module to be used with external password
+verification.  Based on patch from Ilkka Virta <itvirta@iki.fi>.
+
 ** API and ABI is backwards compatible with the previous version.
 
 * Version 2.0.1 (released 2012-10-24)
