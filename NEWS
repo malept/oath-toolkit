@@ -14,6 +14,9 @@ The old proper base32 format is still supported.
 This enables the pam_oath module to be used with external password
 verification.  Based on patch from Ilkka Virta <itvirta@iki.fi>.
 
+** tests: Fixed expiry date of some certificates used in the test suite.
+The last release would only complete 'make check' during a 30 day window.
+
 ** API and ABI is backwards compatible with the previous version.
 
 * Version 2.0.1 (released 2012-10-24)
