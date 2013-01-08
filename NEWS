@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 2.0.2 (unreleased)
+* Version 2.0.2 (released 2013-01-08)
 
 ** oathtool: Base32 decoding of keys are now more liberal in what accepts.
 It can now accept keys on the "gr6d 5br7 25s6 vnck v4vl hlao re"
