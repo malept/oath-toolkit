@@ -450,7 +450,6 @@ EXTRA_DIST += test-stdint.c
 ## begin gnulib module stdio
 
 BUILT_SOURCES += stdio.h
-libtests_a_SOURCES += stdio.c
 
 # We need the following in order to create <stdio.h> when the system
 # doesn't have one that works with the given compiler.

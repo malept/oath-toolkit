@@ -548,7 +548,6 @@ EXTRA_DIST += stdint.in.h
 ## begin gnulib module stdio
 
 BUILT_SOURCES += stdio.h
-libgnu_la_SOURCES += stdio.c
 
 # We need the following in order to create <stdio.h> when the system
 # doesn't have one that works with the given compiler.

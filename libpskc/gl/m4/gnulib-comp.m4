@@ -454,7 +454,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/printf-parse.h
   tests=lib/size_max.h
   tests=lib/snprintf.c
-  tests=lib/stdio.c
   tests=lib/stdio.in.h
   tests=lib/sys_types.in.h
   tests=lib/unistd.c
