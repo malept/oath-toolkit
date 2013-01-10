@@ -24,11 +24,10 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AM_SILENT_RULES([yes])
 
-m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
-
 AC_PROG_CC
 AC_LIBTOOL_WIN32_DLL
 AC_DISABLE_STATIC
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AC_PROG_LIBTOOL
 
 AC_CHECK_HEADERS([security/pam_appl.h], [],

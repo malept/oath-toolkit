@@ -26,11 +26,10 @@ AM_SILENT_RULES([yes])
 
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 
-m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
-
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_CC
 gl_EARLY
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AC_PROG_LIBTOOL
 gl_INIT
 
