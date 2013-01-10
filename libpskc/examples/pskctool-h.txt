@@ -2,7 +2,7 @@ Manipulate Portable Symmetric Key Container (PSKC) data.
 
 Usage: pskctool [OPTIONS]... [FILE]...
 
-This tool allows you to parse, print, validate, sign and verify PSKC data.  The 
+This tool allows you to parse, print, validate, sign and verify PSKC data.  The
 input is provided in FILE or on standard input.
 
   -h, --help             Print help and exit
@@ -15,7 +15,7 @@ input is provided in FILE or on standard input.
 Selecting one of the following modes is required:
 
  Mode: info
-  -i, --info             Parse and print human readable summary of PSKC input  
+  -i, --info             Parse and print human readable summary of PSKC input
                            (default=off)
 
  Mode: validate
