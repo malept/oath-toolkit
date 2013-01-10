@@ -391,6 +391,65 @@ main (void)
       return 1;
     }
 
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "427517", 5, "darn", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[30]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Valid OTP for first token but incorrect password. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "917625", 5, "nope", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile[31]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Valid OTP for second token but incorrect password. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "459145", 5, "nope", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile[32]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Valid OTP for first token but with password for second user. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "917625", 5, "test", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile[33]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Valid OTP for second token but with password for first user. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "459145", 5, "", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile[34]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Valid OTP for third token but with password for second user. */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "633070", 9, "test", &last_otp);
+  if (rc != OATH_BAD_PASSWORD)
+    {
+      printf ("oath_authenticate_usersfile[35]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
   rc = oath_done ();
   if (rc != OATH_OK)
     {
