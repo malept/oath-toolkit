@@ -372,6 +372,25 @@ main (void)
       return 1;
     }
 
+  /* Test different tokens with different passwords for one user */
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "898463", 5, NULL, &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[28]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  rc = oath_authenticate_usersfile (CREDS,
+				    "password", "989803", 5, "test", &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[29]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
   rc = oath_done ();
   if (rc != OATH_OK)
     {

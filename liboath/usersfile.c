@@ -85,6 +85,8 @@ parse_usersfile (const char *username,
 		 char **lineptr, size_t * n, uint64_t * new_moving_factor,
 		 size_t * skipped_users)
 {
+  int bad_password = 0;
+
   *skipped_users = 0;
 
   while (getline (lineptr, n, infh) != -1)
@@ -95,7 +97,7 @@ parse_usersfile (const char *username,
       char secret[32];
       size_t secret_length = sizeof (secret);
       uint64_t start_moving_factor = 0;
-      int rc;
+      int rc = 0;
       char *prev_otp = NULL;
 
       if (p == NULL)
@@ -119,14 +121,26 @@ parse_usersfile (const char *username,
 	  if (strcmp (p, "-") == 0)
 	    {
 	      if (*passwd != '\0')
-		return OATH_BAD_PASSWORD;
+	        {
+		  bad_password = 1;
+		  rc = OATH_BAD_PASSWORD;
+		}
 	    }
 	  else if (strcmp (p, "+") == 0)
 	    {
 	      /* Externally verified. */
 	    }
 	  else if (strcmp (p, passwd) != 0)
-	    return OATH_BAD_PASSWORD;
+	    {
+	      bad_password = 1;
+	      rc = OATH_BAD_PASSWORD;
+	    }
+	  if (rc == OATH_BAD_PASSWORD)
+	    {
+	      (*skipped_users)++;
+	      continue;
+	    }
+	  bad_password = 0;
 	}
 
       /* Read key. */
@@ -210,7 +224,12 @@ parse_usersfile (const char *username,
     }
 
   if (*skipped_users)
-    return OATH_INVALID_OTP;
+      {
+        if (bad_password)
+          return OATH_BAD_PASSWORD;
+        else
+          return OATH_INVALID_OTP;
+      }
 
   return OATH_UNKNOWN_USER;
 }

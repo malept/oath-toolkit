@@ -22,3 +22,5 @@ HOTP/E	fiveuser	-	22222222
 HOTP/E	fiveuser	-	33333333
 HOTP/E	fiveuser	-	44444444
 HOTP/E	fiveuser	-	55555555
+HOTP	password	-	0815
+HOTP	password	test	1630
