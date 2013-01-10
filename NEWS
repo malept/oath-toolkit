@@ -3,6 +3,9 @@ Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
 * Version 2.0.3 (unreleased)
 
+** liboath: Permit different passwords for different tokens for the same user.
+Thanks to Christian Hesse <list@eworm.de>.
+
 ** build: Improve building from git when most recent automake and gengetopt.
 Thanks to Christian Hesse <list@eworm.de>.
 
