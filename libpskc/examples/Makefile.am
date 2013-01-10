@@ -22,6 +22,9 @@ LDADD = ../libpskc.la
 
 noinst_PROGRAMS = serialno pskc2csv pskcsign pskcverify
 
+# Remember to update EXAMPLES_SOURCE_FILES in ../gtk-doc/Makefile.am
+# if you add examples.
+
 # Manually maintained.
 EXTRA_DIST = pskc-mini.xml pskc-hotp.xml
 

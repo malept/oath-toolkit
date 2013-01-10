@@ -102,11 +102,17 @@ TESTS_ENVIRONMENT = cd $(srcdir) && \
 #TESTS = $(GTKDOC_CHECK)
 endif
 
-EXAMPLES_SOURCE_DIR=$(top_srcdir)/examples
 EXAMPLES_SOURCE_FILES=\
-	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.c' -print) \
-	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.xml' -print) \
-	$(shell find $(EXAMPLES_SOURCE_DIR) -name '*.txt' -print)
+	$(top_srcdir)/examples/serialno.c \
+	$(top_srcdir)/examples/pskc2csv.c \
+	$(top_srcdir)/examples/pskcsign.c \
+	$(top_srcdir)/examples/pskcverify.c \
+	$(top_srcdir)/examples/pskc-hotp-signed.xml \
+	$(top_srcdir)/examples/pskc-hotp.xml \
+	$(top_srcdir)/examples/pskc-mini.xml \
+	$(top_srcdir)/examples/pskctool-h.txt \
+	$(top_srcdir)/examples/pskc-figure6-debug.txt \
+	$(top_srcdir)/examples/pskc-hotp-human.txt
 
 $(content_files):
 	$(AM_V_GEN)for i in $(EXAMPLES_SOURCE_FILES) ; do \
