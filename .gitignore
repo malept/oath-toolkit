@@ -29,6 +29,7 @@ liboath/aclocal.m4
 liboath/autom4te.cache/
 liboath/aux.lo
 liboath/aux.o
+liboath/build-aux/ar-lib
 liboath/build-aux/config.guess
 liboath/build-aux/config.sub
 liboath/build-aux/depcomp
@@ -405,6 +406,7 @@ liboath/usersfile.lo
 liboath/usersfile.o
 libpskc/.deps/
 libpskc/.libs/
+libpskc/build-aux/ar-lib
 libpskc/build-aux/config.guess
 libpskc/build-aux/config.sub
 libpskc/build-aux/depcomp
@@ -667,6 +669,7 @@ oathtool/Makefile
 oathtool/Makefile.in
 oathtool/aclocal.m4
 oathtool/autom4te.cache/
+oathtool/build-aux/ar-lib
 oathtool/build-aux/config.guess
 oathtool/build-aux/config.sub
 oathtool/build-aux/depcomp
@@ -906,6 +909,7 @@ pam_oath/tests/test-pam_oath-root.o
 pam_oath/tests/test-pam_oath.o
 pskctool/.deps/
 pskctool/.libs/
+pskctool/build-aux/ar-lib
 pskctool/build-aux/config.guess
 pskctool/build-aux/config.sub
 pskctool/build-aux/depcomp
