@@ -43,7 +43,7 @@ pskc-hotp-signed.xml: $(srcdir)/pskc-hotp.xml
 	mv tmp $@
 
 pskctool-h.txt: $(top_srcdir)/../pskctool/pskctool.ggo $(top_srcdir)/../pskctool/pskctool.c
-	$(top_builddir)/../pskctool/pskctool | sed '1,2d' > tmp 2>&1
+	$(top_builddir)/../pskctool/pskctool | sed '1,2d;s/ \+$$//' > tmp 2>&1
 	mv tmp $@
 
 pskc-figure6-debug.txt: $(top_srcdir)/../pskctool/tests/pskc-figure6.xml
