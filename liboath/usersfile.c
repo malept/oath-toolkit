@@ -121,7 +121,7 @@ parse_usersfile (const char *username,
 	  if (strcmp (p, "-") == 0)
 	    {
 	      if (*passwd != '\0')
-	        {
+		{
 		  bad_password = 1;
 		  rc = OATH_BAD_PASSWORD;
 		}
@@ -224,12 +224,12 @@ parse_usersfile (const char *username,
     }
 
   if (*skipped_users)
-      {
-        if (bad_password)
-          return OATH_BAD_PASSWORD;
-        else
-          return OATH_INVALID_OTP;
-      }
+    {
+      if (bad_password)
+	return OATH_BAD_PASSWORD;
+      else
+	return OATH_INVALID_OTP;
+    }
 
   return OATH_UNKNOWN_USER;
 }
