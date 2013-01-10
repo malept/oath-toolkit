@@ -1,6 +1,17 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 2.0.3 (unreleased)
+
+** build: Improve building from git when most recent automake and gengetopt.
+Thanks to Christian Hesse <list@eworm.de>.
+
+** build: Valgrind is not enabled by default.
+It causes too much false positives.  For developers who want, use
+--enable-valgrind-tests.  It is still enabled by default when building
+from the version controlled sources (see cfg.mk).  Thanks to Christian
+Hesse <list@eworm.de>.
+
 * Version 2.0.2 (released 2013-01-08)
 
 ** oathtool: Base32 decoding of keys are now more liberal in what accepts.
