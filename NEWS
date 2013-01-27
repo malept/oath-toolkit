@@ -6,7 +6,7 @@ Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 ** liboath: Permit different passwords for different tokens for the same user.
 Thanks to Christian Hesse <list@eworm.de>.
 
-** build: Improve building from git when most recent automake and gengetopt.
+** build: Improve building from git with most recent automake and gengetopt.
 Thanks to Christian Hesse <list@eworm.de>.
 
 ** build: Valgrind is not enabled by default.
