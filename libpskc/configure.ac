@@ -47,13 +47,15 @@ GTK_DOC_CHECK(1.1)
 
 AM_PATH_XML2([], [], [AC_MSG_ERROR(["cannot find libxml2"])])
 PKG_CHECK_MODULES(XMLSEC, xmlsec1, [xmlsec=yes], [xmlsec=no])
+AC_PATH_PROG(XMLCATALOG, xmlcatalog)
+if test -z "$ac_cv_path_XMLCATALOG"; then
+  xmlsec=no
+fi
 if test "$xmlsec" != "no" ; then
   AC_DEFINE(USE_XMLSEC, 1, [Define to 1 if you want to use xmlsec.])
 fi
 AC_MSG_CHECKING([if xmlsec should be used])
 AC_MSG_RESULT($xmlsec)
-
-AC_PATH_PROG(XMLCATALOG, xmlcatalog)
 
 AC_SUBST(pskcschemadir, "\$(datarootdir)/xml/pskc")
 AC_ARG_WITH(pskc-schema-dir,
@@ -128,3 +130,8 @@ AC_CONFIG_FILES([
   tests/Makefile
 ])
 AC_OUTPUT
+
+AC_MSG_NOTICE([summary of build options:
+
+  XMLSEC enabled:       $xmlsec
+])
