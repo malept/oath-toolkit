@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (fstat, int, (int, struct stat *));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 
@@ -39,6 +40,7 @@ main (int argc, char *argv[])
   {
     struct stat statbuf;
 
+    close (99);
     errno = 0;
     ASSERT (fstat (99, &statbuf) == -1);
     ASSERT (errno == EBADF);

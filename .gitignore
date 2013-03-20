@@ -510,6 +510,7 @@ libpskc/gl/tests/test-verify
 libpskc/gl/tests/test-wchar
 libpskc/gl/tests/test-wchar.o
 libpskc/gl/tests/unistd.h
+libpskc/gl/tests/unistd.o
 libpskc/gl/tests/vasnprintf.o
 libpskc/gl/tests/warn-on-use.h
 libpskc/gl/tests/wchar.h

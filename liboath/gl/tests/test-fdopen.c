@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (fdopen, FILE *, (int, const char *));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 
@@ -42,6 +43,7 @@ main (void)
   {
     FILE *fp;
 
+    close (99);
     errno = 0;
     fp = fdopen (99, "r");
     if (fp == NULL)
