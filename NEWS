@@ -15,6 +15,9 @@ It causes too much false positives.  For developers who want, use
 from the version controlled sources (see cfg.mk).  Thanks to Christian
 Hesse <list@eworm.de>.
 
+** liboath: Make header file usable from C++ (extern "C" guard).
+Reported by Alan Markus <alan.markus@gmail.com>.
+
 * Version 2.0.2 (released 2013-01-08)
 
 ** oathtool: Base32 decoding of keys are now more liberal in what accepts.

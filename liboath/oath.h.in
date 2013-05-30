@@ -39,6 +39,11 @@
 #include <string.h>		/* For size_t.t */
 #include <time.h>		/* For time_t. */
 
+# ifdef __cplusplus
+extern "C"
+{
+# endif
+
 /**
  * OATH_VERSION
  *
@@ -279,5 +284,9 @@ oath_authenticate_usersfile (const char *usersfile,
 			     size_t window,
 			     const char *passwd,
 			     time_t * last_otp);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif /* OATH_H */
