@@ -83,7 +83,7 @@ parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
 	  if (p == NULL || *p != '\0')
 	    {
 	      _pskc_debug ("cannot convert time string '%s'",
-			   kp->device_startdate_str);
+			   kp->device_expirydate_str);
 	      *rc = PSKC_PARSE_ERROR;
 	    }
 	}
