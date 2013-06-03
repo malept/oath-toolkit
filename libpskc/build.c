@@ -110,7 +110,6 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
   int chall_encoding_p;
   pskc_valueformat chall_encoding = pskc_get_key_algparm_chall_encoding
     (kp, &chall_encoding_p);
-  const char *chall_encoding_str = pskc_valueformat2str (chall_encoding);
   int chall_min_p;
   uint32_t chall_min = pskc_get_key_algparm_chall_min (kp, &chall_min_p);
   int chall_max_p;
@@ -121,7 +120,6 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
   int resp_encoding_p;
   pskc_valueformat resp_encoding = pskc_get_key_algparm_resp_encoding
     (kp, &resp_encoding_p);
-  const char *resp_encoding_str = pskc_valueformat2str (resp_encoding);
   int resp_length_p;
   uint32_t resp_length = pskc_get_key_algparm_resp_length (kp, &resp_length_p);
   int resp_checkdigits_p;
@@ -146,7 +144,9 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
       chall = xmlNewChild (algparm, NULL, BAD_CAST "ChallengeFormat", NULL);
 
       if (chall_encoding_p)
-	xmlNewProp (chall, BAD_CAST "Encoding", BAD_CAST chall_encoding_str);
+	xmlNewProp (chall, BAD_CAST "Encoding",
+		    BAD_CAST pskc_valueformat2str (chall_encoding));
+
 
       if (chall_min_p)
 	{
@@ -173,7 +173,8 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
       resp = xmlNewChild (algparm, NULL, BAD_CAST "ResponseFormat", NULL);
 
       if (resp_encoding_p)
-	xmlNewProp (resp, BAD_CAST "Encoding", BAD_CAST resp_encoding_str);
+	xmlNewProp (resp, BAD_CAST "Encoding",
+		    BAD_CAST pskc_valueformat2str (resp_encoding));
 
       if (resp_length_p)
 	{
