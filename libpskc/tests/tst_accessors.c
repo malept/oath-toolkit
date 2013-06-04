@@ -714,11 +714,10 @@ main (void)
     int w = pskc_get_key_policy_keyusages (pskc_key, NULL);
     if (p != 1 || v != w || v != (PSKC_KEYUSAGE_OTP | PSKC_KEYUSAGE_CR))
       {
-	printf ("pskc_get_key_policy_pinencoding\n");
+	printf ("pskc_get_key_policy_keyusages\n");
 	return 1;
       }
   }
-
 
   {
     int p;
