@@ -88,3 +88,50 @@ LIBPSKC_2.0.0 {
   local:
     *;
 };
+
+LIBPSKC_2.2.0 {
+  global:
+    pskc_add_keypackage;
+    pskc_set_cryptomodule_id;
+    pskc_set_device_devicebinding;
+    pskc_set_device_expirydate;
+    pskc_set_device_issueno;
+    pskc_set_device_manufacturer;
+    pskc_set_device_model;
+    pskc_set_device_serialno;
+    pskc_set_device_startdate;
+    pskc_set_device_userid;
+    pskc_set_id;
+    pskc_set_key_algorithm;
+    pskc_set_key_algparm_chall_checkdigits;
+    pskc_set_key_algparm_chall_encoding;
+    pskc_set_key_algparm_chall_max;
+    pskc_set_key_algparm_chall_min;
+    pskc_set_key_algparm_resp_checkdigits;
+    pskc_set_key_algparm_resp_encoding;
+    pskc_set_key_algparm_resp_length;
+    pskc_set_key_algparm_suite;
+    pskc_set_key_data_b64secret;
+    pskc_set_key_data_counter;
+    pskc_set_key_data_secret;
+    pskc_set_key_data_time;
+    pskc_set_key_data_timedrift;
+    pskc_set_key_data_timeinterval;
+    pskc_set_key_friendlyname;
+    pskc_set_key_id;
+    pskc_set_key_issuer;
+    pskc_set_key_policy_expirydate;
+    pskc_set_key_policy_keyusages;
+    pskc_set_key_policy_numberoftransactions;
+    pskc_set_key_policy_pinencoding;
+    pskc_set_key_policy_pinkeyid;
+    pskc_set_key_policy_pinmaxfailedattempts;
+    pskc_set_key_policy_pinmaxlength;
+    pskc_set_key_policy_pinminlength;
+    pskc_set_key_policy_pinusagemode;
+    pskc_set_key_policy_startdate;
+    pskc_set_key_profileid;
+    pskc_set_key_reference;
+    pskc_set_key_userid;
+    pskc_set_version;
+} LIBPSKC_2.0.0;

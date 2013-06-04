@@ -48,11 +48,7 @@ extern PSKCAPI void pskc_done (pskc_t *container);
 extern PSKCAPI int pskc_parse_from_memory (pskc_t *container,
 					   size_t len, const char *buffer);
 
-extern PSKCAPI const char *pskc_get_version (pskc_t *container);
-extern PSKCAPI const char *pskc_get_id (pskc_t *container);
 extern PSKCAPI int pskc_get_signed_p (pskc_t *container);
-extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
-						size_t i);
 
 extern PSKCAPI int pskc_validate (pskc_t *container, int *isvalid);
 
@@ -64,6 +60,16 @@ extern PSKCAPI int pskc_sign_x509 (pskc_t *container,
 extern PSKCAPI int pskc_verify_x509crt (pskc_t * container,
 					const char *cert_file,
 					int *valid_signature);
+
+/* Access data fields. */
+extern PSKCAPI const char *pskc_get_version (pskc_t *container);
+extern PSKCAPI void pskc_set_version (pskc_t *container, const char *version);
+extern PSKCAPI const char *pskc_get_id (pskc_t *container);
+extern PSKCAPI void pskc_set_id (pskc_t *container, const char *id);
+
+extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
+						size_t i);
+extern PSKCAPI int pskc_add_keypackage (pskc_t *container, pskc_key_t **key);
 
 /**
  * pskc_output_formats_t:

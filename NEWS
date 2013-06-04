@@ -1,7 +1,12 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 2.0.3 (unreleased)
+* Version 2.2.0 (unreleased)
+
+** libpskc: Add functions for setting PSKC data.
+The new functions are pskc_add_keypackage and all pskc_set_* functions
+(see libpskc/include/pskc/keypackage.h).  This allow you to write
+programs that generate new PSKC structures.
 
 ** liboath: Permit different passwords for different tokens for the same user.
 Thanks to Christian Hesse <list@eworm.de>.

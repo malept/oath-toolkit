@@ -104,10 +104,12 @@ struct pskc
 {
   /* raw XML */
   xmlDocPtr xmldoc;
-  /* parsed version */
+  /* Is there a Signature element in xmldoc? */
+  int signed_p;
+
+  /* parsed data */
   const char *version;
   const char *id;
-  int signed_p;
   size_t nkeypackages;
   struct pskc_key *keypackages;
 };

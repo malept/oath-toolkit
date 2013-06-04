@@ -20,7 +20,7 @@ AM_LDFLAGS = -no-install
 
 LDADD = ../libpskc.la
 
-noinst_PROGRAMS = serialno pskc2csv pskcsign pskcverify
+noinst_PROGRAMS = serialno pskc2csv pskcsign pskcverify pskccreate
 
 # Remember to update EXAMPLES_SOURCE_FILES in ../gtk-doc/Makefile.am
 # if you add examples.

@@ -375,9 +375,6 @@ build_key (pskc_key_t *kp, xmlNodePtr keyp)
   xmlNodePtr key;
   int rc;
 
-  if (!id && !alg && !issuer && !userid)
-    return PSKC_OK;
-
   key = xmlNewChild (keyp, NULL, BAD_CAST "Key", NULL);
 
   if (id && xmlNewProp (key, BAD_CAST "Id", BAD_CAST id) == NULL)
