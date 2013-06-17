@@ -391,7 +391,7 @@ oath_totp_validate3_callback (const char *secret,
       if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	{
 	  if (otp_counter)
-	    *otp_counter = iter;
+	    *otp_counter = nts + iter;
 	  if (otp_pos)
 	    *otp_pos = iter;
 	  return iter;
