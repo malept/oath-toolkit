@@ -275,6 +275,30 @@ oath_totp_validate2_callback (const char *secret,
 			      oath_validate_strcmp_function strcmp_otp,
 			      void *strcmp_handle);
 
+extern OATHAPI int
+oath_totp_validate3 (const char *secret,
+		     size_t secret_length,
+		     time_t now,
+		     unsigned time_step_size,
+		     time_t start_offset,
+		     size_t window,
+		     int *otp_pos,
+		     uint64_t *otp_counter,
+		     const char *otp);
+
+extern OATHAPI int
+oath_totp_validate3_callback (const char *secret,
+			      size_t secret_length,
+			      time_t now,
+			      unsigned time_step_size,
+			      time_t start_offset,
+			      unsigned digits,
+			      size_t window,
+			      int *otp_pos,
+			      uint64_t *otp_counter,
+			      oath_validate_strcmp_function strcmp_otp,
+			      void *strcmp_handle);
+
 /* Usersfile */
 
 extern OATHAPI int

@@ -109,8 +109,8 @@ oath_totp_validate (const char *secret,
 		    unsigned time_step_size,
 		    time_t start_offset, size_t window, const char *otp)
 {
-  return oath_totp_validate2 (secret, secret_length, now, time_step_size,
-			      start_offset, window, NULL, otp);
+  return oath_totp_validate3 (secret, secret_length, now, time_step_size,
+			      start_offset, window, NULL, NULL, otp);
 }
 
 /**
@@ -166,9 +166,9 @@ oath_totp_validate_callback (const char *secret,
 			     oath_validate_strcmp_function strcmp_otp,
 			     void *strcmp_handle)
 {
-  return oath_totp_validate2_callback (secret, secret_length, now,
+  return oath_totp_validate3_callback (secret, secret_length, now,
 				       time_step_size, start_offset,
-				       digits, window, NULL,
+				       digits, window, NULL, NULL,
 				       strcmp_otp, strcmp_handle);
 }
 
@@ -264,6 +264,110 @@ oath_totp_validate2_callback (const char *secret,
 			      oath_validate_strcmp_function strcmp_otp,
 			      void *strcmp_handle)
 {
+    return oath_totp_validate3_callback (secret, secret_length, now,
+                        time_step_size, start_offset,
+                        digits, window, otp_pos, NULL,
+                        strcmp_otp, strcmp_handle);
+}
+
+/**
+ * oath_totp_validate3:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @now: Unix time value to validate TOTP for
+ * @time_step_size: time step system parameter (typically 30)
+ * @start_offset: Unix time of when to start counting time steps (typically 0)
+ * @window: how many OTPs after/before start OTP to test
+ * @otp_pos: output search position in search window (may be NULL).
+ * @otp_counter: counter value used to calculate OTP value (may be NULL).
+ * @otp: the OTP to validate.
+ *
+ * Validate an OTP according to OATH TOTP algorithm per RFC 6238.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns absolute value of position in OTP window (zero is
+ *   first position), or %OATH_INVALID_OTP if no OTP was found in OTP
+ *   window, or an error code.
+ *
+ * Since: TODO
+ **/
+int
+oath_totp_validate3 (const char *secret,
+		     size_t secret_length,
+		     time_t now,
+		     unsigned time_step_size,
+		     time_t start_offset,
+		     size_t window,
+		     int *otp_pos,
+		     uint64_t *otp_counter,
+		     const char *otp)
+{
+     return oath_totp_validate3_callback (secret, secret_length, now,
+				       time_step_size, start_offset,
+				       strlen (otp), window, otp_pos, otp_counter,
+				       _oath_strcmp_callback, (void *) otp); 
+}
+
+/**
+ * oath_totp_validate3_callback:
+ * @secret: the shared secret string
+ * @secret_length: length of @secret
+ * @now: Unix time value to compute TOTP for
+ * @time_step_size: time step system parameter (typically 30)
+ * @start_offset: Unix time of when to start counting time steps (typically 0)
+ * @digits: number of requested digits in the OTP
+ * @window: how many OTPs after start counter to test
+ * @otp_pos: output search position in search window (may be NULL).
+ * @otp_counter: counter value used to calculate OTP value (may be NULL).
+ * @strcmp_otp: function pointer to a strcmp-like function.
+ * @strcmp_handle: caller handle to be passed on to @strcmp_otp.
+ *
+ * Validate an OTP according to OATH TOTP algorithm per RFC 6238.
+ *
+ * Validation is implemented by generating a number of potential OTPs
+ * and performing a call to the @strcmp_otp function, to compare the
+ * potential OTP against the given @otp.  It has the following
+ * prototype:
+ *
+ * int (*oath_validate_strcmp_function) (void *handle, const char *test_otp);
+ *
+ * The function should be similar to strcmp in that it return 0 only
+ * on matches.  It differs by permitting use of negative return codes
+ * as indication of internal failures in the callback.  Positive
+ * values indicate OTP mismatch.
+ *
+ * This callback interface is useful when you cannot compare OTPs
+ * directly using normal strcmp, but instead for example only have a
+ * hashed OTP.  You would then typically pass in the hashed OTP in the
+ * @strcmp_handle and let your implementation of @strcmp_otp hash the
+ * test_otp OTP using the same hash, and then compare the results.
+ *
+ * Currently only OTP lengths of 6, 7 or 8 digits are supported.  This
+ * restrictions may be lifted in future versions, although some
+ * limitations are inherent in the protocol.
+ *
+ * Returns: Returns absolute value of position in OTP window (zero is
+ *   first position), or %OATH_INVALID_OTP if no OTP was found in OTP
+ *   window, or an error code.
+ *
+ * Since: TODO
+ **/
+int
+oath_totp_validate3_callback (const char *secret,
+			      size_t secret_length,
+			      time_t now,
+			      unsigned time_step_size,
+			      time_t start_offset,
+			      unsigned digits,
+			      size_t window,
+			      int *otp_pos,
+			      uint64_t *otp_counter,
+			      oath_validate_strcmp_function strcmp_otp,
+			      void *strcmp_handle)
+{
   unsigned iter = 0;
   char tmp_otp[10];
   int rc;
@@ -286,6 +390,8 @@ oath_totp_validate2_callback (const char *secret,
 
       if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	{
+	  if (otp_counter)
+	    *otp_counter = iter;
 	  if (otp_pos)
 	    *otp_pos = iter;
 	  return iter;
@@ -306,6 +412,8 @@ oath_totp_validate2_callback (const char *secret,
 
 	  if ((rc = strcmp_otp (strcmp_handle, tmp_otp)) == 0)
 	    {
+	      if (otp_counter)
+		*otp_counter = nts - iter;
 	      if (otp_pos)
 		*otp_pos = -iter;
 	      return iter;
