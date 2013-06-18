@@ -292,7 +292,7 @@ oath_totp_validate2_callback (const char *secret,
  *   first position), or %OATH_INVALID_OTP if no OTP was found in OTP
  *   window, or an error code.
  *
- * Since: TODO
+ * Since: 2.2.0
  **/
 int
 oath_totp_validate3 (const char *secret,
@@ -353,7 +353,7 @@ oath_totp_validate3 (const char *secret,
  *   first position), or %OATH_INVALID_OTP if no OTP was found in OTP
  *   window, or an error code.
  *
- * Since: TODO
+ * Since: 2.2.0
  **/
 int
 oath_totp_validate3_callback (const char *secret,
