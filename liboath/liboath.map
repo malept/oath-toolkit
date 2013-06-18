@@ -70,7 +70,7 @@ LIBOATH_1.12.0
     oath_base32_encode;
 } LIBOATH_1.10.0;
 
-LIBOATH_1.13.0
+LIBOATH_2.2.0
 {
   global:
     oath_totp_validate3;
