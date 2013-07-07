@@ -269,7 +269,7 @@ jas@latte:~$</programlisting></informalexample></para>
 
 	<para><informalexample><programlisting>
 jas@latte:~$ cc -o pskccreate pskccreate.c $(pkg-config --cflags --libs libpskc)
-jas@latte:~$ ./pskccreate 
+jas@latte:~$ ./pskccreate
 &lt;?xml version="1.0"?&gt;
 &lt;KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0"&gt;&lt;KeyPackage&gt;&lt;DeviceInfo&gt;&lt;Manufacturer&gt;Acme&lt;/Manufacturer&gt;&lt;SerialNo&gt;42&lt;/SerialNo&gt;&lt;/DeviceInfo&gt;&lt;Key Id="4711" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp"&gt;&lt;AlgorithmParameters&gt;&lt;ResponseFormat Encoding="DECIMAL" Length="8"/&gt;&lt;/AlgorithmParameters&gt;&lt;Data&gt;&lt;Secret&gt;&lt;PlainValue&gt;Zm9v&lt;/PlainValue&gt;&lt;/Secret&gt;&lt;Counter&gt;&lt;PlainValue&gt;42&lt;/PlainValue&gt;&lt;/Counter&gt;&lt;/Data&gt;&lt;/Key&gt;&lt;/KeyPackage&gt;&lt;/KeyContainer&gt;
 jas@latte:~$ </programlisting></informalexample></para>
