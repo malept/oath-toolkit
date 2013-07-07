@@ -13,6 +13,7 @@
 	  <!ENTITY pskc-example-pskc2csv SYSTEM "pskc2csv.sgml">
 	  <!ENTITY pskc-example-pskcsign SYSTEM "pskcsign.sgml">
 	  <!ENTITY pskc-example-pskcverify SYSTEM "pskcverify.sgml">
+	  <!ENTITY pskc-example-pskccreate SYSTEM "pskccreate.sgml">
 	  <!ENTITY pskc-example-pskctool-h SYSTEM "pskctool-h.sgml">
 	  ]>
 <book id="index">
@@ -232,6 +233,55 @@ jas@latte:~$</programlisting></informalexample></para>
 	  For more background and information on how to generate the
 	  necessary private key and certificates, see the "pskctool"
 	  command line tool documentation.
+	</para>
+
+      </section>
+
+      <section id="pskc-tutorial-libpskc-create">
+	<title>Create PSKC data</title>
+
+	<para>
+	  To create PSKC data you should first get a handle to a
+	  container using <link linkend="pskc_init">pskc_init</link>.
+	  Add one or more keypackages to the container
+	  using <link linkend="pskc_add_keypackage">
+	  pskc_add_keypackage</link>.  For each keypackage, set the
+	  relevant values you want using the "pskc_set_*" functions,
+	  for example <link linkend="pskc_set_device_serialno">
+	  pskc_set_device_serialno</link>.
+	</para>
+
+	<para>
+	  The XML output is created as usual
+	  with <link linkend="pskc_build_xml">pskc_build_xml</link>.
+	</para>
+
+	<para>
+	  Here follows an example that would generate PSKC data that
+	  could be used to personalize an imaginary HOTP token.
+	</para>
+
+	&pskc-example-pskccreate;
+
+	<para>
+	  You would compile and use the example like this.
+	</para>
+
+	<para><informalexample><programlisting>
+jas@latte:~$ cc -o pskccreate pskccreate.c $(pkg-config --cflags --libs libpskc)
+jas@latte:~$ ./pskccreate 
+&lt;?xml version="1.0"?&gt;
+&lt;KeyContainer xmlns="urn:ietf:params:xml:ns:keyprov:pskc" Version="1.0"&gt;&lt;KeyPackage&gt;&lt;DeviceInfo&gt;&lt;Manufacturer&gt;Acme&lt;/Manufacturer&gt;&lt;SerialNo&gt;42&lt;/SerialNo&gt;&lt;/DeviceInfo&gt;&lt;Key Id="4711" Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp"&gt;&lt;AlgorithmParameters&gt;&lt;ResponseFormat Encoding="DECIMAL" Length="8"/&gt;&lt;/AlgorithmParameters&gt;&lt;Data&gt;&lt;Secret&gt;&lt;PlainValue&gt;Zm9v&lt;/PlainValue&gt;&lt;/Secret&gt;&lt;Counter&gt;&lt;PlainValue&gt;42&lt;/PlainValue&gt;&lt;/Counter&gt;&lt;/Data&gt;&lt;/Key&gt;&lt;/KeyPackage&gt;&lt;/KeyContainer&gt;
+jas@latte:~$ </programlisting></informalexample></para>
+
+	<para>
+	  For more background and information what each field mean and
+	  which ones are required, you should read the PSKC
+	  specification (RFC 6030).  You may pretty print the XML
+	  generate using "xmllint --pretty 1" which may simplify
+	  reading it.  You may use "pskctool --info" to print a human
+	  summary of some PSKC data and validate the XML syntax using
+	  "pskctool --validate".
 	</para>
 
       </section>
