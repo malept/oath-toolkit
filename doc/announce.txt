@@ -1,31 +1,26 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 2.0.1
+Subject: OATH Toolkit 2.0.2
 <#part sign=pgpmime>
-The PSKC support has now been extended with support for signing and
-verifying PSKC data (using XML Digital Signatures).  Quick introduction
-documentation is available here:
-
-http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-pskctool.html
-http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-quickstart.html
-
-You'll need the XMLSec library, but it is an optional dependency and if
-you don't have it, the signing stuff will be disable.
-http://www.aleksey.com/xmlsec/
+No PSKC change this time, only improvements to liboath/oathtool.
 
 Happy hacking,
 Simon
 
-* Version 2.0.1 (released 2012-10-24)
+* Version 2.0.2 (released 2013-01-08)
 
-** libpskc, pskctool: Support sign and verify of PSKC data using XML DigSig.
+** oathtool: Base32 decoding of keys are now more liberal in what accepts.
+It can now accept keys on the "gr6d 5br7 25s6 vnck v4vl hlao re"
+format, i.e., base32 data delimited using SPC and without padding.
+The old proper base32 format is still supported.
 
-** libpskc: XML Schema validation modified.
-The entire PSKC schema is now supported (before the XML Digital
-Signatures and Encryption parts were removed).  The code now assumes
-that the schema is available in the local XML catalog.  Thanks to Liam
-Quin for hints about XML catalogs.
+** liboath: oath_base32_decode now ignores SPC and adds pad characters.
 
-** pskctool: the --check (-c) parameter was renamed to --info (-i).
+** liboath: If password in usersfile is + then ignore supplied password.
+This enables the pam_oath module to be used with external password
+verification.  Based on patch from Ilkka Virta <itvirta@iki.fi>.
+
+** tests: Fixed expiry date of some certificates used in the test suite.
+The last release would only complete 'make check' during a 30 day window.
 
 ** API and ABI is backwards compatible with the previous version.
 
@@ -73,8 +68,8 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.1.tar.gz (3.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.1.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.2.tar.gz (3.8MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.2.tar.gz.sig (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
@@ -93,8 +88,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-41f0e3f39391138f737d2c10cfa99385617a88ad  oath-toolkit-2.0.1.tar.gz
-8f61890aa5bfd90d69e9e5b82b021c3da0be364af856e5a25f291692  oath-toolkit-2.0.1.tar.gz
+3672924a9d9c3373ec62a6b79e9aa1e846c4d178  oath-toolkit-2.0.2.tar.gz
+5933a431566d606f83a1f971fab3792b6d4d255b8c70d00752550cb4  oath-toolkit-2.0.2.tar.gz
 
 General information on contributing:
   http://www.nongnu.org/oath-toolkit/contrib.html
