@@ -218,6 +218,8 @@ liboath/man/oath_totp_generate.3
 liboath/man/oath_totp_validate.3
 liboath/man/oath_totp_validate2.3
 liboath/man/oath_totp_validate2_callback.3
+liboath/man/oath_totp_validate3.3
+liboath/man/oath_totp_validate3_callback.3
 liboath/man/oath_totp_validate_callback.3
 liboath/oath.h
 liboath/stamp-h1
