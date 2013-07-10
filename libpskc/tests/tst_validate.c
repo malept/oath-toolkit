@@ -29,14 +29,12 @@
 const char *pskc_mini =
   "<?xml version=\"1.0\"?>\n"
   "<KeyContainer xmlns=\"urn:ietf:params:xml:ns:keyprov:pskc\"\n"
-  "              Version=\"1.0\">\n"
-  "  <KeyPackage/>\n"
-  "</KeyContainer>\n";
+  "              Version=\"1.0\">\n" "  <KeyPackage/>\n" "</KeyContainer>\n";
 
 void
 my_log (const char *msg)
 {
-  puts(msg);
+  puts (msg);
 }
 
 int

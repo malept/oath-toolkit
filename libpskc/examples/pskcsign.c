@@ -25,14 +25,19 @@ main (int argc, const char *argv[])
 
   fclose (fh);
 
-  rc = pskc_global_init (); PSKC_CHECK_RC;
+  rc = pskc_global_init ();
+  PSKC_CHECK_RC;
 
-  rc = pskc_init (&container); PSKC_CHECK_RC;
-  rc = pskc_parse_from_memory (container, len, buffer); PSKC_CHECK_RC;
+  rc = pskc_init (&container);
+  PSKC_CHECK_RC;
+  rc = pskc_parse_from_memory (container, len, buffer);
+  PSKC_CHECK_RC;
 
-  rc = pskc_sign_x509 (container, argv[2], argv[3]); PSKC_CHECK_RC;
+  rc = pskc_sign_x509 (container, argv[2], argv[3]);
+  PSKC_CHECK_RC;
 
-  rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len); PSKC_CHECK_RC;
+  rc = pskc_output (container, PSKC_OUTPUT_XML, &out, &len);
+  PSKC_CHECK_RC;
   fwrite (out, 1, len, stdout);
   pskc_free (out);
 

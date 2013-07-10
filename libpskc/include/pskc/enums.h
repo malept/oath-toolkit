@@ -58,20 +58,20 @@
  * PIN is used.
  */
 typedef enum
-  {
-    PSKC_PINUSAGEMODE_UNKNOWN = 0,
-    PSKC_PINUSAGEMODE_LOCAL = 1,
-    PSKC_PINUSAGEMODE_PREPEND = 2,
-    PSKC_PINUSAGEMODE_APPEND = 3,
-    PSKC_PINUSAGEMODE_ALGORITHMIC = 4,
-    /* Make sure the following value is the highest. */
-    PSKC_PINUSAGEMODE_LAST = PSKC_PINUSAGEMODE_ALGORITHMIC
-  } pskc_pinusagemode;
+{
+  PSKC_PINUSAGEMODE_UNKNOWN = 0,
+  PSKC_PINUSAGEMODE_LOCAL = 1,
+  PSKC_PINUSAGEMODE_PREPEND = 2,
+  PSKC_PINUSAGEMODE_APPEND = 3,
+  PSKC_PINUSAGEMODE_ALGORITHMIC = 4,
+  /* Make sure the following value is the highest. */
+  PSKC_PINUSAGEMODE_LAST = PSKC_PINUSAGEMODE_ALGORITHMIC
+} pskc_pinusagemode;
 
-extern PSKCAPI const char *
-pskc_pinusagemode2str (pskc_pinusagemode pinusagemode);
-extern PSKCAPI pskc_pinusagemode
-pskc_str2pinusagemode (const char *pinusagemode);
+extern PSKCAPI const char *pskc_pinusagemode2str (pskc_pinusagemode
+						  pinusagemode);
+extern PSKCAPI pskc_pinusagemode pskc_str2pinusagemode (const char
+							*pinusagemode);
 
 /**
  * pskc_valueformat:
@@ -87,21 +87,21 @@ pskc_str2pinusagemode (const char *pinusagemode);
  * Enumeration of PSKC value encoding formats.
  */
 typedef enum
-  {
-    PSKC_VALUEFORMAT_UNKNOWN = 0,
-    PSKC_VALUEFORMAT_DECIMAL = 1,
-    PSKC_VALUEFORMAT_HEXADECIMAL = 2,
-    PSKC_VALUEFORMAT_ALPHANUMERIC = 3,
-    PSKC_VALUEFORMAT_BASE64 = 4,
-    PSKC_VALUEFORMAT_BINARY = 5,
-    /* Make sure the following value is the highest. */
-    PSKC_VALUEFORMAT_LAST = PSKC_VALUEFORMAT_BINARY
-  } pskc_valueformat;
+{
+  PSKC_VALUEFORMAT_UNKNOWN = 0,
+  PSKC_VALUEFORMAT_DECIMAL = 1,
+  PSKC_VALUEFORMAT_HEXADECIMAL = 2,
+  PSKC_VALUEFORMAT_ALPHANUMERIC = 3,
+  PSKC_VALUEFORMAT_BASE64 = 4,
+  PSKC_VALUEFORMAT_BINARY = 5,
+  /* Make sure the following value is the highest. */
+  PSKC_VALUEFORMAT_LAST = PSKC_VALUEFORMAT_BINARY
+} pskc_valueformat;
 
-extern PSKCAPI const char *
-pskc_valueformat2str (pskc_valueformat valueformat);
-extern PSKCAPI pskc_valueformat
-pskc_str2valueformat (const char *valueformat);
+extern PSKCAPI const char *pskc_valueformat2str (pskc_valueformat
+						 valueformat);
+extern PSKCAPI pskc_valueformat pskc_str2valueformat (const char
+						      *valueformat);
 
 /**
  * pskc_keyusage:
@@ -137,22 +137,22 @@ pskc_str2valueformat (const char *valueformat);
  * values.
  */
 typedef enum
-  {
-    PSKC_KEYUSAGE_UNKNOWN = 0,
-    PSKC_KEYUSAGE_OTP = 1,
-    PSKC_KEYUSAGE_CR = 2,
-    PSKC_KEYUSAGE_ENCRYPT = 4,
-    PSKC_KEYUSAGE_INTEGRITY = 8,
-    PSKC_KEYUSAGE_VERIFY = 16,
-    PSKC_KEYUSAGE_UNLOCK = 32,
-    PSKC_KEYUSAGE_DECRYPT = 64,
-    PSKC_KEYUSAGE_KEYWRAP = 128,
-    PSKC_KEYUSAGE_UNWRAP = 256,
-    PSKC_KEYUSAGE_DERIVE = 512,
-    PSKC_KEYUSAGE_GENERATE = 1024,
-    /* Make sure the following value is the highest. */
-    PSKC_KEYUSAGE_LAST = PSKC_KEYUSAGE_GENERATE
-  } pskc_keyusage;
+{
+  PSKC_KEYUSAGE_UNKNOWN = 0,
+  PSKC_KEYUSAGE_OTP = 1,
+  PSKC_KEYUSAGE_CR = 2,
+  PSKC_KEYUSAGE_ENCRYPT = 4,
+  PSKC_KEYUSAGE_INTEGRITY = 8,
+  PSKC_KEYUSAGE_VERIFY = 16,
+  PSKC_KEYUSAGE_UNLOCK = 32,
+  PSKC_KEYUSAGE_DECRYPT = 64,
+  PSKC_KEYUSAGE_KEYWRAP = 128,
+  PSKC_KEYUSAGE_UNWRAP = 256,
+  PSKC_KEYUSAGE_DERIVE = 512,
+  PSKC_KEYUSAGE_GENERATE = 1024,
+  /* Make sure the following value is the highest. */
+  PSKC_KEYUSAGE_LAST = PSKC_KEYUSAGE_GENERATE
+} pskc_keyusage;
 
 extern PSKCAPI const char *pskc_keyusage2str (pskc_keyusage keyusage);
 extern PSKCAPI pskc_keyusage pskc_str2keyusage (const char *keyusage);

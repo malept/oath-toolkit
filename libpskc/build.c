@@ -31,7 +31,7 @@
 #include "inttostr.h"		/* umaxtostr */
 
 static int
-build_deviceinfo (pskc_key_t *kp, xmlNodePtr keyp)
+build_deviceinfo (pskc_key_t * kp, xmlNodePtr keyp)
 {
   const char *manufacturer = pskc_get_device_manufacturer (kp);
   const char *serialno = pskc_get_device_serialno (kp);
@@ -86,7 +86,7 @@ build_deviceinfo (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_cryptomoduleinfo (pskc_key_t *kp, xmlNodePtr keyp)
+build_cryptomoduleinfo (pskc_key_t * kp, xmlNodePtr keyp)
 {
   const char *cryptomodule_id = pskc_get_cryptomodule_id (kp);
   xmlNodePtr cminfo;
@@ -97,14 +97,13 @@ build_cryptomoduleinfo (pskc_key_t *kp, xmlNodePtr keyp)
   cminfo = xmlNewChild (keyp, NULL, BAD_CAST "CryptoModuleInfo", NULL);
 
   if (cryptomodule_id)
-    xmlNewTextChild (cminfo, NULL, BAD_CAST "Id",
-		     BAD_CAST cryptomodule_id);
+    xmlNewTextChild (cminfo, NULL, BAD_CAST "Id", BAD_CAST cryptomodule_id);
 
   return PSKC_OK;
 }
 
 static int
-build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
+build_algparm (pskc_key_t * kp, xmlNodePtr keyp)
 {
   const char *suite = pskc_get_key_algparm_suite (kp);
   int chall_encoding_p;
@@ -121,7 +120,8 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
   pskc_valueformat resp_encoding = pskc_get_key_algparm_resp_encoding
     (kp, &resp_encoding_p);
   int resp_length_p;
-  uint32_t resp_length = pskc_get_key_algparm_resp_length (kp, &resp_length_p);
+  uint32_t resp_length =
+    pskc_get_key_algparm_resp_length (kp, &resp_length_p);
   int resp_checkdigits_p;
   int resp_checkdigits = pskc_get_key_algparm_resp_checkdigits
     (kp, &resp_checkdigits_p);
@@ -150,14 +150,14 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
 
       if (chall_min_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (chall_min, buf);
 	  xmlNewProp (chall, BAD_CAST "Min", BAD_CAST p);
 	}
 
       if (chall_max_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (chall_max, buf);
 	  xmlNewProp (chall, BAD_CAST "Max", BAD_CAST p);
 	}
@@ -178,7 +178,7 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
 
       if (resp_length_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (resp_length, buf);
 	  xmlNewProp (resp, BAD_CAST "Length", BAD_CAST p);
 	}
@@ -191,7 +191,7 @@ build_algparm (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_data (pskc_key_t *kp, xmlNodePtr keyp)
+build_data (pskc_key_t * kp, xmlNodePtr keyp)
 {
   const char *b64secret = pskc_get_key_data_b64secret (kp);
   int counter_p;
@@ -217,7 +217,7 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
 
   if (counter_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char buf[INT_BUFSIZE_BOUND (uintmax_t)];
       char *p = umaxtostr (counter, buf);
 
       sub = xmlNewChild (data, NULL, BAD_CAST "Counter", NULL);
@@ -226,7 +226,7 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
 
   if (t_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char buf[INT_BUFSIZE_BOUND (uintmax_t)];
       char *p = umaxtostr (t, buf);
 
       sub = xmlNewChild (data, NULL, BAD_CAST "Time", NULL);
@@ -235,7 +235,7 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
 
   if (tinterval_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char buf[INT_BUFSIZE_BOUND (uintmax_t)];
       char *p = umaxtostr (tinterval, buf);
 
       sub = xmlNewChild (data, NULL, BAD_CAST "TimeInterval", NULL);
@@ -244,7 +244,7 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
 
   if (tdrift_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char buf[INT_BUFSIZE_BOUND (uintmax_t)];
       char *p = umaxtostr (tdrift, buf);
 
       sub = xmlNewChild (data, NULL, BAD_CAST "TimeDrift", NULL);
@@ -255,7 +255,7 @@ build_data (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_policy (pskc_key_t *kp, xmlNodePtr keyp)
+build_policy (pskc_key_t * kp, xmlNodePtr keyp)
 {
   int keyusage_p;
   int keyusages = pskc_get_key_policy_keyusages (kp, &keyusage_p);
@@ -314,21 +314,21 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
 
       if (attempts_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (attempts, buf);
 	  xmlNewProp (pinpolicy, BAD_CAST "MaxFailedAttempts", BAD_CAST p);
 	}
 
       if (pinmin_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (pinmin, buf);
 	  xmlNewProp (pinpolicy, BAD_CAST "MinLength", BAD_CAST p);
 	}
 
       if (pinmax_p)
 	{
-	  char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+	  char buf[INT_BUFSIZE_BOUND (uintmax_t)];
 	  char *p = umaxtostr (pinmax, buf);
 	  xmlNewProp (pinpolicy, BAD_CAST "MaxLength", BAD_CAST p);
 	}
@@ -353,7 +353,7 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
 
   if (numberoftransactions_p)
     {
-      char buf[INT_BUFSIZE_BOUND(uintmax_t)];
+      char buf[INT_BUFSIZE_BOUND (uintmax_t)];
       char *p = umaxtostr (numberoftransactions, buf);
       xmlNewTextChild (policy, NULL, BAD_CAST "NumberOfTransactions",
 		       BAD_CAST p);
@@ -363,7 +363,7 @@ build_policy (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_key (pskc_key_t *kp, xmlNodePtr keyp)
+build_key (pskc_key_t * kp, xmlNodePtr keyp)
 {
   const char *id = pskc_get_key_id (kp);
   const char *alg = pskc_get_key_algorithm (kp);
@@ -419,7 +419,7 @@ build_key (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_keypackage (pskc_key_t *kp, xmlNodePtr keyp)
+build_keypackage (pskc_key_t * kp, xmlNodePtr keyp)
 {
   build_deviceinfo (kp, keyp);
   build_cryptomoduleinfo (kp, keyp);
@@ -429,7 +429,7 @@ build_keypackage (pskc_key_t *kp, xmlNodePtr keyp)
 }
 
 static int
-build_keycont (pskc_t *container, xmlNodePtr keycont)
+build_keycont (pskc_t * container, xmlNodePtr keycont)
 {
   const char *ver = pskc_get_version (container);;
   const char *id = pskc_get_id (container);
@@ -483,7 +483,7 @@ build_keycont (pskc_t *container, xmlNodePtr keycont)
  *   allocation errors %PSKC_MALLOC_ERROR is returned.
  **/
 int
-pskc_build_xml (pskc_t *container, char **out, size_t *len)
+pskc_build_xml (pskc_t * container, char **out, size_t * len)
 {
   xmlDocPtr doc = NULL;
   xmlNodePtr keycont = NULL;

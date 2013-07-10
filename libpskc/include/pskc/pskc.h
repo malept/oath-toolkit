@@ -34,12 +34,13 @@
  */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-#include <stddef.h> /* size_t */
-#include <stdint.h> /* uint32_t, uint64_t */
-#include <time.h> /* struct tm */
+#include <stddef.h>		/* size_t */
+#include <stdint.h>		/* uint32_t, uint64_t */
+#include <time.h>		/* struct tm */
 
 /**
  * pskc_t:
@@ -50,7 +51,7 @@ extern "C" {
  * pskc_get_id()) and any number of #pskc_key_t types, each containing
  * one key (see pskc_get_keypackage()).
  */
-typedef struct pskc pskc_t;
+  typedef struct pskc pskc_t;
 
 /**
  * pskc_key_t:
@@ -60,7 +61,7 @@ typedef struct pskc pskc_t;
  * pskc_get_keypackage() function is used to retrieve the #pskc_key_t
  * values from the #pskc_t structure.
  */
-typedef struct pskc_key pskc_key_t;
+  typedef struct pskc_key pskc_key_t;
 
 #include <pskc/exports.h>
 #include <pskc/version.h>
@@ -74,4 +75,4 @@ typedef struct pskc_key pskc_key_t;
 }
 #endif
 
-#endif /* PSKC_H */
+#endif				/* PSKC_H */

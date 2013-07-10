@@ -26,12 +26,16 @@ main (int argc, const char *argv[])
 
   fclose (fh);
 
-  rc = pskc_global_init (); PSKC_CHECK_RC;
+  rc = pskc_global_init ();
+  PSKC_CHECK_RC;
 
-  rc = pskc_init (&container); PSKC_CHECK_RC;
-  rc = pskc_parse_from_memory (container, len, buffer); PSKC_CHECK_RC;
+  rc = pskc_init (&container);
+  PSKC_CHECK_RC;
+  rc = pskc_parse_from_memory (container, len, buffer);
+  PSKC_CHECK_RC;
 
-  rc = pskc_verify_x509crt (container, argv[2], &valid_sig); PSKC_CHECK_RC;
+  rc = pskc_verify_x509crt (container, argv[2], &valid_sig);
+  PSKC_CHECK_RC;
   puts (valid_sig ? "OK" : "FAIL");
 
   pskc_done (container);

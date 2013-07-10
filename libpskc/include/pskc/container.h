@@ -42,19 +42,20 @@
  * containing one key (see pskc_get_keypackage()).
  */
 
-extern PSKCAPI int pskc_init (pskc_t **container);
-extern PSKCAPI void pskc_done (pskc_t *container);
+extern PSKCAPI int pskc_init (pskc_t ** container);
+extern PSKCAPI void pskc_done (pskc_t * container);
 
-extern PSKCAPI int pskc_parse_from_memory (pskc_t *container,
+extern PSKCAPI int pskc_parse_from_memory (pskc_t * container,
 					   size_t len, const char *buffer);
 
-extern PSKCAPI int pskc_get_signed_p (pskc_t *container);
+extern PSKCAPI int pskc_get_signed_p (pskc_t * container);
 
-extern PSKCAPI int pskc_validate (pskc_t *container, int *isvalid);
+extern PSKCAPI int pskc_validate (pskc_t * container, int *isvalid);
 
-extern PSKCAPI int pskc_build_xml (pskc_t *container, char **out, size_t *len);
+extern PSKCAPI int pskc_build_xml (pskc_t * container, char **out,
+				   size_t * len);
 
-extern PSKCAPI int pskc_sign_x509 (pskc_t *container,
+extern PSKCAPI int pskc_sign_x509 (pskc_t * container,
 				   const char *key_file,
 				   const char *cert_file);
 extern PSKCAPI int pskc_verify_x509crt (pskc_t * container,
@@ -62,14 +63,15 @@ extern PSKCAPI int pskc_verify_x509crt (pskc_t * container,
 					int *valid_signature);
 
 /* Access data fields. */
-extern PSKCAPI const char *pskc_get_version (pskc_t *container);
-extern PSKCAPI void pskc_set_version (pskc_t *container, const char *version);
-extern PSKCAPI const char *pskc_get_id (pskc_t *container);
-extern PSKCAPI void pskc_set_id (pskc_t *container, const char *id);
+extern PSKCAPI const char *pskc_get_version (pskc_t * container);
+extern PSKCAPI void pskc_set_version (pskc_t * container,
+				      const char *version);
+extern PSKCAPI const char *pskc_get_id (pskc_t * container);
+extern PSKCAPI void pskc_set_id (pskc_t * container, const char *id);
 
-extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t *container,
-						size_t i);
-extern PSKCAPI int pskc_add_keypackage (pskc_t *container, pskc_key_t **key);
+extern PSKCAPI pskc_key_t *pskc_get_keypackage (pskc_t * container, size_t i);
+extern PSKCAPI int pskc_add_keypackage (pskc_t * container,
+					pskc_key_t ** key);
 
 /**
  * pskc_output_formats_t:
@@ -81,14 +83,14 @@ extern PSKCAPI int pskc_add_keypackage (pskc_t *container, pskc_key_t **key);
  * Enumeration of different PSKC output formats.
  */
 typedef enum pskc_output_formats
-  {
-    PSKC_OUTPUT_HUMAN_COMPLETE = 0,
-    PSKC_OUTPUT_XML = 1,
-    PSKC_OUTPUT_INDENTED_XML = 2
-  } pskc_output_formats_t;
+{
+  PSKC_OUTPUT_HUMAN_COMPLETE = 0,
+  PSKC_OUTPUT_XML = 1,
+  PSKC_OUTPUT_INDENTED_XML = 2
+} pskc_output_formats_t;
 
-extern PSKCAPI int pskc_output (pskc_t *container,
+extern PSKCAPI int pskc_output (pskc_t * container,
 				pskc_output_formats_t format,
-				char **out, size_t *len);
+				char **out, size_t * len);
 
 #endif /* PSKC_CONTAINER_H */

@@ -37,7 +37,7 @@ my_log (const char *msg)
 }
 
 int
-precheck (pskc_t *pskc)
+precheck (pskc_t * pskc)
 {
   pskc_key_t *keyp;
 
@@ -92,7 +92,7 @@ precheck (pskc_t *pskc)
 }
 
 int
-check (pskc_t *pskc)
+check (pskc_t * pskc)
 {
   pskc_key_t *keyp;
 
@@ -651,8 +651,7 @@ main (void)
 
   pskc_done (pskc);
 
-  if (len != strlen (pskc_expect)
-      || memcmp (pskc_expect, out, len) != 0)
+  if (len != strlen (pskc_expect) || memcmp (pskc_expect, out, len) != 0)
     {
       printf ("generated data mismatch.  expected:\n%s\ngot:\n%.*s\n",
 	      pskc_expect, (int) len, out);

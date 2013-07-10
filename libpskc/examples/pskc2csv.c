@@ -121,7 +121,7 @@ main (int argc, const char *argv[])
 
   exit_code = EXIT_SUCCESS;
 
- done:
+done:
   pskc_done (container);
   if (fh && fclose (fh) != 0)
     perror ("fclose");

@@ -135,13 +135,13 @@ main (void)
 		  i, otp_pos, tv[i].otp_pos);
 	  return 1;
 	}
-	
+
       otp_pos = 95;
       otp_counter = 23;
 
       rc = oath_totp_validate3 (secret, secretlen, tv[i].now, time_step_size,
-				start_offset, tv[i].window, &otp_pos, &otp_counter,
-				tv[i].otp);
+				start_offset, tv[i].window, &otp_pos,
+				&otp_counter, tv[i].otp);
       if (rc != tv[i].expected_rc)
 	{
 	  printf ("validate3 loop %ld failed (rc %d != %d)?!\n",
@@ -154,40 +154,41 @@ main (void)
 		  i, otp_pos, tv[i].otp_pos);
 	  return 1;
 	}
-	  if (otp_counter != tv[i].otp_counter)
+      if (otp_counter != tv[i].otp_counter)
 	{
-		printf ("validate3 loop %ld failed (counter %d != %d)?!\n",
-			i, otp_counter, tv[i].otp_counter);
-		return 1;
+	  printf ("validate3 loop %ld failed (counter %d != %d)?!\n",
+		  i, otp_counter, tv[i].otp_counter);
+	  return 1;
 	}
 
-	  otp_pos = 191;
-	  otp_counter=47;
+      otp_pos = 191;
+      otp_counter = 47;
 
-	  rc = oath_totp_validate3_callback (secret, secretlen, tv[i].now,
-			  		 time_step_size, start_offset,
+      rc = oath_totp_validate3_callback (secret, secretlen, tv[i].now,
+					 time_step_size, start_offset,
 					 8, tv[i].window, &otp_pos,
-					 &otp_counter, my_strcmp, (void *) tv[i].otp);
+					 &otp_counter, my_strcmp,
+					 (void *) tv[i].otp);
 
-	  if (rc != tv[i].expected_rc)
+      if (rc != tv[i].expected_rc)
 	{
-		printf ("validate3_callback loop %ld failed (rc %d != %d)?!\n",
-			i, rc, tv[i].expected_rc);
-		return 1;
+	  printf ("validate3_callback loop %ld failed (rc %d != %d)?!\n",
+		  i, rc, tv[i].expected_rc);
+	  return 1;
 	}
-	  if (otp_pos != tv[i].otp_pos)
+      if (otp_pos != tv[i].otp_pos)
 	{
-		printf ("validate3_callback loop %ld failed (pos %d != %d)?!\n",
-			i, otp_pos, tv[i].otp_pos);
-		return 1;
+	  printf ("validate3_callback loop %ld failed (pos %d != %d)?!\n",
+		  i, otp_pos, tv[i].otp_pos);
+	  return 1;
 	}
-	  if (otp_counter != tv[i].otp_counter)
+      if (otp_counter != tv[i].otp_counter)
 	{
-		printf ("validate3_callback loop %ld failed (counter %d != %d)?!\n",
-		i, otp_counter, tv[i].otp_counter);
-		return 1;
+	  printf ("validate3_callback loop %ld failed (counter %d != %d)?!\n",
+		  i, otp_counter, tv[i].otp_counter);
+	  return 1;
 	}
-	}
+    }
 
   rc = oath_done ();
   if (rc != OATH_OK)

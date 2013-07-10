@@ -116,11 +116,11 @@ struct pskc
 #endif
 
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
-# define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
+#define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
 #else
-# define _GL_ATTRIBUTE_FORMAT(spec) /* empty */
+#define _GL_ATTRIBUTE_FORMAT(spec)	/* empty */
 #endif
 
 extern void
 _pskc_debug (const char *format, ...)
-  _GL_ATTRIBUTE_FORMAT ((printf, 1, 2));
+_GL_ATTRIBUTE_FORMAT ((printf, 1, 2));

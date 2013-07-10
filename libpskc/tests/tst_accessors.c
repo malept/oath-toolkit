@@ -243,15 +243,12 @@ const char *pskc_all =
   "        <ExpiryDate>2006-05-bad:00:00Z</ExpiryDate>"
   "        <PINPolicy apa=\"apa\" />"
   "        <Test/>"
-  "      </Policy>"
-  "    </Key>"
-  "  </KeyPackage>"
-  "</KeyContainerX>";
+  "      </Policy>" "    </Key>" "  </KeyPackage>" "</KeyContainerX>";
 
 void
 my_log (const char *msg)
 {
-  puts(msg);
+  puts (msg);
 }
 
 int
@@ -442,7 +439,8 @@ main (void)
   {
     int p;
     pskc_valueformat v = pskc_get_key_algparm_chall_encoding (pskc_key, &p);
-    pskc_valueformat v2 = pskc_get_key_algparm_chall_encoding (pskc_key, NULL);
+    pskc_valueformat v2 =
+      pskc_get_key_algparm_chall_encoding (pskc_key, NULL);
     if (p != 1 || v != v2 || v != PSKC_VALUEFORMAT_HEXADECIMAL)
       {
 	printf ("pskc_get_key_algparm_chall_encoding\n");

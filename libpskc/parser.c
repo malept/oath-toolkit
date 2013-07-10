@@ -63,7 +63,7 @@ parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
 	{
 	  const char *p;
 	  kp->device_startdate_str = content;
-	  memset (&kp->device_startdate, 0, sizeof(struct tm));
+	  memset (&kp->device_startdate, 0, sizeof (struct tm));
 	  p = strptime (kp->device_startdate_str,
 			"%Y-%m-%dT%H:%M:%SZ", &kp->device_startdate);
 	  if (p == NULL || *p != '\0')
@@ -77,7 +77,7 @@ parse_deviceinfo (xmlNode * x, struct pskc_key *kp, int *rc)
 	{
 	  const char *p;
 	  kp->device_expirydate_str = content;
-	  memset (&kp->device_expirydate, 0, sizeof(struct tm));
+	  memset (&kp->device_expirydate, 0, sizeof (struct tm));
 	  p = strptime (kp->device_expirydate_str,
 			"%Y-%m-%dT%H:%M:%SZ", &kp->device_expirydate);
 	  if (p == NULL || *p != '\0')
@@ -148,7 +148,7 @@ parse_intlongstrdatatype (xmlNode * x, const char **var, int *rc)
 }
 
 static char *
-remove_whitespace (const char *str, size_t *outlen)
+remove_whitespace (const char *str, size_t * outlen)
 {
   size_t len = strlen (str);
   char *out = malloc (len + 1);
@@ -281,8 +281,7 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 		{
 		  kp->key_algparm_chall_encoding_str = attr_content;
 		  kp->key_algparm_chall_encoding =
-		    pskc_str2valueformat
-		    (kp->key_algparm_chall_encoding_str);
+		    pskc_str2valueformat (kp->key_algparm_chall_encoding_str);
 		}
 	      else if (strcmp ("Min", attr_name) == 0)
 		{
@@ -299,10 +298,12 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 	      else if (strcmp ("CheckDigits", attr_name) == 0)
 		{
 		  kp->key_algparm_chall_checkdigits_str = attr_content;
-		  if (strcmp ("1", kp->key_algparm_chall_checkdigits_str) == 0)
+		  if (strcmp ("1", kp->key_algparm_chall_checkdigits_str) ==
+		      0)
 		    kp->key_algparm_chall_checkdigits = 1;
 		  else if (strcmp ("true",
-				   kp->key_algparm_chall_checkdigits_str) == 0)
+				   kp->key_algparm_chall_checkdigits_str) ==
+			   0)
 		    kp->key_algparm_chall_checkdigits = 1;
 		  else
 		    kp->key_algparm_chall_checkdigits = 0;
@@ -330,8 +331,7 @@ parse_algorithmparameters (xmlNode * x, struct pskc_key *kp, int *rc)
 		{
 		  kp->key_algparm_resp_encoding_str = attr_content;
 		  kp->key_algparm_resp_encoding =
-		    pskc_str2valueformat
-		    (kp->key_algparm_resp_encoding_str);
+		    pskc_str2valueformat (kp->key_algparm_resp_encoding_str);
 		}
 	      else if (strcmp ("Length", attr_name) == 0)
 		{
@@ -384,7 +384,7 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
 	{
 	  const char *p;
 	  kp->key_policy_startdate_str = content;
-	  memset (&kp->key_policy_startdate, 0, sizeof(struct tm));
+	  memset (&kp->key_policy_startdate, 0, sizeof (struct tm));
 	  p = strptime (kp->key_policy_startdate_str,
 			"%Y-%m-%dT%H:%M:%SZ", &kp->key_policy_startdate);
 	  if (p == NULL || *p != '\0')
@@ -398,7 +398,7 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
 	{
 	  const char *p;
 	  kp->key_policy_expirydate_str = content;
-	  memset (&kp->key_policy_expirydate, 0, sizeof(struct tm));
+	  memset (&kp->key_policy_expirydate, 0, sizeof (struct tm));
 	  p = strptime (kp->key_policy_expirydate_str,
 			"%Y-%m-%dT%H:%M:%SZ", &kp->key_policy_expirydate);
 	  if (p == NULL || *p != '\0')
@@ -425,8 +425,7 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
 		{
 		  kp->key_policy_pinusagemode_str = attr_content;
 		  kp->key_policy_pinusagemode =
-		    pskc_str2pinusagemode (kp->
-					   key_policy_pinusagemode_str);
+		    pskc_str2pinusagemode (kp->key_policy_pinusagemode_str);
 		}
 	      else if (strcmp ("MaxFailedAttempts", attr_name) == 0)
 		{
@@ -445,7 +444,7 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
 		{
 		  kp->key_policy_pinmaxlength_str = attr_content;
 		  kp->key_policy_pinmaxlength =
-			strtoull (kp->key_policy_pinmaxlength_str, NULL, 10);
+		    strtoull (kp->key_policy_pinmaxlength_str, NULL, 10);
 		}
 	      else if (strcmp ("PINEncoding", attr_name) == 0)
 		{
@@ -455,7 +454,8 @@ parse_policy (xmlNode * x, struct pskc_key *kp, int *rc)
 		}
 	      else
 		{
-		  _pskc_debug ("unknown <%s> attribute <%s>", name, attr_name);
+		  _pskc_debug ("unknown <%s> attribute <%s>", name,
+			       attr_name);
 		  *rc = PSKC_PARSE_ERROR;
 		}
 	    }
@@ -552,7 +552,8 @@ parse_keypackage (xmlNode * x, struct pskc_key *kp, int *rc)
 		kp->key_algorithm = attr_content;
 	      else
 		{
-		  _pskc_debug ("unknown <%s> attribute <%s>", name, attr_name);
+		  _pskc_debug ("unknown <%s> attribute <%s>", name,
+			       attr_name);
 		  *rc = PSKC_PARSE_ERROR;
 		}
 	    }
@@ -584,8 +585,7 @@ parse_keypackages (pskc_t * pd, xmlNode * x, int *rc)
 	  struct pskc_key *tmp;
 
 	  tmp = realloc (pd->keypackages,
-			 sizeof (*pd->keypackages) *
-			 (pd->nkeypackages + 1));
+			 sizeof (*pd->keypackages) * (pd->nkeypackages + 1));
 	  if (tmp == NULL)
 	    {
 	      *rc = PSKC_MALLOC_ERROR;
@@ -707,7 +707,7 @@ pskc_done (pskc_t * container)
  *   %PSKC_PARSE_ERROR is returned.
  **/
 int
-pskc_parse_from_memory (pskc_t *container, size_t len, const char *buffer)
+pskc_parse_from_memory (pskc_t * container, size_t len, const char *buffer)
 {
   xmlDocPtr xmldoc;
   xmlNode *root;

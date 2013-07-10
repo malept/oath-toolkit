@@ -27,10 +27,13 @@ main (int argc, const char *argv[])
 
   fclose (fh);
 
-  rc = pskc_global_init (); PSKC_CHECK_RC;
+  rc = pskc_global_init ();
+  PSKC_CHECK_RC;
 
-  rc = pskc_init (&container); PSKC_CHECK_RC;
-  rc = pskc_parse_from_memory (container, len, buffer); PSKC_CHECK_RC;
+  rc = pskc_init (&container);
+  PSKC_CHECK_RC;
+  rc = pskc_parse_from_memory (container, len, buffer);
+  PSKC_CHECK_RC;
 
   keypackage = pskc_get_keypackage (container, 0);
 

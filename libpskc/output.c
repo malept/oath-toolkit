@@ -137,7 +137,7 @@ buffer_addf (struct buffer *buf, const char *fmt, ...)
 }
 
 static void
-print_keypackage (struct buffer *buf, pskc_key_t *kp)
+print_keypackage (struct buffer *buf, pskc_key_t * kp)
 {
   const char *device_manufacturer = pskc_get_device_manufacturer (kp);
   const char *device_serialno = pskc_get_device_serialno (kp);
@@ -174,8 +174,9 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
   uint32_t key_policy_pinmaxlength = pskc_get_key_policy_pinmaxlength
     (kp, &key_policy_pinmaxlength_present);
   int key_policy_pinmaxfailedattempts_present;
-  uint32_t key_policy_pinmaxfailedattempts = pskc_get_key_policy_pinmaxfailedattempts
-    (kp, &key_policy_pinmaxfailedattempts_present);
+  uint32_t key_policy_pinmaxfailedattempts =
+    pskc_get_key_policy_pinmaxfailedattempts (kp,
+					      &key_policy_pinmaxfailedattempts_present);
   int key_policy_pinusagemode_present;
   pskc_pinusagemode key_policy_pinusagemode =
     pskc_get_key_policy_pinusagemode (kp, &key_policy_pinusagemode_present);
@@ -198,12 +199,12 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     pskc_get_key_algparm_chall_max (kp, &key_algparm_chall_max_present);
   int key_algparm_resp_encoding_present;
   pskc_valueformat key_algparm_resp_encoding =
-    pskc_get_key_algparm_resp_encoding (kp, &key_algparm_resp_encoding_present);
+    pskc_get_key_algparm_resp_encoding (kp,
+					&key_algparm_resp_encoding_present);
   int key_algparm_resp_length_present;
   uint32_t key_algparm_resp_length =
     pskc_get_key_algparm_resp_length (kp, &key_algparm_resp_length_present);
-  const struct tm *key_policy_startdate =
-    pskc_get_key_policy_startdate (kp);
+  const struct tm *key_policy_startdate = pskc_get_key_policy_startdate (kp);
   const struct tm *key_policy_expirydate =
     pskc_get_key_policy_expirydate (kp);
 
@@ -261,8 +262,7 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tKey TimeInterval: %" PRId32 "\n",
 		 key_timeinterval);
   if (key_timedrift_present)
-    buffer_addf (buf, "\t\t\tKey TimeDrift: %" PRId32 "\n",
-		 key_timedrift);
+    buffer_addf (buf, "\t\t\tKey TimeDrift: %" PRId32 "\n", key_timedrift);
   if (key_policy_keyusages_present)
     {
       int i;
@@ -304,7 +304,8 @@ print_keypackage (struct buffer *buf, pskc_key_t *kp)
     buffer_addf (buf, "\t\t\tPIN Policy PIN Usage Mode: %s\n",
 		 pskc_pinusagemode2str (key_policy_pinusagemode));
   if (key_policy_pinmaxfailedattempts_present)
-    buffer_addf (buf, "\t\t\tPIN Policy PIN Max Failed Attempts: %" PRId32 "\n",
+    buffer_addf (buf,
+		 "\t\t\tPIN Policy PIN Max Failed Attempts: %" PRId32 "\n",
 		 key_policy_pinmaxfailedattempts);
   if (key_algparm_suite)
     buffer_addf (buf, "\t\t\tAlgorithm Parameters Suite: %s\n",

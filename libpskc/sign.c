@@ -53,9 +53,9 @@ pskc_sign_x509 (pskc_t * container,
   pskc_build_xml (container, NULL, NULL);
 
   /* create signature template for RSA-SHA1 enveloped signature */
-  signNode = xmlSecTmplSignatureCreate(container->xmldoc,
-				       xmlSecTransformExclC14NId,
-				       xmlSecTransformRsaSha1Id, NULL);
+  signNode = xmlSecTmplSignatureCreate (container->xmldoc,
+					xmlSecTransformExclC14NId,
+					xmlSecTransformRsaSha1Id, NULL);
   if (signNode == NULL)
     {
       _pskc_debug ("xmlSecTmplSignatureCreateNsPref failed");
@@ -141,8 +141,7 @@ pskc_sign_x509 (pskc_t * container,
 
 static int
 verify (pskc_t * container, xmlSecKeysMngrPtr mngr,
-	xmlSecDSigCtxPtr dsigCtx, const char *cert_file,
-	int *valid_signature)
+	xmlSecDSigCtxPtr dsigCtx, const char *cert_file, int *valid_signature)
 {
   xmlNodePtr node = NULL;
 

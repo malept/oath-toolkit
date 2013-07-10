@@ -210,7 +210,7 @@ oath_base32_decode (const char *in, size_t inlen, char **out, size_t * outlen)
   char *tmp;
   bool ok;
 
-  in_upcase = malloc (inlen + 6); /* leave room for up to 6 '=' */
+  in_upcase = malloc (inlen + 6);	/* leave room for up to 6 '=' */
   if (!in_upcase)
     return OATH_MALLOC_ERROR;
 
