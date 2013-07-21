@@ -1,28 +1,39 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 2.0.2
+Subject: OATH Toolkit 2.2.0
 <#part sign=pgpmime>
-No PSKC change this time, only improvements to liboath/oathtool.
+This release introduces one major PSKC improvement: the library is now
+able to create PSKC data, see the new section in the manual about this:
+http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-libpskc-create.html
+
+Plenty of new functions were added to support this:
+http://www.nongnu.org/oath-toolkit/libpskc-api/api-index-2-2-0.html
+
+There were some other changes as well, see below for the details.
 
 Happy hacking,
 Simon
 
-* Version 2.0.2 (released 2013-01-08)
+* Version 2.2.0 (released 2013-07-07)
 
-** oathtool: Base32 decoding of keys are now more liberal in what accepts.
-It can now accept keys on the "gr6d 5br7 25s6 vnck v4vl hlao re"
-format, i.e., base32 data delimited using SPC and without padding.
-The old proper base32 format is still supported.
+** libpskc: Add functions for setting PSKC data.
+The new functions are pskc_add_keypackage and all pskc_set_* functions
+(see libpskc/include/pskc/keypackage.h).  This allow you to write
+programs that generate new PSKC structures.
 
-** liboath: oath_base32_decode now ignores SPC and adds pad characters.
+** liboath: Permit different passwords for different tokens for the same user.
+Thanks to Christian Hesse <list@eworm.de>.
 
-** liboath: If password in usersfile is + then ignore supplied password.
-This enables the pam_oath module to be used with external password
-verification.  Based on patch from Ilkka Virta <itvirta@iki.fi>.
+** build: Improve building from git with most recent automake and gengetopt.
+Thanks to Christian Hesse <list@eworm.de>.
 
-** tests: Fixed expiry date of some certificates used in the test suite.
-The last release would only complete 'make check' during a 30 day window.
+** build: Valgrind is not enabled by default.
+It causes too much false positives.  For developers who want, use
+--enable-valgrind-tests.  It is still enabled by default when building
+From the version controlled sources (see cfg.mk).  Thanks to Christian
+Hesse <list@eworm.de>.
 
-** API and ABI is backwards compatible with the previous version.
+** liboath: Make header file usable from C++ (extern "C" guard).
+Reported by Alan Markus <alan.markus@gmail.com>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains shared libraries, command line
@@ -68,19 +79,21 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.2.tar.gz (3.8MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.0.2.tar.gz.sig (OpenPGP)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.2.0.tar.gz
+(4.0MB)
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.2.0.tar.gz.sig
+(OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
 
-pub   1280R/B565716F 2002-05-05 [expires: 2013-05-10]
-      Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
+pub   1280R/B565716F 2002-05-05 [expires: 2014-05-11]
+uid                  Simon Josefsson <simon@yubico.com>
 uid                  Simon Josefsson <simon@josefsson.org>
 sub   2048R/105E722E 2012-03-13 [expires: 2013-07-26]
 sub   2048R/728AB82C 2012-03-13 [expires: 2013-07-26]
 sub   2048R/9394F626 2012-03-13 [expires: 2013-07-26]
-sub   1280R/4D5D40AE 2002-05-05 [expires: 2013-05-10]
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2014-05-11]
 
 The key is available from:
   http://josefsson.org/key.txt
@@ -88,8 +101,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-3672924a9d9c3373ec62a6b79e9aa1e846c4d178  oath-toolkit-2.0.2.tar.gz
-5933a431566d606f83a1f971fab3792b6d4d255b8c70d00752550cb4  oath-toolkit-2.0.2.tar.gz
+b417a109cf0fc5b11880d1723852918c98d91159  oath-toolkit-2.2.0.tar.gz
+aac15aaf0d03d26bf50d2e8bdac74ca9d7211dd4cf20047e529390d3ebdd7df1
+oath-toolkit-2.2.0.tar.gz
 
 General information on contributing:
   http://www.nongnu.org/oath-toolkit/contrib.html
