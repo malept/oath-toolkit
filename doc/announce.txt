@@ -1,39 +1,18 @@
 To: oath-toolkit-help@nongnu.org
-Subject: OATH Toolkit 2.2.0
+Subject: OATH Toolkit 2.4.0
 <#part sign=pgpmime>
-This release introduces one major PSKC improvement: the library is now
-able to create PSKC data, see the new section in the manual about this:
-http://www.nongnu.org/oath-toolkit/libpskc-api/pskc-tutorial-libpskc-create.html
-
-Plenty of new functions were added to support this:
-http://www.nongnu.org/oath-toolkit/libpskc-api/api-index-2-2-0.html
-
-There were some other changes as well, see below for the details.
+This merges Fabian's TOTP fix.  I'm hoping the next major release will
+implement OCRA, Fabian has been busy working on that...
 
 Happy hacking,
 Simon
 
-* Version 2.2.0 (released 2013-07-07)
-
-** libpskc: Add functions for setting PSKC data.
-The new functions are pskc_add_keypackage and all pskc_set_* functions
-(see libpskc/include/pskc/keypackage.h).  This allow you to write
-programs that generate new PSKC structures.
-
-** liboath: Permit different passwords for different tokens for the same user.
-Thanks to Christian Hesse <list@eworm.de>.
-
-** build: Improve building from git with most recent automake and gengetopt.
-Thanks to Christian Hesse <list@eworm.de>.
-
-** build: Valgrind is not enabled by default.
-It causes too much false positives.  For developers who want, use
---enable-valgrind-tests.  It is still enabled by default when building
-From the version controlled sources (see cfg.mk).  Thanks to Christian
-Hesse <list@eworm.de>.
-
-** liboath: Make header file usable from C++ (extern "C" guard).
-Reported by Alan Markus <alan.markus@gmail.com>.
+** liboath: Add new API methods for validating TOTP OTPs
+The new methods (oath_totp_validate3 and oath_totp_validate3_callback)
+introduce a new parameter *otp_counter, which is set to the actual
+counter used to calculate the OTP (unless it is a NULL pointer). This
+allows for easier OTP replay detection in applications using liboath.
+Patch from Fabian Grünbichler <fabian.gruenbichler@tuwien.ac.at>.
 
 The OATH Toolkit makes it easy to build one-time password
 authentication systems.  It contains shared libraries, command line
@@ -79,17 +58,17 @@ are invited to join our oath-toolkit-help mailing list, see:
   https://lists.nongnu.org/mailman/listinfo/oath-toolkit-help
 
 Here are the compressed sources of the entire package:
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.2.0.tar.gz
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.4.0.tar.gz
 (4.0MB)
-  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.2.0.tar.gz.sig
+  http://download.savannah.nongnu.org/releases/oath-toolkit/oath-toolkit-2.4.0.tar.gz.sig
 (OpenPGP)
 
 The software is cryptographically signed by the author using an OpenPGP
 key identified by the following information:
 
 pub   1280R/B565716F 2002-05-05 [expires: 2014-05-11]
-uid                  Simon Josefsson <simon@yubico.com>
 uid                  Simon Josefsson <simon@josefsson.org>
+uid                  Simon Josefsson <simon@yubico.com>
 sub   2048R/105E722E 2012-03-13 [expires: 2013-07-26]
 sub   2048R/728AB82C 2012-03-13 [expires: 2013-07-26]
 sub   2048R/9394F626 2012-03-13 [expires: 2013-07-26]
@@ -101,9 +80,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-b417a109cf0fc5b11880d1723852918c98d91159  oath-toolkit-2.2.0.tar.gz
-aac15aaf0d03d26bf50d2e8bdac74ca9d7211dd4cf20047e529390d3ebdd7df1
-oath-toolkit-2.2.0.tar.gz
+89d2cd30dd401a3f6973ec3c2b26f1cb737764a7  oath-toolkit-2.4.0.tar.gz
+1c165a851a76c3e308ab18c61d1a22b19b93f04b1197ba1dae2e1ec6
+oath-toolkit-2.4.0.tar.gz
 
 General information on contributing:
   http://www.nongnu.org/oath-toolkit/contrib.html
