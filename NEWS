@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 2.4.0 (unreleased)
+* Version 2.4.0 (released 2013-07-21)
 
 ** liboath: Add new API methods for validating TOTP OTPs
 The new methods (oath_totp_validate3 and oath_totp_validate3_callback)
