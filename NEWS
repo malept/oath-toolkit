@@ -8,6 +8,7 @@ The new methods (oath_totp_validate3 and oath_totp_validate3_callback)
 introduce a new parameter *otp_counter, which is set to the actual
 counter used to calculate the OTP (unless it is a NULL pointer). This
 allows for easier OTP replay detection in applications using liboath.
+Patch from Fabian Grünbichler <fabian.gruenbichler@tuwien.ac.at>.
 
 * Version 2.2.0 (released 2013-07-07)
 
