@@ -56,6 +56,8 @@ and I'll add them to the list.
   One-Time Password Algorithm].
 - http://tools.ietf.org/html/rfc6030[RFC 6030 on Portable Symmetric
   Key Container (PSKC)].
+- https://github.com/malept/pyoath-toolkit[Python bindings for OATH
+  Toolkit].
 
 Please let me know if any of these links need updating.
 
