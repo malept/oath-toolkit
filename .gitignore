@@ -135,6 +135,7 @@ liboath/gl/tests/test-symlink
 liboath/gl/tests/test-sys_stat
 liboath/gl/tests/test-sys_types
 liboath/gl/tests/test-time
+liboath/gl/tests/test-u64
 liboath/gl/tests/test-unistd
 liboath/gl/tests/test-unlink
 liboath/gl/tests/test-unsetenv
