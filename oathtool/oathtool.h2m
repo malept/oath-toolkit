@@ -73,8 +73,8 @@ mode.  Usage is similar, but \-\-totp needs to be provided:
    $
 
 Don't be alarmed if you do not get the same output, this is because
-the output is time variant.  To generate a TOTP for a particular fixed
-time use the \-N (\-\-now) parameter:
+the output depends on the current time.  To generate a TOTP for a
+particular fixed time use the \-N (\-\-now) parameter:
 
    $ oathtool \-\-totp \-\-now "2008\-04\-23 17:42:17 UTC" 00
    974945
@@ -84,6 +84,17 @@ The format is a mostly free format human readable date string such as
 "Sun, 29 Feb 2004 16:21:42 \-0800" or "2004\-02\-29 16:21:42" or even
 "next Thursday".  It is the same used as the \-\-date parameter of the
 date(1) tool.
+
+The default MAC algorithm to use with TOTP is HMAC\-SHA1 and this is
+what is usually used.  The tool supports two other MACs, namely the
+HMAC\-SHA256 and HMAC\-SHA512 as well.  To use either of these,
+qualify the \-\-totp parameter with a value.  Use "sha256" for
+HMAC\-SHA256 and "sha512" for HMAC\-SHA512.  The following demonstrate
+generating one of the RFC 6238 test vectors.
+
+   $ oathtool \-\-totp=sha256 \-\-digits=8 \-\-now "2009\-02\-13 23:31:30 UTC" 3132333435363738393031323334353637383930313233343536373839303132
+   91819424
+   $
 
 You may generate several TOTPs by specifying the \-\-window parameter,
 similar to how it works for HOTP.  The OTPs generated here will be for

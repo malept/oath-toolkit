@@ -56,11 +56,21 @@ AC_DEFUN([gl_EARLY],
   # Code from module crypto/gc:
   # Code from module crypto/gc-hmac-sha1:
   # Code from module crypto/gc-hmac-sha1-tests:
+  # Code from module crypto/gc-hmac-sha256:
+  # Code from module crypto/gc-hmac-sha256-tests:
+  # Code from module crypto/gc-hmac-sha512:
+  # Code from module crypto/gc-hmac-sha512-tests:
   # Code from module crypto/gc-tests:
   # Code from module crypto/hmac-sha1:
   # Code from module crypto/hmac-sha1-tests:
+  # Code from module crypto/hmac-sha256:
+  # Code from module crypto/hmac-sha256-tests:
+  # Code from module crypto/hmac-sha512:
+  # Code from module crypto/hmac-sha512-tests:
   # Code from module crypto/sha1:
   # Code from module crypto/sha1-tests:
+  # Code from module crypto/sha256:
+  # Code from module crypto/sha512:
   # Code from module dirent:
   # Code from module dirent-tests:
   # Code from module dirname-lgpl:
@@ -203,6 +213,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module test-framework-sh-tests:
   # Code from module time:
   # Code from module time-tests:
+  # Code from module u64:
+  # Code from module u64-tests:
   # Code from module unistd:
   # Code from module unistd-tests:
   # Code from module unlink:
@@ -262,7 +274,13 @@ AC_DEFUN([gl_INIT],
   fi
   gl_GC_HMAC_SHA1
   gl_MODULE_INDICATOR([gc-hmac-sha1])
+  gl_GC_HMAC_SHA256
+  gl_MODULE_INDICATOR([gc-hmac-sha256])
+  gl_GC_HMAC_SHA512
+  gl_MODULE_INDICATOR([gc-hmac-sha512])
   gl_SHA1
+  gl_SHA256
+  gl_SHA512
   gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
   gl_HEADER_ERRNO_H
@@ -698,6 +716,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getdelim.c
   lib/getline.c
   lib/hmac-sha1.c
+  lib/hmac-sha256.c
+  lib/hmac-sha512.c
   lib/hmac.h
   lib/itold.c
   lib/lseek.c
@@ -726,6 +746,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/same-inode.h
   lib/sha1.c
   lib/sha1.h
+  lib/sha256.c
+  lib/sha256.h
+  lib/sha512.c
+  lib/sha512.h
   lib/size_max.h
   lib/snprintf.c
   lib/stat.c
@@ -744,6 +768,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_stat.in.h
   lib/sys_types.in.h
   lib/time.in.h
+  lib/u64.c
+  lib/u64.h
   lib/unistd.c
   lib/unistd.in.h
   lib/unlink.c
@@ -784,6 +810,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ftell.m4
   m4/ftello.m4
   m4/gc-hmac-sha1.m4
+  m4/gc-hmac-sha256.m4
+  m4/gc-hmac-sha512.m4
   m4/gc.m4
   m4/getcwd.m4
   m4/getdelim.m4
@@ -829,6 +857,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/rmdir.m4
   m4/setenv.m4
   m4/sha1.m4
+  m4/sha256.m4
+  m4/sha512.m4
   m4/size_max.m4
   m4/snprintf.m4
   m4/ssize_t.m4
@@ -912,11 +942,15 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-ftello4.sh
   tests/test-fwrite.c
   tests/test-gc-hmac-sha1.c
+  tests/test-gc-hmac-sha256.c
+  tests/test-gc-hmac-sha512.c
   tests/test-gc.c
   tests/test-getcwd-lgpl.c
   tests/test-getdelim.c
   tests/test-getline.c
   tests/test-hmac-sha1.c
+  tests/test-hmac-sha256.c
+  tests/test-hmac-sha512.c
   tests/test-ignore-value.c
   tests/test-init.sh
   tests/test-intprops.c
@@ -955,6 +989,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-sys_types.c
   tests/test-sys_wait.h
   tests/test-time.c
+  tests/test-u64.c
   tests/test-unistd.c
   tests/test-unlink.c
   tests/test-unlink.h

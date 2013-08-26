@@ -22,6 +22,7 @@
 #include <config.h>
 
 #include "oath.h"
+#include "hotp.h"
 #include "aux.h"		/* _oath_strcmp_callback */
 
 #include <stdio.h>		/* For snprintf. */
@@ -64,11 +65,28 @@ oath_hotp_generate (const char *secret,
 		    bool add_checksum,
 		    size_t truncation_offset, char *output_otp)
 {
-  char hs[GC_SHA1_DIGEST_SIZE];
+  return _oath_hotp_generate2 (secret, secret_length, moving_factor, digits,
+			       add_checksum, truncation_offset, 0,
+			       output_otp);
+}
+
+/* Takes @flags to override use of MAC.  HOTP is only specified for
+   HMAC-SHA1 which is why this function is not exported. */
+int
+_oath_hotp_generate2 (const char *secret,
+		      size_t secret_length,
+		      uint64_t moving_factor,
+		      unsigned digits,
+		      bool add_checksum,
+		      size_t truncation_offset, int flags, char *output_otp)
+{
+  char hs[GC_SHA512_DIGEST_SIZE];
+  int hssize = GC_SHA1_DIGEST_SIZE;
   long S;
 
   (void) add_checksum;
   (void) truncation_offset;
+  (void) flags;
 
   {
     char counter[sizeof (moving_factor)];
@@ -79,14 +97,27 @@ oath_hotp_generate (const char *secret,
       counter[i] =
 	(moving_factor >> ((sizeof (moving_factor) - i - 1) * 8)) & 0xFF;
 
-    rc = gc_hmac_sha1 (secret, secret_length,
-		       counter, sizeof (moving_factor), hs);
+    if (flags & OATH_TOTP_HMAC_SHA256)
+      {
+	hssize = GC_SHA256_DIGEST_SIZE;
+	rc = gc_hmac_sha256 (secret, secret_length,
+			     counter, sizeof (moving_factor), hs);
+      }
+    else if (flags & OATH_TOTP_HMAC_SHA512)
+      {
+	hssize = GC_SHA512_DIGEST_SIZE;
+	rc = gc_hmac_sha512 (secret, secret_length,
+			     counter, sizeof (moving_factor), hs);
+      }
+    else
+      rc = gc_hmac_sha1 (secret, secret_length,
+			 counter, sizeof (moving_factor), hs);
     if (rc != GC_OK)
       return OATH_CRYPTO_ERROR;
   }
 
   {
-    uint8_t offset = hs[sizeof (hs) - 1] & 0x0f;
+    uint8_t offset = hs[hssize - 1] & 0x0f;
 
     S = (((hs[offset] & 0x7f) << 24)
 	 | ((hs[offset + 1] & 0xff) << 16)

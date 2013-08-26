@@ -226,6 +226,18 @@ oath_hotp_validate_callback (const char *secret,
 #define OATH_TOTP_DEFAULT_TIME_STEP_SIZE	30
 #define OATH_TOTP_DEFAULT_START_TIME		((time_t) 0)
 
+/**
+ * oath_totp_flags:
+ * @OATH_TOTP_HMAC_SHA256: Use HMAC-SHA256 instead of HMAC-SHA1.
+ * @OATH_TOTP_HMAC_SHA512: Use HMAC-SHA512 instead of HMAC-SHA1.
+ *
+ * Flags for oath_totp_generate2().
+ */
+typedef enum {
+  OATH_TOTP_HMAC_SHA256 = 1,
+  OATH_TOTP_HMAC_SHA512 = 2
+} oath_totp_flags;
+
 extern OATHAPI int
 oath_totp_generate (const char *secret,
 		    size_t secret_length,
@@ -233,6 +245,16 @@ oath_totp_generate (const char *secret,
 		    unsigned time_step_size,
 		    time_t start_offset,
 		    unsigned digits, char *output_otp);
+
+extern OATHAPI int
+oath_totp_generate2 (const char *secret,
+		     size_t secret_length,
+		     time_t now,
+		     unsigned time_step_size,
+		     time_t start_offset,
+		     unsigned digits,
+		     int flags,
+		     char *output_otp);
 
 extern OATHAPI int
 oath_totp_validate (const char *secret,
@@ -296,6 +318,32 @@ oath_totp_validate3_callback (const char *secret,
 			      size_t window,
 			      int *otp_pos,
 			      uint64_t *otp_counter,
+			      oath_validate_strcmp_function strcmp_otp,
+			      void *strcmp_handle);
+
+extern OATHAPI int
+oath_totp_validate4 (const char *secret,
+		     size_t secret_length,
+		     time_t now,
+		     unsigned time_step_size,
+		     time_t start_offset,
+		     size_t window,
+		     int *otp_pos,
+		     uint64_t *otp_counter,
+		     int flags,
+		     const char *otp);
+
+extern OATHAPI int
+oath_totp_validate4_callback (const char *secret,
+			      size_t secret_length,
+			      time_t now,
+			      unsigned time_step_size,
+			      time_t start_offset,
+			      unsigned digits,
+			      size_t window,
+			      int *otp_pos,
+			      uint64_t *otp_counter,
+			      int flags,
 			      oath_validate_strcmp_function strcmp_otp,
 			      void *strcmp_handle);
 

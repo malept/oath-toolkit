@@ -132,6 +132,7 @@ main (int argc, char *argv[])
   unsigned digits;
   char otp[10];
   time_t now, when, t0, time_step_size;
+  int totpflags = 0;
 
   set_program_name (argv[0]);
 
@@ -248,7 +249,7 @@ main (int argc, char *argv[])
       printf ("Window size: %ld\n", window);
     }
 
-  if (args_info.totp_flag)
+  if (args_info.totp_given)
     {
       now = time (NULL);
       when = parse_time (args_info.now_arg, now);
@@ -266,6 +267,11 @@ main (int argc, char *argv[])
 	error (EXIT_FAILURE, 0, "cannot parse time `%s'",
 	       args_info.time_step_size_arg);
 
+      if (strcmp (args_info.totp_arg, "sha256") == 0)
+	totpflags = OATH_TOTP_HMAC_SHA256;
+      else if (strcmp (args_info.totp_arg, "sha512") == 0)
+	totpflags = OATH_TOTP_HMAC_SHA512;
+
       if (args_info.verbose_flag)
 	verbose_totp (t0, time_step_size, when);
     }
@@ -275,7 +281,7 @@ main (int argc, char *argv[])
 	verbose_hotp (moving_factor);
     }
 
-  if (generate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
+  if (generate_otp_p (args_info.inputs_num) && !args_info.totp_given)
     {
       size_t iter = 0;
 
@@ -294,16 +300,17 @@ main (int argc, char *argv[])
 	}
       while (window - iter++ > 0);
     }
-  else if (generate_otp_p (args_info.inputs_num) && args_info.totp_flag)
+  else if (generate_otp_p (args_info.inputs_num) && args_info.totp_given)
     {
       size_t iter = 0;
 
       do
 	{
-	  rc = oath_totp_generate (secret,
-				   secretlen,
-				   when + iter * time_step_size,
-				   time_step_size, t0, digits, otp);
+	  rc = oath_totp_generate2 (secret,
+				    secretlen,
+				    when + iter * time_step_size,
+				    time_step_size, t0, digits, totpflags,
+				    otp);
 	  if (rc != OATH_OK)
 	    error (EXIT_FAILURE, 0,
 		   "generating one-time password failed (%d)", rc);
@@ -312,7 +319,7 @@ main (int argc, char *argv[])
 	}
       while (window - iter++ > 0);
     }
-  else if (validate_otp_p (args_info.inputs_num) && !args_info.totp_flag)
+  else if (validate_otp_p (args_info.inputs_num) && !args_info.totp_given)
     {
       rc = oath_hotp_validate (secret,
 			       secretlen,
@@ -327,13 +334,15 @@ main (int argc, char *argv[])
 	       "validating one-time password failed (%d)", rc);
       printf ("%d\n", rc);
     }
-  else if (validate_otp_p (args_info.inputs_num) && args_info.totp_flag)
+  else if (validate_otp_p (args_info.inputs_num) && args_info.totp_given)
     {
-      rc = oath_totp_validate (secret,
-			       secretlen,
-			       when,
-			       time_step_size,
-			       t0, window, args_info.inputs[1]);
+      rc = oath_totp_validate4 (secret,
+				secretlen,
+				when,
+				time_step_size,
+				t0,
+				window,
+				NULL, NULL, totpflags, args_info.inputs[1]);
       if (rc == OATH_INVALID_OTP)
 	error (EXIT_OTP_INVALID, 0,
 	       "password \"%s\" not found in range %ld .. %ld",

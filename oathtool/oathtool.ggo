@@ -16,7 +16,7 @@
 purpose "Generate and validate OATH one-time passwords."
 
 option "hotp" - "use event-based HOTP mode" flag on
-option "totp" - "use time-variant TOTP mode" flag off
+option "totp" - "use time-variant TOTP mode" values="sha1","sha256","sha512" default="sha1" optional argoptional
 
 option "base32" b "use base32 encoding of KEY instead of hex" flag off
 option "counter" c "HOTP counter value" longlong typestr="COUNTER" no

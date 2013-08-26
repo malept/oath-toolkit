@@ -140,6 +140,22 @@ EXTRA_DIST += test-gc-hmac-sha1.c
 
 ## end   gnulib module crypto/gc-hmac-sha1-tests
 
+## begin gnulib module crypto/gc-hmac-sha256-tests
+
+TESTS += test-gc-hmac-sha256
+check_PROGRAMS += test-gc-hmac-sha256
+EXTRA_DIST += test-gc-hmac-sha256.c
+
+## end   gnulib module crypto/gc-hmac-sha256-tests
+
+## begin gnulib module crypto/gc-hmac-sha512-tests
+
+TESTS += test-gc-hmac-sha512
+check_PROGRAMS += test-gc-hmac-sha512
+EXTRA_DIST += test-gc-hmac-sha512.c
+
+## end   gnulib module crypto/gc-hmac-sha512-tests
+
 ## begin gnulib module crypto/gc-tests
 
 TESTS += test-gc
@@ -155,6 +171,22 @@ check_PROGRAMS += test-hmac-sha1
 EXTRA_DIST += test-hmac-sha1.c
 
 ## end   gnulib module crypto/hmac-sha1-tests
+
+## begin gnulib module crypto/hmac-sha256-tests
+
+TESTS += test-hmac-sha256
+check_PROGRAMS += test-hmac-sha256
+EXTRA_DIST += test-hmac-sha256.c
+
+## end   gnulib module crypto/hmac-sha256-tests
+
+## begin gnulib module crypto/hmac-sha512-tests
+
+TESTS += test-hmac-sha512
+check_PROGRAMS += test-hmac-sha512
+EXTRA_DIST += test-hmac-sha512.c
+
+## end   gnulib module crypto/hmac-sha512-tests
 
 ## begin gnulib module crypto/sha1-tests
 
@@ -933,6 +965,14 @@ check_PROGRAMS += test-time
 EXTRA_DIST += test-time.c
 
 ## end   gnulib module time-tests
+
+## begin gnulib module u64-tests
+
+TESTS += test-u64
+check_PROGRAMS += test-u64
+EXTRA_DIST += test-u64.c
+
+## end   gnulib module u64-tests
 
 ## begin gnulib module unistd-tests
 

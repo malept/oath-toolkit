@@ -1,6 +1,16 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2013 Simon Josefsson.  Licensed under the GPLv3+.
 
+* Version 2.6.0 (unreleased)
+
+** liboath: Support TOTP with HMAC-SHA256 and HMAC-SHA512.
+This adds new APIs oath_totp_generate2, oath_totp_validate4 and
+oath_totp_validate4_callback.
+
+** oathtool: The --totp parameter now take an optional argument to specify MAC.
+For example use --totp=sha256 to use HMAC-SHA256.  When --totp is used
+the default HMAC-SHA1 is used, as before.
+
 * Version 2.4.0 (released 2013-07-21)
 
 ** liboath: Add new API methods for validating TOTP OTPs
