@@ -126,6 +126,7 @@ AC_DEFUN([gl_INIT],
   gl_COMMON
   gl_source_base='gl'
   gl_FUNC_BASE64
+  AC_REQUIRE([gl_EXTERN_INLINE])
   gl_INTTOSTR
   gl_LD_VERSION_SCRIPT
   gl_VISIBILITY
@@ -196,7 +197,6 @@ changequote([, ])dnl
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
   gl_FUNC_ALLOCA
   gl_HEADER_ERRNO_H
-  AC_REQUIRE([gl_EXTERN_INLINE])
   gl_FUNC_FDOPEN
   if test $REPLACE_FDOPEN = 1; then
     AC_LIBOBJ([fdopen])
