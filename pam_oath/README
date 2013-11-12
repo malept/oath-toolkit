@@ -39,10 +39,16 @@ HOTP root - 00
 ---------
 
 The file format handles any whitespace as field separator.  You may
-also add lines starting with '#' for comments.
+also add lines starting with '#' for comments.  The file format is
+documented here: http://code.google.com/p/mod-authn-otp/wiki/UsersFile
 
-The above added an OATH secret of all-zeros.  To test this, we need to
-generate some one-time passwords.  The "oathtool" is handy for this purpose:
+WARNING!  The above added an OATH secret of all-zeros, which leads to
+no security.  In production, replace "00" with a randomly generate hex
+encoded data of say, 20 bytes in size.
+
+To test the setup, we need to generate some one-time passwords.  The
+"oathtool" is handy for this purpose.  Replace 00 with the key you
+generated.
 
 ---------
 # oathtool/oathtool -w 5 00
@@ -100,7 +106,7 @@ HOTP	root	-	00	0	328482	2009-12-07T23:23:49L
 ---------
 
 In production use you will want to remove the 'debug' parameter in the
-PAM configuration.
+PAM configuration, and make sure you use random keys instead of 00.
 
 Two-factor authentication
 -------------------------
