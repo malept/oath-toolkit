@@ -1,7 +1,7 @@
 OATH Toolkit NEWS -- History of user-visible changes.           -*- outline -*-
 Copyright (C) 2009-2014 Simon Josefsson.  Licensed under the GPLv3+.
 
-* Version 2.4.1 (unreleased)
+* Version 2.4.1 (released 2014-02-12)
 
 ** liboath: Fix usersfile bug that caused it to update the wrong line.
 When an usersfile contain multiple lines for the same user but with an
