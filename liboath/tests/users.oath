@@ -25,3 +25,8 @@ HOTP/E	fiveuser	-	55555555
 HOTP	password	-	0815
 HOTP	password	test	1630
 HOTP	password	darn	2445
+#HOTP   nobody  -       00      1       812658  2013-12-21T19:40:21L
+# HOTP  nobody  -       11
+HOTP    someone -       22
+HOTP    nobody  -       1234
+HOTP    nobody  -       33

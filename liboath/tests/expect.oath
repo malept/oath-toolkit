@@ -25,3 +25,8 @@ HOTP/E	fiveuser	-	55555555	7	730790	2006-12-07T00:00:00L
 HOTP	password	-	0815	2	898463	2006-12-07T00:00:00L
 HOTP	password	test	1630	3	989803	2006-12-07T00:00:00L
 HOTP	password	darn	2445	4	427517	2006-12-07T00:00:00L
+#HOTP   nobody  -       00      1       812658  2013-12-21T19:40:21L
+# HOTP  nobody  -       11
+HOTP    someone -       22
+HOTP	nobody	-	1234	4	158134	2006-12-07T00:00:00L
+HOTP    nobody  -       33

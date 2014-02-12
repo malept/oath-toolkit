@@ -1,6 +1,6 @@
 /*
  * tst_usersfile.c - self-tests for Liboath usersfile functions
- * Copyright (C) 2009-2013 Simon Josefsson
+ * Copyright (C) 2009-2014 Simon Josefsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -452,6 +452,16 @@ main (void)
   if (rc != OATH_BAD_PASSWORD)
     {
       printf ("oath_authenticate_usersfile[35]: %s (%d)\n",
+	      oath_strerror_name (rc), rc);
+      return 1;
+    }
+
+  /* Regression check of the commented-out duplicate user bug. */
+  rc = oath_authenticate_usersfile (CREDS, "nobody", "158134", 5, "",
+				    &last_otp);
+  if (rc != OATH_OK)
+    {
+      printf ("oath_authenticate_usersfile[36]: %s (%d)\n",
 	      oath_strerror_name (rc), rc);
       return 1;
     }
