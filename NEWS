@@ -8,8 +8,9 @@ When an usersfile contain multiple lines for the same user but with an
 unparseable token type (e.g., HOTP vs TOTP), the code would update the
 wrong line of the file.  Since the then updated line could be a
 commented out line, this can lead to the same OTP being accepted
-multiple times.  Reported by Bas van Schaik <bas@sj-vs.net> and patch
-provided by Ilkka Virta <itvirta@iki.fi>.
+multiple times which is a security vulnerability.  Reported by Bas van
+Schaik <bas@sj-vs.net> and patch provided by Ilkka Virta
+<itvirta@iki.fi>.  CVE-2013-7322
 
 * Version 2.4.0 (released 2013-07-21)
 
